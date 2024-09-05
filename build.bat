@@ -1,5 +1,5 @@
 @echo off
-call "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat"
+call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 cd godot-4.3
 scons platform=windows vsproj=yes dev_build=yes vsproj_gen_only=no
 
@@ -10,7 +10,7 @@ cd ..
 if not exist godot.exe.lnk (
     :: Create a shortcut to the Godot editor
     echo Creating a shortcut for the Godot editor...
-    powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.3\bin\godot.windows.editor.dev.x86_32.exe';$s.Save()"
+    powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.3\bin\godot.windows.editor.dev.x86_64.exe';$s.Save()"
 ) else (
     echo godot.exe shortcut already exists.
 )
