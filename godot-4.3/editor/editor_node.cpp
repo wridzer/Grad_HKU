@@ -7320,6 +7320,14 @@ EditorNode::EditorNode() {
 	right_spacer->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	title_bar->add_child(right_spacer);
 
+	// Custom label
+	VBoxContainer *vbox = memnew(VBoxContainer);
+	Label *custom_label = memnew(Label("Michael wat is dit?"));
+	custom_label->set_autowrap_mode(TextServer::AUTOWRAP_WORD_SMART);
+	custom_label->set_custom_minimum_size(Size2(300 * EDSCALE, 1));
+	vbox->add_child(custom_label);
+	title_bar->add_child(vbox);
+
 	project_run_bar = memnew(EditorRunBar);
 	title_bar->add_child(project_run_bar);
 	project_run_bar->connect("play_pressed", callable_mp(this, &EditorNode::_project_run_started));
