@@ -12,14 +12,9 @@ python modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin -
 :: Go back to the directory where the batch file is located
 cd ..
 
-:: Check if godot.exe.lnk already exists
-if not exist godot.exe.lnk (
-    :: Create a shortcut to the Godot editor
-    echo Creating a shortcut for the Godot editor...
-    powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.3\bin\godot.windows.editor.dev.x86_64.mono.exe';$s.Save()"
-) else (
-    echo godot.exe shortcut already exists.
-)
+:: Always create or replace the godot.exe.lnk shortcut
+echo Creating or replacing the shortcut for the Godot editor...
+powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.3\bin\godot.windows.editor.dev.x86_64.mono.exe';$s.Save()"
 
 echo Done building Godot Engine. If it does not work, please check for errors above and send them to Wridzer.
 pause
