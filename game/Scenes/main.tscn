@@ -1,3 +1,15 @@
-[gd_scene format=3 uid="uid://dy7cyxriu1eja"]
+[gd_scene load_steps=3 format=3 uid="uid://dy7cyxriu1eja"]
+
+[ext_resource type="PackedScene" uid="uid://nqudhm4qctrk" path="res://Scenes/smith_level.tscn" id="1_l0k8m"]
+[ext_resource type="PackedScene" uid="uid://yo1y4je8hvir" path="res://Scenes/player.tscn" id="1_ygi7h"]
 
 [node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ygi7h")]
+z_index = 1
+position = Vector2(40, -7)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(4, 4)
+
+[node name="Tilemaps" parent="." instance=ExtResource("1_l0k8m")]

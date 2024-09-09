@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://yo1y4je8hvir"]
+
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_exls2"]
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_lxypx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
+atlas = ExtResource("1_exls2")
+region = Rect2(884, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvff1"]
+atlas = ExtResource("1_exls2")
+region = Rect2(901, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvhqn"]
+atlas = ExtResource("1_exls2")
+region = Rect2(918, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7f6eg"]
+atlas = ExtResource("1_exls2")
+region = Rect2(935, 459, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5qvlo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ava5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvff1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvhqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7f6eg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cslfr"]
+radius = 3.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_lxypx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5qvlo")
+frame = 3
+frame_progress = 0.340298
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cslfr")
