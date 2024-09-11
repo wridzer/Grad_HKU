@@ -13,7 +13,7 @@ shape = SubResource("RectangleShape2D_o8u7f")
 debug_color = Color(0.933333, 0.909804, 0, 0.321569)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.6
+wait_time = 0.3
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dwlln5rqw6foq"]
 
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_pybjk"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_lctts"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_amndk"]
 resource_name = "roguelike-rpg"
-texture = ExtResource("1_pybjk")
+texture = ExtResource("1_lctts")
 separation = Vector2i(1, 1)
 0:0/0 = 0
 1:0/0 = 0
@@ -73,6 +73,8 @@ separation = Vector2i(1, 1)
 2:1/0 = 0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.75, -8, 8, -8, 8, 8, -5.625, 8)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.54637, -8, 6.125, -8, 5.625, -5.625, -5.41379, -5.67895)
+3:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(-5.19282, 5.45798, 6.18719, 5.3033, 6.375, 8, -5.89992, 8)
 4:1/0 = 0
 4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 6, -8, 6.25, 8, -8, 8)
 5:1/0 = 0
@@ -805,9 +807,9 @@ separation = Vector2i(1, 1)
 51:12/0 = 0
 52:12/0 = 0
 53:12/0 = 0
-53:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -5, -8, -5.25)
-53:12/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, -5.125, -6.75, -5.125, -7, 5, -8, 5)
-53:12/0/physics_layer_0/polygon_2/points = PackedVector2Array(-8, 5, 8, 5.125, 8, 8, -8, 8)
+53:12/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 12.25, -8.125, 12.125, -5.5, -8, -5.25)
+53:12/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, -5.125, -6.875, -6, -7, 5, -8, 5)
+53:12/0/physics_layer_0/polygon_2/points = PackedVector2Array(-8, 5, 13.25, 5.125, 12.75, 7.5, -8, 8)
 54:12/0 = 0
 55:12/0 = 0
 56:12/0 = 0
@@ -865,8 +867,8 @@ separation = Vector2i(1, 1)
 51:13/0 = 0
 52:13/0 = 0
 53:13/0 = 0
-53:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -5, -8, -5.25)
-53:13/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, 5, 8, 5.125, 8, 8, -8, 8)
+53:13/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5.54637, -8, 6.125, -8, 5.625, -5.625, -5.41379, -5.67895)
+53:13/0/physics_layer_0/polygon_1/points = PackedVector2Array(-5.19282, 5.45798, 6.18719, 5.3033, 6.375, 8, -5.89992, 8)
 54:13/0 = 0
 55:13/0 = 0
 56:13/0 = 0
@@ -922,8 +924,8 @@ separation = Vector2i(1, 1)
 51:14/0 = 0
 52:14/0 = 0
 53:14/0 = 0
-53:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -4.875, -8, -5.25)
-53:14/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, 5, 8, 5.125, 8, 8, -8, 8)
+53:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11.625, -8.125, 8, -8, 8, -4.875, -11.5, -5.25)
+53:14/0/physics_layer_0/polygon_1/points = PackedVector2Array(-12.125, 5.375, 8, 5.125, 8, 8, -11.75, 7.625)
 53:14/0/physics_layer_0/polygon_2/points = PackedVector2Array(8, -5.125, 6.375, -5.375, 6.5, 5.25, 8, 5.25)
 54:14/0 = 0
 55:14/0 = 0

@@ -57,3 +57,5 @@ shape = SubResource("CircleShape2D_cslfr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
