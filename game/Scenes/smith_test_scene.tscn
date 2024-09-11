@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dym022rgjstyh"]
-
-[ext_resource type="PackedScene" uid="uid://nqudhm4qctrk" path="res://Scenes/smith_level.tscn" id="1_wm8ti"]
-
-[node name="SmithTestScene" type="Node2D"]
-
-[node name="Tilemaps" parent="." instance=ExtResource("1_wm8ti")]

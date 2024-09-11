@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_exls2"]
-[ext_resource type="Script" path="res://Scenes/player.gd" id="1_lxypx"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
 atlas = ExtResource("1_exls2")
@@ -43,6 +43,8 @@ animations = [{
 radius = 3.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_lxypx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -52,3 +54,6 @@ frame_progress = 0.340298
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)

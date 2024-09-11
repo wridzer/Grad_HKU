@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpdotgt3oya1o"]
+
+[ext_resource type="Script" path="res://Scripts/level_loader.gd" id="1_qbwnd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8u7f"]
+
+[node name="LevelLoader" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_qbwnd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o8u7f")
+debug_color = Color(0.933333, 0.909804, 0, 0.321569)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://divp2amo5ul71"]
+
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mu8o"]
+atlas = ExtResource("1_3m0e2")
+region = Rect2(884, 510, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqs6l"]
+atlas = ExtResource("1_3m0e2")
+region = Rect2(901, 510, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mof70"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mu8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqs6l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_neb5v"]
+radius = 3.0
+
+[node name="Enemy" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mof70")
+frame_progress = 0.923811
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_neb5v")
+debug_color = Color(0.996319, 0, 0.189017, 0.42)
