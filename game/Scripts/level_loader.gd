@@ -19,4 +19,4 @@ func _on_timer_timeout() -> void:
 	get_parent().queue_free()
 	
 	# Get the new level's spawn point location and emit a signal to spawn player there
-	game_manager.emit_signal("get_spawn_location")
+	game_manager.get_spawn_location.emit()

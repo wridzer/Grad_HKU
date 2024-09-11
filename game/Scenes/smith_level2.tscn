@@ -32,7 +32,7 @@ tile_set = ExtResource("2_ssdax")
 collision_visibility_mode = 1
 
 [node name="LevelLoader" parent="." instance=ExtResource("2_34sdf")]
-position = Vector2(-198, -24)
+position = Vector2(-188, -24)
 level_to_load = "res://Scenes/smith_level1.tscn"
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_0pdyt")]

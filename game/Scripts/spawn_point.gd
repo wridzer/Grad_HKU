@@ -5,4 +5,4 @@ func _ready() -> void:
 
 
 func spawn_player():
-	game_manager.emit_signal("spawn_player", self.position)
+	game_manager.spawn_player.emit(self.position)
