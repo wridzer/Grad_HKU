@@ -1,8 +1,13 @@
 extends CharacterBody2D
 
-const SPEED : float = 4000.0
+const SPEED: float = 4000.0
 
-var last_dir : Vector2
+var last_dir: Vector2
+@onready var health_component: HealthComponent = $HealthComponent
+
+
+func _ready() -> void:
+	health_component.connect("die", die.bind())
 
 
 func _physics_process(delta: float) -> void:
@@ -15,3 +20,7 @@ func _physics_process(delta: float) -> void:
 	
 	last_dir = direction
 	move_and_slide()
+
+
+func die():
+	queue_free()

@@ -1,7 +1,7 @@
 class_name HurtboxComponent
 extends Area2D
 
-@export var health : HealthComponent
+@export var health: HealthComponent
 
 
 func _ready() -> void:
@@ -11,3 +11,5 @@ func _ready() -> void:
 func _on_area_entered(hitbox: HitboxComponent) -> void:
 	if hitbox == null:
 		return
+	
+	health.take_damage(1)

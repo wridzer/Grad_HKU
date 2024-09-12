@@ -19,10 +19,6 @@ config/icon="res://icon.svg"
 
 game_manager="*res://Scenes/game_manager.tscn"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [dotnet]
 
 project/assembly_name="game"

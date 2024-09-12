@@ -5,6 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8u7f"]
 
 [node name="LevelLoader" type="Area2D"]
+collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_qbwnd")
 
