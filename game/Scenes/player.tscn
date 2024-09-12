@@ -74,7 +74,8 @@ position_smoothing_speed = 20.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_fkww5")
 
-[node name="HurtboxComponent" parent="." instance=ExtResource("5_c8efr")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("5_c8efr")]
+health = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")
