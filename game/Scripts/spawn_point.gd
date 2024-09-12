@@ -1,5 +1,6 @@
 extends Node2D
 
+
 func _ready() -> void:
 	game_manager.connect("get_spawn_location", spawn_player.bind())
 

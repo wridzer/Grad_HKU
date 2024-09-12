@@ -1,6 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://divp2amo5ul71"]
+[gd_scene load_steps=11 format=3 uid="uid://divp2amo5ul71"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ewpuj"]
+[ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_ox5hm"]
+[ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_egr5u"]
+[ext_resource type="PackedScene" uid="uid://dmuxv52hjgxge" path="res://Scenes/Components/hitbox_component.tscn" id="4_vxwr0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_neb5v"]
+radius = 3.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mu8o"]
 atlas = ExtResource("1_3m0e2")
@@ -24,19 +31,27 @@ animations = [{
 "speed": 4.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_neb5v"]
-radius = 3.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_jx768"]
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_ewpuj")
+
+[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_neb5v")
+debug_color = Color(0.996319, 0, 0.189017, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mof70")
 frame_progress = 0.923811
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 3
+[node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_neb5v")
-debug_color = Color(0.996319, 0, 0.189017, 0.42)
+[node name="HitboxComponent" parent="." instance=ExtResource("4_vxwr0")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_jx768")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("4_egr5u")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_jx768")
