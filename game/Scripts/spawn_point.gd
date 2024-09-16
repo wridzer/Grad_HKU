@@ -8,7 +8,7 @@ func _ready() -> void:
 	game_manager.get_spawn_location.connect(spawn_player)
 
 
-func spawn_player():
+func spawn_player() -> void:
 	if spawn:
 		game_manager.spawn_player.emit(self.position)
 		spawn = false

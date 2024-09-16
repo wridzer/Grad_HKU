@@ -10,9 +10,11 @@ func _ready() -> void:
 
 
 func attack() -> void:
+	pivot.set_process_mode(Node.PROCESS_MODE_INHERIT)
 	pivot.visible = true
 	animation_player.play("slash")
 
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	pivot.visible = false
+	pivot.set_process_mode(Node.PROCESS_MODE_DISABLED)

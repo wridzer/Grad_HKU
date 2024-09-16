@@ -12,4 +12,4 @@ func _on_area_entered(hitbox: HitboxComponent) -> void:
 	if hitbox == null:
 		return
 	
-	health.take_damage(1)
+	health.take_damage(hitbox.damage)

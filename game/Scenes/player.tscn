@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=17 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_exls2"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
@@ -13,6 +13,14 @@ region = Rect2(884, 459, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
 atlas = ExtResource("1_exls2")
 region = Rect2(884, 510, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
+atlas = ExtResource("1_exls2")
+region = Rect2(901, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
+atlas = ExtResource("1_exls2")
+region = Rect2(901, 510, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
 atlas = ExtResource("1_exls2")
@@ -38,10 +46,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_krhfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkrkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0ynp")
 }],
 "loop": true,
 "name": &"hit",
-"speed": 2.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -74,16 +88,17 @@ script = ExtResource("1_lxypx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")
-animation = &"idle"
-frame_progress = 0.417034
+animation = &"hit"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_856tq")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("animated_sprite_2d") instance=ExtResource("3_856tq")]
 health = 3
+immunityLength = 1.0
+animated_sprite_2d = NodePath("../AnimatedSprite2D")
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")

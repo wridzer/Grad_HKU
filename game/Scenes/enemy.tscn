@@ -45,8 +45,9 @@ script = ExtResource("1_ewpuj")
 sprite_frames = SubResource("SpriteFrames_mof70")
 frame_progress = 0.923811
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("animated_sprite_2d") instance=ExtResource("3_ox5hm")]
 health = 1
+animated_sprite_2d = NodePath("../AnimatedSprite2D")
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_neb5v")

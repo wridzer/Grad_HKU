@@ -16,11 +16,14 @@ func _physics_process(delta: float) -> void:
 	
 	var direction = Vector2(directionx, directiony)
 	
-	velocity = direction * SPEED * delta if direction != Vector2.ZERO else velocity.move_toward(Vector2.ZERO, SPEED)
+	if direction != Vector2.ZERO:
+		velocity = direction * SPEED * delta
+	else:
+		velocity.move_toward(Vector2.ZERO, SPEED)
 	
 	last_dir = direction
 	move_and_slide()
 
 
-func die():
+func die() -> void:
 	queue_free()

@@ -5,12 +5,15 @@ const SPEED := 4000.0
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
 	health_component.die.connect(respawn)
+	animated_sprite_2d.play("idle")
 
 
 func _physics_process(delta: float) -> void:
@@ -22,7 +25,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func spawn(spawn_pos : Vector2):
+func spawn(spawn_pos : Vector2) -> void:
 	var reenable_smoothing := camera_2d.is_position_smoothing_enabled()
 	camera_2d.set_position_smoothing_enabled(false)
 	
@@ -33,6 +36,6 @@ func spawn(spawn_pos : Vector2):
 	camera_2d.set_position_smoothing_enabled(reenable_smoothing)
 
 
-func respawn():
+func respawn() -> void:
 	spawn(saved_spawn_pos)
 	health_component.gain_health(3)
