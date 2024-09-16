@@ -5,7 +5,7 @@ var spawn := true
 
 
 func _ready() -> void:
-	game_manager.connect("get_spawn_location", spawn_player.bind())
+	game_manager.get_spawn_location.connect(spawn_player)
 
 
 func spawn_player():

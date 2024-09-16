@@ -1,10 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=15 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_exls2"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_856tq"]
-[ext_resource type="PackedScene" uid="uid://dmuxv52hjgxge" path="res://Scenes/Components/hitbox_component.tscn" id="4_tfh4y"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="5_c8efr"]
+[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="6_s88px"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
+atlas = ExtResource("1_exls2")
+region = Rect2(884, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
+atlas = ExtResource("1_exls2")
+region = Rect2(884, 510, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
 atlas = ExtResource("1_exls2")
@@ -26,6 +34,17 @@ region = Rect2(935, 459, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_wsuc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krhfj")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ava5m")
 }, {
 "duration": 1.0,
@@ -38,15 +57,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_7f6eg")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 2.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cslfr"]
 radius = 3.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrjw6"]
-size = Vector2(12, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jdjs5"]
 radius = 2.0
@@ -58,8 +74,8 @@ script = ExtResource("1_lxypx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")
-frame = 3
-frame_progress = 0.340298
+animation = &"idle"
+frame_progress = 0.417034
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
@@ -72,15 +88,6 @@ health = 3
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")
 
-[node name="HitboxComponent" parent="." instance=ExtResource("4_tfh4y")]
-collision_layer = 2
-collision_mask = 4
-damage = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(4, 0)
-shape = SubResource("RectangleShape2D_hrjw6")
-
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("5_c8efr")]
 collision_layer = 2
 collision_mask = 4
@@ -88,3 +95,5 @@ health = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")
+
+[node name="Sword" parent="." instance=ExtResource("6_s88px")]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://b3s2y63nra24b"]
+
+[ext_resource type="Script" path="res://Scripts/sword.gd" id="1_quut7"]
+[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="2_ekvkk"]
+[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="3_ndokg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpyv7"]
+atlas = ExtResource("2_ekvkk")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6dbag"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpyv7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_obcww"]
+
+[sub_resource type="Animation" id="Animation_hk5kk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ie728"]
+resource_name = "slash"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.34151, 1),
+"update": 0,
+"values": [-0.523599, 2.0944]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nl56l"]
+_data = {
+"RESET": SubResource("Animation_hk5kk"),
+"slash": SubResource("Animation_ie728")
+}
+
+[node name="Sword" type="Node2D"]
+script = ExtResource("1_quut7")
+
+[node name="Pivot" type="Node2D" parent="."]
+visible = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pivot"]
+position = Vector2(6, -6)
+scale = Vector2(0.125, 0.125)
+sprite_frames = SubResource("SpriteFrames_6dbag")
+
+[node name="HitboxComponent" type="Area2D" parent="Pivot"]
+position = Vector2(2, -2)
+rotation = 0.711666
+scale = Vector2(0.342544, 0.416869)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("3_ndokg")
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/HitboxComponent"]
+position = Vector2(1.8248, -20.2995)
+shape = SubResource("CapsuleShape2D_obcww")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nl56l")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

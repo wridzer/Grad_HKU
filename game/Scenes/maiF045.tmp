@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy7cyxriu1eja"]
+
+[ext_resource type="PackedScene" uid="uid://nqudhm4qctrk" path="res://Scenes/smith_level1.tscn" id="1_l0k8m"]
+[ext_resource type="PackedScene" uid="uid://yo1y4je8hvir" path="res://Scenes/player.tscn" id="1_ygi7h"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ygi7h")]
+z_index = 1
+position = Vector2(40, -7)
+
+[node name="Level" type="Node" parent="."]
+
+[node name="Smith Level 1" parent="Level" instance=ExtResource("1_l0k8m")]
