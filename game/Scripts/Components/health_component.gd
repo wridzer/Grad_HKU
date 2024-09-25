@@ -1,13 +1,16 @@
 class_name HealthComponent
 extends Node
 
+@onready var timer := $ImmunityTimer
+
 @export var health: int
 @export var maxHealth: int = 3
 @export var immunityLength: float = .5
-@onready var timer := $ImmunityTimer
+@export var animated_sprite_2d: AnimatedSprite2D
+
 var immune := false
 signal die
-@export var animated_sprite_2d: AnimatedSprite2D
+signal hit
 
 
 func _ready() -> void:
@@ -33,6 +36,8 @@ func take_damage(amount: int) -> void:
 	
 	if is_instance_valid(animated_sprite_2d):
 		animated_sprite_2d.play("hit")
+		
+	hit.emit()
 
 
 func _on_immunity_timer_timeout() -> void:

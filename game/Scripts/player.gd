@@ -13,6 +13,7 @@ var saved_spawn_pos: Vector2
 func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
 	health_component.die.connect(respawn)
+	health_component.hit.connect(hit)
 	animated_sprite_2d.play("idle")
 
 
@@ -39,3 +40,7 @@ func spawn(spawn_pos : Vector2) -> void:
 func respawn() -> void:
 	spawn(saved_spawn_pos)
 	health_component.gain_health(3)
+
+
+func hit() -> void:
+	pass

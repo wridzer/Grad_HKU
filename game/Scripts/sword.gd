@@ -7,14 +7,18 @@ extends Node
 
 func _ready() -> void:
 	input_manager.attack.connect(attack)
+	toggle_sword(false)
 
 
 func attack() -> void:
-	pivot.set_process_mode(Node.PROCESS_MODE_INHERIT)
-	pivot.visible = true
+	toggle_sword(true)
 	animation_player.play("slash")
 
 
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
-	pivot.visible = false
-	pivot.set_process_mode(Node.PROCESS_MODE_DISABLED)
+	toggle_sword(false)
+
+
+func toggle_sword(on : bool) -> void:
+	pivot.visible = on
+	pivot.set_process_mode(Node.PROCESS_MODE_INHERIT if on else Node.PROCESS_MODE_DISABLED)

@@ -1,41 +1,40 @@
-[gd_scene load_steps=17 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=16 format=3 uid="uid://bdntcr5tudi1b"]
 
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_exls2"]
-[ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
-[ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_856tq"]
-[ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="5_c8efr"]
-[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="6_s88px"]
+[ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
+[ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
+[ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(884, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(884, 510, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(901, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(901, 510, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(884, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jvff1"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(901, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vvhqn"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(918, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7f6eg"]
-atlas = ExtResource("1_exls2")
+atlas = ExtResource("2_ebpt7")
 region = Rect2(935, 459, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qvlo"]
@@ -81,13 +80,11 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_jdjs5"]
 radius = 2.0
 
-[node name="Player" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 9
-script = ExtResource("1_lxypx")
+[node name="Npc" type="CharacterBody2D"]
+collision_layer = 17
+script = ExtResource("1_kinge")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
 sprite_frames = SubResource("SpriteFrames_5qvlo")
 animation = &"hit"
 
@@ -96,7 +93,7 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("animated_sprite_2d") instance=ExtResource("3_856tq")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("animated_sprite_2d") instance=ExtResource("3_wo31h")]
 health = 3
 immunityLength = 1.0
 animated_sprite_2d = NodePath("../AnimatedSprite2D")
@@ -104,12 +101,10 @@ animated_sprite_2d = NodePath("../AnimatedSprite2D")
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("5_c8efr")]
-collision_layer = 2
-collision_mask = 4
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("4_6t8yg")]
+collision_layer = 16
+collision_mask = 6
 health = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")
-
-[node name="Sword" parent="." instance=ExtResource("6_s88px")]
