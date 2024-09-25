@@ -6,6 +6,7 @@ const SPEED := 4000.0
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_tree: AnimationTree = $AnimationTree
 
 var saved_spawn_pos: Vector2
 
@@ -14,7 +15,8 @@ func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
 	health_component.die.connect(respawn)
 	health_component.hit.connect(hit)
-	animated_sprite_2d.play("idle")
+	animated_sprite_2d.play("idle_left")
+	animation_tree.active = true
 
 
 func _physics_process(delta: float) -> void:
@@ -22,8 +24,11 @@ func _physics_process(delta: float) -> void:
 		velocity = input_manager.direction * SPEED * delta
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
-
+	
 	move_and_slide()
+	if velocity.length() > 0:
+		animation_tree.set("parameters/idle/blend_position", velocity)
+		animation_tree.get("parameters/playback").travel("idle")
 
 
 func spawn(spawn_pos : Vector2) -> void:
