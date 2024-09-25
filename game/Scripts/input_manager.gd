@@ -3,14 +3,14 @@ extends Node
 var direction : Vector2
 var disabled : bool = false
 signal attack
-
+signal interact
 
 func _ready() -> void:
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
 
 
 func _process(_delta: float) -> void:
-	# Stop moving when input is disabled
+	# Reset movement direction when input is disabled
 	direction = Vector2.ZERO
 	if disabled:
 		return
@@ -22,6 +22,9 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("attack"):
 		attack.emit()
+	
+	if Input.is_action_just_pressed("interact"):
+		interact.emit()
 
 
 func _on_dialogue_ended(_resource: DialogueResource) -> void:

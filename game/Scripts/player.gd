@@ -7,12 +7,14 @@ const SPEED := 4000.0
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var actionable_finder: Area2D = $Direction/ActionableFinder
 
 var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
+	input_manager.interact.connect(interact)
 	health_component.die.connect(respawn)
 	health_component.hit.connect(hit)
 	animated_sprite_2d.play("idle_left")
@@ -49,3 +51,10 @@ func respawn() -> void:
 
 func hit() -> void:
 	pass
+
+
+func interact() -> void:
+	var actionables := actionable_finder.get_overlapping_areas()
+	if actionables.size() > 0:
+		actionables[0].action.emit()
+		return
