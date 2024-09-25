@@ -32,6 +32,8 @@ func _on_dialogue_ended(_resource: DialogueResource) -> void:
 	toggle_input(true)
 
 
-func toggle_input(enabled: bool) -> void:
-	disabled = !enabled
-	print(disabled)
+func toggle_input(enable: bool) -> void:
+	if enable: 
+		await get_tree().create_timer(.4).timeout
+		
+	disabled = !enable

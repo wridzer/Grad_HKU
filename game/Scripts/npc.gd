@@ -34,4 +34,4 @@ func _on_dialogue_ended(resource: DialogueResource) -> void:
 	if resource == hit_dialogue:
 		return
 	
-	await get_tree().create_timer(0.4).timeout
+	pass

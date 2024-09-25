@@ -25,7 +25,6 @@ func gain_health(amount: int) -> void:
 
 
 func take_damage(amount: int) -> void:
-	print(amount)
 	if !immune:
 		health -= amount
 		if health <= 0:
