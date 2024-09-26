@@ -47,19 +47,18 @@ blend_point_3/pos = Vector2(0, -1)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_axvvu"]
-animation = &"swing_right"
+animation = &"slash_right"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6x7h8"]
-animation = &"swing_up"
+animation = &"slash_up"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bfbcd"]
-animation = &"swing_left"
+animation = &"slash_left"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1oku1"]
-animation = &"swing_down"
+animation = &"slash_down"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_pyiv4"]
-auto_triangles = false
 blend_point_0/node = SubResource("AnimationNodeAnimation_axvvu")
 blend_point_0/pos = Vector2(1, 0)
 blend_point_1/node = SubResource("AnimationNodeAnimation_6x7h8")
@@ -68,7 +67,6 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_bfbcd")
 blend_point_2/pos = Vector2(-1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_1oku1")
 blend_point_3/pos = Vector2(0, -1)
-triangles = PackedInt32Array(0, 1, 2, 0, 2, 3, 0, 1, 3)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_owmwe"]

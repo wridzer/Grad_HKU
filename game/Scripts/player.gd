@@ -7,6 +7,7 @@ const SPEED := 4000.0
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var actionable_finder: Area2D = $Direction/ActionableFinder
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var saved_spawn_pos: Vector2
 
@@ -38,14 +39,16 @@ func update_animation_parameters() -> void:
 	animation_tree.set("parameters/conditions/hit", health_component.immune)
 	animation_tree.set("parameters/conditions/idle", input_manager.direction == Vector2.ZERO)
 	animation_tree.set("parameters/conditions/moving", input_manager.direction != Vector2.ZERO)
-	animation_tree.set("parameters/conditions/slash", input_manager.attack)
 	
 	if input_manager.direction.length() > 0:
 		animation_tree.set("parameters/Hit/blend_position", input_manager.direction)
 		animation_tree.set("parameters/Idle/blend_position", input_manager.direction)
 		animation_tree.set("parameters/Walk/blend_position", input_manager.direction)
-		#TODO fix sword bug
-		animation_tree.set("parameters/Slash/blend_position", input_manager.direction)
+	
+	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
+		# Easiest way to get the right direction at this point
+		animation_tree.set("parameters/Slash/blend_position", animation_tree.get("parameters/Idle/blend_position"))
+		slash()
 
 
 func spawn(spawn_pos : Vector2) -> void:
@@ -73,3 +76,12 @@ func interact() -> void:
 	if actionables.size() > 0:
 		actionables[0].action.emit()
 		return
+
+
+func slash():
+	animation_tree.set("parameters/conditions/slash", true)
+	
+	# Can't find a way to get the length from the Animation Tree Blend Space 2D
+	await get_tree().create_timer(animation_player.get_animation("slash_right").length).timeout
+	
+	animation_tree.set("parameters/conditions/slash", false)
