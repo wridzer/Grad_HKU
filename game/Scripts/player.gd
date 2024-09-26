@@ -14,7 +14,6 @@ var saved_spawn_pos: Vector2
 func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
 	input_manager.interact.connect(interact)
-	input_manager.attack.connect(attack)
 	health_component.die.connect(respawn)
 	health_component.hit.connect(hit)
 	
@@ -35,17 +34,18 @@ func _physics_process(delta: float) -> void:
 
 
 func update_animation_parameters() -> void:
-	# Set velocity parameters and display correct animation direction
+	# Set blend position parameters and display correct animation direction
 	animation_tree.set("parameters/conditions/hit", health_component.immune)
-	animation_tree.set("parameters/conditions/idle", velocity == Vector2.ZERO)
-	animation_tree.set("parameters/conditions/moving", velocity != Vector2.ZERO)
-	animation_tree.set("parameters/conditions/slash", false)
+	animation_tree.set("parameters/conditions/idle", input_manager.direction == Vector2.ZERO)
+	animation_tree.set("parameters/conditions/moving", input_manager.direction != Vector2.ZERO)
+	animation_tree.set("parameters/conditions/slash", input_manager.attack)
 	
-	if velocity.length() > 0:
-		animation_tree.set("parameters/Hit/blend_position", velocity)
-		animation_tree.set("parameters/Idle/blend_position", velocity)
-		animation_tree.set("parameters/Walk/blend_position", velocity)
-		animation_tree.set("parameters/Slash/blend_position", velocity)
+	if input_manager.direction.length() > 0:
+		animation_tree.set("parameters/Hit/blend_position", input_manager.direction)
+		animation_tree.set("parameters/Idle/blend_position", input_manager.direction)
+		animation_tree.set("parameters/Walk/blend_position", input_manager.direction)
+		#TODO fix sword bug
+		animation_tree.set("parameters/Slash/blend_position", input_manager.direction)
 
 
 func spawn(spawn_pos : Vector2) -> void:
@@ -73,7 +73,3 @@ func interact() -> void:
 	if actionables.size() > 0:
 		actionables[0].action.emit()
 		return
-
-
-func attack() -> void:
-	animation_tree.set("parameters/conditions/slash", true)

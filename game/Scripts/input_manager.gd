@@ -1,9 +1,10 @@
 extends Node
 
 var direction : Vector2
+var attack : bool
 var disabled : bool = false
-signal attack
 signal interact
+
 
 func _ready() -> void:
 	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
@@ -20,8 +21,7 @@ func _process(_delta: float) -> void:
 	var directiony := Input.get_axis("move_up", "move_down")
 	direction = Vector2(directionx, directiony).normalized()
 	
-	if Input.is_action_just_pressed("attack"):
-		attack.emit()
+	attack = Input.is_action_just_pressed("attack")
 	
 	if Input.is_action_just_pressed("interact"):
 		interact.emit()
@@ -29,6 +29,7 @@ func _process(_delta: float) -> void:
 
 func _on_dialogue_ended(_resource: DialogueResource) -> void:
 	# Re-enable input when dialogue has ended
+	print("huh")
 	toggle_input(true)
 
 

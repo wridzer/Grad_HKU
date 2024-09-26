@@ -38,45 +38,10 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_yj05r"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Direction:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Direction/Sword:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Direction/Sword:process_mode")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
 
 [sub_resource type="Animation" id="Animation_wp2l8"]
 resource_name = "swing_right"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -96,7 +61,7 @@ tracks/1/path = NodePath("Direction/Sword:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -108,7 +73,7 @@ tracks/2/path = NodePath("Direction/Sword:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 4]
@@ -128,6 +93,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_bbiqr"]
 resource_name = "swing_left"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -147,7 +113,7 @@ tracks/1/path = NodePath("Direction/Sword:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -159,7 +125,7 @@ tracks/2/path = NodePath("Direction/Sword:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 4]
@@ -382,6 +348,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_1vlnx"]
 resource_name = "swing_up"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -401,7 +368,7 @@ tracks/1/path = NodePath("Direction/Sword:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -413,7 +380,7 @@ tracks/2/path = NodePath("Direction/Sword:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 4]
@@ -433,6 +400,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_tebc8"]
 resource_name = "swing_down"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -452,7 +420,7 @@ tracks/1/path = NodePath("Direction/Sword:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -464,7 +432,7 @@ tracks/2/path = NodePath("Direction/Sword:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 4]
@@ -479,7 +447,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.5708]
+"values": [4.71239]
 }
 
 [sub_resource type="Animation" id="Animation_8pg1d"]
@@ -724,11 +692,11 @@ active = false
 tree_root = ExtResource("2_dhl6a")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/hit = false
-parameters/conditions/idle = false
+parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
 parameters/Hit/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(-0.00048238, 0.970516)
+parameters/Idle/blend_position = Vector2(1, 0)
 parameters/Slash/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
@@ -765,6 +733,7 @@ shape = SubResource("CircleShape2D_jdjs5")
 [node name="Direction" type="Node2D" parent="."]
 
 [node name="Sword" parent="Direction" instance=ExtResource("6_s88px")]
+rotation = -0.523599
 
 [node name="ActionableFinder" type="Area2D" parent="Direction"]
 position = Vector2(5, -6)
