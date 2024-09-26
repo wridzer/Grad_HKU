@@ -5,7 +5,6 @@ const SPEED := 4000.0
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var actionable_finder: Area2D = $Direction/ActionableFinder
 
@@ -15,10 +14,15 @@ var saved_spawn_pos: Vector2
 func _ready() -> void:
 	game_manager.spawn_player.connect(spawn)
 	input_manager.interact.connect(interact)
+	input_manager.attack.connect(attack)
 	health_component.die.connect(respawn)
 	health_component.hit.connect(hit)
-	animated_sprite_2d.play("idle_left")
+	
 	animation_tree.active = true
+
+
+func _process(_delta: float) -> void:
+	update_animation_parameters()
 
 
 func _physics_process(delta: float) -> void:
@@ -28,9 +32,20 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
 	
 	move_and_slide()
+
+
+func update_animation_parameters() -> void:
+	# Set velocity parameters and display correct animation direction
+	animation_tree.set("parameters/conditions/hit", health_component.immune)
+	animation_tree.set("parameters/conditions/idle", velocity == Vector2.ZERO)
+	animation_tree.set("parameters/conditions/moving", velocity != Vector2.ZERO)
+	animation_tree.set("parameters/conditions/slash", false)
+	
 	if velocity.length() > 0:
-		animation_tree.set("parameters/idle/blend_position", velocity)
-		animation_tree.get("parameters/playback").travel("idle")
+		animation_tree.set("parameters/Hit/blend_position", velocity)
+		animation_tree.set("parameters/Idle/blend_position", velocity)
+		animation_tree.set("parameters/Walk/blend_position", velocity)
+		animation_tree.set("parameters/Slash/blend_position", velocity)
 
 
 func spawn(spawn_pos : Vector2) -> void:
@@ -58,3 +73,7 @@ func interact() -> void:
 	if actionables.size() > 0:
 		actionables[0].action.emit()
 		return
+
+
+func attack() -> void:
+	animation_tree.set("parameters/conditions/slash", true)

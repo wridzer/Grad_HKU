@@ -6,7 +6,6 @@ extends Node
 @export var health: int
 @export var maxHealth: int = 3
 @export var immunityLength: float = .5
-@export var animated_sprite_2d: AnimatedSprite2D
 
 var immune := false
 signal die
@@ -32,9 +31,6 @@ func take_damage(amount: int) -> void:
 			return
 		immune = true
 		timer.start()
-	
-	if is_instance_valid(animated_sprite_2d):
-		animated_sprite_2d.play("hit")
 		
 	hit.emit()
 
@@ -42,9 +38,5 @@ func take_damage(amount: int) -> void:
 func _on_immunity_timer_timeout() -> void:
 	# Be able to take damage again
 	immune = false
-	
-	if is_instance_valid(animated_sprite_2d):
-		if animated_sprite_2d.animation == "hit":
-			animated_sprite_2d.play("idle")
 	
 	timer.stop()

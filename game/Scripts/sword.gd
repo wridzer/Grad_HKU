@@ -1,3 +1,4 @@
+# DEPRECATED TODO REMOVE
 class_name Weapon
 extends Node
 
