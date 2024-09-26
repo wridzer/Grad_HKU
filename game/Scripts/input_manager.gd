@@ -29,7 +29,6 @@ func _process(_delta: float) -> void:
 
 func _on_dialogue_ended(_resource: DialogueResource) -> void:
 	# Re-enable input when dialogue has ended
-	print("huh")
 	toggle_input(true)
 
 

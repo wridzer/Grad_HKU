@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 game_manager="*res://Scenes/game_manager.tscn"
 input_manager="*res://Scenes/input_manager.tscn"
 dialogue_manager="*res://addons/dialogue_manager/dialogue_manager.gd"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [dotnet]
 
