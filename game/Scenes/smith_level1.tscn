@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://nqudhm4qctrk"]
+[gd_scene load_steps=8 format=4 uid="uid://nqudhm4qctrk"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_q3wky"]
 [ext_resource type="PackedScene" uid="uid://dpdotgt3oya1o" path="res://Scenes/level_loader.tscn" id="2_415ri"]
 [ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="2_lbhg0"]
+[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/Ker.dialogue" id="3_a0b7x"]
+[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/Ker_hit.dialogue" id="4_ao885"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/spawn_point.tscn" id="4_yhct4"]
 [ext_resource type="PackedScene" uid="uid://bdntcr5tudi1b" path="res://Scenes/npc.tscn" id="5_x4qe1"]
 
@@ -10,9 +12,15 @@
 script = ExtResource("1_q3wky")
 spawn_point = NodePath("SpawnPoint")
 
-[node name="Npc" parent="." instance=ExtResource("5_x4qe1")]
-z_index = 1
+[node name="Npc_Kin" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(72, -39)
+display_name = "Kin"
+
+[node name="Npc_Ker" parent="." instance=ExtResource("5_x4qe1")]
+position = Vector2(71, 42)
+display_name = "Ker"
+action_dialogue = ExtResource("3_a0b7x")
+hit_dialogue = ExtResource("4_ao885")
 
 [node name="Tilemaps" type="Node" parent="."]
 

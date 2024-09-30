@@ -1,0 +1,25 @@
+~ start
+Kin: Hi, I'm Kin!
+% Kin: Want to take me on an adventure?
+% Kin: Do you want to go on an adventure?
+- Yes => yes
+- No => no
+
+~ yes
+%2 => wel
+% => niet
+
+~ wel
+% Kin: let's go
+% Kin: okay
+do game_manager.npc_follow.emit()
+=> END!
+
+~ niet
+Kin: ik heb geen zin meer
+=> END
+
+~ no
+% Kin: Waarom ouweee
+% Kin: kutzooi
+=> END

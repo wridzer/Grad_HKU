@@ -1,18 +1,25 @@
 class_name Player
 extends CharacterBody2D
 
-const SPEED := 4000.0
-
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var actionable_finder: Area2D = $Direction/ActionableFinder
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+const SPEED := 4000.0
+static var instance: Player = null
+
 var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
+	if instance == null:
+		instance = self
+	if instance != self:
+		push_warning("Multiple players found in scene, deleting last loaded")
+		queue_free()
+	
 	game_manager.spawn_player.connect(spawn)
 	input_manager.interact.connect(interact)
 	health_component.die.connect(respawn)
@@ -78,10 +85,14 @@ func interact() -> void:
 		return
 
 
-func slash():
+func slash() -> void:
 	animation_tree.set("parameters/conditions/slash", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D
 	await get_tree().create_timer(animation_player.get_animation("slash_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/slash", false)
+
+
+#func get_position() -> Vector2D:
+#	return position

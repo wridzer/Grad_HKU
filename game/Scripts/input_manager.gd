@@ -1,13 +1,14 @@
 extends Node
 
-var direction : Vector2
-var attack : bool
-var disabled : bool = false
+var direction: Vector2 = Vector2.ZERO
+var attack: bool = false
+var disabled: bool = false
+
 signal interact
 
 
 func _ready() -> void:
-	dialogue_manager.dialogue_ended.connect(_on_dialogue_ended)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 
 func _process(_delta: float) -> void:

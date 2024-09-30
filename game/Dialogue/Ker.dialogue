@@ -1,0 +1,25 @@
+~ start
+Ker: Hi, I'm Ker!
+% Ker: Want to take me on an adventure?
+% Ker: Do you want to go on an adventure?
+- Yes => yes
+- No => no
+
+~ yes
+%2 => wel
+% => niet
+
+~ wel
+% Ker: yippee
+% Ker: let's gooooooooooooooooooooooooo
+do game_manager.npc_follow.emit()
+=> END!
+
+~ niet
+Ker: ik wil toch niet, sorry
+=> END
+
+~ no
+% Ker: This is so sad alexa play despacito
+% Ker: :(
+=> END

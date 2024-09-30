@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
-[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/test.dialogue" id="2_lde1w"]
-[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/hi.dialogue" id="3_35wy5"]
+[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/Kin_hit.dialogue" id="2_lde1w"]
+[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/Kin.dialogue" id="3_35wy5"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
@@ -87,10 +87,11 @@ radius = 2.0
 radius = 12.0
 
 [node name="Npc" type="CharacterBody2D"]
+z_index = 1
 collision_layer = 17
 script = ExtResource("1_kinge")
-hit_dialogue = ExtResource("2_lde1w")
 action_dialogue = ExtResource("3_35wy5")
+hit_dialogue = ExtResource("2_lde1w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")
@@ -120,3 +121,16 @@ shape = SubResource("CircleShape2D_jdjs5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_fd4sv")
+
+[node name="NameLabel" type="Label" parent="."]
+z_index = 5
+offset_left = -30.0
+offset_top = -14.0
+offset_right = 170.0
+offset_bottom = 11.0
+scale = Vector2(0.3, 0.3)
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
+max_lines_visible = 1
+language = "en"
