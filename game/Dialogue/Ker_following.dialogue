@@ -16,8 +16,12 @@ do game_manager.npc_stop_following.emit()
 ~ niet
 Ker: maybe if I just try harder...
 	please reconsider?
-- Yes => yes
-- No => no
+- Yes => reconsider
+- No => wel
+=> END
+
+~ reconsider
+Ker: now this is epic
 => END
 
 ~ no

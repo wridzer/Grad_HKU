@@ -14,11 +14,15 @@ const SPEED := 2500.0
 const FOLLOW_DISTANCE := 10.0
 
 var is_talking: bool = false
-
 var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
+	# Remove myself if I'm already instanced and following the player
+	if Player.instance.following_npc:
+		if Player.instance.following_npc.display_name == display_name:
+			die()
+	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(action_dialogue), "Please assign a valid action_dialogue to " + name)
 	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + name)
@@ -68,7 +72,7 @@ func start_dialogue() -> void:
 	is_talking = true
 
 
-func _on_dialogue_ended(resource: DialogueResource) -> void:
+func _on_dialogue_ended(_resource: DialogueResource) -> void:
 	is_talking = false
 
 

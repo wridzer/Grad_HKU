@@ -96,7 +96,3 @@ func slash() -> void:
 	await get_tree().create_timer(animation_player.get_animation("slash_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/slash", false)
-
-
-#func get_position() -> Vector2D:
-#	return position
