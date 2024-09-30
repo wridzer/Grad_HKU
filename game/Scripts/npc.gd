@@ -17,11 +17,16 @@ var following: bool = false
 
 
 func _ready() -> void:
+	assert(is_instance_valid(action_dialogue), "Please assign a valid action_dialogue to " + name)
+	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + name)
+	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + name)
+	
 	health_component.die.connect(die)
 	health_component.hit.connect(hit)
 	actionable.action.connect(start_dialogue)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	game_manager.npc_follow.connect(follow)
+	game_manager.npc_stop_following.connect(stop_following)
 	
 	name_label.text = display_name
 
@@ -61,4 +66,13 @@ func _on_dialogue_ended(resource: DialogueResource) -> void:
 
 func follow() -> void:
 	if is_talking:
-		following = true
+		if !Player.instance.chosen_npc:
+			Player.instance.chosen_npc = self
+			following = true
+		else:
+			DialogueManager.show_dialogue_balloon(action_dialogue, "already_following")
+
+func stop_following() -> void:
+	if is_talking && Player.instance.chosen_npc == self:
+		Player.instance.chosen_npc = null
+		following = false

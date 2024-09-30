@@ -1,0 +1,30 @@
+~ start
+Kin: Hello, I'm Kin!
+% Kin: Want to take me on an adventure?
+% Kin: Do you want to go on an adventure?
+- Yes => yes
+- No => no
+
+~ yes
+%2 => wel
+% => niet
+
+~ wel
+% Kin: Let's go
+% Kin: Okay
+do game_manager.npc_follow.emit()
+=> END
+
+~ niet
+Kin: I don't want to
+=> END
+
+~ no
+% Kin: Why not?
+% Kin: But I can play the guitar!
+=> END
+
+~ already_following
+Kin: Someone is already following you...
+	Please deal with them first.
+=> END

@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dtb0grb3pjub0"
+path="res://.godot/imported/Ker_action.dialogue-905f3a82e7dc769ea65e93eb0e8d9a6b.tres"
+
+[deps]
+
+source_file="res://Dialogue/Ker_action.dialogue"
+dest_files=["res://.godot/imported/Ker_action.dialogue-905f3a82e7dc769ea65e93eb0e8d9a6b.tres"]
+
+[params]
+
+defaults=true

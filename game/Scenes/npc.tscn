@@ -1,9 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=18 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
-[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/Kin_hit.dialogue" id="2_lde1w"]
-[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/Kin.dialogue" id="3_35wy5"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
@@ -90,8 +88,6 @@ radius = 12.0
 z_index = 1
 collision_layer = 17
 script = ExtResource("1_kinge")
-action_dialogue = ExtResource("3_35wy5")
-hit_dialogue = ExtResource("2_lde1w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")

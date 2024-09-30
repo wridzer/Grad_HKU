@@ -9,6 +9,7 @@ extends CharacterBody2D
 
 const SPEED := 4000.0
 static var instance: Player = null
+var chosen_npc: Npc = null
 
 var saved_spawn_pos: Vector2
 
