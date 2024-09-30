@@ -38,6 +38,7 @@ level_to_load = "res://Scenes/smith_level1.tscn"
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_0pdyt")]
 position = Vector2(-161, -24)
+npc_offset = Vector2(-10, 0)
 
 [node name="Enemies" type="Node" parent="."]
 

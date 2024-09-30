@@ -1,19 +1,22 @@
 extends Node2D
 
 @onready var timer: Timer = $Timer
-var spawn := true
+
+@export var npc_offset: Vector2
+
+var just_spawned := true
 
 
 func _ready() -> void:
-	game_manager.get_spawn_location.connect(spawn_player)
+	game_manager.get_spawn_location.connect(spawn)
 
 
-func spawn_player() -> void:
-	if spawn:
-		game_manager.spawn_player.emit(self.position)
-		spawn = false
+func spawn() -> void:
+	if just_spawned:
+		game_manager.spawn.emit(self.position, npc_offset)
+		just_spawned = false
 		timer.stop()
 
 
 func _on_timer_timeout() -> void:
-	spawn = false
+	just_spawned = false

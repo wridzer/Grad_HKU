@@ -15,11 +15,21 @@ func _on_body_exited(player: Player) -> void:
 
 
 func _on_timer_timeout() -> void:
+	var level_parent = get_parent().get_parent()
+	
+	# Bring following npc with you when warping
+	if Player.instance.following_npc:
+		Player.instance.following_npc.get_parent().remove_child(Player.instance.following_npc)
+		level_parent.get_parent().add_child(Player.instance.following_npc)
+	
+	# Remove leftover npc's
+	game_manager.switch_level_cleanup.emit()
+	
 	# Add the level to load under "Level" to the scene tree
 	var scene = ResourceLoader.load(level_to_load, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE)
-	get_parent().get_parent().add_child(scene.instantiate())
+	level_parent.add_child(scene.instantiate())
 	get_parent().queue_free()
 	
-	# Get the new level's spawn point location and emit a signal to spawn player there
+	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	game_manager.get_spawn_location.emit()
 	timer.stop()

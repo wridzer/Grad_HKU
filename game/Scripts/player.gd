@@ -9,23 +9,26 @@ extends CharacterBody2D
 
 const SPEED := 4000.0
 static var instance: Player = null
-var chosen_npc: Npc = null
+var following_npc: Npc = null
 
 var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
+	# Singleton
 	if instance == null:
 		instance = self
 	if instance != self:
 		push_warning("Multiple players found in scene, deleting last loaded")
 		queue_free()
 	
-	game_manager.spawn_player.connect(spawn)
+	# Connect signals
+	game_manager.spawn.connect(spawn)
 	input_manager.interact.connect(interact)
 	health_component.die.connect(respawn)
 	health_component.hit.connect(hit)
 	
+	# Enable animations
 	animation_tree.active = true
 
 
@@ -59,7 +62,7 @@ func update_animation_parameters() -> void:
 		slash()
 
 
-func spawn(spawn_pos : Vector2) -> void:
+func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 	var reenable_smoothing := camera_2d.is_position_smoothing_enabled()
 	camera_2d.set_position_smoothing_enabled(false)
 	
@@ -71,7 +74,7 @@ func spawn(spawn_pos : Vector2) -> void:
 
 
 func respawn() -> void:
-	spawn(saved_spawn_pos)
+	spawn(saved_spawn_pos, Vector2.ZERO)
 	health_component.gain_health(3)
 
 
