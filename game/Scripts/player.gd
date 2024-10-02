@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
+
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animation_tree: AnimationTree = $AnimationTree

@@ -1,5 +1,6 @@
 extends Node2D
 
+
 @onready var timer: Timer = $Timer
 
 @export var npc_offset: Vector2

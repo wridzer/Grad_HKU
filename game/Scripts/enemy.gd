@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+
 @onready var health_component: HealthComponent = $HealthComponent
 
 const SPEED: float = 4000.0

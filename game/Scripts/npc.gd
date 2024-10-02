@@ -1,9 +1,11 @@
 class_name Npc
 extends CharacterBody2D
 
+
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var actionable: Area2D = $Actionable
 @onready var name_label: Label = $NameLabel
+@onready var state_machine: StateMachine = $StateMachine
 
 @export var display_name: String
 @export var action_dialogue: DialogueResource
@@ -33,8 +35,6 @@ func _ready() -> void:
 	health_component.hit.connect(hit)
 	actionable.action.connect(start_dialogue)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
-	game_manager.npc_follow.connect(follow)
-	game_manager.npc_stop_following.connect(stop_following)
 	game_manager.spawn.connect(spawn)
 	game_manager.switch_level_cleanup.connect(cleanup)
 	
@@ -42,18 +42,10 @@ func _ready() -> void:
 	name_label.text = display_name
 
 
-func _physics_process(delta: float) -> void:
-	# Follow the player
-	if Player.instance.following_npc == self:
-		var player_pos: Vector2 = Player.instance.get_position()
-		if position.distance_to(player_pos) > FOLLOW_DISTANCE:
-			var target_pos: Vector2 = (player_pos - position).normalized()
-			velocity = target_pos * SPEED * delta
-			move_and_slide()
-			look_at(player_pos)
-
-
 func die() -> void:
+	if Player.instance.following_npc == self:
+		Player.instance.following_npc = null
+	
 	queue_free()
 
 
@@ -74,19 +66,6 @@ func start_dialogue() -> void:
 
 func _on_dialogue_ended(_resource: DialogueResource) -> void:
 	is_talking = false
-
-
-func follow() -> void:
-	if is_talking:
-		if !Player.instance.following_npc:
-			Player.instance.following_npc = self
-		else:
-			DialogueManager.show_dialogue_balloon(action_dialogue, "already_following")
-
-
-func stop_following() -> void:
-	if is_talking && Player.instance.following_npc == self:
-		Player.instance.following_npc = null
 
 
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:

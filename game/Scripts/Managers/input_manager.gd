@@ -1,5 +1,6 @@
 extends Node
 
+
 var direction: Vector2 = Vector2.ZERO
 var attack: bool = false
 var disabled: bool = false
