@@ -17,10 +17,6 @@ func _ready() -> void:
 	state.enter("INVALID")
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	state.handle_input(event)
-
-
 func _process(delta: float) -> void:
 	state.update(delta)
 

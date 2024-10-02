@@ -5,10 +5,6 @@ extends Node
 signal finished(next_state: String, data: Dictionary)
 
 
-func handle_input(_event: InputEvent) -> void:
-	pass
-
-
 func update(_delta: float) -> void:
 	pass
 
