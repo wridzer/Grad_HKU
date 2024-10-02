@@ -21,13 +21,14 @@ func start_dialogue() -> void:
 	npc.is_talking = true
 
 
-func get_state_type() -> String:
-	return state_type_to_string(StateType.INVALID)
+func get_state_type() -> int:
+	return state_type_to_int(StateType.INVALID)
 
 
-func string_to_state_type(state: String) -> StateType:
+func string_to_state_type(state: int) -> StateType:
 	return StateType.find_key(state)
 
 
-func state_type_to_string(state: StateType) -> String:
-	return str(state)
+func state_type_to_int(state: StateType) -> int:
+	print(int(state))
+	return int(state)

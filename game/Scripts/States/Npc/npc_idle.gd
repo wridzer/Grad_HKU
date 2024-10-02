@@ -5,11 +5,11 @@ extends NpcState
 const STATE_TYPE = StateType.IDLE
 
 
-func get_state_type() -> String:
-	return state_type_to_string(STATE_TYPE)
+func get_state_type() -> int:
+	return state_type_to_int(STATE_TYPE)
 
 
-func enter(previous_state: String, data := {}) -> void:
+func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(start_dialogue)
 	
 	game_manager.npc_follow.connect(follow)
@@ -33,7 +33,7 @@ func start_dialogue() -> void:
 
 
 func exit() -> void:
-	npc.actionable.action.connect(start_dialogue)
+	npc.actionable.action.disconnect(start_dialogue)
 	
 	game_manager.npc_follow.disconnect(follow)
 	game_manager.switch_level_cleanup.disconnect(cleanup)
@@ -48,7 +48,7 @@ func follow() -> void:
 	if npc.is_talking:
 		if !Player.instance.following_npc:
 			Player.instance.following_npc = npc
-			finished.emit(state_type_to_string(StateType.FOLLOWING))
+			finished.emit(state_type_to_int(StateType.FOLLOWING))
 		else:
 			input_manager.toggle_input(false)
 			DialogueManager.show_dialogue_balloon(npc.idle_dialogue, "already_following")

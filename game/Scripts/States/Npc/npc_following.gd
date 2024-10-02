@@ -7,11 +7,11 @@ const FOLLOW_DISTANCE := 15.0
 const FOLLOW_SPEED := 2500.0
 
 
-func get_state_type() -> String:
-	return state_type_to_string(STATE_TYPE)
+func get_state_type() -> int:
+	return state_type_to_int(STATE_TYPE)
 
 
-func enter(previous_state: String, data := {}) -> void:
+func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(start_dialogue)
 	
 	game_manager.npc_stop_following.connect(stop_following)
@@ -57,7 +57,7 @@ func start_dialogue() -> void:
 
 func stop_following() -> void:
 	if npc.is_talking && Player.instance.following_npc == npc:
-		finished.emit(state_type_to_string(StateType.IDLE))
+		finished.emit(state_type_to_int(StateType.IDLE))
 
 
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:

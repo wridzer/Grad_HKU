@@ -14,7 +14,7 @@ func _ready() -> void:
 		state_node.finished.connect(_transition_to_next_state)
 
 	await owner.ready
-	state.enter("INVALID")
+	state.enter(0)
 
 
 func _process(delta: float) -> void:
@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 	state.physics_update(delta)
 
 
-func _transition_to_next_state(target_state: String, data: Dictionary = {}) -> void:
+func _transition_to_next_state(target_state: int, data: Dictionary = {}) -> void:
 	for state_node: State in find_children("*", "State"):
 		if state_node.get_state_type() == target_state:
 			state.exit()
@@ -36,4 +36,4 @@ func _transition_to_next_state(target_state: String, data: Dictionary = {}) -> v
 			
 			return
 	
-	printerr(owner.name + ": Trying to transition to state " + target_state + " but it does not exist.")
+	printerr(owner.name + ": Trying to transition to state " + str(target_state) + " but it does not exist.")

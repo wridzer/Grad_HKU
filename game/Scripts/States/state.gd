@@ -2,7 +2,7 @@ class_name State
 extends Node
 
 
-signal finished(next_state: String, data: Dictionary)
+@warning_ignore("unused_signal") signal finished(next_state: int, data: Dictionary)
 
 
 func update(_delta: float) -> void:
@@ -13,7 +13,7 @@ func physics_update(_delta: float) -> void:
 	pass
 
 
-func enter(previous_state: String, data := {}) -> void:
+func enter(_previous_state: int, _data := {}) -> void:
 	pass
 
 
@@ -21,5 +21,5 @@ func exit() -> void:
 	pass
 
 
-func get_state_type() -> String:
-	return "INVALID"
+func get_state_type() -> int:
+	return 0
