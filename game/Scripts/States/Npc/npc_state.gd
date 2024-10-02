@@ -30,5 +30,4 @@ func string_to_state_type(state: int) -> StateType:
 
 
 func state_type_to_int(state: StateType) -> int:
-	print(int(state))
 	return int(state)
