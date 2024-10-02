@@ -3,12 +3,12 @@
 importer="dialogue_manager_compiler_12"
 type="Resource"
 uid="uid://e1ysdk534hu5"
-path="res://.godot/imported/Ker_following.dialogue-a734ee42734639c08af49675973030e4.tres"
+path="res://.godot/imported/ker_following.dialogue-882307767a6dacda9a16fc2d42206b58.tres"
 
 [deps]
 
-source_file="res://Dialogue/Ker_following.dialogue"
-dest_files=["res://.godot/imported/Ker_following.dialogue-a734ee42734639c08af49675973030e4.tres"]
+source_file="res://Dialogue/ker_following.dialogue"
+dest_files=["res://.godot/imported/ker_following.dialogue-882307767a6dacda9a16fc2d42206b58.tres"]
 
 [params]
 

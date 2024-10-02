@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dtb0grb3pjub0"
+path="res://.godot/imported/ker_idle.dialogue-7a160a64ad9569e74bfcff596bb93eb7.tres"
+
+[deps]
+
+source_file="res://Dialogue/ker_idle.dialogue"
+dest_files=["res://.godot/imported/ker_idle.dialogue-7a160a64ad9569e74bfcff596bb93eb7.tres"]
+
+[params]
+
+defaults=true

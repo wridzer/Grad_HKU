@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_q3wky"]
 [ext_resource type="PackedScene" uid="uid://dpdotgt3oya1o" path="res://Scenes/level_loader.tscn" id="2_415ri"]
 [ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="2_lbhg0"]
-[ext_resource type="Resource" uid="uid://c7xo1vvpanwjt" path="res://Dialogue/Kin_following.dialogue" id="3_5v3rr"]
-[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/Ker_action.dialogue" id="3_a0b7x"]
-[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/Kin_action.dialogue" id="3_k4amv"]
-[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/Kin_hit.dialogue" id="4_6a5rs"]
-[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/Ker_hit.dialogue" id="4_ao885"]
+[ext_resource type="Resource" uid="uid://c7xo1vvpanwjt" path="res://Dialogue/kin_following.dialogue" id="3_5v3rr"]
+[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/ker_idle.dialogue" id="3_hs5g4"]
+[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/kin_idle.dialogue" id="3_xtaxt"]
+[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/kin_hit.dialogue" id="4_6a5rs"]
+[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/ker_hit.dialogue" id="4_ao885"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/spawn_point.tscn" id="4_yhct4"]
 [ext_resource type="PackedScene" uid="uid://bdntcr5tudi1b" path="res://Scenes/npc.tscn" id="5_x4qe1"]
-[ext_resource type="Resource" uid="uid://e1ysdk534hu5" path="res://Dialogue/Ker_following.dialogue" id="6_phc4w"]
+[ext_resource type="Resource" uid="uid://e1ysdk534hu5" path="res://Dialogue/ker_following.dialogue" id="6_phc4w"]
 
 [node name="Smith Level 1" type="Node2D" node_paths=PackedStringArray("spawn_point")]
 script = ExtResource("1_q3wky")
@@ -19,14 +19,14 @@ spawn_point = NodePath("SpawnPoint")
 [node name="Npc_Kin" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(72, -39)
 display_name = "Kin"
-action_dialogue = ExtResource("3_k4amv")
+idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
 
 [node name="Npc_Ker" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
 display_name = "Ker"
-action_dialogue = ExtResource("3_a0b7x")
+idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
 

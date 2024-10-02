@@ -32,10 +32,12 @@ func _physics_process(delta: float) -> void:
 func _transition_to_next_state(target_state: String, data: Dictionary = {}) -> void:
 	for state_node: State in find_children("*", "State"):
 		if state_node.get_state_type() == target_state:
-			var previous_state := state
 			state.exit()
+			
+			var previous_state := state
 			state = state_node
 			state.enter(previous_state.get_state_type(), data)
+			
 			return
 	
 	printerr(owner.name + ": Trying to transition to state " + target_state + " but it does not exist.")
