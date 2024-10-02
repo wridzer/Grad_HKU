@@ -21,6 +21,14 @@ game_manager="*res://Scenes/game_manager.tscn"
 input_manager="*res://Scenes/input_manager.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
+[blackboard]
+
+test=1
+test2="test"
+test3=Vector2(1, 2)
+test4=Vector3(1, 2, 3)
+test5=Rect2(1, 2, 3, 4)
+
 [dotnet]
 
 project/assembly_name="game"

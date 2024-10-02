@@ -575,6 +575,35 @@ void ProjectSettingsEditor::_update_action_map_editor() {
 	action_map_editor->update_action_list(actions);
 }
 
+void ProjectSettingsEditor::_update_blackboard_editor() {
+	Vector<BlackboardEditor::BlackboardInfo> values;
+
+	List<PropertyInfo> props;
+	ProjectSettings::get_singleton()->get_property_list(&props);
+
+	const Ref<Texture2D> builtin_icon = get_editor_theme_icon(SNAME("PinPressed"));
+	for (const PropertyInfo &E : props) {
+		const String property_name = E.name;
+
+		if (!property_name.begins_with("blackboard/")) {
+			continue;
+		}
+
+		// Strip the "blackboard/" from the left.
+		String display_name = property_name.substr(String("blackboard/").size() - 1);
+		Variant data = GLOBAL_GET(property_name);
+
+		BlackboardEditor::BlackboardInfo blackboard_info;
+		blackboard_info.name = display_name;
+		blackboard_info.data = data;
+		blackboard_info.type = Variant::get_type_name(data.get_type());
+
+		values.push_back(blackboard_info);
+	}
+
+	blackboard_editor->update_blackboard_list(values);
+}
+
 void ProjectSettingsEditor::_update_theme() {
 	add_button->set_icon(get_editor_theme_icon(SNAME("Add")));
 	del_button->set_icon(get_editor_theme_icon(SNAME("Remove")));
@@ -730,6 +759,11 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	action_map_editor->connect(SNAME("filter_focused"), callable_mp((AcceptDialog *)this, &AcceptDialog::set_close_on_escape).bind(false));
 	action_map_editor->connect(SNAME("filter_unfocused"), callable_mp((AcceptDialog *)this, &AcceptDialog::set_close_on_escape).bind(true));
 	tab_container->add_child(action_map_editor);
+
+	blackboard_editor = memnew(BlackboardEditor);
+	blackboard_editor->set_name(TTR("Blackboard"));
+	tab_container->add_child(blackboard_editor);
+	_update_blackboard_editor();
 
 	localization_editor = memnew(LocalizationEditor);
 	localization_editor->set_name(TTR("Localization"));

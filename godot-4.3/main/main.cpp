@@ -75,6 +75,7 @@
 #include "servers/rendering/rendering_server_default.h"
 #include "servers/text/text_server_dummy.h"
 #include "servers/text_server.h"
+#include "core/blackboard.h"
 
 // 2D
 #include "servers/navigation_server_2d.h"
@@ -140,6 +141,7 @@ static Engine *engine = nullptr;
 static ProjectSettings *globals = nullptr;
 static Input *input = nullptr;
 static InputMap *input_map = nullptr;
+static Blackboard *blackboard = nullptr;
 static TranslationServer *translation_server = nullptr;
 static Performance *performance = nullptr;
 static PackedData *packed_data = nullptr;
@@ -924,6 +926,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 
 	input_map = memnew(InputMap);
 	globals = memnew(ProjectSettings);
+	blackboard = memnew(Blackboard);
 
 	register_core_settings(); //here globals are present
 
@@ -2502,6 +2505,9 @@ error:
 	}
 	if (packed_data) {
 		memdelete(packed_data);
+	}
+	if (blackboard) {
+		memdelete(blackboard);
 	}
 
 	unregister_core_driver_types();
@@ -4350,6 +4356,9 @@ void Main::cleanup(bool p_force) {
 	}
 	if (input_map) {
 		memdelete(input_map);
+	}
+	if (blackboard) {
+		memdelete(blackboard);
 	}
 	if (translation_server) {
 		memdelete(translation_server);
