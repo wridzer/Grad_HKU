@@ -4,6 +4,7 @@ extends EnemyState
 
 const STATE_TYPE = StateType.IDLE
 const IDLE_SPEED: float = 4000.0
+const CHASE_DISTANCE: float = 50.0
 var last_dir: Vector2 = Vector2.ZERO
 
 
@@ -18,7 +19,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func update(_delta: float) -> void:
-	if enemy.global_position.distance_to(Player.instance.global_position) < 50:
+	if enemy.global_position.distance_to(Player.instance.global_position) < CHASE_DISTANCE:
 		finished.emit(state_type_to_int(StateType.CHASE))
 
 

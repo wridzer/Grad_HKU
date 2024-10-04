@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var state_machine: StateMachine = $StateMachine
+@onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 
 
 func _ready() -> void:
