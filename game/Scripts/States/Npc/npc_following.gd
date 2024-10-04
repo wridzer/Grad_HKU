@@ -18,7 +18,6 @@ func enter(previous_state: int, data := {}) -> void:
 	game_manager.spawn.connect(spawn)
 	
 	npc.health_component.die.connect(die)
-	npc.health_component.hit.connect(hit)
 	super.enter(previous_state, data)
 
 
@@ -45,7 +44,6 @@ func exit() -> void:
 	game_manager.spawn.disconnect(spawn)
 	
 	npc.health_component.die.disconnect(die)
-	npc.health_component.hit.disconnect(hit)
 	
 	super.exit()
 
@@ -63,12 +61,6 @@ func stop_following() -> void:
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 	npc.saved_spawn_pos = spawn_pos
 	npc.position = spawn_pos + npc_offset
-
-
-func hit() -> void:
-	input_manager.toggle_input(false)
-	DialogueManager.show_dialogue_balloon(npc.hit_dialogue, "start")
-	npc.is_talking = true
 
 
 func die() -> void:

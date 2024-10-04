@@ -16,7 +16,6 @@ func enter(previous_state: int, data := {}) -> void:
 	game_manager.switch_level_cleanup.connect(cleanup)
 	
 	npc.health_component.die.connect(die)
-	npc.health_component.hit.connect(hit)
 	
 	super.enter(previous_state, data)
 
@@ -39,7 +38,6 @@ func exit() -> void:
 	game_manager.switch_level_cleanup.disconnect(cleanup)
 	
 	npc.health_component.die.disconnect(die)
-	npc.health_component.hit.disconnect(hit)
 	
 	super.exit()
 
@@ -56,12 +54,6 @@ func follow() -> void:
 
 func die() -> void:
 	npc.die()
-
-
-func hit() -> void:
-	input_manager.toggle_input(false)
-	DialogueManager.show_dialogue_balloon(npc.hit_dialogue, "start")
-	npc.is_talking = true
 
 
 func cleanup() -> void:

@@ -3,12 +3,12 @@
 importer="dialogue_manager_compiler_12"
 type="Resource"
 uid="uid://c700abupjy41r"
-path="res://.godot/imported/kin_hit.dialogue-6e7d0f8509473eddb21b5fbdc6fdd35a.tres"
+path="res://.godot/imported/Kin_hit.dialogue-a6d547d306cbaec2ea661ab059adbeb1.tres"
 
 [deps]
 
-source_file="res://Dialogue/kin_hit.dialogue"
-dest_files=["res://.godot/imported/kin_hit.dialogue-6e7d0f8509473eddb21b5fbdc6fdd35a.tres"]
+source_file="res://Dialogue/Kin_hit.dialogue"
+dest_files=["res://.godot/imported/Kin_hit.dialogue-a6d547d306cbaec2ea661ab059adbeb1.tres"]
 
 [params]
 

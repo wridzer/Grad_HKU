@@ -32,6 +32,7 @@ func _ready() -> void:
 	
 	# Connect signals
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	health_component.hit.connect(hit)
 	
 	# Set display name label
 	name_label.text = display_name
@@ -39,6 +40,12 @@ func _ready() -> void:
 
 func die() -> void:
 	queue_free()
+
+
+func hit() -> void:
+	input_manager.toggle_input(false)
+	DialogueManager.show_dialogue_balloon(hit_dialogue, "start")
+	is_talking = true
 
 
 func _on_dialogue_ended(_resource: DialogueResource) -> void:
