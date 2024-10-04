@@ -1,10 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://divp2amo5ul71"]
+[gd_scene load_steps=15 format=3 uid="uid://divp2amo5ul71"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ewpuj"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/enemy_idle.gd" id="3_1iy2t"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_ox5hm"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_egr5u"]
+[ext_resource type="Script" path="res://Scripts/States/Enemy/enemy_chase.gd" id="4_hpoqk"]
 [ext_resource type="PackedScene" uid="uid://dmuxv52hjgxge" path="res://Scenes/Components/hitbox_component.tscn" id="4_vxwr0"]
+[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="6_qadqw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mu8o"]
 atlas = ExtResource("1_3m0e2")
@@ -40,6 +43,16 @@ radius = 2.0
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 5
 script = ExtResource("1_ewpuj")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_qadqw")
+initial_state = NodePath("EnemyIdle")
+
+[node name="EnemyIdle" type="Node" parent="StateMachine"]
+script = ExtResource("3_1iy2t")
+
+[node name="EnemyChase" type="Node" parent="StateMachine"]
+script = ExtResource("4_hpoqk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mof70")
