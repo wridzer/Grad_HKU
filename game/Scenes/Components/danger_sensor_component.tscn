@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://di00aoah5eh3v"]
+
+[ext_resource type="Script" path="res://Scripts/Components/danger_sensor_component.gd" id="1_bqhda"]
+
+[node name="DangerSensorComponent" type="Node2D" node_paths=PackedStringArray("raycasts")]
+script = ExtResource("1_bqhda")
+raycasts = [NodePath("0"), NodePath("1"), NodePath("2"), NodePath("3"), NodePath("4"), NodePath("5"), NodePath("6"), NodePath("7")]
+
+[node name="0" type="RayCast2D" parent="."]
+target_position = Vector2(30, 0)
+collision_mask = 23
+
+[node name="1" type="RayCast2D" parent="."]
+target_position = Vector2(20, -20)
+collision_mask = 23
+
+[node name="2" type="RayCast2D" parent="."]
+target_position = Vector2(0, -30)
+collision_mask = 23
+
+[node name="3" type="RayCast2D" parent="."]
+target_position = Vector2(-20, -20)
+collision_mask = 23
+
+[node name="4" type="RayCast2D" parent="."]
+target_position = Vector2(-30, 0)
+collision_mask = 23
+
+[node name="5" type="RayCast2D" parent="."]
+target_position = Vector2(-20, 20)
+collision_mask = 23
+
+[node name="6" type="RayCast2D" parent="."]
+target_position = Vector2(0, 30)
+collision_mask = 23
+
+[node name="7" type="RayCast2D" parent="."]
+target_position = Vector2(20, 20)
+collision_mask = 23
