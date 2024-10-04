@@ -11,6 +11,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
+	enemy.set_velocity(Vector2.ZERO)
 	super.enter(previous_state, data)
 
 

@@ -17,16 +17,17 @@ func enter(previous_state: int, data := {}) -> void:
 	super.enter(previous_state, data)
 
 
+func update(_delta: float) -> void:
+	if enemy.global_position.distance_to(Player.instance.global_position) < 50:
+		finished.emit(state_type_to_int(StateType.CHASE))
+
+
 func physics_update(delta: float) -> void:
 	var directionx := clampf(last_dir.x + randf_range(-0.01, 0.01), -1.0, 1.0)
 	var directiony := clampf(last_dir.y + randf_range(-0.01, 0.01), -1.0, 1.0)
 	
 	var direction = Vector2(directionx, directiony)
-	
-	if direction != Vector2.ZERO:
-		enemy.velocity = direction * IDLE_SPEED * delta
-	else:
-		enemy.velocity.move_toward(Vector2.ZERO, IDLE_SPEED)
+	enemy.set_velocity(direction * IDLE_SPEED * delta)
 	
 	last_dir = direction
 	super.physics_update(delta)
