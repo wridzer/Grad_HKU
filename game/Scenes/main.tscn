@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://yo1y4je8hvir" path="res://Scenes/player.tscn" id="1_ygi7h"]
 
 [node name="Main" type="Node2D"]
+process_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("1_ygi7h")]
 z_index = 1

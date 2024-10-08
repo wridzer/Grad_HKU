@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://Scripts/Managers/game_manager.gd" id="1_oacws"]
 
 [node name="GameManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_oacws")
