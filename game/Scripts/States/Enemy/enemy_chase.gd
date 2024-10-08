@@ -30,7 +30,7 @@ func physics_update(delta: float) -> void:
 	var context_map: PackedFloat32Array = [0,0,0,0,0,0,0,0]
 	var player_direction: Vector2 = (Player.instance.global_position - enemy.global_position).normalized()
 	
-	# Get the best direction index
+	# Get the best direction index using a loop, dot product and danger array
 	var best_index: int = 0
 	var best_interest: float = 0
 	for index in range(directions.size()):
@@ -45,10 +45,10 @@ func physics_update(delta: float) -> void:
 	var normalized_velocity: Vector2 = enemy.get_velocity().normalized()
 	var smoothed_direction: Vector2 = normalized_velocity.lerp(directions[best_index], SMOOTHING_VALUE).normalized()
 	
-	# Calculate the steering force
+	# Calculate the steering force towards the smoothed best direction
 	var steering_force: Vector2 = (smoothed_direction - normalized_velocity) * STEERING_VALUE
 	
-	# Limit the velocity to a minimum and maximum speed
+	# Limit the new velocity to a minimum and maximum speed
 	var new_velocity = enemy.get_velocity() + steering_force
 	var new_velocity_length_squared = new_velocity.length_squared()
 	if new_velocity_length_squared < MIN_CHASE_SPEED * MIN_CHASE_SPEED:
