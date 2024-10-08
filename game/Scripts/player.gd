@@ -8,10 +8,9 @@ extends CharacterBody2D
 @onready var actionable_finder: Area2D = $Direction/ActionableFinder
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-const SPEED := 4000.0
+const SPEED := 70.0
 static var instance: Player = null
 var following_npc: Npc = null
-
 var saved_spawn_pos: Vector2
 
 
@@ -39,7 +38,7 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	if input_manager.direction != Vector2.ZERO:
-		velocity = input_manager.direction * SPEED * delta
+		velocity = input_manager.direction * SPEED
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
 	

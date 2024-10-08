@@ -12,9 +12,6 @@ extends CharacterBody2D
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
 
-const SPEED := 2500.0
-const FOLLOW_DISTANCE := 10.0
-
 var is_talking: bool = false
 var saved_spawn_pos: Vector2
 

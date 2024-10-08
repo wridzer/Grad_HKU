@@ -3,9 +3,12 @@ extends EnemyState
 
 
 const STATE_TYPE = StateType.CHASE
-const CHASE_SPEED: float = 200.0
-const STEERING_VALUE: float = 2.0
-var directions: PackedVector2Array = [Vector2(1,0),Vector2(1,1),Vector2(0,1),Vector2(-1,1),Vector2(-1,0),Vector2(-1,-1),Vector2(0,-1),Vector2(1,-1)]
+const MIN_CHASE_SPEED: float = 35.0
+const MAX_CHASE_SPEED: float = 60.0
+const CHASE_STOP_DISTANCE: float = 100.0
+const STEERING_VALUE: float = 1.2
+const SMOOTHING_VALUE: float = 0.01
+var directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1),Vector2(0,1),Vector2(1,1)]
 var context_map: PackedFloat32Array = [0,0,0,0,0,0,0,0]
 
 
@@ -19,7 +22,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func update(_delta: float) -> void:
-	if enemy.global_position.distance_to(Player.instance.global_position) > 50:
+	if enemy.global_position.distance_to(Player.instance.global_position) > CHASE_STOP_DISTANCE:
 		finished.emit(state_type_to_int(StateType.IDLE))
 
 
@@ -27,19 +30,29 @@ func physics_update(delta: float) -> void:
 	# Reset the context map
 	context_map = [0,0,0,0,0,0,0,0]
 	
-	var player_direction = Player.instance.global_position - enemy.global_position.normalized()
+	var player_direction = (Player.instance.global_position - enemy.global_position).normalized()
 	
 	var best_direction = 0
 	for i in directions.size():
-		print("Vector2("+str(directions[i].x)+","+str(directions[i].y)+") is dot: " + str(directions[i].dot(player_direction)))
-		var interest = directions[i].dot(player_direction)
-		context_map[i] = interest - enemy.danger_sensor_component.danger_array[i]
+		context_map[i] = directions[i].dot(player_direction) - enemy.danger_sensor_component.danger_array[i]
 		if i != 0 && context_map[i] > context_map[best_direction]:
 			best_direction = i
 	
-	var steering_force = directions[best_direction] - enemy.get_velocity()
-	steering_force *= STEERING_VALUE
-	enemy.set_velocity(steering_force * CHASE_SPEED * delta)
+	# Lerp the enemy's velocity towards the best direction
+	var smoothed_direction = enemy.get_velocity().normalized().lerp(directions[best_direction], SMOOTHING_VALUE).normalized()
+	
+	# Calculate the steering force
+	var steering_force = (directions[best_direction] - enemy.get_velocity().normalized()) * STEERING_VALUE
+	
+	# Limit the velocity to a minimum and maximum speed
+	var new_velocity = (enemy.get_velocity() + steering_force)
+	if new_velocity.length() < MIN_CHASE_SPEED:
+		new_velocity = new_velocity.normalized() * MIN_CHASE_SPEED
+	if new_velocity.length() > MAX_CHASE_SPEED:
+		new_velocity = new_velocity.normalized() * MAX_CHASE_SPEED
+	
+	enemy.set_velocity(new_velocity)
+	
 	super.physics_update(delta)
 
 

@@ -3,8 +3,8 @@ extends EnemyState
 
 
 const STATE_TYPE = StateType.IDLE
-const IDLE_SPEED: float = 4000.0
-const CHASE_DISTANCE: float = 50.0
+const IDLE_SPEED: float = 40.0
+const CHASE_START_DISTANCE: float = 50.0
 var last_dir: Vector2 = Vector2.ZERO
 
 
@@ -19,7 +19,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func update(_delta: float) -> void:
-	if enemy.global_position.distance_to(Player.instance.global_position) < CHASE_DISTANCE:
+	if enemy.global_position.distance_to(Player.instance.global_position) < CHASE_START_DISTANCE:
 		finished.emit(state_type_to_int(StateType.CHASE))
 
 
@@ -28,7 +28,7 @@ func physics_update(delta: float) -> void:
 	var directiony := clampf(last_dir.y + randf_range(-0.01, 0.01), -1.0, 1.0)
 	
 	var direction = Vector2(directionx, directiony)
-	enemy.set_velocity(direction * IDLE_SPEED * delta)
+	enemy.set_velocity(direction * IDLE_SPEED)
 	
 	last_dir = direction
 	super.physics_update(delta)
