@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://c700abupjy41r"
+path="res://.godot/imported/kin_hit.dialogue-6e7d0f8509473eddb21b5fbdc6fdd35a.tres"
+
+[deps]
+
+source_file="res://Dialogue/kin_hit.dialogue"
+dest_files=["res://.godot/imported/kin_hit.dialogue-6e7d0f8509473eddb21b5fbdc6fdd35a.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://c7xo1vvpanwjt"
+path="res://.godot/imported/kin_following.dialogue-92d6d9001eca9d7ed3e11f12357fd82a.tres"
+
+[deps]
+
+source_file="res://Dialogue/kin_following.dialogue"
+dest_files=["res://.godot/imported/kin_following.dialogue-92d6d9001eca9d7ed3e11f12357fd82a.tres"]
+
+[params]
+
+defaults=true
