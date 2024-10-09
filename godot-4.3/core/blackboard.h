@@ -25,6 +25,7 @@ public:
 	void clear_data();
 	void remove_data(const String &p_key);
 
+
 	// save and load data from file using playerprefs
 	void save_data();
 	void load_data();
@@ -34,8 +35,9 @@ public:
 
 protected:
 	static void _bind_methods();
+	void _notification(int p_what);
 
 private:
-
+	int test_counter = 0;
 };
 #endif // !BLACKBOARD

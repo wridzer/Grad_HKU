@@ -43,6 +43,9 @@ func _physics_process(_delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
 	
 	move_and_slide()
+	
+	Blackboard.add_data("player_location", self.position)
+	Blackboard.save_data()
 
 
 func update_animation_parameters() -> void:

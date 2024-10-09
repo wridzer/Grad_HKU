@@ -31,6 +31,7 @@
 #include "project_settings_editor.h"
 
 #include "core/config/project_settings.h"
+#include "core/blackboard.h"
 #include "editor/editor_log.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
@@ -330,6 +331,8 @@ void ProjectSettingsEditor::_add_feature_overrides() {
 
 void ProjectSettingsEditor::_tabs_tab_changed(int p_tab) {
 	_focus_current_search_box();
+
+	_update_blackboard_editor(); // temp until add blackboard value calls are here
 }
 
 void ProjectSettingsEditor::_focus_current_search_box() {

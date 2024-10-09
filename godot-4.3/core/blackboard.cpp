@@ -1,6 +1,7 @@
 #include "Blackboard.h"
 
 #include "core/config/project_settings.h"
+#include <scene/main/node.h>
 
 Blackboard *Blackboard::singleton = nullptr;
 
@@ -21,7 +22,7 @@ List<StringName> Blackboard::get_keys() {
 
 void Blackboard::add_data(const String &p_key, const Variant &p_data) {
 	blackboard_data[p_key] = p_data;
-
+	//printf("Added data: %s with value %s\n", p_key.utf8().get_data(), p_data.stringify().utf8().get_data());
 }
 
 void Blackboard::clear_data() {
@@ -37,9 +38,7 @@ void Blackboard::save_data() {
 		// Save each blackboard variable to project settings
 		ProjectSettings::get_singleton()->set("blackboard/" + key, blackboard_data[key]);
 	}
-
-	// Ensure project settings are saved to disk
-	//ProjectSettings::get_singleton()->save();
+	
 }
 
 void Blackboard::load_data() {
@@ -51,7 +50,7 @@ void Blackboard::load_data() {
 
 	for (const PropertyInfo &prop : props) {
 		if (prop.name.begins_with("blackboard/")) {
-			String key_name = prop.name.substr(String("blackboard/").size());
+			String key_name = prop.name.substr(String("blackboard/").size() - 1);
 			blackboard_data[key_name] = ProjectSettings::get_singleton()->get(prop.name);
 		}
 	}
@@ -61,13 +60,25 @@ void Blackboard::load_data() {
 Blackboard::Blackboard() {
 	ERR_FAIL_COND_MSG(singleton, "Singleton in Blackboard already exist.");
 	singleton = this;
+}
 
-	load_data();
+void Blackboard::_notification(int p_what) {
+	printf("[+] CURRENT REQUEST: %s\n", p_what);
+	//switch (p_what) {
+	//	case NOTIFICATION_WM_CLOSE_REQUEST: {
+	//		ProjectSettings::get_singleton()->save();
+	//		printf("Blackboard closed\n");
+	//	} break;
+	//}
 }
 
 Blackboard::~Blackboard() {
+	printf("Blackboard destructor\n");
 	if (singleton == this) {
 		save_data();
+
+		// Ensure project settings are saved to disk
+		ProjectSettings::get_singleton()->save(); // only do this on close
 	}
 	singleton = nullptr;
 }

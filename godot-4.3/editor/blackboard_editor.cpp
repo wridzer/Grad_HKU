@@ -75,6 +75,7 @@ void BlackboardEditor::_on_item_edited(TreeItem *p_item, int p_column) {
 }
 
 BlackboardEditor::BlackboardEditor() {
+	Blackboard::get_singleton()->load_data();
 	// Main Vbox Container
 	VBoxContainer *main_vbox = memnew(VBoxContainer);
 	main_vbox->set_anchors_and_offsets_preset(PRESET_FULL_RECT);
