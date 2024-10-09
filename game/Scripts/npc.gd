@@ -2,6 +2,8 @@ class_name Npc
 extends CharacterBody2D
 
 
+enum CombatType {ATTACK, DEFEND, AVOID}
+
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var actionable: Area2D = $Actionable
 @onready var name_label: Label = $NameLabel
@@ -11,6 +13,11 @@ extends CharacterBody2D
 @export var idle_dialogue: DialogueResource
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
+@export var preferred_combat: CombatType
+@export var adapatable_combat: CombatType
+@export var unadaptable_combat: CombatType
+
+var affection: int
 
 var is_talking: bool = false
 var saved_spawn_pos: Vector2
@@ -27,7 +34,11 @@ func _ready() -> void:
 	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + name)
 	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + name)
 	
-	# Connect signals
+	# Assert that all combat preferences are unique types
+	assert(preferred_combat != adapatable_combat, name + "'s preferred_combat and adapatable_combat are the same")
+	assert(adapatable_combat != unadaptable_combat, name + "'s adapatable_combat and unadaptable_combat are the same")
+	assert(unadaptable_combat != preferred_combat, name + "'s unadaptable_combat and preferred_combat are the same")
+	
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	health_component.hit.connect(hit)
 	
