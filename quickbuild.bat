@@ -2,7 +2,7 @@
 call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 :: Building Godot with parallel jobs and ccache enabled
-cd godot-4.3
+cd godot-4.4-dev3
 scons platform=windows vsproj=yes dev_build=yes vsproj_gen_only=no module_mono_enabled=yes CC="ccache cl" -j8
 
 :: Conditionally generate the Mono glue if necessary
@@ -23,7 +23,7 @@ cd ..
 :: Create or replace the Godot editor shortcut only if it doesn't already exist
 IF NOT EXIST "godot.exe.lnk" (
     echo Creating the shortcut for the Godot editor...
-    powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.3\bin\godot.windows.editor.dev.x86_64.mono.exe';$s.Save()"
+    powershell "$s=(New-Object -COM WScript.Shell).CreateShortcut('%cd%\godot.exe.lnk');$s.TargetPath='%cd%\godot-4.4-dev3\bin\godot.windows.editor.dev.x86_64.mono.exe';$s.Save()"
 )
 
 echo Done building Godot Engine. If it does not work, please check for errors above and send them to Wridzer.

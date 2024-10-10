@@ -12,14 +12,13 @@ config_version=5
 
 config/name="game"
 run/main_scene="res://Scenes/main.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 game_manager="*res://Scenes/game_manager.tscn"
 input_manager="*res://Scenes/input_manager.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [blackboard]
 

@@ -1,1 +1,1 @@
-godot-4.3\bin\godot.windows.editor.dev.x86_64.mono.console.exe -e --path="C:\Users\wridz\Documents\Grad_HKU\game"
+godot-4.4-dev3\bin\godot.windows.editor.dev.x86_64.mono.console.exe -e --path="C:\Users\wridz\Documents\Grad_HKU\game"
