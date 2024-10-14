@@ -22,7 +22,6 @@ List<StringName> Blackboard::get_keys() {
 
 void Blackboard::add_data(const String &p_key, const Variant &p_data) {
 	blackboard_data[p_key] = p_data;
-	//printf("Added data: %s with value %s\n", p_key.utf8().get_data(), p_data.stringify().utf8().get_data());
 }
 
 void Blackboard::clear_data() {
@@ -39,7 +38,7 @@ void Blackboard::save_data() {
 		ProjectSettings::get_singleton()->set("blackboard/" + key, blackboard_data[key]);
 	}
 
-	//ProjectSettings::get_singleton()->save(); // TODO (wkamphuis) - only do this on close
+	ProjectSettings::get_singleton()->save(); // TODO (wkamphuis) - only do this on close
 	
 }
 

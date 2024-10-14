@@ -80,7 +80,7 @@
 #include "core/string/optimized_translation.h"
 #include "core/string/translation.h"
 #include "core/string/translation_server.h"
-#include "core/blackboard.h"
+#include "core/blackboard/blackboard.h"
 
 static Ref<ResourceFormatSaverBinary> resource_saver_binary;
 static Ref<ResourceFormatLoaderBinary> resource_loader_binary;
@@ -318,7 +318,7 @@ void register_core_singletons() {
 	OS::get_singleton()->benchmark_begin_measure("Core", "Register Singletons");
 
 	GDREGISTER_CLASS(ProjectSettings);
-	GDREGISTER_CLASS(Blackboard);
+	GDREGISTER_ABSTRACT_CLASS(Blackboard);
 	GDREGISTER_ABSTRACT_CLASS(IP);
 	GDREGISTER_CLASS(core_bind::Geometry2D);
 	GDREGISTER_CLASS(core_bind::Geometry3D);

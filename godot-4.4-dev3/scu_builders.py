@@ -276,6 +276,7 @@ def generate_scu_files(max_includes_per_scu):
         return
 
     process_folder(["core"])
+    process_folder(["core/blackboard"])
     process_folder(["core/crypto"])
     process_folder(["core/debugger"])
     process_folder(["core/extension"])

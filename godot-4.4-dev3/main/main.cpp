@@ -39,7 +39,7 @@
 #include "core/extension/gdextension_manager.h"
 #include "core/input/input.h"
 #include "core/input/input_map.h"
-#include "core/blackboard.h"
+#include "core/blackboard/blackboard.h"
 #include "core/io/dir_access.h"
 #include "core/io/file_access_pack.h"
 #include "core/io/file_access_zip.h"
@@ -952,7 +952,6 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 
 	input_map = memnew(InputMap);
 	globals = memnew(ProjectSettings);
-	blackboard = memnew(Blackboard);
 
 	register_core_settings(); //here globals are present
 
@@ -2887,6 +2886,16 @@ Error Main::setup2(bool p_show_boot_logo) {
 		OS::get_singleton()->initialize_joypads();
 
 		OS::get_singleton()->benchmark_end_measure("Servers", "Input");
+	}
+
+	/* Initialize Blackboard */
+
+	{
+		OS::get_singleton()->benchmark_begin_measure("Servers", "Blackboard");
+
+		blackboard = memnew(Blackboard);
+
+		OS::get_singleton()->benchmark_end_measure("Servers", "Blackboard");
 	}
 
 	/* Initialize Display Server */

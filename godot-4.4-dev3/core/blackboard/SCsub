@@ -1,0 +1,7 @@
+from misc.utility.scons_hints import *
+
+Import("env")
+
+env_config = env.Clone()
+
+env_config.add_source_files(env.core_sources, "*.cpp")
