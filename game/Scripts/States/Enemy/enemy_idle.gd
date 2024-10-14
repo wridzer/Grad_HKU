@@ -19,7 +19,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func update(_delta: float) -> void:
-	if enemy.global_position.distance_to(Player.instance.global_position) < CHASE_START_DISTANCE:
+	if enemy.squared_distance < CHASE_START_DISTANCE * CHASE_START_DISTANCE:
 		finished.emit(state_type_to_int(StateType.CHASE))
 
 
