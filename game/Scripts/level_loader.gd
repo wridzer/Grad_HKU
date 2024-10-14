@@ -6,6 +6,7 @@ extends Area2D
 
 
 func _on_body_entered(player: Player) -> void:
+	Blackboard.save_data()
 	if player != null:
 		timer.start()
 

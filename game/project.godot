@@ -20,7 +20,6 @@ config/windows_native_icon="res://Art/squit.ico"
 
 game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [blackboard]
 
@@ -31,6 +30,9 @@ test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
 player_location=Vector2(40, -7)
 player_location2=Vector2(110.943, 0.422957)
+enemies_alive=4
+enemies_killed=3
+damage_done=9
 
 [dotnet]
 
