@@ -18,8 +18,8 @@ config/windows_native_icon="res://Art/squit.ico"
 
 [autoload]
 
-game_manager="*res://Scenes/game_manager.tscn"
-input_manager="*res://Scenes/input_manager.tscn"
+game_manager="*res://Scenes/Managers/game_manager.tscn"
+input_manager="*res://Scenes/Managers/input_manager.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [blackboard]
