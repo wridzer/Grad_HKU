@@ -19,8 +19,6 @@ const border_size: int = 20
 const min_room_size: int = 2
 const max_room_size: int = 4
 
-var rooms: Array[Room]
-
 
 func generate() -> void:
 	make_border()
