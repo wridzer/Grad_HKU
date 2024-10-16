@@ -18,19 +18,32 @@ extends Node
 				rooms.clear()
 			start = value
 
+# Tiles
+const INVALID_TILE: Vector2i = Vector2i(-1, -1)
 const BORDER_TILE: Vector2i = Vector2i(7, 0)
 const DOOR_TILE: Vector2i = Vector2i(32, 0)
 const ROOM_TILE: Vector2i = Vector2i(7, 2)
+const WALL_TILE: Vector2i = Vector2i(7, 4)
 const HALLWAY_TILE: Vector2i = Vector2i(11, 8)
-const ROOM_AMOUNT: int = 5
-const ROOM_MARGIN: int = 3
+const BACKGROUND_TILE: Vector2i = Vector2i(7, 0)
+
+# Generation instructions
+const ROOM_AMOUNT: int = 10
+const MIN_WALL_MARGIN: int = 3 #don't edit pls
+const EXTRA_ROOM_MARGIN: int = 0
+const BORDER_MARGIN: int = 20
 const MAX_RECURSION: int = 10
-const BORDER_SIZE: int = 25
-const MIN_ROOM_SIZE: int = 4
-const MAX_ROOM_SIZE: int = 8
+const BORDER_SIZE: int = 150
+const MIN_ROOM_SIZE: int = 8
+const MAX_ROOM_SIZE: int = 16
 
 var rooms: Array[Room] = []
-
+var step: int = 0:
+	set(value):
+		step += value
+		if step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
+			await get_tree().create_timer(0).timeout
+const STEPS_BEFORE_WAITING_FRAME = 20
 
 func generate(seed: String) -> void:
 	print("generating")
@@ -40,19 +53,22 @@ func generate(seed: String) -> void:
 		seed(seed.hash())
 	
 	make_border()
+	var t: int = 0
 	for i in ROOM_AMOUNT:
 		make_room(MAX_RECURSION)
 	
 	var mst_graph: AStar2D = get_minimum_spanning_tree()
 	var doors: Array[PackedVector2Array] = make_doors(mst_graph)
 	
-	make_walls()
+	make_walls(doors)
 	make_hallways(doors)
+	fill_background()
 
 
 func make_border() -> void:
 	# Generate the border tiles
 	for i in range(-1, BORDER_SIZE + 1):
+		step += 1
 		tile_map.set_cell(Vector2i(i, -1), 0, BORDER_TILE, 0)
 		tile_map.set_cell(Vector2i(i, BORDER_SIZE), 0, BORDER_TILE, 0)
 		tile_map.set_cell(Vector2i(BORDER_SIZE, i), 0, BORDER_TILE, 0)
@@ -63,6 +79,8 @@ func make_room(recursion: int) -> void:
 	if recursion <= 0:
 		return
 	
+	step += 1
+	
 	# Generate a random room
 	var width: int = randi() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE) + MIN_ROOM_SIZE
 	var height: int = randi() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE) + MIN_ROOM_SIZE
@@ -72,10 +90,18 @@ func make_room(recursion: int) -> void:
 	start_pos.y = randi() % (BORDER_SIZE - height + 1)
 	
 	# Prevent room overlap
-	for x in range(-ROOM_MARGIN, width + ROOM_MARGIN):
-		for y in range(-ROOM_MARGIN, height + ROOM_MARGIN):
+	for x in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), width + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
+		for y in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), height + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			if tile_map.get_cell_atlas_coords(pos) == ROOM_TILE:
+				make_room(recursion - 1)
+				return
+	
+	# Prevent wall/border overlap
+	for x in range(-BORDER_MARGIN, width + BORDER_MARGIN):
+		for y in range(-BORDER_MARGIN, height + BORDER_MARGIN):
+			var pos: Vector2i = start_pos + Vector2i(x,y)
+			if tile_map.get_cell_atlas_coords(pos) == BORDER_TILE:
 				make_room(recursion - 1)
 				return
 	
@@ -84,6 +110,7 @@ func make_room(recursion: int) -> void:
 	
 	for x in width:
 		for y in height:
+			step += 1
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			tile_map.set_cell(pos, 0, ROOM_TILE, 0)
 			room.room_tiles.append(pos)
@@ -146,38 +173,6 @@ func get_minimum_spanning_tree() -> AStar2D:
 	return mst_graph
 
 
-func make_walls() -> void:
-	pass
-
-
-func make_hallways(doors: Array[PackedVector2Array]) -> void:
-	# Set up AStar pathfinding
-	var a_star: AStarGrid2D = AStarGrid2D.new()
-	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * BORDER_SIZE)
-	a_star.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
-	a_star.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
-	a_star.update()
-	
-	# Pass AStar the area to work with
-	for tile in tile_map.get_used_cells():
-		if tile_map.get_cell_atlas_coords(tile) == ROOM_TILE &&\
-		   tile_map_decor.get_cell_atlas_coords(tile) != DOOR_TILE:
-			a_star.set_point_solid(Vector2i(tile))
-	
-	# Generate the hallway tiles
-	for door in doors:
-		var door_from: Vector2i = Vector2i(door[0])
-		var door_to: Vector2i = Vector2i(door[1])
-		
-		a_star.set_point_solid(door_from, false)
-		a_star.set_point_solid(door_to, false)
-		var hallway: PackedVector2Array = a_star.get_point_path(door_from, door_to)
-		
-		for point in hallway:
-			if tile_map.get_cell_atlas_coords(point) == Vector2i(-1,-1):
-				tile_map.set_cell(point, 0, HALLWAY_TILE, 0)
-
-
 func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 	var doors: Array[PackedVector2Array] = []
 	
@@ -185,6 +180,7 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 	for point_id in hallway_graph.get_point_ids():
 		for connection in hallway_graph.get_point_connections(point_id):
 			if connection > point_id: # Don't check connections twice
+				step += 1
 				var room_from: Room = rooms[point_id]
 				var room_to: Room = rooms[connection]
 				
@@ -223,3 +219,63 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				tile_map_decor.set_cell(tile_to, 0, DOOR_TILE, 0)
 	
 	return doors
+
+
+func make_walls(doors: Array[PackedVector2Array]) -> void:
+	for room in rooms:
+		step += 1
+		var room_width_pos = room.start_pos.x + room.width
+		var room_height_pos = room.start_pos.y + room.height
+		for i in range(room.start_pos.x - 1, room_width_pos + 1):
+			tile_map.set_cell(Vector2i(i, room.start_pos.y - 1), 0, WALL_TILE, 0)
+			tile_map.set_cell(Vector2i(i, room_height_pos), 0, WALL_TILE, 0)
+		for i in range(room.start_pos.y - 1, room_height_pos + 1):
+			tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILE, 0)
+			tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILE, 0)
+	
+	for door_pair in doors:
+		for door in door_pair:
+			var surroundings: PackedVector2Array = PackedVector2Array([Vector2(-1, 0) + door,Vector2(1, 0) + door,Vector2(0, -1) + door,Vector2(0, 1) + door])
+			for point in surroundings:
+				step += 1
+				if tile_map.get_cell_atlas_coords(point) == WALL_TILE:
+					tile_map.set_cell(point, 0, INVALID_TILE, 0)
+					break;
+
+
+func make_hallways(doors: Array[PackedVector2Array]) -> void:
+	# Set up AStar pathfinding
+	var a_star: AStarGrid2D = AStarGrid2D.new()
+	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * BORDER_SIZE)
+	a_star.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	a_star.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	a_star.update()
+	
+	# Pass AStar the area to work with
+	for tile in tile_map.get_used_cells():
+		if (tile_map.get_cell_atlas_coords(tile) == ROOM_TILE ||\
+		   tile_map.get_cell_atlas_coords(tile) == WALL_TILE) &&\
+		   tile_map_decor.get_cell_atlas_coords(tile) != DOOR_TILE:
+			a_star.set_point_solid(Vector2i(tile))
+	
+	# Generate the hallway tiles
+	for door in doors:
+		var door_from: Vector2i = Vector2i(door[0])
+		var door_to: Vector2i = Vector2i(door[1])
+		
+		a_star.set_point_solid(door_from, false)
+		a_star.set_point_solid(door_to, false)
+		var hallway: PackedVector2Array = a_star.get_point_path(door_from, door_to)
+		
+		for point in hallway:
+			step += 1
+			if tile_map.get_cell_atlas_coords(point) == INVALID_TILE:
+				tile_map.set_cell(point, 0, HALLWAY_TILE, 0)
+
+
+func fill_background() -> void:
+	for x in BORDER_SIZE:
+		for y in BORDER_SIZE:
+			var pos: Vector2i = Vector2i(x,y)
+			if tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
+				tile_map.set_cell(pos, 0, BACKGROUND_TILE, 0)
