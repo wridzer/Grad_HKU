@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Scripts/spawn_point.gd" id="1_aaati"]
 
 [node name="SpawnPoint" type="Node2D"]
-position = Vector2(-179, -24)
 script = ExtResource("1_aaati")
+npc_offset = Vector2(-10, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

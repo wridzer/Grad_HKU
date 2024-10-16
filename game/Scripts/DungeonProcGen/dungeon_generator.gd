@@ -7,7 +7,7 @@ extends Node
 @onready var tile_map_decor: TileMapLayer = $TileMapLayer2
 
 @export var seed: String
-@export var start: bool = false:
+@export var generated: bool = false:
 	set(value):
 		if Engine.is_editor_hint():
 			if value:
@@ -16,7 +16,10 @@ extends Node
 				tile_map.clear()
 				tile_map_decor.clear()
 				rooms.clear()
-			start = value
+				if is_instance_valid(spawn_point):
+					spawn_point.queue_free()
+			generated = value
+@export var spawn_point_scene: PackedScene
 
 # Tiles
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
@@ -43,7 +46,8 @@ var step: int = 0:
 		step += value
 		if step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
 			await get_tree().create_timer(0).timeout
-const STEPS_BEFORE_WAITING_FRAME = 20
+const STEPS_BEFORE_WAITING_FRAME: int = 20
+var spawn_point: Node2D
 
 func generate(seed: String) -> void:
 	print("generating")
@@ -63,6 +67,10 @@ func generate(seed: String) -> void:
 	make_walls(doors)
 	make_hallways(doors)
 	fill_background()
+	
+	var spawn_room = rooms.pick_random()
+	spawn_enemies(spawn_room)
+	make_spawn_point(spawn_room)
 
 
 func make_border() -> void:
@@ -279,3 +287,15 @@ func fill_background() -> void:
 			var pos: Vector2i = Vector2i(x,y)
 			if tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
 				tile_map.set_cell(pos, 0, BACKGROUND_TILE, 0)
+
+
+func spawn_enemies(spawn_room: Room) -> void:
+	pass
+
+
+func make_spawn_point(spawn_room: Room) -> void:
+	spawn_point = spawn_point_scene.instantiate()
+	self.add_child(spawn_point)
+	spawn_point.owner = self
+	
+	spawn_point.translate(spawn_room.position * tile_map.rendering_quadrant_size)
