@@ -25,10 +25,11 @@ extends Node
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
 const BORDER_TILE: Vector2i = Vector2i(7, 0)
 const DOOR_TILE: Vector2i = Vector2i(32, 0)
-const ROOM_TILE: Vector2i = Vector2i(7, 2)
-const WALL_TILE: Vector2i = Vector2i(7, 4)
-const HALLWAY_TILE: Vector2i = Vector2i(11, 8)
-const BACKGROUND_TILE: Vector2i = Vector2i(7, 0)
+const ROOM_TILES: Array[Vector2i] = [Vector2i(7, 2), Vector2i(7, 3)]
+const WALL_TILES_HOR: Array[Vector2i] = [Vector2i(9, 2), Vector2i(9, 3)]
+const WALL_TILES_VER: Array[Vector2i] = [Vector2i(8, 2), Vector2i(8, 3)]
+const HALLWAY_TILES: Array[Vector2i] = [Vector2i(8, 0), Vector2i(8, 1)] 
+const BACKGROUND_TILES: Array[Vector2i] = [Vector2i(7, 0),Vector2i(7, 1),Vector2i(9, 0)]
 
 # Generation instructions
 const ROOM_AMOUNT: int = 10
@@ -101,9 +102,10 @@ func make_room(recursion: int) -> void:
 	for x in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), width + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
 		for y in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), height + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
-			if tile_map.get_cell_atlas_coords(pos) == ROOM_TILE:
-				make_room(recursion - 1)
-				return
+			for tile_type in ROOM_TILES:
+				if tile_map.get_cell_atlas_coords(pos) == tile_type:
+					make_room(recursion - 1)
+					return
 	
 	# Prevent wall/border overlap
 	for x in range(-BORDER_MARGIN, width + BORDER_MARGIN):
@@ -120,7 +122,7 @@ func make_room(recursion: int) -> void:
 		for y in height:
 			step += 1
 			var pos: Vector2i = start_pos + Vector2i(x,y)
-			tile_map.set_cell(pos, 0, ROOM_TILE, 0)
+			tile_map.set_cell(pos, 0, ROOM_TILES.pick_random(), 0)
 			room.room_tiles.append(pos)
 	
 	rooms.append(room)
@@ -231,24 +233,31 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 
 func make_walls(doors: Array[PackedVector2Array]) -> void:
 	for room in rooms:
-		step += 1
 		var room_width_pos = room.start_pos.x + room.width
 		var room_height_pos = room.start_pos.y + room.height
 		for i in range(room.start_pos.x - 1, room_width_pos + 1):
-			tile_map.set_cell(Vector2i(i, room.start_pos.y - 1), 0, WALL_TILE, 0)
-			tile_map.set_cell(Vector2i(i, room_height_pos), 0, WALL_TILE, 0)
+			step += 1
+			tile_map.set_cell(Vector2i(i, room.start_pos.y - 1), 0, WALL_TILES_HOR.pick_random(), 0)
+			tile_map.set_cell(Vector2i(i, room_height_pos), 0, WALL_TILES_HOR.pick_random(), 0)
 		for i in range(room.start_pos.y - 1, room_height_pos + 1):
-			tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILE, 0)
-			tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILE, 0)
+			step += 1
+			tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILES_VER.pick_random(), 0)
+			tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILES_VER.pick_random(), 0)
 	
 	for door_pair in doors:
 		for door in door_pair:
-			var surroundings: PackedVector2Array = PackedVector2Array([Vector2(-1, 0) + door,Vector2(1, 0) + door,Vector2(0, -1) + door,Vector2(0, 1) + door])
-			for point in surroundings:
+			var surroundings: PackedVector2Array = [Vector2(-1, 0) + door, Vector2(1, 0) + door, Vector2(0, -1) + door, Vector2(0, 1) + door]
+			break_random_wall(surroundings)
+
+
+func break_random_wall(locations: PackedVector2Array) -> void:
+	for point in locations:
+		var tile_atlas_coord = tile_map.get_cell_atlas_coords(point)
+		for wall_tile in WALL_TILES_HOR + WALL_TILES_VER:
+			if tile_atlas_coord == wall_tile:
 				step += 1
-				if tile_map.get_cell_atlas_coords(point) == WALL_TILE:
-					tile_map.set_cell(point, 0, INVALID_TILE, 0)
-					break;
+				tile_map.set_cell(point, 0, INVALID_TILE, 0)
+				return
 
 
 func make_hallways(doors: Array[PackedVector2Array]) -> void:
@@ -261,10 +270,13 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 	
 	# Pass AStar the area to work with
 	for tile in tile_map.get_used_cells():
-		if (tile_map.get_cell_atlas_coords(tile) == ROOM_TILE ||\
-		   tile_map.get_cell_atlas_coords(tile) == WALL_TILE) &&\
-		   tile_map_decor.get_cell_atlas_coords(tile) != DOOR_TILE:
-			a_star.set_point_solid(Vector2i(tile))
+		if tile_map_decor.get_cell_atlas_coords(tile) == DOOR_TILE:
+			continue;
+		
+		var tile_atlas_coord = tile_map.get_cell_atlas_coords(tile)
+		for tile_type in WALL_TILES_HOR + WALL_TILES_VER + ROOM_TILES:
+			if tile_atlas_coord == tile_type:
+				a_star.set_point_solid(Vector2i(tile))
 	
 	# Generate the hallway tiles
 	for door in doors:
@@ -278,7 +290,7 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 		for point in hallway:
 			step += 1
 			if tile_map.get_cell_atlas_coords(point) == INVALID_TILE:
-				tile_map.set_cell(point, 0, HALLWAY_TILE, 0)
+				tile_map.set_cell(point, 0, HALLWAY_TILES.pick_random(), 0)
 
 
 func fill_background() -> void:
@@ -286,7 +298,7 @@ func fill_background() -> void:
 		for y in BORDER_SIZE:
 			var pos: Vector2i = Vector2i(x,y)
 			if tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
-				tile_map.set_cell(pos, 0, BACKGROUND_TILE, 0)
+				tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
 
 
 func spawn_enemies(spawn_room: Room) -> void:
