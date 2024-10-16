@@ -223,15 +223,3 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				tile_map_decor.set_cell(tile_to, 0, DOOR_TILE, 0)
 	
 	return doors
-
-
-func get_cell_positions_in_rect(tile_map: TileMapLayer, rect: Rect2i) -> PackedVector2Array:
-	var empty_cell_positions: PackedVector2Array = []
-
-	for y in rect.size.y:
-		for x in rect.size.x:
-			var position: Vector2i = rect.position + Vector2i(x, y)
-			if tile_map.get_cell_atlas_coords(position) != Vector2i(-1, -1):
-				empty_cell_positions.append(position)
-
-	return empty_cell_positions
