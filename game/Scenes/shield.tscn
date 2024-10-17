@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://pwse5ov065ph"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_e8vdd"]
-[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="2_6u28b"]
+[ext_resource type="Script" path="res://Scripts/shield.gd" id="1_librw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uylmv"]
 atlas = ExtResource("1_e8vdd")
@@ -19,16 +19,26 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlby3"]
-size = Vector2(20, 3.5)
+size = Vector2(20, 1.75)
 
 [node name="Shield" type="Node2D"]
+script = ExtResource("1_librw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xw6r0")
 
-[node name="HitboxComponent" type="Area2D" parent="."]
-script = ExtResource("2_6u28b")
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(0, -0.25)
 shape = SubResource("RectangleShape2D_qlby3")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_qlby3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

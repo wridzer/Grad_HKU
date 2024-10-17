@@ -86,7 +86,6 @@ func respawn() -> void:
 func hit() -> void:
 	pass
 
-
 func interact() -> void:
 	var actionables := actionable_finder.get_overlapping_areas()
 	if actionables.size() > 0:
