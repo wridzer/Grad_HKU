@@ -7,6 +7,7 @@ var width: int
 var height: int
 var position: Vector2
 var room_tiles: PackedVector2Array = []
+var enemies: Array[Enemy] = []
 
 
 func _init(start_pos, width, height) -> void:

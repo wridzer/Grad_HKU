@@ -15,11 +15,15 @@ extends Node
 			else:
 				tile_map.clear()
 				tile_map_decor.clear()
+				for room in rooms:
+					for enemy in room.enemies:
+						enemy.queue_free()
 				rooms.clear()
 				if is_instance_valid(spawn_point):
 					spawn_point.queue_free()
 			generated = value
 @export var spawn_point_scene: PackedScene
+@export var enemy_scene: PackedScene
 
 # Tiles
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
@@ -40,6 +44,9 @@ const MAX_RECURSION: int = 10
 const BORDER_SIZE: int = 150
 const MIN_ROOM_SIZE: int = 8
 const MAX_ROOM_SIZE: int = 16
+const MIN_ENEMIES_PER_ROOM: int = 1
+const MAX_ENEMIES_PER_ROOM: int = 3
+const ENEMY_WALL_MARGIN: float = 0.5
 
 var rooms: Array[Room] = []
 var step: int = 0:
@@ -302,12 +309,27 @@ func fill_background() -> void:
 
 
 func spawn_enemies(spawn_room: Room) -> void:
-	pass
+	var enemies_node: Node = get_node("Enemies")
+	for room in rooms:
+		if room == spawn_room:
+			continue
+		
+		var enemy_count: int = randi() % MAX_ENEMIES_PER_ROOM + MIN_ENEMIES_PER_ROOM
+		
+		for i in enemy_count:
+			step += 1
+			var enemy: Enemy = enemy_scene.instantiate()
+			room.enemies.append(enemy)
+			enemies_node.add_child(enemy)
+			enemy.name = str(room.position) + enemy.name + str(i)
+			enemy.owner = self
+			var x_pos: float= ENEMY_WALL_MARGIN + fposmod(randf() * room.width, room.width - ENEMY_WALL_MARGIN)
+			var y_pos: float = ENEMY_WALL_MARGIN + fposmod(randf() * room.height, room.height - ENEMY_WALL_MARGIN)
+			enemy.translate((room.start_pos as Vector2 + Vector2(x_pos, y_pos)) * tile_map.rendering_quadrant_size)
 
 
 func make_spawn_point(spawn_room: Room) -> void:
 	spawn_point = spawn_point_scene.instantiate()
 	self.add_child(spawn_point)
 	spawn_point.owner = self
-	
 	spawn_point.translate(spawn_room.position * tile_map.rendering_quadrant_size)
