@@ -6,18 +6,19 @@ extends Node
 @onready var tile_map: TileMapLayer = $TileMapLayer
 @onready var tile_map_decor: TileMapLayer = $TileMapLayer2
 
-@export var seed: String
+@warning_ignore("shadowed_global_identifier") @export var seed: String
 @export var generated: bool = false:
 	set(value):
 		if Engine.is_editor_hint():
 			if value:
-				generate(seed)
+				generate()
 			else:
 				tile_map.clear()
 				tile_map_decor.clear()
 				for room in rooms:
 					for enemy in room.enemies:
 						enemy.queue_free()
+					room.room_node.queue_free()
 				rooms.clear()
 				if is_instance_valid(spawn_point):
 					spawn_point.queue_free()
@@ -57,7 +58,13 @@ var step: int = 0:
 const STEPS_BEFORE_WAITING_FRAME: int = 20
 var spawn_point: Node2D
 
-func generate(seed: String) -> void:
+
+func _ready() -> void:
+	if !generated:
+		generate()
+
+
+func generate() -> void:
 	print("generating")
 	
 	# Apply seed when generating
@@ -65,7 +72,6 @@ func generate(seed: String) -> void:
 		seed(seed.hash())
 	
 	make_border()
-	var t: int = 0
 	for i in ROOM_AMOUNT:
 		make_room(MAX_RECURSION)
 	
@@ -98,16 +104,14 @@ func make_room(recursion: int) -> void:
 	step += 1
 	
 	# Generate a random room
-	var width: int = randi() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE) + MIN_ROOM_SIZE
-	var height: int = randi() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE) + MIN_ROOM_SIZE
-	
-	var start_pos: Vector2i
-	start_pos.x = randi() % (BORDER_SIZE - width + 1)
-	start_pos.y = randi() % (BORDER_SIZE - height + 1)
+	var width: int = randi_range(MIN_ROOM_SIZE, MAX_ROOM_SIZE - 1)
+	var height: int = randi_range(MIN_ROOM_SIZE, MAX_ROOM_SIZE - 1)
+	var start_pos: Vector2i = Vector2i(randi_range(0, BORDER_SIZE - width), randi_range(0, BORDER_SIZE - height))
 	
 	# Prevent room overlap
-	for x in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), width + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
-		for y in range(-(MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN), height + MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN):
+	var wall_margin: int = MIN_WALL_MARGIN + EXTRA_ROOM_MARGIN
+	for x in range(-wall_margin, width + wall_margin):
+		for y in range(-wall_margin, height + wall_margin):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			for tile_type in ROOM_TILES:
 				if tile_map.get_cell_atlas_coords(pos) == tile_type:
@@ -124,6 +128,11 @@ func make_room(recursion: int) -> void:
 	
 	# Generate the room tiles, and save room data
 	var room: Room = Room.new(start_pos, width, height)
+	rooms.append(room)
+	self.add_child(room.room_node)
+	room.room_node.owner = self
+	room.room_node.set_global_position(room.room_node.get_global_position() * tile_map.rendering_quadrant_size)
+	room.room_node.name = str(room.position) + str(rooms.size() - 1)
 	
 	for x in width:
 		for y in height:
@@ -131,8 +140,6 @@ func make_room(recursion: int) -> void:
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			tile_map.set_cell(pos, 0, ROOM_TILES.pick_random(), 0)
 			room.room_tiles.append(pos)
-	
-	rooms.append(room)
 
 
 func get_minimum_spanning_tree() -> AStar2D:
@@ -149,7 +156,8 @@ func get_minimum_spanning_tree() -> AStar2D:
 	
 	# Delauanay triangulation
 	var delaunay: Array = Array(Geometry2D.triangulate_delaunay(positions))
-
+	
+	@warning_ignore("integer_division")
 	# Triangles contain 3 points, so we can only have to loop 1/3 of the time
 	for _i in delaunay.size() / 3:
 		var p1: int = delaunay.pop_front()
@@ -301,31 +309,31 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 
 
 func fill_background() -> void:
-	for x in BORDER_SIZE:
-		for y in BORDER_SIZE:
+	for x in range(BORDER_SIZE):
+		for y in range(BORDER_SIZE):
 			var pos: Vector2i = Vector2i(x,y)
 			if tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
 				tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
 
 
 func spawn_enemies(spawn_room: Room) -> void:
-	var enemies_node: Node = get_node("Enemies")
 	for room in rooms:
 		if room == spawn_room:
 			continue
 		
-		var enemy_count: int = randi() % MAX_ENEMIES_PER_ROOM + MIN_ENEMIES_PER_ROOM
+		var enemy_count: int = randi_range(MIN_ENEMIES_PER_ROOM, MAX_ENEMIES_PER_ROOM)
 		
-		for i in enemy_count:
+		for i in range(enemy_count):
 			step += 1
 			var enemy: Enemy = enemy_scene.instantiate()
 			room.enemies.append(enemy)
-			enemies_node.add_child(enemy)
-			enemy.name = str(room.position) + enemy.name + str(i)
+			room.room_node.add_child(enemy)
+			enemy.name = enemy.name + str(i)
 			enemy.owner = self
-			var x_pos: float= ENEMY_WALL_MARGIN + fposmod(randf() * room.width, room.width - ENEMY_WALL_MARGIN)
-			var y_pos: float = ENEMY_WALL_MARGIN + fposmod(randf() * room.height, room.height - ENEMY_WALL_MARGIN)
-			enemy.translate((room.start_pos as Vector2 + Vector2(x_pos, y_pos)) * tile_map.rendering_quadrant_size)
+			var half_width: float = room.width / 2.0 - ENEMY_WALL_MARGIN
+			var half_height: float = room.height / 2.0 - ENEMY_WALL_MARGIN
+			var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
+			enemy.translate(pos * tile_map.rendering_quadrant_size)
 
 
 func make_spawn_point(spawn_room: Room) -> void:
