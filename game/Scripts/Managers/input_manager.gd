@@ -3,6 +3,7 @@ extends Node
 
 var direction: Vector2 = Vector2.ZERO
 var attack: bool = false
+var block: bool = false
 var disabled: bool = false
 
 signal interact
@@ -30,6 +31,7 @@ func _process(_delta: float) -> void:
 	direction = Vector2(directionx, directiony).normalized()
 	
 	attack = Input.is_action_just_pressed("attack")
+	block = Input.is_action_just_pressed("block")
 	
 	if Input.is_action_just_pressed("interact"):
 		interact.emit()

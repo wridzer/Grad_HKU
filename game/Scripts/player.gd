@@ -60,6 +60,11 @@ func update_animation_parameters() -> void:
 		# Easiest way to get the right direction at this point
 		animation_tree.set("parameters/Slash/blend_position", animation_tree.get("parameters/Idle/blend_position"))
 		slash()
+	
+	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
+		# Easiest way to get the right direction at this point
+		animation_tree.set("parameters/Block/blend_position", animation_tree.get("parameters/Idle/blend_position"))
+		block()
 
 
 func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
@@ -88,6 +93,12 @@ func interact() -> void:
 		actionables[0].action.emit()
 		return
 
+func block() -> void:
+	animation_tree.set("parameters/conditions/block", true)
+	# Can't find a way to get the length from the Animation Tree Blend Space 2D
+	await get_tree().create_timer(animation_player.get_animation("block_right").length).timeout
+	
+	animation_tree.set("parameters/conditions/block", false)
 
 func slash() -> void:
 	animation_tree.set("parameters/conditions/slash", true)
