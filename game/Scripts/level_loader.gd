@@ -6,7 +6,6 @@ extends Area2D
 
 
 func _on_body_entered(player: Player) -> void:
-	Blackboard.save_data()
 	if player != null:
 		timer.start()
 
@@ -31,6 +30,12 @@ func _on_timer_timeout() -> void:
 	var scene = ResourceLoader.load(level_to_load, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE)
 	level_parent.add_child(scene.instantiate())
 	get_parent().queue_free()
+	
+	# Update utilities
+	if(level_to_load == "res://Scenes/smith_level1.tscn"):
+		Blackboard.save_data()
+		UtilitySystem.instance.calculate()
+		UtilitySystem.instance.reset_values()
 	
 	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	game_manager.get_spawn_location.emit()
