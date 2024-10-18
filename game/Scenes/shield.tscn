@@ -1,17 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://pwse5ov065ph"]
+[gd_scene load_steps=5 format=3 uid="uid://pwse5ov065ph"]
 
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_e8vdd"]
 [ext_resource type="Script" path="res://Scripts/shield.gd" id="1_librw"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uylmv"]
-atlas = ExtResource("1_e8vdd")
-region = Rect2(867, 17, 16, 16)
+[ext_resource type="Texture2D" uid="uid://cgplcfowi1neh" path="res://Art/Shield-0001.png" id="2_vhk1j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xw6r0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uylmv")
+"texture": ExtResource("2_vhk1j")
 }],
 "loop": true,
 "name": &"default",
