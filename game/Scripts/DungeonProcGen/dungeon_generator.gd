@@ -8,29 +8,20 @@ extends Node
 @export var tile_map_decor: TileMapLayer
 
 @warning_ignore("shadowed_global_identifier") @export var seed: String
-@export var generated: bool:
+@export var generated: bool = false:
 	set(value):
-		print("setting for some reason")
+		if Engine.is_editor_hint() && dungeon_node.get_child_count() == 0:
+			generate()
+
+@export var clear: bool = false:
+	set(value):
 		if Engine.is_editor_hint():
-			if value:
-				generate()
-			else:
-				tile_map.clear()
-				tile_map_decor.clear()
-				for room in rooms:
-					for enemy in room.enemies:
-						if is_instance_valid(enemy):
-							enemy.queue_free()
-					if is_instance_valid(room):
-						room.queue_free()
-				rooms.clear()
-				if is_instance_valid(spawn_point):
-					spawn_point.queue_free()
-			# Save generated value
-			var config = ConfigFile.new()
-			config.set_value("dungeon", "generated", value)
-			config.save("user://dungeon.cfg")
-		generated = value
+			tile_map.clear()
+			tile_map_decor.clear()
+			rooms.clear()
+			
+			for child in dungeon_node.get_children():
+				child.queue_free()
 
 @export var spawn_point_scene: PackedScene
 @export var enemy_scene: PackedScene
@@ -71,17 +62,8 @@ var spawn_point: Node2D
 
 
 func _ready() -> void:
-	if !Engine.is_editor_hint():
-		# Load generated value
-		var config = ConfigFile.new()
-		var err = config.load("user://dungeon.cfg")
-		#
-		if err == OK:
-			generated = config.get_value("dungeon", "generated", false)
-		
-		# Load generated dungeon
-		if !generated:
-			generate()
+	if !Engine.is_editor_hint() &&  dungeon_node.get_child_count() == 0:
+		generate()
 
 
 func generate() -> void:
