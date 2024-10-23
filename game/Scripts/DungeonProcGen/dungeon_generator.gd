@@ -3,12 +3,14 @@ class_name DungeonGenerator
 extends Node
 
 
-@onready var tile_map: TileMapLayer = $TileMapLayer
-@onready var tile_map_decor: TileMapLayer = $TileMapLayer2
+@export var dungeon_node: Node2D
+@export var tile_map: TileMapLayer
+@export var tile_map_decor: TileMapLayer
 
 @warning_ignore("shadowed_global_identifier") @export var seed: String
-@export var generated: bool = false:
+@export var generated: bool:
 	set(value):
+		print("setting for some reason")
 		if Engine.is_editor_hint():
 			if value:
 				generate()
@@ -17,12 +19,19 @@ extends Node
 				tile_map_decor.clear()
 				for room in rooms:
 					for enemy in room.enemies:
-						enemy.queue_free()
-					room.room_node.queue_free()
+						if is_instance_valid(enemy):
+							enemy.queue_free()
+					if is_instance_valid(room):
+						room.queue_free()
 				rooms.clear()
 				if is_instance_valid(spawn_point):
 					spawn_point.queue_free()
-			generated = value
+			# Save generated value
+			var config = ConfigFile.new()
+			config.set_value("dungeon", "generated", value)
+			config.save("user://dungeon.cfg")
+		generated = value
+
 @export var spawn_point_scene: PackedScene
 @export var enemy_scene: PackedScene
 
@@ -36,18 +45,20 @@ const WALL_TILES_VER: Array[Vector2i] = [Vector2i(8, 2), Vector2i(8, 3)]
 const HALLWAY_TILES: Array[Vector2i] = [Vector2i(8, 0), Vector2i(8, 1)] 
 const BACKGROUND_TILES: Array[Vector2i] = [Vector2i(7, 0),Vector2i(7, 1),Vector2i(9, 0)]
 
+const MIN_WALL_MARGIN: int = 3
+
 # Generation instructions
-const ROOM_AMOUNT: int = 10
-const MIN_WALL_MARGIN: int = 3 #don't edit pls
-const EXTRA_ROOM_MARGIN: int = 0
-const BORDER_MARGIN: int = 20
-const MAX_RECURSION: int = 10
-const BORDER_SIZE: int = 150
-const MIN_ROOM_SIZE: int = 8
-const MAX_ROOM_SIZE: int = 16
-const MIN_ENEMIES_PER_ROOM: int = 1
-const MAX_ENEMIES_PER_ROOM: int = 3
-const ENEMY_WALL_MARGIN: float = 0.5
+@export var ROOM_AMOUNT: int = 10
+@export var EXTRA_ROOM_MARGIN: int = 0
+@export var BORDER_MARGIN: int = 20
+@export var MAX_RECURSION: int = 10
+@export var BORDER_SIZE: int = 150
+@export var ROOM_TYPES: Dictionary[int, int] = {}
+@export var MIN_ROOM_SIZE: int = 8
+@export var MAX_ROOM_SIZE: int = 16
+@export var MIN_ENEMIES_PER_ROOM: int = 1
+@export var MAX_ENEMIES_PER_ROOM: int = 3
+@export var ENEMY_WALL_MARGIN: float = 0.5
 
 var rooms: Array[Room] = []
 var step: int = 0:
@@ -60,8 +71,17 @@ var spawn_point: Node2D
 
 
 func _ready() -> void:
-	if !generated:
-		generate()
+	if !Engine.is_editor_hint():
+		# Load generated value
+		var config = ConfigFile.new()
+		var err = config.load("user://dungeon.cfg")
+		#
+		if err == OK:
+			generated = config.get_value("dungeon", "generated", false)
+		
+		# Load generated dungeon
+		if !generated:
+			generate()
 
 
 func generate() -> void:
@@ -104,8 +124,8 @@ func make_room(recursion: int) -> void:
 	step += 1
 	
 	# Generate a random room
-	var width: int = randi_range(MIN_ROOM_SIZE, MAX_ROOM_SIZE - 1)
-	var height: int = randi_range(MIN_ROOM_SIZE, MAX_ROOM_SIZE - 1)
+	var width: int = ROOM_TYPES.keys().pick_random()
+	var height: int = ROOM_TYPES[width]
 	var start_pos: Vector2i = Vector2i(randi_range(0, BORDER_SIZE - width), randi_range(0, BORDER_SIZE - height))
 	
 	# Prevent room overlap
@@ -129,10 +149,10 @@ func make_room(recursion: int) -> void:
 	# Generate the room tiles, and save room data
 	var room: Room = Room.new(start_pos, width, height)
 	rooms.append(room)
-	self.add_child(room.room_node)
-	room.room_node.owner = self
-	room.room_node.set_global_position(room.room_node.get_global_position() * tile_map.rendering_quadrant_size)
-	room.room_node.name = str(room.position) + str(rooms.size() - 1)
+	dungeon_node.add_child(room)
+	room.owner = self
+	room.name = str(room.room_position) + str(rooms.size() - 1)
+	room.set_global_position(room.room_position * tile_map.rendering_quadrant_size)
 	
 	for x in width:
 		for y in height:
@@ -150,9 +170,9 @@ func get_minimum_spanning_tree() -> AStar2D:
 	# Get all room positions and populate the graphs
 	var positions: PackedVector2Array = []
 	for room in rooms:
-		positions.append(room.position)
-		del_graph.add_point(del_graph.get_available_point_id(), room.position)
-		mst_graph.add_point(mst_graph.get_available_point_id(), room.position)
+		positions.append(room.room_position)
+		del_graph.add_point(del_graph.get_available_point_id(), room.room_position)
+		mst_graph.add_point(mst_graph.get_available_point_id(), room.room_position)
 	
 	# Delauanay triangulation
 	var delaunay: Array = Array(Geometry2D.triangulate_delaunay(positions))
@@ -213,24 +233,24 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				var tile_from: Vector2i = room_from.room_tiles[0]
 				var tile_to: Vector2i = room_to.room_tiles[0]
 				
-				var current_shortest_dist_from = tile_from.distance_squared_to(room_to.position)
+				var current_shortest_dist_from = tile_from.distance_squared_to(room_to.room_position)
 				for tile in room_from.room_tiles:
 					# Skip the first tile
 					if tile as Vector2i == tile_from:
 						continue
 					
-					var possible_shortest_dist = tile.distance_squared_to(room_to.position)
+					var possible_shortest_dist = tile.distance_squared_to(room_to.room_position)
 					if possible_shortest_dist < current_shortest_dist_from:
 						tile_from = tile
 						current_shortest_dist_from = possible_shortest_dist
 				
-				var current_shortest_dist_to = tile_to.distance_squared_to(room_from.position)
+				var current_shortest_dist_to = tile_to.distance_squared_to(room_from.room_position)
 				for tile in room_to.room_tiles:
 					# Skip the first tile
 					if tile as Vector2i == tile_to:
 						continue
 					
-					var possible_shortest_dist = tile.distance_squared_to(room_from.position)
+					var possible_shortest_dist = tile.distance_squared_to(room_from.room_position)
 					if possible_shortest_dist < current_shortest_dist_to:
 						tile_to = tile
 						current_shortest_dist_to = possible_shortest_dist
@@ -327,7 +347,7 @@ func spawn_enemies(spawn_room: Room) -> void:
 			step += 1
 			var enemy: Enemy = enemy_scene.instantiate()
 			room.enemies.append(enemy)
-			room.room_node.add_child(enemy)
+			room.add_child(enemy)
 			enemy.name = enemy.name + str(i)
 			enemy.owner = self
 			var half_width: float = room.width / 2.0 - ENEMY_WALL_MARGIN
@@ -338,6 +358,6 @@ func spawn_enemies(spawn_room: Room) -> void:
 
 func make_spawn_point(spawn_room: Room) -> void:
 	spawn_point = spawn_point_scene.instantiate()
-	self.add_child(spawn_point)
+	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self
-	spawn_point.translate(spawn_room.position * tile_map.rendering_quadrant_size)
+	spawn_point.translate(spawn_room.room_position * tile_map.rendering_quadrant_size)
