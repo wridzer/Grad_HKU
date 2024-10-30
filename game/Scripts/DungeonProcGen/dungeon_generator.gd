@@ -37,16 +37,14 @@ const HALLWAY_TILES: Array[Vector2i] = [Vector2i(8, 0), Vector2i(8, 1)]
 const BACKGROUND_TILES: Array[Vector2i] = [Vector2i(7, 0),Vector2i(7, 1),Vector2i(9, 0)]
 
 const MIN_WALL_MARGIN: int = 3
+const MAX_RECURSION: int = 10
 
 # Generation instructions
 @export var ROOM_AMOUNT: int = 10
 @export var EXTRA_ROOM_MARGIN: int = 0
 @export var BORDER_MARGIN: int = 20
-@export var MAX_RECURSION: int = 10
 @export var BORDER_SIZE: int = 150
 @export var ROOM_TYPES: Dictionary[int, int] = {}
-@export var MIN_ROOM_SIZE: int = 8
-@export var MAX_ROOM_SIZE: int = 16
 @export var MIN_ENEMIES_PER_ROOM: int = 1
 @export var MAX_ENEMIES_PER_ROOM: int = 3
 @export var ENEMY_WALL_MARGIN: float = 0.5
