@@ -10,7 +10,6 @@ var room_tiles: PackedVector2Array = []
 var enemies: Array[Enemy] = []
 
 
-@warning_ignore("shadowed_variable")
 func _init(start_pos, width, height) -> void:
 	self.start_pos = start_pos
 	self.width = width
