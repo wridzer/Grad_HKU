@@ -950,6 +950,7 @@ Error Main::setup(const char *execpath, int argc, char *argv[], bool p_second_ph
 
 	MAIN_PRINT("Main: Initialize Globals");
 
+	blackboard = memnew(Blackboard);
 	input_map = memnew(InputMap);
 	globals = memnew(ProjectSettings);
 
@@ -2888,16 +2889,6 @@ Error Main::setup2(bool p_show_boot_logo) {
 		OS::get_singleton()->benchmark_end_measure("Servers", "Input");
 	}
 
-	/* Initialize Blackboard */
-
-	{
-		OS::get_singleton()->benchmark_begin_measure("Servers", "Blackboard");
-
-		blackboard = memnew(Blackboard);
-
-		OS::get_singleton()->benchmark_end_measure("Servers", "Blackboard");
-	}
-
 	/* Initialize Display Server */
 
 	{
@@ -2985,9 +2976,6 @@ Error Main::setup2(bool p_show_boot_logo) {
 
 			if (input) {
 				memdelete(input);
-			}
-			if (blackboard) {
-				memdelete(blackboard);
 			}
 			if (tsman) {
 				memdelete(tsman);
@@ -4633,7 +4621,6 @@ void Main::cleanup(bool p_force) {
 	if (blackboard) {
 		memdelete(blackboard);
 	}
-
 	if (packed_data) {
 		memdelete(packed_data);
 	}
