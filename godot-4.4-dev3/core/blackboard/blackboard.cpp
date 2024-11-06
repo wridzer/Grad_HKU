@@ -38,8 +38,7 @@ void Blackboard::save_data() {
 		ProjectSettings::get_singleton()->set("blackboard/" + key, blackboard_data[key]);
 	}
 
-	ProjectSettings::get_singleton()->save(); // TODO (wkamphuis) - only do this on close
-	
+	//ProjectSettings::get_singleton()->save(); // TODO (wkamphuis) - only do this on close
 }
 
 void Blackboard::load_data() {
@@ -64,12 +63,12 @@ Blackboard::Blackboard() {
 }
 
 Blackboard::~Blackboard() {
-	printf("Blackboard destructor\n");
 	if (singleton == this) {
 		save_data();
 
 		// Ensure project settings are saved to disk
-		ProjectSettings::get_singleton()->save(); // only do this on close
+		if (!blackboard_data.is_empty())
+			ProjectSettings::get_singleton()->save(); // only do this on close
 	}
 	singleton = nullptr;
 }

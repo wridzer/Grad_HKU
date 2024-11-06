@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://tm0wihh7f04q"]
+
+[ext_resource type="Script" path="res://Scripts/DungeonProcGen/dungeon_generator.gd" id="1_6uvhx"]
+[ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/spawn_point.tscn" id="2_8vk5u"]
+[ext_resource type="PackedScene" uid="uid://divp2amo5ul71" path="res://Scenes/enemy.tscn" id="3_ucs6u"]
+[ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="4_lg2bt"]
+
+[node name="Dungeon Level" type="Node2D" node_paths=PackedStringArray("dungeon_node", "tile_map", "tile_map_decor")]
+script = ExtResource("1_6uvhx")
+dungeon_node = NodePath("Dungeon")
+tile_map = NodePath("TileMapLayer")
+tile_map_decor = NodePath("TileMapLayer2")
+spawn_point_scene = ExtResource("2_8vk5u")
+enemy_scene = ExtResource("3_ucs6u")
+ROOM_AMOUNT = 8
+BORDER_SIZE = 120
+ROOM_TYPES = Dictionary[int, int]({
+8: 8,
+12: 12,
+16: 16
+})
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_lg2bt")
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="."]
+tile_set = ExtResource("4_lg2bt")
+
+[node name="Dungeon" type="Node2D" parent="."]

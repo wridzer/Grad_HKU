@@ -18,8 +18,8 @@ func _ready() -> void:
 	health_component.hit.connect(hit)
 
 
-func _process(delta: float) -> void:
-	squared_distance = global_position.distance_squared_to(Player.instance.global_position);
+func _process(_delta: float) -> void:
+	squared_distance = int(global_position.distance_squared_to(Player.instance.global_position));
 
 
 func die() -> void:
