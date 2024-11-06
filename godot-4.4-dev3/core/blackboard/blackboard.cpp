@@ -39,7 +39,6 @@ void Blackboard::save_data() {
 	}
 
 	//ProjectSettings::get_singleton()->save(); // TODO (wkamphuis) - only do this on close
-	
 }
 
 void Blackboard::load_data() {
@@ -64,7 +63,6 @@ Blackboard::Blackboard() {
 }
 
 Blackboard::~Blackboard() {
-	printf("Blackboard destructor\n");
 	if (singleton == this) {
 		save_data();
 
