@@ -1,6 +1,6 @@
 #include "editor/blackboard_editor.h"
 
-#include "core/blackboard/blackboard.h"
+#include "core/ai/blackboard.h"
 #include "editor/editor_settings.h"
 #include "editor/editor_string_names.h"
 #include "editor/event_listener_line_edit.h"

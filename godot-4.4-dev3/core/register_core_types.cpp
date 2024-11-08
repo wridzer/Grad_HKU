@@ -80,7 +80,7 @@
 #include "core/string/optimized_translation.h"
 #include "core/string/translation.h"
 #include "core/string/translation_server.h"
-#include "core/blackboard/blackboard.h"
+#include "core/ai/blackboard.h"
 
 static Ref<ResourceFormatSaverBinary> resource_saver_binary;
 static Ref<ResourceFormatLoaderBinary> resource_loader_binary;

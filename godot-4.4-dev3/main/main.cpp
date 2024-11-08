@@ -39,7 +39,7 @@
 #include "core/extension/gdextension_manager.h"
 #include "core/input/input.h"
 #include "core/input/input_map.h"
-#include "core/blackboard/blackboard.h"
+#include "core/ai/blackboard.h"
 #include "core/io/dir_access.h"
 #include "core/io/file_access_pack.h"
 #include "core/io/file_access_zip.h"

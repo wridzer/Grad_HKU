@@ -56,7 +56,6 @@ void Blackboard::load_data() {
 	}
 }
 
-
 Blackboard::Blackboard() {
 	ERR_FAIL_COND_MSG(singleton, "Singleton in Blackboard already exist.");
 	singleton = this;

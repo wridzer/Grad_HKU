@@ -92,8 +92,12 @@ class GodotBuildApp:
         bits = self.bits_var.get()
         cores = self.cores_var.get()
 
-        # Construct the build command
-        command = f"scons platform={platform} tools={tools} target={target} bits={bits} -j{cores}"
+        if(tools == "yes"):
+            # Construct the build command
+            command = f"scons platform={platform} tools={tools} target={target} bits={bits} -j{cores}"
+        else:
+            # Construct the build command
+            command = f"scons platform={platform} vsproj=yes dev_build=yes vsproj_gen_only=no module_mono_enabled=no -j{cores}"
         
         # Verify engine path
         engine_path = os.path.abspath(self.engine_path)
@@ -152,9 +156,13 @@ class GodotBuildApp:
         engine_exe_path = os.path.join(self.engine_path, "bin", engine_exe)
 
         try:
-            subprocess.Popen(engine_exe_path)
+            process = subprocess.Popen(engine_exe_path)
         except Exception as e:
             messagebox.showerror("Error", f"Could not open the engine: {e}")
+            # Update UI with output
+            for line in iter(process.stdout.readline, ""):
+                # Show the last line in output label
+                self.output_label.config(text=f"{line.strip()}")
 
     def open_project(self):
         platform = self.platform_var.get()
@@ -176,9 +184,13 @@ class GodotBuildApp:
         project_file = os.path.join(self.project_path, "project.godot")
 
         try:
-            subprocess.Popen([engine_exe_path, project_file])
+            process = subprocess.Popen([engine_exe_path, project_file])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open the project: {e}")
+            # Update UI with output
+            for line in iter(process.stdout.readline, ""):
+                # Show the last line in output label
+                self.output_label.config(text=f"{line.strip()}")
 
 if __name__ == "__main__":
     root = tk.Tk()
