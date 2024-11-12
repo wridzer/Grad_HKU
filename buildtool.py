@@ -45,7 +45,7 @@ class GodotBuildApp:
         # Number of Cores
         ttk.Label(root, text="Cores:").grid(row=4, column=0, padx=10, pady=5, sticky="w")
         maxAmountOfCores = os.cpu_count()
-        self.cores_var = tk.StringVar(value=maxAmountOfCores)  # Default to 4 cores
+        self.cores_var = tk.StringVar(value=maxAmountOfCores)  # Default to max cores present in CPU
         self.cores_entry = ttk.Entry(root, textvariable=self.cores_var, width=10)
         self.cores_entry.grid(row=4, column=1, padx=10, pady=5)
 
