@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://enfh0jk6264s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fcrv"]
+radius = 6.0
+
+[node name="ActionableFinder" type="Area2D"]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_7fcrv")
