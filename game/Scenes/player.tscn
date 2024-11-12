@@ -124,10 +124,10 @@ parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(-0.109767, 0.100917)
+parameters/Block/blend_position = Vector2(0, 0)
 parameters/Hit/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(1, 0)
-parameters/Slash/blend_position = Vector2(-0.597234, -0.0336392)
+parameters/Idle/blend_position = Vector2(0, 0)
+parameters/Slash/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
