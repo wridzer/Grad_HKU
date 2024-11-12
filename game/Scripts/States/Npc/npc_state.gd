@@ -2,7 +2,7 @@ class_name NpcState
 extends State
 
 
-enum StateType {INVALID, IDLE, FOLLOWING}
+enum StateType {INVALID, IDLE, FOLLOWING, ATTACK, DEFEND, AVOID}
 
 var npc: Npc
 
