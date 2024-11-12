@@ -39,8 +39,8 @@ func _ready() -> void:
 	assert(adapatable_combat != unadaptable_combat, name + "'s adapatable_combat and unadaptable_combat are the same")
 	assert(unadaptable_combat != preferred_combat, name + "'s unadaptable_combat and preferred_combat are the same")
 	
-	animation_tree = $AnimationTree
-	animation_player = $AnimationPlayer
+	animation_tree = $CharacterAnimations/AnimationTree
+	animation_player = $CharacterAnimations/AnimationPlayer
 	
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	health_component.immune.connect(set_immunity_animation_param)

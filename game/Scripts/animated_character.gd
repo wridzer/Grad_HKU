@@ -16,7 +16,7 @@ func block() -> void:
 	animation_tree.set("parameters/conditions/block", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D
-	await get_tree().create_timer(animation_player.get_animation("block_right").length).timeout
+	await get_tree().create_timer(animation_player.get_animation("character_animations/block_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/block", false)
 
@@ -27,7 +27,7 @@ func slash() -> void:
 	animation_tree.set("parameters/conditions/slash", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D
-	await get_tree().create_timer(animation_player.get_animation("slash_right").length).timeout
+	await get_tree().create_timer(animation_player.get_animation("character_animations/slash_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/slash", false)
 

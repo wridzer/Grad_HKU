@@ -4,7 +4,7 @@ extends AnimatedCharacter
 
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var actionable_finder: Area2D = $Direction/ActionableFinder
+@onready var actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
 
 
 const SPEED := 70.0
@@ -21,8 +21,8 @@ func _ready() -> void:
 		push_warning("Multiple players found in scene, deleting last loaded")
 		queue_free()
 	
-	animation_tree = $AnimationTree
-	animation_player = $AnimationPlayer
+	animation_tree = $CharacterAnimations/AnimationTree
+	animation_player = $CharacterAnimations/AnimationPlayer
 	
 	# Connect signals
 	game_manager.spawn.connect(spawn)
