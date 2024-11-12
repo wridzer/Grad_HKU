@@ -24,6 +24,7 @@ animations = [{
 process_mode = 4
 visible = false
 z_index = 1
+rotation = 1.0472
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(6, -6)

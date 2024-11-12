@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://pwse5ov065ph"]
+[gd_scene load_steps=4 format=3 uid="uid://pwse5ov065ph"]
 
-[ext_resource type="Script" path="res://Scripts/shield.gd" id="1_librw"]
 [ext_resource type="Texture2D" uid="uid://cgplcfowi1neh" path="res://Art/Shield-0001.png" id="2_vhk1j"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xw6r0"]
@@ -18,7 +17,8 @@ animations = [{
 size = Vector2(20, 1.75)
 
 [node name="Shield" type="Node2D"]
-script = ExtResource("1_librw")
+process_mode = 4
+visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xw6r0")
