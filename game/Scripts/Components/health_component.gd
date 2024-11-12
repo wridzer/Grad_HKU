@@ -7,9 +7,8 @@ extends Node
 @export var maxHealth: int = 3
 @export var immunityLength: float = .5
 
-var immune := false
 signal die
-signal hit
+signal immune
 
 
 func _ready() -> void:
@@ -29,14 +28,12 @@ func take_damage(amount: int) -> void:
 		if health <= 0:
 			die.emit()
 			return
-		immune = true
+		immune.emit(true)
 		timer.start()
-		
-	hit.emit()
 
 
 func _on_immunity_timer_timeout() -> void:
 	# Be able to take damage again
-	immune = false
+	immune.emit(false)
 	
 	timer.stop()

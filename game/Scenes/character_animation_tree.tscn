@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbregppos0g6h"]
+
+[ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="1_c14fm"]
+
+[node name="CharacterAnimationTree" type="AnimationTree"]
+active = false
+tree_root = ExtResource("1_c14fm")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/block = false
+parameters/conditions/hit = false
+parameters/conditions/idle = true
+parameters/conditions/moving = false
+parameters/conditions/slash = false
+parameters/Block/blend_position = Vector2(-0.109767, 0.100917)
+parameters/Hit/blend_position = Vector2(0, 0)
+parameters/Idle/blend_position = Vector2(1, 0)
+parameters/Slash/blend_position = Vector2(-0.597234, -0.0336392)
+parameters/Walk/blend_position = Vector2(0, 0)
