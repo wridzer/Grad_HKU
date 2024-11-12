@@ -1,5 +1,5 @@
 class_name Npc
-extends CharacterBody2D
+extends AnimatedCharacter
 
 
 enum CombatType {ATTACK, DEFEND, AVOID}
@@ -39,8 +39,12 @@ func _ready() -> void:
 	assert(adapatable_combat != unadaptable_combat, name + "'s adapatable_combat and unadaptable_combat are the same")
 	assert(unadaptable_combat != preferred_combat, name + "'s unadaptable_combat and preferred_combat are the same")
 	
+	animation_tree = $AnimationTree
+	animation_player = $AnimationPlayer
+	
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
-	health_component.hit.connect(hit)
+	health_component.immune.connect(set_immunity_animation_param)
+	health_component.immune.connect(hit)
 	
 	# Set display name label
 	name_label.text = display_name

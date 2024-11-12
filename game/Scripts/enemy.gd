@@ -10,12 +10,13 @@ extends CharacterBody2D
 var squared_distance: int = (1 << 31) - 1
 
 func _ready() -> void:
+	
 	if (Blackboard.get_data("enemies_alive")):
 		Blackboard.add_data("enemies_alive", Blackboard.get_data("enemies_alive") + 1)
 	else:
 		Blackboard.add_data("enemies_alive", 1)
 	health_component.die.connect(die)
-	health_component.hit.connect(hit)
+	health_component.immune.connect(hit)
 
 
 func _process(_delta: float) -> void:
@@ -36,4 +37,3 @@ func hit() -> void:
 		Blackboard.add_data("damage_done", Blackboard.get_data("damage_done") + 1)
 	else:
 		Blackboard.add_data("damage_done", 1)
-	pass
