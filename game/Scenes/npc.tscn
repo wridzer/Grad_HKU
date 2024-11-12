@@ -1,13 +1,17 @@
-[gd_scene load_steps=21 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=25 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="2_howq1"]
 [ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="2_sw6te"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_xvmxr"]
+[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://CharacterAnimations.res" id="3_f0j1w"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
+[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
+[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/shield.tscn" id="5_r2ml8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
 atlas = ExtResource("2_ebpt7")
@@ -91,6 +95,37 @@ radius = 12.0
 z_index = 1
 collision_layer = 17
 script = ExtResource("1_kinge")
+
+[node name="CharacterAnimations" type="Node2D" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="CharacterAnimations"]
+active = false
+root_node = NodePath("../..")
+tree_root = ExtResource("2_xvmxr")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/block = false
+parameters/conditions/hit = false
+parameters/conditions/idle = true
+parameters/conditions/moving = false
+parameters/conditions/slash = false
+parameters/Block/blend_position = Vector2(-0.109767, 0.100917)
+parameters/Hit/blend_position = Vector2(0, 0)
+parameters/Idle/blend_position = Vector2(1, 0)
+parameters/Slash/blend_position = Vector2(-0.597234, -0.0336392)
+parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
+root_node = NodePath("../..")
+libraries = {
+&"CharacterAnimations": ExtResource("3_f0j1w")
+}
+
+[node name="Direction" type="Node2D" parent="CharacterAnimations"]
+
+[node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("4_x3qln")]
+
+[node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
+position = Vector2(0, 8)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_sw6te")
