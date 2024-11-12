@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="2_howq1"]
 [ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="2_sw6te"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_xvmxr"]
-[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://character_animations.res" id="3_f0j1w"]
+[ext_resource type="AnimationLibrary" path="res://Animations/character_animations.res" id="3_32tg2"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
@@ -100,6 +100,7 @@ script = ExtResource("1_kinge")
 
 [node name="AnimationTree" type="AnimationTree" parent="CharacterAnimations"]
 active = false
+deterministic = false
 root_node = NodePath("../..")
 tree_root = ExtResource("2_xvmxr")
 anim_player = NodePath("../AnimationPlayer")
@@ -108,16 +109,16 @@ parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(-0.109767, 0.100917)
+parameters/Block/blend_position = Vector2(-0.00350875, 0.989333)
 parameters/Hit/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(1, 0)
-parameters/Slash/blend_position = Vector2(-0.597234, -0.0336392)
+parameters/Idle/blend_position = Vector2(0, 0)
+parameters/Slash/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
 root_node = NodePath("../..")
 libraries = {
-&"character_animations": ExtResource("3_f0j1w")
+&"character_animations": ExtResource("3_32tg2")
 }
 
 [node name="Direction" type="Node2D" parent="CharacterAnimations"]
@@ -125,7 +126,7 @@ libraries = {
 [node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("4_x3qln")]
 
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
-position = Vector2(0, 8)
+position = Vector2(0, 9)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_sw6te")

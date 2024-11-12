@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_856tq"]
-[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://character_animations.res" id="3_r82o3"]
+[ext_resource type="AnimationLibrary" path="res://Animations/character_animations.res" id="3_d2i3i"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="3_y3655"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="5_c8efr"]
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="6_s88px"]
@@ -116,6 +116,7 @@ script = ExtResource("1_lxypx")
 
 [node name="AnimationTree" type="AnimationTree" parent="CharacterAnimations"]
 active = false
+deterministic = false
 root_node = NodePath("../..")
 tree_root = ExtResource("2_dhl6a")
 anim_player = NodePath("../AnimationPlayer")
@@ -124,7 +125,7 @@ parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(0, 0)
+parameters/Block/blend_position = Vector2(-0.00350875, 0.989333)
 parameters/Hit/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Slash/blend_position = Vector2(0, 0)
@@ -133,7 +134,7 @@ parameters/Walk/blend_position = Vector2(0, 0)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
 root_node = NodePath("../..")
 libraries = {
-&"character_animations": ExtResource("3_r82o3")
+&"character_animations": ExtResource("3_d2i3i")
 }
 
 [node name="Direction" type="Node2D" parent="CharacterAnimations"]
@@ -141,7 +142,7 @@ libraries = {
 [node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("6_s88px")]
 
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("7_1yosh")]
-position = Vector2(0, 8)
+position = Vector2(0, 9)
 script = ExtResource("8_sibh1")
 
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
