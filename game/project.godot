@@ -13,14 +13,13 @@ config_version=5
 config/name="game"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://Art/squit.png"
-config/windows_native_icon="res://Art/squit.ico"
+config/icon="res://Art/squid.png"
+config/windows_native_icon="res://Art/squid.ico"
 
 [autoload]
 
 game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [blackboard]
 

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="2_howq1"]
 [ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="2_sw6te"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_xvmxr"]
-[ext_resource type="AnimationLibrary" path="res://Animations/character_animations.res" id="3_32tg2"]
+[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://Animations/character_animations.res" id="3_32tg2"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
