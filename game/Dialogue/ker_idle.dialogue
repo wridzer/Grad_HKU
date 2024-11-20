@@ -12,7 +12,7 @@ Ker: hi, I'm Ker!
 ~ wel
 % Ker: yippee
 % Ker: let's gooooooooooooooooooooooooo :)
-do game_manager.npc_follow.emit()
+do game_manager.npc_follow.emit("Ker")
 => END
 
 ~ niet

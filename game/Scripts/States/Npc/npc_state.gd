@@ -17,10 +17,6 @@ func physics_update(_delta: float) -> void:
 	super.physics_update(_delta)
 
 
-func start_dialogue() -> void:
-	npc.is_talking = true
-
-
 func get_state_type() -> int:
 	return state_type_to_int(StateType.INVALID)
 

@@ -19,7 +19,6 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 
 var affection: int
 
-var is_talking: bool = false
 var saved_spawn_pos: Vector2
 
 
@@ -42,23 +41,20 @@ func _ready() -> void:
 	animation_tree = $CharacterAnimations/AnimationTree
 	animation_player = $CharacterAnimations/AnimationPlayer
 	
-	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	health_component.immune.connect(set_immunity_animation_param)
 	health_component.immune.connect(hit)
+	health_component.die.connect(die)
 	
 	# Set display name label
 	name_label.text = display_name
 
 
 func die() -> void:
+	if Player.instance.following_npc == self:
+		Player.instance.following_npc = null
+	
 	queue_free()
 
 
 func hit() -> void:
-	input_manager.toggle_input(false)
-	DialogueManager.show_dialogue_balloon(hit_dialogue, "start")
-	is_talking = true
-
-
-func _on_dialogue_ended(_resource: DialogueResource) -> void:
-	is_talking = false
+	dialogue_manager.start_dialogue(hit_dialogue)

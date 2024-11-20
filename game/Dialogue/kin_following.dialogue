@@ -5,7 +5,7 @@ Kin: Do you want me to stop following you?
 
 ~ yes
 Kin: Okay, see you later.
-do game_manager.npc_stop_following.emit()
+do game_manager.npc_stop_following.emit("Kin")
 => END
 
 ~ no

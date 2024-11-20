@@ -12,12 +12,11 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(start_dialogue)
+	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
 	
 	game_manager.npc_stop_following.connect(stop_following)
 	game_manager.spawn.connect(spawn)
 	
-	npc.health_component.die.connect(die)
 	super.enter(previous_state, data)
 
 
@@ -38,31 +37,19 @@ func physics_update(delta: float) -> void:
 func exit() -> void:
 	Player.instance.following_npc = null
 	
-	npc.actionable.action.disconnect(start_dialogue)
+	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
 	
 	game_manager.npc_stop_following.disconnect(stop_following)
 	game_manager.spawn.disconnect(spawn)
 	
-	npc.health_component.die.disconnect(die)
-	
 	super.exit()
 
 
-func start_dialogue() -> void:
-	DialogueManager.show_dialogue_balloon(npc.following_dialogue)
-	super.start_dialogue()
-
-
-func stop_following() -> void:
-	if npc.is_talking && Player.instance.following_npc == npc:
+func stop_following(display_name: String) -> void:
+	if display_name == npc.display_name && Player.instance.following_npc == npc:
 		finished.emit(state_type_to_int(StateType.IDLE))
 
 
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 	npc.saved_spawn_pos = spawn_pos
 	npc.position = spawn_pos + npc_offset
-
-
-func die() -> void:
-	Player.instance.following_npc = null
-	npc.die()

@@ -12,7 +12,7 @@ Kin: Hello, I'm Kin!
 ~ wel
 % Kin: Let's go
 % Kin: Okay
-do game_manager.npc_follow.emit()
+do game_manager.npc_follow.emit("Kin")
 => END
 
 ~ niet

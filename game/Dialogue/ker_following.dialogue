@@ -10,7 +10,7 @@
 
 ~ wel
 % Ker: *WAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHH*
-do game_manager.npc_stop_following.emit()
+do game_manager.npc_stop_following.emit("Ker")
 => END!
 
 ~ niet
