@@ -6,7 +6,6 @@ extends AnimatedCharacter
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
 
-
 const SPEED := 70.0
 static var instance: Player = null
 var following_npc: Npc = null

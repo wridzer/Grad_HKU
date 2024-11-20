@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dy7cyxriu1eja"]
 
-[ext_resource type="PackedScene" uid="uid://nqudhm4qctrk" path="res://Scenes/smith_level1.tscn" id="1_l0k8m"]
+[ext_resource type="PackedScene" uid="uid://nqudhm4qctrk" path="res://Scenes/Levels/level_hub.tscn" id="1_l0k8m"]
 [ext_resource type="PackedScene" uid="uid://yo1y4je8hvir" path="res://Scenes/player.tscn" id="1_ygi7h"]
 [ext_resource type="Script" path="res://Scripts/utility_system.gd" id="3_gr28y"]
 
@@ -13,7 +13,7 @@ position = Vector2(40, -7)
 
 [node name="Level" type="Node" parent="."]
 
-[node name="Smith Level 1" parent="Level" instance=ExtResource("1_l0k8m")]
+[node name="Hub" parent="Level" instance=ExtResource("1_l0k8m")]
 
 [node name="UtilitySystem" type="Node" parent="."]
 script = ExtResource("3_gr28y")
