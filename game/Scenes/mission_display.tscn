@@ -1,3 +1,23 @@
-[gd_scene format=3 uid="uid://d3nmvrek3uub0"]
+[gd_scene load_steps=6 format=3 uid="uid://d3nmvrek3uub0"]
 
-[node name="MissionDisplay" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/mission_display.gd" id="1_ve4ia"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="1_yh8sa"]
+[ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="2_0qgon"]
+[ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="3_rfjs1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
+
+[node name="Mission Display" type="Node2D"]
+script = ExtResource("1_ve4ia")
+mission_dialogue = ExtResource("2_0qgon")
+
+[node name="Actionable" parent="." instance=ExtResource("1_yh8sa")]
+position = Vector2(0, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+shape = SubResource("CircleShape2D_oudfl")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(8, 0)
+tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 19, 0, 0, 0, 0, 0)
+tile_set = ExtResource("3_rfjs1")

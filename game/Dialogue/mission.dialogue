@@ -1,0 +1,18 @@
+~ start
+Mission Board: Pick your preferred mission type from the mission board.
+- Get item
+	=> item
+- Slay enemy
+	=> slay
+
+~ item
+do game_manager.set_mission_type("ITEM")
+=> gl
+
+~ slay
+do game_manager.set_mission_type("SLAY")
+=> gl
+
+~ gl
+Mission Board: Good luck. If you change your mind feel free to choose again.
+=> END

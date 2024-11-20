@@ -1,5 +1,6 @@
 extends Node
 
+enum MissionType {INVALID, ITEM, SLAY}
 
 # These signals are emitted from other scripts, so the warning can be ignored
 @warning_ignore("unused_signal") signal spawn(value: Vector2, offset: Vector2)
@@ -8,8 +9,13 @@ extends Node
 signal switch_level_cleanup
 signal get_spawn_location
 
+var mission_type: MissionType = MissionType.INVALID
 @export_file var level_hub: String
 @export var level_parent: Node
+
+
+func set_mission_type(type: String) -> void:
+	mission_type = MissionType.get(type)
 
 
 func _ready() -> void:
