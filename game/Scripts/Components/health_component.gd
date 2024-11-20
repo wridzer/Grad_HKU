@@ -1,6 +1,7 @@
 class_name HealthComponent
 extends Node
 
+
 @onready var timer := $ImmunityTimer
 
 @export var health: int

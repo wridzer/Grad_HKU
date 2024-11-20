@@ -9,8 +9,8 @@ extends CharacterBody2D
 # MAX_INT32
 var squared_distance: int = (1 << 31) - 1
 
+
 func _ready() -> void:
-	
 	if (Blackboard.get_data("enemies_alive")):
 		Blackboard.add_data("enemies_alive", Blackboard.get_data("enemies_alive") + 1)
 	else:

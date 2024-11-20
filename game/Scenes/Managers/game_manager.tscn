@@ -5,3 +5,4 @@
 [node name="GameManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_oacws")
+level_hub = "res://Scenes/Levels/level_hub.tscn"

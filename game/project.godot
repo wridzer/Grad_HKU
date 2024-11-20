@@ -20,6 +20,8 @@ config/windows_native_icon="res://Art/squid.ico"
 
 game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+dialogue_manager="*res://Scenes/Managers/dialogue_manager.tscn"
 
 [blackboard]
 
@@ -87,6 +89,11 @@ pause={
 block={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
+}
+debug_gotohub={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":80,"key_label":0,"unicode":112,"location":0,"echo":false,"script":null)
 ]
 }
 

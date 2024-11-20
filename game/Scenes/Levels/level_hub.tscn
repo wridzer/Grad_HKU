@@ -58,7 +58,7 @@ collision_visibility_mode = 1
 
 [node name="LevelLoader" parent="." instance=ExtResource("2_415ri")]
 position = Vector2(140, 9)
-level_to_load = "res://Scenes/DungeonProcGen/dungeon_level.tscn"
+level_to_load = "res://Scenes/Levels/level_dungeon.tscn"
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)
