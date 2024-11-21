@@ -2,7 +2,7 @@ class_name HealthComponent
 extends Node
 
 
-@onready var timer := $ImmunityTimer
+@onready var immunity_timer := $ImmunityTimer
 
 @export var health: int
 @export var maxHealth: int = 3
@@ -13,7 +13,7 @@ signal immune
 
 
 func _ready() -> void:
-	timer.wait_time = immunityLength
+	immunity_timer.wait_time = immunityLength
 
 
 func gain_health(amount: int) -> void:
@@ -24,17 +24,17 @@ func gain_health(amount: int) -> void:
 
 
 func take_damage(amount: int) -> void:
-	if !immune:
+	if immunity_timer.time_left == 0:
 		health -= amount
 		if health <= 0:
 			die.emit()
 			return
 		immune.emit(true)
-		timer.start()
+		immunity_timer.start()
 
 
 func _on_immunity_timer_timeout() -> void:
 	# Be able to take damage again
 	immune.emit(false)
 	
-	timer.stop()
+	immunity_timer.stop()

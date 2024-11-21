@@ -32,7 +32,7 @@ func die() -> void:
 	queue_free()
 
 
-func hit() -> void:
+func hit(_immune: bool) -> void:
 	if (Blackboard.get_data("damage_done")):
 		Blackboard.add_data("damage_done", Blackboard.get_data("damage_done") + 1)
 	else:

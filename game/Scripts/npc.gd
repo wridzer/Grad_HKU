@@ -56,5 +56,5 @@ func die() -> void:
 	queue_free()
 
 
-func hit() -> void:
+func hit(_immune: bool) -> void:
 	dialogue_manager.start_dialogue(hit_dialogue)

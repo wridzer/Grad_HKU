@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func _on_area_entered(hitbox: HitboxComponent) -> void:
-	if hitbox == null:
+	if !is_instance_valid(hitbox):
 		return
 	
 	health.take_damage(hitbox.damage)
