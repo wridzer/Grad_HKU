@@ -19,10 +19,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_obcww"]
+radius = 3.0
+height = 12.0
 
 [node name="Sword" type="Node2D"]
 process_mode = 4
-visible = false
 z_index = 1
 rotation = 1.0472
 
@@ -33,13 +34,13 @@ sprite_frames = SubResource("SpriteFrames_6dbag")
 
 [node name="HitboxComponent" type="Area2D" parent="."]
 position = Vector2(2, -2)
-rotation = 0.711666
-scale = Vector2(0.342544, 0.416869)
+rotation = 0.767945
+scale = Vector2(0.822, 1)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("3_ndokg")
 damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(1.8248, -20.2995)
+position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_obcww")
