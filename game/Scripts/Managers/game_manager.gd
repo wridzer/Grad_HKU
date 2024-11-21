@@ -1,5 +1,6 @@
 extends Node
 
+
 enum MissionType {INVALID, ITEM, SLAY}
 
 # These signals are emitted from other scripts, so the warning can be ignored

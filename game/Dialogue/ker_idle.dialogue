@@ -6,7 +6,7 @@ Ker: hi, I'm Ker!
 - No => no
 
 ~ yes
-%3 => wel
+%5 => wel
 % => niet
 
 ~ wel
@@ -16,7 +16,7 @@ do game_manager.npc_follow.emit("Ker")
 => END
 
 ~ niet
-Ker: sorry, no
+Ker: sorry, I'm in my not going era
 => END
 
 ~ no

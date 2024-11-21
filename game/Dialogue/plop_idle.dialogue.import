@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cug04ukn2doay"
+path="res://.godot/imported/plop_idle.dialogue-1f9fb764161ed9e56f6cd220a734c086.tres"
+
+[deps]
+
+source_file="res://Dialogue/plop_idle.dialogue"
+dest_files=["res://.godot/imported/plop_idle.dialogue-1f9fb764161ed9e56f6cd220a734c086.tres"]
+
+[params]
+
+defaults=true
