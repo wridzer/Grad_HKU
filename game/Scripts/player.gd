@@ -31,6 +31,7 @@ func _ready() -> void:
 	
 	# Enable animations
 	animation_tree.active = true
+	animation_player.active = true
 
 
 func _physics_process(_delta: float) -> void:

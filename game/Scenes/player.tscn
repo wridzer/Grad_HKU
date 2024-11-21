@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=26 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -11,6 +11,122 @@
 [ext_resource type="Script" path="res://Scripts/shield.gd" id="8_sibh1"]
 [ext_resource type="Script" path="res://Scripts/UI_text.gd" id="8_t5qnf"]
 [ext_resource type="PackedScene" uid="uid://enfh0jk6264s" path="res://Scenes/actionable_finder.tscn" id="9_2vmwd"]
+
+[sub_resource type="Animation" id="Animation_laorx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterAnimations/Direction/Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterAnimations/Direction/Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterAnimations/Direction/Sword:process_mode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterAnimations/Direction/Shield:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CharacterAnimations/Direction/Shield:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CharacterAnimations/Direction/Shield:process_mode")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CharacterAnimations/Direction/Shield:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CharacterAnimations/Direction/Sword:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CharacterAnimations/Direction:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3r2v4"]
+_data = {
+&"RESET": SubResource("Animation_laorx")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
 atlas = ExtResource("3_y3655")
@@ -125,24 +241,30 @@ parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(-0.00350875, 0.989333)
-parameters/Hit/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(0, 0)
-parameters/Slash/blend_position = Vector2(0, 0)
-parameters/Walk/blend_position = Vector2(0, 0)
+parameters/Block/blend_position = Vector2(0, -0.67474)
+parameters/Hit/blend_position = Vector2(0.00818717, -0.789474)
+parameters/Idle/blend_position = Vector2(-0.0257069, -0.561119)
+parameters/Slash/blend_position = Vector2(-0.544987, -0.0191458)
+parameters/Walk/blend_position = Vector2(-0.104113, 0.0594227)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
+active = false
 root_node = NodePath("../..")
 libraries = {
+&"": SubResource("AnimationLibrary_3r2v4"),
 &"character_animations": ExtResource("3_d2i3i")
 }
+autoplay = "character_animations/RESET"
 
 [node name="Direction" type="Node2D" parent="CharacterAnimations"]
+rotation = 1.5708
 
 [node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("6_s88px")]
 
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("7_1yosh")]
-position = Vector2(0, 9)
+process_mode = 0
+visible = true
+position = Vector2(0, 8)
 script = ExtResource("8_sibh1")
 
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
@@ -151,7 +273,7 @@ visible = false
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_ed326")
-animation = &"hit"
+animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)

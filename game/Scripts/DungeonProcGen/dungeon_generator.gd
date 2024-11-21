@@ -131,7 +131,7 @@ func make_room(recursion: int) -> void:
 	rooms.append(room)
 	dungeon_node.add_child(room)
 	room.owner = self
-	room.name = str(room.room_position) + str(rooms.size() - 1)
+	room.name = "Room " + str(rooms.size() - 1) + str(room.room_position)
 	room.set_global_position(room.room_position * tile_map.rendering_quadrant_size)
 	
 	for x in width:
@@ -140,6 +140,23 @@ func make_room(recursion: int) -> void:
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			tile_map.set_cell(pos, 0, ROOM_TILES.pick_random(), 0)
 			room.room_tiles.append(pos)
+	
+	# Generate an Area2D player detector for the room
+	var player_detector = Area2D.new()
+	room.add_child(player_detector)
+	player_detector.collision_mask = LayerNames.PHYSICS_2D.NONE
+	player_detector.collision_mask = LayerNames.PHYSICS_2D.PLAYER
+	player_detector.name = "PlayerDetector"
+	player_detector.owner = self
+	room.player_detector = player_detector
+	
+	var collision_shape = CollisionShape2D.new()
+	player_detector.add_child(collision_shape)
+	collision_shape.owner = self
+	collision_shape.name = "CollisionShape"
+	var rect_shape = RectangleShape2D.new()
+	rect_shape.extents = float(tile_map.rendering_quadrant_size) / 2 * Vector2(room.width, room.height)
+	collision_shape.shape = rect_shape
 
 
 func get_minimum_spanning_tree() -> AStar2D:
