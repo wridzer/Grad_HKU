@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=31 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -12,6 +12,122 @@
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/shield.tscn" id="5_r2ml8"]
+
+[sub_resource type="Animation" id="Animation_6e80b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterAnimations/Direction/Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterAnimations/Direction/Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterAnimations/Direction/Sword:process_mode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterAnimations/Direction/Shield:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CharacterAnimations/Direction/Shield:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CharacterAnimations/Direction/Shield:process_mode")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CharacterAnimations/Direction/Shield:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CharacterAnimations/Direction/Sword:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CharacterAnimations/Direction:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xvbyj"]
+_data = {
+&"RESET": SubResource("Animation_6e80b")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
 atlas = ExtResource("2_ebpt7")
@@ -42,6 +158,22 @@ atlas = ExtResource("2_ebpt7")
 region = Rect2(918, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7f6eg"]
+atlas = ExtResource("2_ebpt7")
+region = Rect2(935, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jgnn"]
+atlas = ExtResource("2_ebpt7")
+region = Rect2(884, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w52uh"]
+atlas = ExtResource("2_ebpt7")
+region = Rect2(901, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8duvb"]
+atlas = ExtResource("2_ebpt7")
+region = Rect2(918, 459, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igp6d"]
 atlas = ExtResource("2_ebpt7")
 region = Rect2(935, 459, 16, 16)
 
@@ -80,6 +212,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jgnn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w52uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8duvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igp6d")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 4.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cslfr"]
@@ -109,16 +258,17 @@ parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(-0.00350875, 0.989333)
-parameters/Hit/blend_position = Vector2(0, 0)
-parameters/Idle/blend_position = Vector2(0, 0)
-parameters/Slash/blend_position = Vector2(0, 0)
-parameters/Walk/blend_position = Vector2(0, 0)
+parameters/Block/blend_position = Vector2(0, -1)
+parameters/Hit/blend_position = Vector2(0, -1)
+parameters/Idle/blend_position = Vector2(0, -1)
+parameters/Slash/blend_position = Vector2(0, -1)
+parameters/Walk/blend_position = Vector2(0, -1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
 active = false
 root_node = NodePath("../..")
 libraries = {
+&"": SubResource("AnimationLibrary_xvbyj"),
 &"character_animations": ExtResource("3_32tg2")
 }
 

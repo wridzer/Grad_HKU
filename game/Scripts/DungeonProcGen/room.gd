@@ -31,11 +31,13 @@ func _player_entered_room(body: Node2D) -> void:
 	print(body.name + " entered room " + name)
 	
 	for enemy in enemies:
-		enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.CHASE))
+		if is_instance_valid(enemy):
+			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.CHASE))
 
 
 func _player_exited_room(body: Node2D) -> void:
 	print(body.name + " exited room " + name)
 	
 	for enemy in enemies:
-		enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.IDLE))
+		if is_instance_valid(enemy):
+			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.IDLE))
