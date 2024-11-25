@@ -49,14 +49,13 @@ const MAX_RECURSION: int = 10
 @export var MAX_ENEMIES_PER_ROOM: int = 3
 @export var ENEMY_WALL_MARGIN: float = 0.5
 
-var rooms: Array[Room] = []
+@export var rooms: Array[Room] = []
 var step: int = 0:
 	set(value):
 		step += value
 		if step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
 			await get_tree().create_timer(0).timeout
 const STEPS_BEFORE_WAITING_FRAME: int = 20
-var spawn_point: Node2D
 
 
 func _ready() -> void:
@@ -354,7 +353,7 @@ func spawn_enemies(spawn_room: Room) -> void:
 
 
 func make_spawn_point(spawn_room: Room) -> void:
-	spawn_point = spawn_point_scene.instantiate()
+	var spawn_point = spawn_point_scene.instantiate()
 	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self
 	spawn_point.translate(spawn_room.room_position * tile_map.rendering_quadrant_size)

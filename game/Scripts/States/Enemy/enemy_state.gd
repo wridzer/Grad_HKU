@@ -12,9 +12,9 @@ func _ready() -> void:
 	enemy = owner as Enemy
 
 
-func physics_update(_delta: float) -> void:
+func physics_update(delta: float) -> void:
 	enemy.move_and_slide()
-	super.physics_update(_delta)
+	super.physics_update(delta)
 	
 
 func get_state_type() -> int:
@@ -25,5 +25,5 @@ func string_to_state_type(state: int) -> StateType:
 	return StateType.find_key(state)
 
 
-func state_type_to_int(state: StateType) -> int:
+static func state_type_to_int(state: StateType) -> int:
 	return int(state)

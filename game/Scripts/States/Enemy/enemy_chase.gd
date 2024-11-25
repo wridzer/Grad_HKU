@@ -5,7 +5,6 @@ extends EnemyState
 const STATE_TYPE = StateType.CHASE
 const MIN_CHASE_SPEED: float = 40.0
 const MAX_CHASE_SPEED: float = 80.0
-const CHASE_STOP_DISTANCE: float = 100.0
 const STEERING_VALUE: float = 1.6
 const SMOOTHING_VALUE: float = 0.8
 var directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1),Vector2(0,1),Vector2(1,1)]
@@ -16,13 +15,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	enemy.set_velocity(Vector2.ZERO)
 	super.enter(previous_state, data)
-
-
-func update(_delta: float) -> void:
-	if enemy.squared_distance > CHASE_STOP_DISTANCE * CHASE_STOP_DISTANCE:
-		finished.emit(state_type_to_int(StateType.IDLE))
 
 
 func physics_update(delta: float) -> void:
