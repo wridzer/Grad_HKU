@@ -28,6 +28,8 @@ func physics_update(delta: float) -> void:
 	
 	if npc_pos.distance_to(player_pos) > FOLLOW_DISTANCE:
 		var target_pos: Vector2 = (player_pos - npc_pos).normalized()
+		# TODO: npc animations
+		npc.direction = target_pos
 		npc.set_velocity(target_pos * FOLLOW_SPEED)
 	npc.look_at(player_pos)
 	

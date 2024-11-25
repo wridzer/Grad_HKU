@@ -16,6 +16,7 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var preferred_combat: CombatType
 @export var adapatable_combat: CombatType
 @export var unadaptable_combat: CombatType
+var direction: Vector2 = Vector2.ZERO
 
 var affection: int
 
@@ -38,15 +39,18 @@ func _ready() -> void:
 	assert(adapatable_combat != unadaptable_combat, name + "'s adapatable_combat and unadaptable_combat are the same")
 	assert(unadaptable_combat != preferred_combat, name + "'s unadaptable_combat and preferred_combat are the same")
 	
-	animation_tree = $CharacterAnimations/AnimationTree
-	animation_player = $CharacterAnimations/AnimationPlayer
-	
 	health_component.immune.connect(set_immunity_animation_param)
 	health_component.immune.connect(hit)
 	health_component.die.connect(die)
 	
 	# Set display name label
 	name_label.text = display_name
+	
+	# Enable animations
+	animation_tree = $CharacterAnimations/AnimationTree
+	animation_player = $CharacterAnimations/AnimationPlayer
+	animation_tree.active = true
+	animation_player.active = true
 
 
 func die() -> void:
@@ -56,5 +60,20 @@ func die() -> void:
 	queue_free()
 
 
-func hit(_immune: bool) -> void:
-	dialogue_manager.start_dialogue(hit_dialogue)
+func hit(immune: bool) -> void:
+	if immune:
+		dialogue_manager.start_dialogue(hit_dialogue)
+
+
+func update_animation_parameters() -> void:
+	# Set blend position parameters and display correct animation direction
+	# TODO: npc animations
+	animation_tree.set("parameters/conditions/idle", direction == Vector2.ZERO)
+	animation_tree.set("parameters/conditions/moving", direction != Vector2.ZERO)
+	
+	if direction.length() > 0:
+		animation_tree.set("parameters/Hit/blend_position", direction)
+		animation_tree.set("parameters/Idle/blend_position", direction)
+		animation_tree.set("parameters/Walk/blend_position", direction)
+	
+	super.update_animation_parameters()

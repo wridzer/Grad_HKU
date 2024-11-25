@@ -20,9 +20,6 @@ func _ready() -> void:
 		push_warning("Multiple players found in scene, deleting last loaded")
 		queue_free()
 	
-	animation_tree = $CharacterAnimations/AnimationTree
-	animation_player = $CharacterAnimations/AnimationPlayer
-	
 	# Connect signals
 	game_manager.spawn.connect(spawn)
 	input_manager.interact.connect(interact)
@@ -30,6 +27,8 @@ func _ready() -> void:
 	health_component.immune.connect(set_immunity_animation_param)
 	
 	# Enable animations
+	animation_tree = $CharacterAnimations/AnimationTree
+	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
 
@@ -64,3 +63,22 @@ func interact() -> void:
 	if actionables.size() > 0:
 		actionables[0].action.emit()
 		return
+
+
+func update_animation_parameters() -> void:
+	# Set blend position parameters and display correct animation direction
+	animation_tree.set("parameters/conditions/idle", input_manager.direction == Vector2.ZERO)
+	animation_tree.set("parameters/conditions/moving", input_manager.direction != Vector2.ZERO)
+	
+	if input_manager.direction.length() > 0:
+		animation_tree.set("parameters/Hit/blend_position", input_manager.direction)
+		animation_tree.set("parameters/Idle/blend_position", input_manager.direction)
+		animation_tree.set("parameters/Walk/blend_position", input_manager.direction)
+	
+	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
+		slash()
+	
+	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
+		block()
+	
+	super.update_animation_parameters()
