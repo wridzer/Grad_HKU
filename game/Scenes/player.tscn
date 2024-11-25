@@ -257,13 +257,10 @@ libraries = {
 autoplay = "character_animations/RESET"
 
 [node name="Direction" type="Node2D" parent="CharacterAnimations"]
-rotation = 1.5708
 
 [node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("6_s88px")]
 
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("7_1yosh")]
-process_mode = 0
-visible = true
 position = Vector2(0, 8)
 script = ExtResource("8_sibh1")
 
