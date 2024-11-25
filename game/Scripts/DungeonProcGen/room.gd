@@ -8,7 +8,11 @@ extends Node2D
 @export var room_position: Vector2
 var room_tiles: PackedVector2Array = []
 @export var enemies: Array[Enemy] = []
-@export var player_detector: Area2D
+@export var player_detector: Area2D:
+	set(value):
+		player_detector = value
+		player_detector.body_entered.connect(_player_entered_room)
+		player_detector.body_exited.connect(_player_exited_room)
 
 
 @warning_ignore("shadowed_variable")
@@ -18,14 +22,9 @@ func _init(start_pos = self.start_pos, width = self.width, height = self.height)
 	self.height = height
 	
 	if !room_position:
-		var average_x: float = start_pos.x + float(width)/2
-		var average_y: float = start_pos.y + float(height)/2
+		var average_x: float = start_pos.x + float(width) / 2
+		var average_y: float = start_pos.y + float(height) / 2
 		room_position = Vector2(average_x, average_y)
-
-
-func _ready() -> void:
-	player_detector.body_entered.connect(_player_entered_room)
-	player_detector.body_exited.connect(_player_exited_room)
 
 
 func _player_entered_room(body: Node2D) -> void:
