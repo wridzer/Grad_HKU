@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=32 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -9,9 +9,10 @@
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
-[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/sword.tscn" id="4_x3qln"]
+[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Held Items/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
-[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/shield.tscn" id="5_r2ml8"]
+[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Held Items/shield.tscn" id="5_r2ml8"]
+[ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Held Items/bow.tscn" id="6_u67rn"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -241,7 +242,7 @@ radius = 2.0
 radius = 12.0
 
 [node name="Npc" type="CharacterBody2D"]
-z_index = 1
+z_index = 4
 collision_layer = 17
 script = ExtResource("1_kinge")
 
@@ -257,10 +258,12 @@ parameters/conditions/block = false
 parameters/conditions/hit = false
 parameters/conditions/idle = true
 parameters/conditions/moving = false
+parameters/conditions/shoot = false
 parameters/conditions/slash = false
 parameters/Block/blend_position = Vector2(0, -1)
 parameters/Hit/blend_position = Vector2(0, -1)
 parameters/Idle/blend_position = Vector2(0, -1)
+parameters/Shoot/blend_position = Vector2(0, 0)
 parameters/Slash/blend_position = Vector2(0, -1)
 parameters/Walk/blend_position = Vector2(0, -1)
 
@@ -278,6 +281,8 @@ libraries = {
 
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
 position = Vector2(0, 8)
+
+[node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_sw6te")

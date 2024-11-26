@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3s2y63nra24b"]
 
-[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="2_ekvkk"]
-[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="3_ndokg"]
+[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_hxfpf"]
+[ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="2_sf7ls"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tpyv7"]
-atlas = ExtResource("2_ekvkk")
+atlas = ExtResource("1_hxfpf")
 region = Rect2(0, 128, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6dbag"]
@@ -25,7 +25,7 @@ height = 12.0
 [node name="Sword" type="Node2D"]
 process_mode = 4
 visible = false
-z_index = 1
+z_index = 2
 rotation = 1.0472
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -39,7 +39,7 @@ rotation = 0.767945
 scale = Vector2(0.822, 1)
 collision_layer = 2
 collision_mask = 4
-script = ExtResource("3_ndokg")
+script = ExtResource("2_sf7ls")
 damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponentSword"]

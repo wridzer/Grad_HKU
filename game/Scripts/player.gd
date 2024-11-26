@@ -81,4 +81,7 @@ func update_animation_parameters() -> void:
 	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
 		block()
 	
+	if input_manager.bow && !animation_tree.get("parameters/conditions/bow"):
+		shoot()
+	
 	super.update_animation_parameters()

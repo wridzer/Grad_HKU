@@ -19,6 +19,7 @@ size = Vector2(20, 1.75)
 [node name="Shield" type="Node2D"]
 process_mode = 4
 visible = false
+z_index = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xw6r0")
