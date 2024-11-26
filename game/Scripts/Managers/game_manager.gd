@@ -38,7 +38,7 @@ func load_level(level_to_load: String = level_hub) -> void:
 	switch_level_cleanup.emit()
 	
 	# Add the level to load under "Level" to the scene tree
-	var scene = ResourceLoader.load(level_to_load, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE)
+	var scene = ResourceLoader.load(level_to_load, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	level_parent.add_child(scene.instantiate())
 	
 	# Remove the old level

@@ -38,12 +38,11 @@ func slash() -> void:
 	animation_tree.set("parameters/conditions/slash", false)
 
 
-func shoot() -> void:
+func shoot(direction: Vector2) -> void:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
-	# Most rigid way to get the right direction at this point is from the idle blend position
-	animation_tree.set("parameters/Shoot/blend_position", animation_tree.get("parameters/Idle/blend_position"))
+	animation_tree.set("parameters/Shoot/blend_position", direction)
 	animation_tree.set("parameters/conditions/shoot", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D

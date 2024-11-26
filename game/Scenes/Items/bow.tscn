@@ -1,9 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://do6he7lc4b3cx"]
 
-[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_cqf0o"]
+[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_qbrh2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4q4ns"]
-atlas = ExtResource("1_cqf0o")
+atlas = ExtResource("1_qbrh2")
 region = Rect2(640, 896, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xw6r0"]
@@ -20,7 +20,7 @@ animations = [{
 [node name="Bow" type="Node2D"]
 process_mode = 4
 visible = false
-z_index = 2
+z_index = 8
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 3)

@@ -3,3 +3,4 @@ extends Area2D
 
 
 @export var damage: int
+signal hit

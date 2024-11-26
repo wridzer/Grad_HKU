@@ -9,10 +9,10 @@
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
-[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Held Items/sword.tscn" id="4_x3qln"]
+[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
-[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Held Items/shield.tscn" id="5_r2ml8"]
-[ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Held Items/bow.tscn" id="6_u67rn"]
+[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="5_r2ml8"]
+[ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -279,6 +279,9 @@ libraries = {
 
 [node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("4_x3qln")]
 
+[node name="HitboxComponentSword" parent="CharacterAnimations/Direction/Sword" index="1"]
+collision_layer = 16
+
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
 position = Vector2(0, 8)
 
@@ -312,7 +315,7 @@ shape = SubResource("CircleShape2D_cslfr")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("4_6t8yg")]
 collision_layer = 16
-collision_mask = 6
+collision_mask = 70
 health = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
@@ -335,3 +338,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
+
+[editable path="CharacterAnimations/Direction/Sword"]

@@ -16,10 +16,10 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var preferred_combat: CombatType
 @export var adapatable_combat: CombatType
 @export var unadaptable_combat: CombatType
+@export_file var arrow_path: String
+
 var direction: Vector2 = Vector2.ZERO
-
 var affection: int
-
 var saved_spawn_pos: Vector2
 
 

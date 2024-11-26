@@ -14,3 +14,4 @@ func _on_area_entered(hitbox: HitboxComponent) -> void:
 		return
 	
 	health.take_damage(hitbox.damage)
+	hitbox.hit.emit()

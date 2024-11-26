@@ -6,4 +6,3 @@ extends Node2D
 
 func get_spawn_point() -> Node2D:
 	return spawn_point
-	
