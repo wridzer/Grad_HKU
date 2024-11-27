@@ -33,6 +33,7 @@ scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_6dbag")
 
 [node name="HitboxComponentArrow" type="Area2D" parent="."]
+process_mode = 4
 collision_layer = 64
 collision_mask = 23
 script = ExtResource("3_xna7g")
@@ -43,11 +44,16 @@ position = Vector2(3.2, -0.1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_obcww")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="StopTimer" type="Timer" parent="."]
+wait_time = 0.01
+one_shot = true
+
+[node name="StartTimer" type="Timer" parent="."]
 wait_time = 0.01
 one_shot = true
 
 [connection signal="area_entered" from="HitboxComponentArrow" to="." method="_on_hitbox_component_arrow_area_entered"]
 [connection signal="body_entered" from="HitboxComponentArrow" to="." method="_on_hitbox_component_arrow_body_entered"]
 [connection signal="hit" from="HitboxComponentArrow" to="." method="_on_hurtbox_hit"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="StopTimer" to="." method="_on_stop_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
