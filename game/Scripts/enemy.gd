@@ -6,6 +6,10 @@ extends CharacterBody2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 
+@export_range(0.1, 15.0) var min_chase_speed: float = 1.0
+@export_range(15.0, 100.0) var max_chase_speed: float = 50.0
+@export_range(1.0, 5.0) var steering_value: float = 1.5
+@export_range(0.5, 1) var smoothing_value: float = 0.8
 
 func _ready() -> void:
 	if (Blackboard.get_data("enemies_alive")):
