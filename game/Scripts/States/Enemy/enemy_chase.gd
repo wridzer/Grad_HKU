@@ -33,19 +33,20 @@ func physics_update(delta: float) -> void:
 	
 	# Lerp the enemy's velocity towards the best direction
 	var normalized_velocity: Vector2 = enemy.get_velocity().normalized()
-	var smoothed_direction: Vector2 = normalized_velocity.lerp(directions[best_index], enemy.smoothing_value).normalized()
+	var smoothed_direction: Vector2 = normalized_velocity.lerp(directions[best_index], enemy.turning_smoothing_value).normalized()
 	
 	# Calculate the steering force towards the smoothed best direction
 	var steering_force: Vector2 = (smoothed_direction - normalized_velocity) * enemy.steering_value
 	
-	# Calculate the alignment between current velocity and the smoothed direction
-	var alignment: float = normalized_velocity.dot(smoothed_direction)
-	
-	# Interpolate between MIN and MAX speed based on alignment
+	# Interpolate between MIN and MAX speed based on alignment to best direction
+	var alignment: float = normalized_velocity.dot(directions[best_index])
 	var target_speed: float = lerp(enemy.min_chase_speed, enemy.max_chase_speed, (alignment + 1) * 0.5) 
 	
-	# Calculate the new velocity with dynamic speed adjustment
-	var new_velocity = (enemy.get_velocity() + steering_force).normalized() * target_speed
+	# Smoothly interpolate the current speed to the target speed
+	var smoothed_speed = lerp(enemy.get_velocity().length(), target_speed, enemy.speed_smoothing_value)
+
+	# Calculate the new velocity
+	var new_velocity = (enemy.get_velocity() + steering_force).normalized() * smoothed_speed
 	
 	# Limit the new velocity to a minimum and maximum speed
 	var new_velocity_length_squared = new_velocity.length_squared()

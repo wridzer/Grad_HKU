@@ -6,12 +6,15 @@ extends CharacterBody2D
 @onready var state_machine: StateMachine = $StateMachine
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 
-@export_range(0.1, 15.0) var min_chase_speed: float = 1.0
+@export_range(1.0, 20.0) var min_chase_speed: float = 5.0
 @export_range(15.0, 100.0) var max_chase_speed: float = 50.0
-@export_range(1.0, 5.0) var steering_value: float = 1.5
-@export_range(0.5, 1) var smoothing_value: float = 0.8
+@export_range(1.0, 6.0) var steering_value: float = 1.4
+@export_range(0.5, 1) var turning_smoothing_value: float = 0.7
+@export_range(0.0, 1) var speed_smoothing_value: float = 0.3
+
 
 func _ready() -> void:
+	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed") 
 	if (Blackboard.get_data("enemies_alive")):
 		Blackboard.add_data("enemies_alive", Blackboard.get_data("enemies_alive") + 1)
 	else:
