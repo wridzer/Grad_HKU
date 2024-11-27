@@ -51,6 +51,9 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 	var reenable_smoothing := camera_2d.is_position_smoothing_enabled()
 	camera_2d.set_position_smoothing_enabled(false)
 	
+	# Reset animation parameters
+	super.reset_animation_parameters()
+	
 	saved_spawn_pos = spawn_pos
 	self.position = spawn_pos
 	

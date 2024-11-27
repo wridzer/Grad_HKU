@@ -57,3 +57,10 @@ func update_animation_parameters() -> void:
 
 func set_immunity_animation_param(immune: bool) -> void:
 	animation_tree.set("parameters/conditions/hit", immune)
+
+
+func reset_animation_parameters() -> void:
+	animation_tree.set("parameters/conditions/hit", false)
+	animation_tree.set("parameters/conditions/slash", false)
+	animation_tree.set("parameters/conditions/block", false)
+	animation_tree.set("parameters/conditions/shoot", false)
