@@ -26,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	if !hit:
 		global_position += direction * SPEED * delta
 
-
+	
 func _on_start_timer_timeout() -> void:
 	hitbox_component_arrow.set_process_mode(Node.PROCESS_MODE_INHERIT)
 
@@ -37,6 +37,7 @@ func _on_hitbox_component_arrow_body_entered(_body: Node2D) -> void:
 
 func _on_stop_timer_timeout() -> void:
 	hit = true
+	hitbox_component_arrow.set_process_mode(Node.PROCESS_MODE_DISABLED)
 
 
 func _on_hurtbox_hit() -> void:
