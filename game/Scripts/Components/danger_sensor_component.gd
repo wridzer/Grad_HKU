@@ -7,7 +7,6 @@ extends Node
 @export var raycasts: Array[RayCast2D]
 
 var danger_array: Array
-var lastEditedRaycast: int
 
 
 func _physics_process(_delta: float) -> void:
