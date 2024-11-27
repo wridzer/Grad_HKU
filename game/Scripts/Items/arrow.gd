@@ -5,6 +5,7 @@ extends Node2D
 @onready var start_timer: Timer = $StartTimer
 @onready var stop_timer: Timer = $StopTimer
 @onready var hitbox_component_arrow: HitboxComponent = $HitboxComponentArrow
+@onready var danger_area: Area2D = $DangerArea
 
 const STARTING_DISTANCE: float = 2.0
 const STOPPING_DISTANCE: float = 2.0
@@ -38,6 +39,7 @@ func _on_hitbox_component_arrow_body_entered(_body: Node2D) -> void:
 func _on_stop_timer_timeout() -> void:
 	hit = true
 	hitbox_component_arrow.set_process_mode(Node.PROCESS_MODE_DISABLED)
+	danger_area.set_process_mode(Node.PROCESS_MODE_DISABLED)
 
 
 func _on_hurtbox_hit() -> void:
