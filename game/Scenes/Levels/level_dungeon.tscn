@@ -7,18 +7,11 @@
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("dungeon_node", "tile_map", "tile_map_decor")]
 script = ExtResource("1_6uvhx")
+spawn_point_scene = ExtResource("2_8vk5u")
+enemy_scene = ExtResource("3_ucs6u")
 dungeon_node = NodePath("Dungeon")
 tile_map = NodePath("TileMapLayer")
 tile_map_decor = NodePath("TileMapLayer2")
-spawn_point_scene = ExtResource("2_8vk5u")
-enemy_scene = ExtResource("3_ucs6u")
-ROOM_AMOUNT = 8
-BORDER_SIZE = 120
-ROOM_TYPES = Dictionary[int, int]({
-8: 8,
-12: 12,
-16: 16
-})
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("4_lg2bt")
