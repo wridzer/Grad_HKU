@@ -23,7 +23,7 @@ func _physics_process(delta: float) -> void:
 		global_position += direction * SPEED * delta
 
 
-func _on_hitbox_component_arrow_body_entered(body: Node2D) -> void:
+func _on_hitbox_component_arrow_body_entered(_body: Node2D) -> void:
 	timer.start()
 
 

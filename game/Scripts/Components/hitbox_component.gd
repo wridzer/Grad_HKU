@@ -3,4 +3,4 @@ extends Area2D
 
 
 @export var damage: int
-signal hit
+@warning_ignore("unused_signal") signal hit
