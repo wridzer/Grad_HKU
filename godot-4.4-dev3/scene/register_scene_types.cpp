@@ -93,6 +93,7 @@
 #include "scene/gui/video_stream_player.h"
 #include "scene/main/canvas_item.h"
 #include "scene/main/canvas_layer.h"
+#include "scene/main/goap_agent.h"
 #include "scene/main/http_request.h"
 #include "scene/main/instance_placeholder.h"
 #include "scene/main/missing_node.h"
@@ -119,6 +120,8 @@
 #include "scene/resources/environment.h"
 #include "scene/resources/external_texture.h"
 #include "scene/resources/font.h"
+#include "scene/resources/goap_action.h"
+#include "scene/resources/goap_goal.h"
 #include "scene/resources/gradient.h"
 #include "scene/resources/gradient_texture.h"
 #include "scene/resources/image_texture.h"
@@ -1015,6 +1018,10 @@ void register_scene_types() {
 	GDREGISTER_CLASS(NavigationAgent2D);
 	GDREGISTER_CLASS(NavigationObstacle2D);
 	GDREGISTER_CLASS(NavigationLink2D);
+
+	GDREGISTER_CLASS(GoapAgent);
+	GDREGISTER_CLASS(GoapAction);
+	GDREGISTER_CLASS(GoapGoal);
 
 	OS::get_singleton()->yield(); // may take time to init
 
