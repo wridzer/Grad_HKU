@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://divp2amo5ul71"]
+[gd_scene load_steps=17 format=3 uid="uid://divp2amo5ul71"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ewpuj"]
@@ -41,6 +41,9 @@ size = Vector2(12, 12)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jx768"]
 radius = 3.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_2mt6e"]
+radius = 14.0
+
 [node name="Enemy" type="CharacterBody2D"]
 z_index = 3
 collision_layer = 5
@@ -66,6 +69,7 @@ frame_progress = 0.923811
 health = 3
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_neb5v")
 debug_color = Color(0.996319, 0, 0.189017, 0.42)
 
@@ -78,9 +82,19 @@ damage = 1
 shape = SubResource("RectangleShape2D_nmttr")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("4_egr5u")]
+visible = false
 collision_layer = 4
 collision_mask = 82
 health = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jx768")
+
+[node name="DangerArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DangerArea"]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_2mt6e")

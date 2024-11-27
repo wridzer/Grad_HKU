@@ -6,12 +6,12 @@ extends Node2D
 @onready var stop_timer: Timer = $StopTimer
 @onready var hitbox_component_arrow: HitboxComponent = $HitboxComponentArrow
 
-const STARTING_DISTANCE := 2
-const STOPPING_DISTANCE := 2
-const SPEED := 150.0
+const STARTING_DISTANCE: float = 2.0
+const STOPPING_DISTANCE: float = 2.0
+const SPEED: float = 120.0
 var mouse_position: Vector2
 var direction: Vector2
-var hit: bool
+var hit: bool = false
 
 
 func _ready() -> void:
