@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
+[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://Scripts/GOAP/test_goap_goal.tres" id="9_cwxd6"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="5_r2ml8"]
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
 
@@ -339,4 +340,6 @@ vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
 
+[node name="GoapAgent" type="GoapAgent" parent="."]
+goals = Array[GoapGoal]([ExtResource("9_cwxd6")])
 [editable path="CharacterAnimations/Direction/Sword"]

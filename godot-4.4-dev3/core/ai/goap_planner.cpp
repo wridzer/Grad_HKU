@@ -1,14 +1,135 @@
 #include "goap_planner.h"
 
-void GoapPlanner::register_classes() {
-	//ClassDB::register_class<GoapAction>();
+#include <core/ai/blackboard.h>
 
-	//ClassDB::register_class<Action>();
-	//ClassDB::register_class<Goal>();
-	//ClassDB::register_class<Planner>();
+GoapPlanner *GoapPlanner::singleton = nullptr;
+
+GoapPlanner::GoapPlanner() {
+	ERR_FAIL_COND_MSG(singleton, "Singleton in GOAP planner already exist.");
+	singleton = this;
 }
 
-// In your module initialization function
-GoapPlanner::GoapPlanner() {
-	register_classes();
+GoapPlanner::~GoapPlanner() {
+	singleton = nullptr;
+}
+
+void GoapPlanner::set_actions(TypedArray<GoapAction> p_actions) {
+	GLTFTemplateConvert::set_from_array(actions, p_actions);
+}
+
+void GoapPlanner::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_actions", "action"), &GoapPlanner::set_actions);
+	ClassDB::bind_method(D_METHOD("get_actions"), &GoapPlanner::get_actions);
+	//ClassDB::bind_method(D_METHOD("get_plan", "goal"), &GoapPlanner::get_plan);
+
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "goals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_goals", "get_goals");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "actions", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_actions", "get_actions");
+}
+
+Plan GoapPlanner::get_plan(Ref<GoapGoal> goal) {
+	printf("Goal: %s\n", String(goal->get_class_name()));
+
+	Dictionary desired_state = goal->get_desired_state().duplicate();
+	if (desired_state.is_empty()) {
+		return Plan();
+	}
+
+	Vector<Plan> plans = _find_best_plan(goal, desired_state);
+	Plan cheapest_plan = _get_cheapest_plan(plans);
+
+	return cheapest_plan;
+}
+
+Vector<Plan> GoapPlanner::_find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state) {
+	Plan root_plan;
+	root_plan.actions.push_back(goal);
+	root_plan.cost = 0;
+
+	Vector<Plan> plans;
+	if (_build_plans(root_plan, desired_state)) {
+		plans = _transform_tree_into_plans(root_plan);
+	}
+	return plans;
+}
+
+Plan GoapPlanner::_get_cheapest_plan(const Vector<Plan> &plans) {
+	Plan best_plan;
+	best_plan.cost = std::numeric_limits<real_t>::max();
+
+	for (const auto &plan : plans) {
+		_print_plan(plan);
+		if (plan.cost < best_plan.cost) {
+			best_plan = plan;
+		}
+	}
+	return best_plan;
+}
+
+bool GoapPlanner::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
+	bool has_followup = false;
+	Dictionary state = desired_state.duplicate();
+
+	for (int i = 0; i < actions.size(); i++) {
+		Ref<GoapAction> action = actions[i];
+		if (!action->is_valid()) {
+			continue;
+		}
+
+		bool should_use_action = false;
+		Dictionary effects = action->get_effects();
+		Dictionary new_desired_state = state.duplicate();
+
+		for (const Variant &s : new_desired_state.keys()) {
+			if (new_desired_state[s] == effects[s]) {
+				new_desired_state.erase(s);
+				should_use_action = true;
+			}
+		}
+
+		if (should_use_action) {
+			Dictionary preconditions = action->get_preconditions();
+			for (const Variant &p : preconditions.keys()) {
+				new_desired_state[p] = preconditions[p];
+			}
+
+			Plan new_plan = current_plan;
+			new_plan.actions.push_back(action);
+			new_plan.cost += action->get_cost();
+
+			if (new_desired_state.is_empty() || _build_plans(new_plan, new_desired_state)) {
+				has_followup = true;
+			}
+		}
+	}
+	return has_followup;
+}
+
+Vector<Plan> GoapPlanner::_transform_tree_into_plans(const Plan &root_plan) {
+	Vector<Plan> plans;
+
+	if (root_plan.actions.is_empty()) {
+		plans.push_back(root_plan);
+		return plans;
+	}
+
+	for (int i = 0; i < root_plan.actions.size(); i++) {
+		Plan plan_with_action = root_plan;
+		plan_with_action.actions.push_back(root_plan.actions[i]);
+		plans.push_back(plan_with_action);
+	}
+
+	return plans;
+}
+
+void GoapPlanner::_print_plan(const Plan &plan) {
+	String action_names;
+	for (int i = 0; i < plan.actions.size(); i++) {
+		// Cast the Variant to a Ref<GoapAction>
+		Ref<GoapAction> action = plan.actions[i];
+		if (action.is_valid()) {
+			action_names += action->get_class_name();
+			action_names += " ";
+		}
+	}
+	printf("Plan cost: %f, actions: %s\n", plan.cost, action_names.utf8().get_data());
 }

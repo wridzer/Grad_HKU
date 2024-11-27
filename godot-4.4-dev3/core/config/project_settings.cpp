@@ -1571,6 +1571,7 @@ ProjectSettings::ProjectSettings() {
 
 	ProjectSettings::get_singleton()->add_hidden_prefix("input/");
 	ProjectSettings::get_singleton()->add_hidden_prefix("blackboard/");
+	ProjectSettings::get_singleton()->add_hidden_prefix("GOAP/");
 }
 
 ProjectSettings::ProjectSettings(const String &p_path) {

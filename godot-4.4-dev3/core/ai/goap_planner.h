@@ -1,41 +1,48 @@
 #pragma once
 
-#include <array>
-#include <core/io/resource.h>
+#include <core/object/class_db.h>
+#include <core/variant/array.h>
+#include <modules/gltf/gltf_template_convert.h>
+#include <scene/main/node.h>
+#include <scene/resources/goap_action.h>
+#include <scene/resources/goap_goal.h>
 
-class GoapPlanner : public Resource {
-	GDCLASS(GoapPlanner, Resource);
+struct Plan {
+	Vector<Ref<GoapAction>> actions;
+	real_t cost;
+
+	Plan() :
+			cost(0) {}
+	Plan(Vector<Ref<GoapAction>> actions, real_t cost) :
+			actions(actions), cost(cost) {}
+};
+
+class GoapPlanner : public Object {
+	GDCLASS(GoapPlanner, Object);
+
+private:
+	static GoapPlanner *singleton;
+	Vector<Ref<GoapAction>> actions;
 
 public:
-	void _init();
-	void register_classes();
+	static _FORCE_INLINE_ GoapPlanner *get_singleton() { return singleton; }
+
 	GoapPlanner();
 	~GoapPlanner();
 
-	//Array plan(const Dictionary &currentState, const Ref<Goal> &goal, const Array &actions) {
-	//	Array actionPlan;
-	//	Dictionary state = currentState;
+	void set_actions(TypedArray<GoapAction> p_actions);
+	TypedArray<GoapAction> get_actions() const { return GLTFTemplateConvert::to_array(actions); }
 
-	//	while (!goal->is_achieved(state)) {
-	//		bool actionFound = false;
+	Plan get_plan(Ref<GoapGoal> goal);
 
-	//		for (int i = 0; i < actions.size(); ++i) {
-	//			Ref<Action> action = actions[i];
+private:
+	Vector<Plan> _find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state);
+	Plan _get_cheapest_plan(const Vector<Plan> &plans);
+	bool _build_plans(Plan &current_plan, const Dictionary &desired_state);
+	Vector<Plan> _transform_tree_into_plans(const Plan &root_plan);
+	void _print_plan(const Plan &plan);
 
-	//			if (action->is_achievable(state)) {
-	//				action->apply_effects(state);
-	//				actionPlan.append(action);
-	//				actionFound = true;
-	//				break;
-	//			}
-	//		}
-
-	//		if (!actionFound) {
-	//			printf("No feasible action found to reach the goal!");
-	//			return Array(); // Return an empty plan if no actions can be taken
-	//		}
-	//	}
-
-	//	return actionPlan;
-	//}
+protected:
+	static void _bind_methods();
 };
+#pragma once
