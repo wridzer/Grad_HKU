@@ -13,7 +13,7 @@ const MAX_ARROW_COUNT = 5
 static var instance: Player = null
 var following_npc: Npc = null
 var saved_spawn_pos: Vector2
-var arrows: Array[Arrow]
+@export var arrows: Array[Arrow]
 
 
 func _ready() -> void:	
@@ -26,7 +26,7 @@ func _ready() -> void:
 	
 	# Connect signals
 	game_manager.spawn.connect(spawn)
-	game_manager.switch_level_cleanup.connect(switch_level_cleanup)
+	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	input_manager.interact.connect(interact)
 	health_component.die.connect(respawn)
 	health_component.immune.connect(set_immunity_animation_param)
@@ -94,12 +94,7 @@ func update_animation_parameters() -> void:
 
 
 func shoot(direction: Vector2) -> void:
-	if arrows.size() >= MAX_ARROW_COUNT:
-		if is_instance_valid(arrows.front()):
-			arrows.pop_front().queue_free()
-		else:
-			arrows.pop_front()
-	
+	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
 	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
@@ -108,10 +103,19 @@ func shoot(direction: Vector2) -> void:
 	arrow.reparent(get_parent())
 	arrows.append(arrow)
 	
+	# There should only be MAX_ARROW_COUNT arrows at once
+	_reduce_arrows_to(MAX_ARROW_COUNT)
+	
+	# Remove arrow from list when freeing
+	arrow.tree_exiting.connect(func(): arrows.erase(arrow))
+	
 	# Animate bow
 	super.shoot(direction)
 
 
-func switch_level_cleanup() -> void:
-	for _i in range(arrows.size()):
-		arrows.pop_front().queue_free()
+func _reduce_arrows_to(amount: int) -> void:
+	while arrows.size() > amount:
+		if is_instance_valid(arrows.front()):
+			arrows.pop_front().queue_free()
+		else:
+			arrows.pop_front()

@@ -219,7 +219,7 @@ animations = [{
 radius = 3.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jdjs5"]
-radius = 2.0
+radius = 3.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_6iiv1"]
 font_size = 9
