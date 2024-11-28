@@ -3,29 +3,6 @@ class_name DungeonGenerator
 extends Node
 
 
-@export var dungeon_node: Node2D
-@export var tile_map: TileMapLayer
-@export var tile_map_decor: TileMapLayer
-
-@warning_ignore("shadowed_global_identifier") @export var seed: String
-@export var generated: bool = false:
-	set(value):
-		if Engine.is_editor_hint() && dungeon_node.get_child_count() == 0:
-			generate()
-
-@export var clear: bool = false:
-	set(value):
-		if Engine.is_editor_hint():
-			tile_map.clear()
-			tile_map_decor.clear()
-			rooms.clear()
-			
-			for child in dungeon_node.get_children():
-				child.queue_free()
-
-@export var spawn_point_scene: PackedScene
-@export var enemy_scene: PackedScene
-
 # Tiles
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
 const BORDER_TILE: Vector2i = Vector2i(7, 0)
@@ -38,42 +15,66 @@ const BACKGROUND_TILES: Array[Vector2i] = [Vector2i(7, 0),Vector2i(7, 1),Vector2
 
 const MIN_WALL_MARGIN: int = 3
 const MAX_RECURSION: int = 15
+const STEPS_BEFORE_WAITING_FRAME: int = 20
+
+# Prerequisites
+@export var _dungeon_node: Node2D
+@export var _tile_map: TileMapLayer
+@export var _tile_map_decor: TileMapLayer
+@export var _spawn_point_scene: PackedScene
+@export var _enemy_scene: PackedScene
+
+@warning_ignore("shadowed_global_identifier")
+@export var _seed: String
+@export var _generated: bool = false:
+	set(value):
+		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
+			generate()
+
+@export var _clear: bool = false:
+	set(value):
+		if Engine.is_editor_hint():
+			_tile_map.clear()
+			_tile_map_decor.clear()
+			_rooms.clear()
+			
+			for child in _dungeon_node.get_children():
+				child.queue_free()
 
 # Generation instructions
-@export_range(3, 20) var room_amount: int = 5
-@export_range(0, 10) var extra_room_margin: int = 0
-@export_range(15, 40, 5) var border_margin: int = 20
-@export_range(15, 200, 5) var dungeon_size: int = 120
-@export var room_types: Dictionary[int, int] = {15: 15}
-@export_range(0, 5) var min_enemies_per_room: int = 1
-@export_range(0, 5) var max_enemies_per_room: int = 3
-@export_range(0.5, 5.0) var enemy_wall_margin: float = 0.5
+@export var _room_types: Dictionary[int, int] = {15: 15}
+@export_range(15, 200, 5) var _dungeon_size: int = 120
+@export_range(3, 20) var _room_amount: int = 5
+@export_range(0, 10) var _extra_room_margin: int = 0
+@export_range(15, 40, 5) var _border_margin: int = 20
+@export_range(0, 5) var _min_enemies_per_room: int = 1
+@export_range(0, 5) var _max_enemies_per_room: int = 3
+@export_range(0.5, 5.0) var _enemy_wall_margin: float = 0.5
 
-var rooms: Array[Room] = []
-var step: int = 0:
+var _rooms: Array[Room] = []
+var _step: int = 0:
 	set(value):
-		step += value
-		if step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
+		_step += value
+		if _step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
 			await get_tree().create_timer(0).timeout
-const STEPS_BEFORE_WAITING_FRAME: int = 20
 
 
 func _ready() -> void:
-	if !Engine.is_editor_hint() &&  dungeon_node.get_child_count() == 0:
+	if !Engine.is_editor_hint() &&  _dungeon_node.get_child_count() == 0:
 		generate()
 
 
 func generate() -> void:
-	assert(dungeon_size > border_margin, "dungeon_size needs to be bigger than border_margin")
-	assert(!room_types.is_empty(), "room_types is empty")
+	assert(_dungeon_size > _border_margin, "dungeon_size needs to be bigger than _border_margin")
+	assert(!_room_types.is_empty(), "room_types is empty")
 	print("generating")
 	
 	# Apply seed when generating
-	if !seed.is_empty():
-		seed(seed.hash())
+	if !_seed.is_empty():
+		seed(_seed.hash())
 	
 	make_border()
-	for i in room_amount:
+	for i in _room_amount:
 		make_room(MAX_RECURSION)
 	
 	# Only works for 3+ rooms
@@ -84,63 +85,63 @@ func generate() -> void:
 	make_hallways(doors)
 	fill_background()
 	
-	var spawn_room = rooms.pick_random()
+	var spawn_room = _rooms.pick_random()
 	spawn_enemies(spawn_room)
 	make_spawn_point(spawn_room)
 
 
 func make_border() -> void:
 	# Generate the border tiles
-	for i in range(-1, dungeon_size + 1):
-		step += 1
-		tile_map.set_cell(Vector2i(i, -1), 0, BORDER_TILE, 0)
-		tile_map.set_cell(Vector2i(i, dungeon_size), 0, BORDER_TILE, 0)
-		tile_map.set_cell(Vector2i(dungeon_size, i), 0, BORDER_TILE, 0)
-		tile_map.set_cell(Vector2i(-1, i), 0, BORDER_TILE, 0)
+	for i in range(-1, _dungeon_size + 1):
+		_step += 1
+		_tile_map.set_cell(Vector2i(i, -1), 0, BORDER_TILE, 0)
+		_tile_map.set_cell(Vector2i(i, _dungeon_size), 0, BORDER_TILE, 0)
+		_tile_map.set_cell(Vector2i(_dungeon_size, i), 0, BORDER_TILE, 0)
+		_tile_map.set_cell(Vector2i(-1, i), 0, BORDER_TILE, 0)
 
 
 func make_room(recursion: int) -> void:
 	if recursion <= 0:
 		return
 	
-	step += 1
+	_step += 1
 	
 	# Generate a random room
-	var width: int = room_types.keys().pick_random()
-	var height: int = room_types[width]
-	var start_pos: Vector2i = Vector2i(randi_range(0, dungeon_size - width), randi_range(0, dungeon_size - height))
+	var width: int = _room_types.keys().pick_random()
+	var height: int = _room_types[width]
+	var start_pos: Vector2i = Vector2i(randi_range(0, _dungeon_size - width), randi_range(0, _dungeon_size - height))
 	
 	# Prevent room overlap
-	var wall_margin: int = MIN_WALL_MARGIN + extra_room_margin
+	var wall_margin: int = MIN_WALL_MARGIN + _extra_room_margin
 	for x in range(-wall_margin, width + wall_margin):
 		for y in range(-wall_margin, height + wall_margin):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			for tile_type in ROOM_TILES:
-				if tile_map.get_cell_atlas_coords(pos) == tile_type:
+				if _tile_map.get_cell_atlas_coords(pos) == tile_type:
 					make_room(recursion - 1)
 					return
 	
 	# Prevent wall/border overlap
-	for x in range(-border_margin, width + border_margin):
-		for y in range(-border_margin, height + border_margin):
+	for x in range(-_border_margin, width + _border_margin):
+		for y in range(-_border_margin, height + _border_margin):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
-			if tile_map.get_cell_atlas_coords(pos) == BORDER_TILE:
+			if _tile_map.get_cell_atlas_coords(pos) == BORDER_TILE:
 				make_room(recursion - 1)
 				return
 	
 	# Generate the room tiles, and save room data
 	var room: Room = Room.new(start_pos, width, height)
-	rooms.append(room)
-	dungeon_node.add_child(room)
+	_rooms.append(room)
+	_dungeon_node.add_child(room)
 	room.owner = self
-	room.name = "Room " + str(rooms.size() - 1) + str(room.room_position)
-	room.set_global_position(room.room_position * tile_map.rendering_quadrant_size)
+	room.name = "Room " + str(_rooms.size() - 1) + str(room.room_position)
+	room.set_global_position(room.room_position * _tile_map.rendering_quadrant_size)
 	
 	for x in width:
 		for y in height:
-			step += 1
+			_step += 1
 			var pos: Vector2i = start_pos + Vector2i(x,y)
-			tile_map.set_cell(pos, 0, ROOM_TILES.pick_random(), 0)
+			_tile_map.set_cell(pos, 0, ROOM_TILES.pick_random(), 0)
 			room.room_tiles.append(pos)
 	
 	# Generate an Area2D player detector for the room
@@ -157,7 +158,7 @@ func make_room(recursion: int) -> void:
 	collision_shape.owner = self
 	collision_shape.name = "CollisionShape"
 	var rect_shape = RectangleShape2D.new()
-	rect_shape.extents = float(tile_map.rendering_quadrant_size) / 2 * Vector2(room.width, room.height)
+	rect_shape.extents = float(_tile_map.rendering_quadrant_size) / 2 * Vector2(room.width, room.height)
 	collision_shape.shape = rect_shape
 
 
@@ -168,7 +169,7 @@ func get_minimum_spanning_tree() -> AStar2D:
 	
 	# Get all room positions and populate the graphs
 	var positions: PackedVector2Array = []
-	for room in rooms:
+	for room in _rooms:
 		positions.append(room.room_position)
 		del_graph.add_point(del_graph.get_available_point_id(), room.room_position)
 		mst_graph.add_point(mst_graph.get_available_point_id(), room.room_position)
@@ -224,9 +225,9 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 	for point_id in hallway_graph.get_point_ids():
 		for connection in hallway_graph.get_point_connections(point_id):
 			if connection > point_id: # Don't check connections twice
-				step += 1
-				var room_from: Room = rooms[point_id]
-				var room_to: Room = rooms[connection]
+				_step += 1
+				var room_from: Room = _rooms[point_id]
+				var room_to: Room = _rooms[connection]
 				
 				# Find the closest room tile to the other room (for both rooms)
 				var tile_from: Vector2i = room_from.room_tiles[0]
@@ -259,24 +260,24 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				doors.append(door)
 				
 				# Set the door tiles
-				tile_map_decor.set_cell(tile_from, 0, DOOR_TILE, 0)
-				tile_map_decor.set_cell(tile_to, 0, DOOR_TILE, 0)
+				_tile_map_decor.set_cell(tile_from, 0, DOOR_TILE, 0)
+				_tile_map_decor.set_cell(tile_to, 0, DOOR_TILE, 0)
 	
 	return doors
 
 
 func make_walls(doors: Array[PackedVector2Array]) -> void:
-	for room in rooms:
+	for room in _rooms:
 		var room_width_pos = room.start_pos.x + room.width
 		var room_height_pos = room.start_pos.y + room.height
 		for i in range(room.start_pos.x - 1, room_width_pos + 1):
-			step += 1
-			tile_map.set_cell(Vector2i(i, room.start_pos.y - 1), 0, WALL_TILES_HOR.pick_random(), 0)
-			tile_map.set_cell(Vector2i(i, room_height_pos), 0, WALL_TILES_HOR.pick_random(), 0)
+			_step += 1
+			_tile_map.set_cell(Vector2i(i, room.start_pos.y - 1), 0, WALL_TILES_HOR.pick_random(), 0)
+			_tile_map.set_cell(Vector2i(i, room_height_pos), 0, WALL_TILES_HOR.pick_random(), 0)
 		for i in range(room.start_pos.y - 1, room_height_pos + 1):
-			step += 1
-			tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILES_VER.pick_random(), 0)
-			tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILES_VER.pick_random(), 0)
+			_step += 1
+			_tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILES_VER.pick_random(), 0)
+			_tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILES_VER.pick_random(), 0)
 	
 	for door_pair in doors:
 		for door in door_pair:
@@ -286,28 +287,28 @@ func make_walls(doors: Array[PackedVector2Array]) -> void:
 
 func break_random_wall(locations: PackedVector2Array) -> void:
 	for point in locations:
-		var tile_atlas_coord = tile_map.get_cell_atlas_coords(point)
+		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(point)
 		for wall_tile in WALL_TILES_HOR + WALL_TILES_VER:
 			if tile_atlas_coord == wall_tile:
-				step += 1
-				tile_map.set_cell(point, 0, INVALID_TILE, 0)
+				_step += 1
+				_tile_map.set_cell(point, 0, INVALID_TILE, 0)
 				return
 
 
 func make_hallways(doors: Array[PackedVector2Array]) -> void:
 	# Set up AStar pathfinding
 	var a_star: AStarGrid2D = AStarGrid2D.new()
-	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * dungeon_size)
+	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * _dungeon_size)
 	a_star.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	a_star.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	a_star.update()
 	
 	# Pass AStar the area to work with
-	for tile in tile_map.get_used_cells():
-		if tile_map_decor.get_cell_atlas_coords(tile) == DOOR_TILE:
+	for tile in _tile_map.get_used_cells():
+		if _tile_map_decor.get_cell_atlas_coords(tile) == DOOR_TILE:
 			continue;
 		
-		var tile_atlas_coord = tile_map.get_cell_atlas_coords(tile)
+		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(tile)
 		for tile_type in WALL_TILES_HOR + WALL_TILES_VER + ROOM_TILES:
 			if tile_atlas_coord == tile_type:
 				a_star.set_point_solid(Vector2i(tile))
@@ -322,41 +323,41 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 		var hallway: PackedVector2Array = a_star.get_point_path(door_from, door_to)
 		
 		for point in hallway:
-			step += 1
-			if tile_map.get_cell_atlas_coords(point) == INVALID_TILE:
-				tile_map.set_cell(point, 0, HALLWAY_TILES.pick_random(), 0)
+			_step += 1
+			if _tile_map.get_cell_atlas_coords(point) == INVALID_TILE:
+				_tile_map.set_cell(point, 0, HALLWAY_TILES.pick_random(), 0)
 
 
 func fill_background() -> void:
-	for x in range(dungeon_size):
-		for y in range(dungeon_size):
+	for x in range(_dungeon_size):
+		for y in range(_dungeon_size):
 			var pos: Vector2i = Vector2i(x,y)
-			if tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
-				tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
+			if _tile_map.get_cell_atlas_coords(pos) == INVALID_TILE:
+				_tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
 
 
 func spawn_enemies(spawn_room: Room) -> void:
-	for room in rooms:
+	for room in _rooms:
 		if room == spawn_room:
 			continue
 		
-		var enemy_count: int = randi_range(min_enemies_per_room, max_enemies_per_room)
+		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
 		
 		for i in range(enemy_count):
-			step += 1
-			var enemy: Enemy = enemy_scene.instantiate()
+			_step += 1
+			var enemy: Enemy = _enemy_scene.instantiate()
 			room.enemies.append(enemy)
 			room.add_child(enemy)
 			enemy.name = enemy.name + str(i)
 			enemy.owner = self
-			var half_width: float = room.width / 2.0 - enemy_wall_margin
-			var half_height: float = room.height / 2.0 - enemy_wall_margin
+			var half_width: float = room.width / 2.0 - _enemy_wall_margin
+			var half_height: float = room.height / 2.0 - _enemy_wall_margin
 			var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
-			enemy.translate(pos * tile_map.rendering_quadrant_size)
+			enemy.translate(pos * _tile_map.rendering_quadrant_size)
 
 
 func make_spawn_point(spawn_room: Room) -> void:
-	var spawn_point = spawn_point_scene.instantiate()
+	var spawn_point = _spawn_point_scene.instantiate()
 	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self
-	spawn_point.translate(spawn_room.room_position * tile_map.rendering_quadrant_size)
+	spawn_point.translate(spawn_room.room_position * _tile_map.rendering_quadrant_size)

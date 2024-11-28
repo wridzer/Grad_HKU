@@ -1,13 +1,13 @@
 extends Node
 
 
+signal interact
+
 var direction: Vector2 = Vector2.ZERO
 var attack: bool = false
 var block: bool = false
 var bow: bool = false
 var disabled: bool = false
-
-signal interact
 
 
 func _process(_delta: float) -> void:

@@ -1,20 +1,21 @@
 extends Area2D
 
 
-@onready var timer := $Timer
-@export_file var level_to_load: String
+@export_file var _level_to_load: String
+
+@onready var _timer := $Timer
 
 
 func _on_body_entered(player: Player) -> void:
 	if player != null:
-		timer.start()
+		_timer.start()
 
 
 func _on_body_exited(player: Player) -> void:
-	if player != null && timer.time_left != 0:
-		timer.stop()
+	if player != null && _timer.time_left != 0:
+		_timer.stop()
 
 
-func _on_timer_timeout() -> void:
-	game_manager.load_level(level_to_load)
-	timer.stop()
+func _on__timer_timeout() -> void:
+	game_manager.load_level(_level_to_load)
+	_timer.stop()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=33 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -11,9 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="4_x3qln"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
-[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://Scripts/GOAP/test_goap_goal.tres" id="9_cwxd6"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="5_r2ml8"]
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
+[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://Scripts/GOAP/test_goap_goal.tres" id="9_cwxd6"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -246,6 +246,7 @@ radius = 12.0
 z_index = 4
 collision_layer = 17
 script = ExtResource("1_kinge")
+_arrow_path = "res://Scenes/Items/arrow.tscn"
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 
@@ -288,9 +289,9 @@ position = Vector2(0, 8)
 
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("2_sw6te")
-initial_state = NodePath("NpcIdle")
+_initial_state = NodePath("NpcIdle")
 
 [node name="NpcIdle" type="Node" parent="StateMachine"]
 script = ExtResource("3_waukb")
@@ -308,16 +309,16 @@ position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_wo31h")]
-health = 3
-immunityLength = 1.0
+_health = 3
+_immunity_length = 1.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("4_6t8yg")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("4_6t8yg")]
 collision_layer = 16
 collision_mask = 70
-health = NodePath("../HealthComponent")
+_health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")
@@ -342,4 +343,5 @@ language = "en"
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
 goals = Array[GoapGoal]([ExtResource("9_cwxd6")])
+
 [editable path="CharacterAnimations/Direction/Sword"]

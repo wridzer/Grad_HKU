@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://Scripts/Components/danger_sensor_component.gd" id="1_bqhda"]
 
-[node name="DangerSensorComponent" type="Node2D" node_paths=PackedStringArray("raycasts")]
+[node name="DangerSensorComponent" type="Node2D" node_paths=PackedStringArray("_raycasts")]
 script = ExtResource("1_bqhda")
-raycasts = [NodePath("0"), NodePath("1"), NodePath("2"), NodePath("3"), NodePath("4"), NodePath("5"), NodePath("6"), NodePath("7")]
+_raycasts = [NodePath("0"), NodePath("1"), NodePath("2"), NodePath("3"), NodePath("4"), NodePath("5"), NodePath("6"), NodePath("7")]
 
 [node name="0" type="RayCast2D" parent="."]
 target_position = Vector2(15, 0)

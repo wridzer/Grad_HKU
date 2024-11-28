@@ -1,11 +1,11 @@
 extends Node2D
 
 
-@onready var timer: Timer = $Timer
+@export var _npc_offset: Vector2
 
-@export var npc_offset: Vector2
+var _just_spawned := true
 
-var just_spawned := true
+@onready var _timer: Timer = $Timer
 
 
 func _ready() -> void:
@@ -13,11 +13,11 @@ func _ready() -> void:
 
 
 func spawn() -> void:
-	if just_spawned:
-		game_manager.spawn.emit(self.position, npc_offset)
-		just_spawned = false
-		timer.stop()
+	if _just_spawned:
+		game_manager.spawn.emit(self.position, _npc_offset)
+		_just_spawned = false
+		_timer.stop()
 
 
-func _on_timer_timeout() -> void:
-	just_spawned = false
+func _on__timer_timeout() -> void:
+	_just_spawned = false

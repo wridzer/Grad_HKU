@@ -3,8 +3,7 @@ extends EnemyState
 
 
 const STATE_TYPE = StateType.CHASE
-
-const directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1),Vector2(0,1),Vector2(1,1)]
+const _directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1),Vector2(0,1),Vector2(1,1)]
 
 
 func get_state_type() -> int:
@@ -23,8 +22,8 @@ func physics_update(delta: float) -> void:
 	# Get the best direction index using a loop, dot product and danger array
 	var best_index: int = 0
 	var best_interest: float = -INF
-	for index in range(directions.size()):
-		var interest: float = directions[index].dot(player_direction) - enemy.danger_sensor_component.danger_array[index]
+	for index in range(_directions.size()):
+		var interest: float = _directions[index].dot(player_direction) - enemy.danger_sensor_component.danger_array[index]
 		context_map[index] = interest
 		
 		if index != 0 && interest > best_interest:
@@ -33,23 +32,23 @@ func physics_update(delta: float) -> void:
 	
 	# Lerp the enemy's velocity towards the best direction
 	var normalized_velocity: Vector2 = enemy.get_velocity().normalized()
-	var smoothed_direction: Vector2 = normalized_velocity.lerp(directions[best_index], enemy.turning_smoothing_value).normalized()
+	var smoothed_direction: Vector2 = normalized_velocity.lerp(_directions[best_index], enemy.turning_smoothing_value).normalized()
 	
 	# Calculate the steering force towards the smoothed best direction
 	var steering_force: Vector2 = (smoothed_direction - normalized_velocity) * enemy.steering_value
 	
 	# Interpolate between MIN and MAX speed based on alignment to best direction
-	var alignment: float = normalized_velocity.dot(directions[best_index])
+	var alignment: float = normalized_velocity.dot(_directions[best_index])
 	var target_speed: float = lerp(enemy.min_chase_speed, enemy.max_chase_speed, (alignment + 1) * 0.5) 
 	
 	# Smoothly interpolate the current speed to the target speed
-	var smoothed_speed = lerp(enemy.get_velocity().length(), target_speed, enemy.speed_smoothing_value)
+	var smoothed_speed: Vector2 = lerp(enemy.get_velocity().length(), target_speed, enemy.speed_smoothing_value)
 
 	# Calculate the new velocity
-	var new_velocity = (enemy.get_velocity() + steering_force).normalized() * smoothed_speed
+	var new_velocity: Vector2 = (enemy.get_velocity() + steering_force).normalized() * smoothed_speed
 	
 	# Limit the new velocity to a minimum and maximum speed
-	var new_velocity_length_squared = new_velocity.length_squared()
+	var new_velocity_length_squared: float = new_velocity.length_squared()
 	if new_velocity_length_squared < enemy.min_chase_speed * enemy.min_chase_speed:
 		new_velocity = new_velocity.normalized() * enemy.min_chase_speed
 	elif new_velocity_length_squared > enemy.max_chase_speed * enemy.max_chase_speed:

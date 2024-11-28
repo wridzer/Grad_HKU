@@ -6,13 +6,14 @@ extends Node2D
 @export var width: int
 @export var height: int
 @export var room_position: Vector2
-var room_tiles: PackedVector2Array = []
 @export var enemies: Array[Enemy] = []
 @export var player_detector: Area2D:
 	set(value):
 		player_detector = value
 		player_detector.body_entered.connect(_player_entered_room)
 		player_detector.body_exited.connect(_player_exited_room)
+
+var room_tiles: PackedVector2Array = []
 
 
 @warning_ignore("shadowed_variable")
