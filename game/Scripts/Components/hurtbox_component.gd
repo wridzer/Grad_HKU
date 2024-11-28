@@ -2,16 +2,16 @@ class_name HurtboxComponent
 extends Area2D
 
 
-@export var health: HealthComponent
+@export var _health_component: HealthComponent
 
 
 func _ready() -> void:
-	assert(is_instance_valid(health), "Please assign a valid HealthComponent to HurtboxComponent")
+	assert(is_instance_valid(_health_component), "Please assign a valid _health_component to HurtboxComponent")
 
 
 func _on_area_entered(hitbox: HitboxComponent) -> void:
 	if !is_instance_valid(hitbox):
 		return
 	
-	health.take_damage(hitbox.damage)
+	_health_component.take_damage(hitbox.damage)
 	hitbox.hit.emit()

@@ -12,8 +12,6 @@ func get_state_type() -> int:
 func enter(previous_state: int, data := {}) -> void:
 	game_manager.switch_level_cleanup.connect(cleanup)
 	
-	npc.health_component.die.connect(die)
-	
 	super.enter(previous_state, data)
 
 
@@ -26,13 +24,7 @@ func physics_update(_delta: float) -> void:
 func exit() -> void:
 	game_manager.switch_level_cleanup.disconnect(cleanup)
 	
-	npc.health_component.die.disconnect(die)
-	
 	super.exit()
-
-
-func die() -> void:
-	npc.die()
 
 
 func cleanup() -> void:

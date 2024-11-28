@@ -2,10 +2,10 @@ class_name StateMachine
 extends Node
 
 
-@export var initial_state: State = null
+@export var _initial_state: State = null
 
-@onready var state: State = (func get_initial_state() -> State:
-	return initial_state if initial_state != null else get_child(0)
+@onready var _state: State = (func get_initial_state() -> State:
+	return _initial_state if _initial_state != null else get_child(0)
 ).call()
 
 
@@ -14,25 +14,25 @@ func _ready() -> void:
 		state_node.finished.connect(transition_to_next_state)
 
 	await owner.ready
-	state.enter(0)
+	_state.enter(0)
 
 
 func _process(delta: float) -> void:
-	state.update(delta)
+	_state.update(delta)
 
 
 func _physics_process(delta: float) -> void:
-	state.physics_update(delta)
+	_state.physics_update(delta)
 	
 
 func transition_to_next_state(target_state: int, data: Dictionary = {}) -> void:
 	for state_node: State in find_children("*", "State"):
 		if state_node.get_state_type() == target_state:
-			state.exit()
+			_state.exit()
 			
-			var previous_state := state
-			state = state_node
-			state.enter(previous_state.get_state_type(), data)
+			var previous_state := _state
+			_state = state_node
+			_state.enter(previous_state.get_state_type(), data)
 			
 			return
 	

@@ -229,7 +229,7 @@ z_index = 4
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_lxypx")
-arrow_path = "res://Scenes/Items/arrow.tscn"
+_arrow_path = "res://Scenes/Items/arrow.tscn"
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 
@@ -288,16 +288,16 @@ position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_856tq")]
-health = 3
-immunityLength = 1.0
+_health = 3
+_immunity_length = 1.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_cslfr")
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("5_c8efr")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("5_c8efr")]
 collision_layer = 2
 collision_mask = 84
-health = NodePath("../HealthComponent")
+_health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")

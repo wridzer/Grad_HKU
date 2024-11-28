@@ -56,9 +56,9 @@ speed_smoothing_value = 0.01
 
 [node name="DangerSensorComponent" parent="." instance=ExtResource("9_mtrvr")]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("6_qadqw")
-initial_state = NodePath("EnemyIdle")
+_initial_state = NodePath("EnemyIdle")
 
 [node name="EnemyIdle" type="Node" parent="StateMachine"]
 script = ExtResource("3_1iy2t")
@@ -71,7 +71,8 @@ sprite_frames = SubResource("SpriteFrames_mof70")
 frame_progress = 0.923811
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
-health = 3
+_health = 3
+_immunity_length = 1.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -86,11 +87,11 @@ damage = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("RectangleShape2D_nmttr")
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health") instance=ExtResource("4_egr5u")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("4_egr5u")]
 visible = false
 collision_layer = 4
 collision_mask = 82
-health = NodePath("../HealthComponent")
+_health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jx768")

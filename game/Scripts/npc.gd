@@ -4,49 +4,29 @@ extends AnimatedCharacter
 
 enum CombatType {ATTACK, DEFEND, AVOID}
 
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var actionable: Area2D = $Actionable
-@onready var name_label: Label = $NameLabel
-@onready var state_machine: StateMachine = $StateMachine
+@export var _preferred_combat: CombatType
+@export var _adapatable_combat: CombatType
+@export var _unadaptable_combat: CombatType
+@export_file var _arrow_path: String
 
 @export var display_name: String
 @export var idle_dialogue: DialogueResource
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
-@export var preferred_combat: CombatType
-@export var adapatable_combat: CombatType
-@export var unadaptable_combat: CombatType
-@export_file var arrow_path: String
 
-var direction: Vector2 = Vector2.ZERO
-var affection: int
-var saved_spawn_pos: Vector2
-
+var _affection: int
 var _goals
 var _current_goal
 var _current_plan
 var _current_plan_step = 0
-
 var _actor
 
-#
-# On every loop this script checks if the current goal is still
-# the highest priority. if it's not, it requests the action planner a new plan
-# for the new high priority goal.
-#
-func _process(delta):
-	var goal = _get_best_goal()
-	if _current_goal == null or goal != _current_goal:
-	# You can set in the blackboard any relevant information you want to use
-	# when calculating action costs and status. I'm not sure here is the best
-	# place to leave it, but I kept here to keep things simple.
-		Blackboard.add_data("npc_location", _actor.position)
+var direction: Vector2 = Vector2.ZERO
+var saved_spawn_pos: Vector2
 
-		_current_goal = goal
-		_current_plan = $GoapPlanner.get_action_planner().get_plan(_current_goal)
-		_current_plan_step = 0
-	else:
-		_follow_plan(_current_plan, delta)
+@onready var _health_component: HealthComponent = $HealthComponent
+@onready var _name_label: Label = $NameLabel
+@onready var actionable: Area2D = $Actionable
 
 
 func init(actor, goals: Array):
@@ -55,15 +35,36 @@ func init(actor, goals: Array):
 
 
 #
+# On every loop this script checks if the current goal is still
+# the highest priority. if it's not, it requests the action planner a new plan
+# for the new high priority goal.
+#
+func _process(delta):
+	pass
+	#var goal = _get_best_goal()
+	#if _current_goal == null or goal != _current_goal:
+	## You can set in the blackboard any relevant information you want to use
+	## when calculating action costs and status. I'm not sure here is the best
+	## place to leave it, but I kept here to keep things simple.
+		#Blackboard.add_data("npc_location", _actor.position)
+	#
+		#_current_goal = goal
+		#_current_plan = $GoapPlanner.get_action_planner().get_plan(_current_goal)
+		#_current_plan_step = 0
+	#else:
+		#_follow_plan(_current_plan, delta)
+
+
+#
 # Returns the highest priority goal available.
 #
 func _get_best_goal():
 	var highest_priority
-
-	for goal in $GoapPlanner._goals:
-		if goal.is_valid() and (highest_priority == null or goal.priority() > highest_priority.priority()):
-			highest_priority = goal
-
+	
+	#for goal in $GoapPlanner._goals:
+	#	if goal.is_valid() and (highest_priority == null or goal.priority() > highest_priority.priority()):
+	#		highest_priority = goal
+	
 	return highest_priority
 
 
@@ -77,10 +78,11 @@ func _get_best_goal():
 func _follow_plan(plan, delta):
 	if plan.size() == 0:
 		return
-
+	
 	var is_step_complete = plan[_current_plan_step].perform(_actor, delta)
 	if is_step_complete and _current_plan_step < plan.size() - 1:
 		_current_plan_step += 1
+
 
 func _ready() -> void:
 	# Destroy instance if any other instance exists that is following the player
@@ -94,16 +96,16 @@ func _ready() -> void:
 	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + name)
 	
 	# Assert that all combat preferences are unique types
-	assert(preferred_combat != adapatable_combat, name + "'s preferred_combat and adapatable_combat are the same")
-	assert(adapatable_combat != unadaptable_combat, name + "'s adapatable_combat and unadaptable_combat are the same")
-	assert(unadaptable_combat != preferred_combat, name + "'s unadaptable_combat and preferred_combat are the same")
+	assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
+	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
+	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
 	
-	health_component.immune.connect(set_immunity_animation_param)
-	health_component.immune.connect(hit)
-	health_component.die.connect(die)
+	_health_component.die.connect(die)
+	_health_component.immune.connect(hit)
+	_health_component.immune.connect(set_immunity_animation_param)
 	
 	# Set display name label
-	name_label.text = display_name
+	_name_label.text = display_name
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree

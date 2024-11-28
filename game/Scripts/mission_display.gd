@@ -1,14 +1,14 @@
 extends Node2D
 
 
-@onready var actionable: Area2D = $Actionable
+@export var _mission_dialogue: DialogueResource
 
-@export var mission_dialogue: DialogueResource
+@onready var _actionable: Area2D = $Actionable
 
 
 func _ready() -> void:
-	actionable.action.connect(activate_display)
+	_actionable.action.connect(_activate_display)
 
 
-func activate_display() -> void:
-	dialogue_manager.start_dialogue(mission_dialogue)
+func _activate_display() -> void:
+	dialogue_manager.start_dialogue(_mission_dialogue)

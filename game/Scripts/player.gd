@@ -2,18 +2,21 @@ class_name Player
 extends AnimatedCharacter
 
 
-@onready var camera_2d: Camera2D = $Camera2D
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
-
-@export_file var arrow_path: String
-
 const SPEED := 70.0
 const MAX_ARROW_COUNT = 5
-static var instance: Player = null
+
+@export_file var _arrow_path: String
+
+var _arrows: Array[Arrow]
+var _saved_spawn_pos: Vector2
+
 var following_npc: Npc = null
-var saved_spawn_pos: Vector2
-@export var arrows: Array[Arrow]
+
+static var instance: Player = null
+
+@onready var _actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
+@onready var _camera_2d: Camera2D = $Camera2D
+@onready var _health_component: HealthComponent = $HealthComponent
 
 
 func _ready() -> void:	
@@ -28,8 +31,8 @@ func _ready() -> void:
 	game_manager.spawn.connect(spawn)
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	input_manager.interact.connect(interact)
-	health_component.die.connect(respawn)
-	health_component.immune.connect(set_immunity_animation_param)
+	_health_component.die.connect(respawn)
+	_health_component.immune.connect(set_immunity_animation_param)
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -48,26 +51,26 @@ func _physics_process(_delta: float) -> void:
 
 
 func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
-	var reenable_smoothing := camera_2d.is_position_smoothing_enabled()
-	camera_2d.set_position_smoothing_enabled(false)
+	var reenable_smoothing := _camera_2d.is_position_smoothing_enabled()
+	_camera_2d.set_position_smoothing_enabled(false)
 	
 	# Reset animation parameters
 	super.reset_animation_parameters()
 	
-	saved_spawn_pos = spawn_pos
+	_saved_spawn_pos = spawn_pos
 	self.position = spawn_pos
 	
 	await get_tree().process_frame
-	camera_2d.set_position_smoothing_enabled(reenable_smoothing)
+	_camera_2d.set_position_smoothing_enabled(reenable_smoothing)
 
 
 func respawn() -> void:
-	spawn(saved_spawn_pos, Vector2.ZERO)
-	health_component.gain_health(3)
+	spawn(_saved_spawn_pos, Vector2.ZERO)
+	_health_component.gain_health(3)
 
 
 func interact() -> void:
-	var actionables := actionable_finder.get_overlapping_areas()
+	var actionables := _actionable_finder.get_overlapping_areas()
 	if actionables.size() > 0:
 		actionables[0].action.emit()
 		return
@@ -98,27 +101,27 @@ func update_animation_parameters() -> void:
 
 func shoot(direction: Vector2) -> void:
 	# Create a new arrow
-	var arrow_resource: Resource = ResourceLoader.load(arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
+	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
 	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
 	arrow.direction = direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
-	arrows.append(arrow)
+	_arrows.append(arrow)
 	
 	# There should only be MAX_ARROW_COUNT arrows at once
 	_reduce_arrows_to(MAX_ARROW_COUNT)
 	
 	# Remove arrow from list when freeing
-	arrow.tree_exiting.connect(func(): arrows.erase(arrow))
+	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
 	super.shoot(direction)
 
 
 func _reduce_arrows_to(amount: int) -> void:
-	while arrows.size() > amount:
-		if is_instance_valid(arrows.front()):
-			arrows.pop_front().queue_free()
+	while _arrows.size() > amount:
+		if is_instance_valid(_arrows.front()):
+			_arrows.pop_front().queue_free()
 		else:
-			arrows.pop_front()
+			_arrows.pop_front()

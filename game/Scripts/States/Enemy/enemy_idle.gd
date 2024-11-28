@@ -3,7 +3,6 @@ extends EnemyState
 
 
 const STATE_TYPE = StateType.IDLE
-var stop_time: float = 0.5
 
 
 func get_state_type() -> int:
@@ -15,7 +14,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func physics_update(delta: float) -> void:
-	var slowdown = min(delta / stop_time, 1.0)
+	var slowdown = min(delta / enemy.stop_time, 1.0)
 	enemy.set_velocity(enemy.velocity - enemy.velocity * slowdown)
 	super.physics_update(delta)
 
