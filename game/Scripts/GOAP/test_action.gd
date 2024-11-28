@@ -11,14 +11,15 @@ func get_cost() -> int:
 	var distance = Blackboard.get_data("npc_location").distance_to(Blackboard.get_data("player_location"))
 	return int(distance / 7)
 
+func _get_action_name(name):
+	name = "TEST"
 
 func get_preconditions() -> Dictionary:
 	return {}
 
 
 func get_effects() -> Dictionary:
-	return {
-	}
+	return {}
 
 
 func perform(actor, delta) -> bool:

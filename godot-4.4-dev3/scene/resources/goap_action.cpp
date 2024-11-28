@@ -13,6 +13,12 @@ bool GoapAction::are_preconditions_met() {
 void GoapAction::apply_effects() {
 }
 
+StringName GoapAction::get_action_name() {
+	StringName action_name = "";
+	GDVIRTUAL_CALL(_get_action_name, action_name);
+	return action_name;
+}
+
 Dictionary GoapAction::get_preconditions() {
 	return Dictionary();
 }

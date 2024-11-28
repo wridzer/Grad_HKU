@@ -13,6 +13,7 @@ public:
 	virtual bool are_preconditions_met();
 	virtual void apply_effects();
 
+	virtual StringName get_action_name();
 	virtual Dictionary get_preconditions();
 	virtual Dictionary get_effects();
 	virtual int get_cost();
@@ -23,5 +24,9 @@ public:
 
 protected:
 	static void _bind_methods();
+
+	GDVIRTUAL1(_get_action_name, StringName)
+	GDVIRTUAL1(_get_preconditions, Dictionary)
+	GDVIRTUAL1(_get_effects, Dictionary)
 };
 #endif // !GOAP_ACTION

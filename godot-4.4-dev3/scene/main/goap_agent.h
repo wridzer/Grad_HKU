@@ -27,7 +27,7 @@ public:
 	TypedArray<GoapGoal> get_goals() const { return GLTFTemplateConvert::to_array(goals); }
 
 private:
-	void _process(float delta);
+	virtual void _process(float delta);
 	Ref<GoapGoal> get_best_goal();
 	void follow_plan(Plan plan, float delta);
 
