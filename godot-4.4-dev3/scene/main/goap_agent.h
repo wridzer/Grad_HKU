@@ -6,7 +6,7 @@
 #include <scene/main/node.h>
 #include <scene/resources/goap_action.h>
 #include <scene/resources/goap_goal.h>
-#include <core/ai/goap_planner.h>
+#include <scene/main/Goap.h>
 
 class GoapAgent : public Node {
 	GDCLASS(GoapAgent, Node);
@@ -25,9 +25,9 @@ public:
 
 	void set_goals(TypedArray<GoapGoal> p_goals);
 	TypedArray<GoapGoal> get_goals() const { return GLTFTemplateConvert::to_array(goals); }
+	void execute(float delta, Node *actor, Goap *goap);
 
 private:
-	virtual void _process(float delta);
 	Ref<GoapGoal> get_best_goal();
 	void follow_plan(Plan plan, float delta);
 

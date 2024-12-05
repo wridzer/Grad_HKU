@@ -34,7 +34,6 @@
 #include "core/config/project_settings.h"
 #include "editor/action_map_editor.h"
 #include "editor/blackboard_editor.h"
-#include "editor/goap_editor.h"
 #include "editor/editor_autoload_settings.h"
 #include "editor/editor_data.h"
 #include "editor/editor_sectioned_inspector.h"
@@ -59,7 +58,6 @@ class ProjectSettingsEditor : public AcceptDialog {
 	SectionedInspector *general_settings_inspector = nullptr;
 	ActionMapEditor *action_map_editor = nullptr;
 	BlackboardEditor *blackboard_editor = nullptr;
-	GoapEditor *goap_editor = nullptr;
 	LocalizationEditor *localization_editor = nullptr;
 	EditorAutoloadSettings *autoload_settings = nullptr;
 	ShaderGlobalsEditor *shaders_global_shader_uniforms_editor = nullptr;

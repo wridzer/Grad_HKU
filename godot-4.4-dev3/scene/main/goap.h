@@ -17,18 +17,16 @@ struct Plan {
 			actions(actions), cost(cost) {}
 };
 
-class GoapPlanner : public Object {
-	GDCLASS(GoapPlanner, Object);
+class Goap : public Node {
+	GDCLASS(Goap, Node);
 
 private:
-	static GoapPlanner *singleton;
 	Vector<Ref<GoapAction>> actions;
 
 public:
-	static _FORCE_INLINE_ GoapPlanner *get_singleton() { return singleton; }
 
-	GoapPlanner();
-	~GoapPlanner();
+	Goap();
+	~Goap();
 
 	void set_actions(TypedArray<GoapAction> p_actions);
 	TypedArray<GoapAction> get_actions() const { return GLTFTemplateConvert::to_array(actions); }

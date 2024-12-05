@@ -93,6 +93,7 @@
 #include "scene/gui/video_stream_player.h"
 #include "scene/main/canvas_item.h"
 #include "scene/main/canvas_layer.h"
+#include "scene/main/goap.h"
 #include "scene/main/goap_agent.h"
 #include "scene/main/http_request.h"
 #include "scene/main/instance_placeholder.h"
@@ -1019,6 +1020,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(NavigationObstacle2D);
 	GDREGISTER_CLASS(NavigationLink2D);
 
+	GDREGISTER_CLASS(Goap);
 	GDREGISTER_CLASS(GoapAgent);
 	GDREGISTER_CLASS(GoapAction);
 	GDREGISTER_CLASS(GoapGoal);

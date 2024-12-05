@@ -767,10 +767,6 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	tab_container->add_child(blackboard_editor);
 	_update_blackboard_editor();
 
-	goap_editor = memnew(GoapEditor);
-	goap_editor->set_name(TTR("GOAP"));
-	tab_container->add_child(goap_editor);
-
 	localization_editor = memnew(LocalizationEditor);
 	localization_editor->set_name(TTR("Localization"));
 	localization_editor->connect("localization_changed", callable_mp(this, &ProjectSettingsEditor::queue_save));

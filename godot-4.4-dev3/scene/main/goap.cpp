@@ -1,33 +1,28 @@
-#include "goap_planner.h"
+#include "goap.h"
 
 #include <core/ai/blackboard.h>
 
-GoapPlanner *GoapPlanner::singleton = nullptr;
-
-GoapPlanner::GoapPlanner() {
-	ERR_FAIL_COND_MSG(singleton, "Singleton in GOAP planner already exist.");
-	singleton = this;
+Goap::Goap() {
 }
 
-GoapPlanner::~GoapPlanner() {
-	singleton = nullptr;
+Goap::~Goap() {
 }
 
-void GoapPlanner::set_actions(TypedArray<GoapAction> p_actions) {
+void Goap::set_actions(TypedArray<GoapAction> p_actions) {
 	GLTFTemplateConvert::set_from_array(actions, p_actions);
 }
 
-void GoapPlanner::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_actions", "action"), &GoapPlanner::set_actions);
-	ClassDB::bind_method(D_METHOD("get_actions"), &GoapPlanner::get_actions);
-	//ClassDB::bind_method(D_METHOD("get_plan", "goal"), &GoapPlanner::get_plan);
+void Goap::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_actions", "action"), &Goap::set_actions);
+	ClassDB::bind_method(D_METHOD("get_actions"), &Goap::get_actions);
+	//ClassDB::bind_method(D_METHOD("get_plan", "goal"), &Goap::get_plan);
 
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "goals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_goals", "get_goals");
+	//ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "goals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_goals", "get_goals");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "actions", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_actions", "get_actions");
 }
 
-Plan GoapPlanner::get_plan(Ref<GoapGoal> goal) {
-	printf("Goal: %s\n", String(goal->get_class_name()));
+Plan Goap::get_plan(Ref<GoapGoal> goal) {
+	printf("Goal: %s\n", String(goal->get_goal_name()));
 
 	Dictionary desired_state = goal->get_desired_state().duplicate();
 	if (desired_state.is_empty()) {
@@ -40,7 +35,7 @@ Plan GoapPlanner::get_plan(Ref<GoapGoal> goal) {
 	return cheapest_plan;
 }
 
-Vector<Plan> GoapPlanner::_find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state) {
+Vector<Plan> Goap::_find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state) {
 	Plan root_plan;
 	root_plan.actions.push_back(goal);
 	root_plan.cost = 0;
@@ -52,7 +47,7 @@ Vector<Plan> GoapPlanner::_find_best_plan(Ref<GoapGoal> goal, const Dictionary &
 	return plans;
 }
 
-Plan GoapPlanner::_get_cheapest_plan(const Vector<Plan> &plans) {
+Plan Goap::_get_cheapest_plan(const Vector<Plan> &plans) {
 	Plan best_plan;
 	best_plan.cost = std::numeric_limits<real_t>::max();
 
@@ -65,7 +60,7 @@ Plan GoapPlanner::_get_cheapest_plan(const Vector<Plan> &plans) {
 	return best_plan;
 }
 
-bool GoapPlanner::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
+bool Goap::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
 	bool has_followup = false;
 	Dictionary state = desired_state.duplicate();
 
@@ -104,7 +99,7 @@ bool GoapPlanner::_build_plans(Plan &current_plan, const Dictionary &desired_sta
 	return has_followup;
 }
 
-Vector<Plan> GoapPlanner::_transform_tree_into_plans(const Plan &root_plan) {
+Vector<Plan> Goap::_transform_tree_into_plans(const Plan &root_plan) {
 	Vector<Plan> plans;
 
 	if (root_plan.actions.is_empty()) {
@@ -121,7 +116,7 @@ Vector<Plan> GoapPlanner::_transform_tree_into_plans(const Plan &root_plan) {
 	return plans;
 }
 
-void GoapPlanner::_print_plan(const Plan &plan) {
+void Goap::_print_plan(const Plan &plan) {
 	String action_names;
 	for (int i = 0; i < plan.actions.size(); i++) {
 		// Cast the Variant to a Ref<GoapAction>

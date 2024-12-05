@@ -21,8 +21,6 @@ config/windows_native_icon="res://Art/squid.ico"
 game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
 dialogue_manager="*res://Scenes/Managers/dialogue_manager.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-LayerNames="*res://addons/layerNames/layerNames.gd"
 
 [blackboard]
 

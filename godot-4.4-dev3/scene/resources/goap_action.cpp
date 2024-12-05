@@ -20,23 +20,33 @@ StringName GoapAction::get_action_name() {
 }
 
 Dictionary GoapAction::get_preconditions() {
-	return Dictionary();
+	Dictionary preconditions;
+	GDVIRTUAL_CALL(_get_preconditions, preconditions);
+	return preconditions;
 }
 
 Dictionary GoapAction::get_effects() {
-	return Dictionary();
+	Dictionary effects;
+	GDVIRTUAL_CALL(_get_effects, effects);
+	return effects;
 }
 
 int GoapAction::get_cost() {
-	return 0;
+	int cost = 0;
+	GDVIRTUAL_CALL(_get_cost, cost);
+	return cost;
 }
 
 bool GoapAction::is_valid() {
-	return false;
+	bool valid = false;
+	GDVIRTUAL_CALL(_is_valid, valid);
+	return valid;
 }
 
 bool GoapAction::perform(Node* _actor, float _delta) {
-	return false;
+	bool success = false;
+	GDVIRTUAL_CALL(_perform, _actor, _delta, success);
+	return success;
 }
 
 void GoapAction::_bind_methods() {
