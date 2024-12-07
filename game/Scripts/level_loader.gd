@@ -16,6 +16,6 @@ func _on_body_exited(player: Player) -> void:
 		_timer.stop()
 
 
-func _on__timer_timeout() -> void:
+func _on_timer_timeout() -> void:
 	game_manager.load_level(_level_to_load)
 	_timer.stop()

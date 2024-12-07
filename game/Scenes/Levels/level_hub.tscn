@@ -16,9 +16,8 @@
 [ext_resource type="Resource" uid="uid://b7mlksh2fce4i" path="res://Dialogue/plop_hit.dialogue" id="10_0kxew"]
 [ext_resource type="Resource" uid="uid://cliiw6ci1lvp4" path="res://Dialogue/plop_following.dialogue" id="11_0d40j"]
 
-[node name="Hub" type="Node2D" node_paths=PackedStringArray("spawn_point")]
+[node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")
-spawn_point = NodePath("SpawnPoint")
 
 [node name="Npc_Kin" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(72, -39)
@@ -26,8 +25,6 @@ display_name = "Kin"
 idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
-adapatable_combat = 2
-unadaptable_combat = 1
 
 [node name="Npc_Ker" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
@@ -35,8 +32,6 @@ display_name = "Ker"
 idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
-preferred_combat = 1
-unadaptable_combat = 2
 
 [node name="Npc_Plop" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
@@ -44,8 +39,6 @@ display_name = "Plop"
 idle_dialogue = ExtResource("9_vaxnm")
 hit_dialogue = ExtResource("10_0kxew")
 following_dialogue = ExtResource("11_0d40j")
-preferred_combat = 2
-adapatable_combat = 1
 
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1
@@ -72,7 +65,7 @@ tile_set = ExtResource("2_lbhg0")
 
 [node name="LevelLoader" parent="." instance=ExtResource("2_415ri")]
 position = Vector2(140, 9)
-level_to_load = "res://Scenes/Levels/level_dungeon.tscn"
+_level_to_load = "res://Scenes/Levels/level_dungeon.tscn"
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)
