@@ -21,7 +21,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 
 func update(delta):
-	npc.goap_agent.execute(delta, self, npc.goap)
+	npc.goap_agent.execute(delta, npc, GoapPlanner)
 
 
 func exit() -> void:

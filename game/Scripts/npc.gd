@@ -12,7 +12,6 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var idle_dialogue: DialogueResource
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
-@export var goap: Goap
 @export var goap_agent: GoapAgent
 
 var _affection: int
