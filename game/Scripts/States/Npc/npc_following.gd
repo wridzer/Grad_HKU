@@ -22,7 +22,7 @@ func enter(previous_state: int, data := {}) -> void:
 
 func _process(delta):
 	if GOAP_ON:
-		$"../../GoapAgent".execute(delta, self, $"../../Goap")
+		$"../../GoapAgent".execute(delta, self, GoapPlanner)
 
 func physics_update(delta: float) -> void:
 	if !GOAP_ON:
