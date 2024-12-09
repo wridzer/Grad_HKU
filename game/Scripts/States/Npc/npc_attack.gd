@@ -2,7 +2,7 @@ class_name NpcAttack
 extends NpcState
 
 
-const STATE_TYPE = StateType.ATTACK
+const STATE_TYPE = StateType.INVALID
 
 
 func get_state_type() -> int:

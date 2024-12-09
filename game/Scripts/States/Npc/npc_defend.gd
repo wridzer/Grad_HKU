@@ -2,7 +2,7 @@ class_name NpcDefend
 extends NpcState
 
 
-const STATE_TYPE = StateType.DEFEND
+const STATE_TYPE = StateType.INVALID
 
 
 func get_state_type() -> int:
@@ -28,4 +28,4 @@ func exit() -> void:
 
 
 func cleanup() -> void:
-	die()
+	npc.die()

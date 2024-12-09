@@ -1,8 +1,8 @@
-class_name NpcFollowing
+class_name NpcGoap
 extends NpcState
 
 
-const STATE_TYPE = StateType.FOLLOWING
+const STATE_TYPE = StateType.GOAP
 const FOLLOW_DISTANCE := 15.0
 const FOLLOW_SPEED := 60.0
 
@@ -15,26 +15,13 @@ func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
 	
 	game_manager.npc_stop_following.connect(stop_following)
-	game_manager.switch_level_cleanup.connect(activate_goap)
 	game_manager.spawn.connect(spawn)
 	
 	super.enter(previous_state, data)
 
 
-func physics_update(delta: float) -> void:
-	npc.set_velocity(Vector2.ZERO)
-	
-	var player_pos: Vector2 = Player.instance.get_global_position()
-	var npc_pos: Vector2 = npc.get_global_position()
-	
-	if npc_pos.distance_to(player_pos) > FOLLOW_DISTANCE:
-		var target_pos: Vector2 = (player_pos - npc_pos).normalized()
-		# TODO: npc animations
-		npc.direction = target_pos
-		npc.set_velocity(target_pos * FOLLOW_SPEED)
-	npc.look_at(player_pos)
-	
-	super.physics_update(delta)
+func update(delta):
+	npc.goap_agent.execute(delta, self, npc.goap)
 
 
 func exit() -> void:
@@ -56,8 +43,3 @@ func stop_following(display_name: String) -> void:
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 	npc.saved_spawn_pos = spawn_pos
 	npc.position = spawn_pos + npc_offset
-
-
-func activate_goap() -> void:
-	if Player.instance.following_npc == npc:
-		finished.emit(state_type_to_int(StateType.GOAP))

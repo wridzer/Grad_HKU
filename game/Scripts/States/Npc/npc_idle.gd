@@ -37,5 +37,7 @@ func follow(display_name: String) -> void:
 		if !Player.instance.following_npc:
 			Player.instance.following_npc = npc
 			finished.emit(state_type_to_int(StateType.FOLLOWING))
+			
+			npc.choose()
 		else:
 			dialogue_manager.start_dialogue(npc.idle_dialogue, "already_following")

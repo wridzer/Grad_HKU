@@ -2,7 +2,7 @@ class_name NpcAvoid
 extends NpcState
 
 
-const STATE_TYPE = StateType.AVOID
+const STATE_TYPE = StateType.INVALID
 
 
 func get_state_type() -> int:

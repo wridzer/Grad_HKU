@@ -21,9 +21,18 @@ var mission_type: MissionType = MissionType.INVALID
 
 func set_mission_type(type: String) -> void:
 	mission_type = MissionType.get(type)
+	
+	var mission_choices: Array[MissionType] = Blackboard.get_data("mission_choices")
+	if !is_instance_valid(mission_choices):
+		mission_choices = []
+	mission_choices.append(mission_type)
+	Blackboard.add_data("mission_choices", mission_choices)
 
 
 func _ready() -> void:
+	# Clear the blackboard data
+	Blackboard.clear_data()
+	
 	# Get the level parent node
 	var main = get_tree().root.get_node("Main")
 	if main and main.has_node("Level"):
