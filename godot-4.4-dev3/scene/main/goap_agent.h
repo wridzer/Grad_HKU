@@ -17,19 +17,17 @@ private:
 	Plan current_plan;
 	int current_plan_index = 0;
 
-	Node *actor;
-
 public:
 	GoapAgent();
 	~GoapAgent();
 
 	void set_goals(TypedArray<GoapGoal> p_goals);
 	TypedArray<GoapGoal> get_goals() const { return GLTFTemplateConvert::to_array(goals); }
-	void execute(float delta, Node *actor, Goap *goap);
+	void execute(float delta, Node* actor, Goap* goap);
 
 private:
 	Ref<GoapGoal> get_best_goal();
-	void follow_plan(Plan plan, float delta);
+	void follow_plan(Plan plan, float delta, Node* actor);
 
 protected:
 	static void _bind_methods();

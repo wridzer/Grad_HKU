@@ -4,7 +4,6 @@
 
 GoapAgent::GoapAgent() {
 	current_goal = nullptr;
-	actor = nullptr;
 }
 
 GoapAgent::~GoapAgent() {}
@@ -44,7 +43,7 @@ void GoapAgent::execute(float delta, Node* actor, Goap *goap) {
 		}
 	}
 
-	follow_plan(current_plan, delta);
+	follow_plan(current_plan, delta, actor);
 }
 
 Ref<GoapGoal> GoapAgent::get_best_goal() {
@@ -58,7 +57,7 @@ Ref<GoapGoal> GoapAgent::get_best_goal() {
 	return highest_priority;
 }
 
-void GoapAgent::follow_plan(Plan plan, float delta) {
+void GoapAgent::follow_plan(Plan plan, float delta, Node* actor) {
 	if (plan.actions.size() == 0)
 		return;
 

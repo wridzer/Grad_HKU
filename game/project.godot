@@ -32,12 +32,14 @@ test2="test"
 test3=Vector2(1, 2)
 test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
-player_location=Vector2(40, -7)
+player_location=Vector2(577.333, 504)
 player_location2=Vector2(110.943, 0.422957)
-enemies_alive=10
+enemies_alive=9
 enemies_killed=3
 damage_done=9
 amount_blocked=7
+npc_location=Vector2(563, 504)
+energy=0
 
 [dotnet]
 
