@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbkv7c24upkau"]
+
+[ext_resource type="GoapAction" uid="uid://bb2twqlko1jc1" path="res://goap_resources/actions/chill_action.tres" id="1_ol0y2"]
+[ext_resource type="GoapAction" uid="uid://cw8xh37623b4b" path="res://goap_resources/actions/test_goap_action.tres" id="2_d1rke"]
+
+[node name="Goap" type="Goap"]
+actions = Array[GoapAction]([ExtResource("1_ol0y2"), ExtResource("2_d1rke")])
