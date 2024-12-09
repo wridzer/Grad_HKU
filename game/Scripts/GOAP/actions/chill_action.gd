@@ -25,6 +25,6 @@ func _get_effects() -> Dictionary:
 	return {"energy" : current_energy}
 
 
-func _perform(actor, delta) -> bool:
+func _perform(_actor, _delta) -> bool:
 	#actor.playidleanimation ofzo
 	return true

@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="FleeFromEnemyAction" load_steps=2 format=3 uid="uid://bgr75ol2xtiva"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/flee_from_enemy_action.gd" id="1_c3xfx"]
+
+[resource]
+script = ExtResource("1_c3xfx")

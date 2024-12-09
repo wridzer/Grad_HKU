@@ -248,7 +248,7 @@ radius = 12.0
 z_index = 4
 collision_layer = 17
 script = ExtResource("1_kinge")
-_arrow_path = "res://Scenes/Items/arrow.tscn"
+arrow_path = "res://Scenes/Items/arrow.tscn"
 goap_agent = NodePath("GoapAgent")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]

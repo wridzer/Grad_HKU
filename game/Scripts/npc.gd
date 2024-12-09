@@ -6,7 +6,7 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var _preferred_combat: CombatType
 @export var _adapatable_combat: CombatType
 @export var _unadaptable_combat: CombatType
-@export_file var _arrow_path: String
+@export_file var arrow_path: String
 
 @export var display_name: String
 @export var idle_dialogue: DialogueResource
@@ -14,8 +14,19 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var following_dialogue: DialogueResource
 @export var goap_agent: GoapAgent
 
+@export var follow_distance: float = 15.0
+@export var chase_distance: float = 10.0
+@export var flee_distance: float = 50.0
+@export var follow_speed: float = 60.0
+@export var chase_speed: float = 70.0
+@export var flee_speed: float = 65.0
+@export var _max_chase_distance: float = 100.0
+
 var _affection: int
 
+var squared_follow_distance: float = follow_distance * follow_distance
+var squared_chase_distance: float = chase_distance * chase_distance
+var squared_flee_distance: float = flee_distance * flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
@@ -39,9 +50,6 @@ func _ready() -> void:
 	assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
 	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
 	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
-	Blackboard.add_data("preferred_combat", _preferred_combat)
-	Blackboard.add_data("adapatable_combat", _adapatable_combat)
-	Blackboard.add_data("unadaptable_combat", _unadaptable_combat)
 	
 	_health_component.die.connect(die)
 	_health_component.immune.connect(hit)
@@ -57,15 +65,17 @@ func _ready() -> void:
 	animation_player.active = true
 
 
-func _process(delta) -> void:
-	Blackboard.add_data("npc_location", self.position)
+func _process(_delta) -> void:
+	Blackboard.add_data("npc_location", global_position)
 
 
 func die() -> void:
-	if Player.instance.following_npc == self:
-		Player.instance.following_npc = null
+	_health_component.gain_health(3)
 	
-	queue_free()
+	#if Player.instance.following_npc == self:
+		#Player.instance.following_npc = null
+	#
+	#queue_free()
 
 
 func hit(immune: bool) -> void:
@@ -88,6 +98,8 @@ func update_animation_parameters() -> void:
 
 
 func choose() -> void:
+	_health_component.set_blackboard_variables()
+	
 	var data = Blackboard.get_data("npc_choices")
 	var npc_choices: Array[CombatType] = []
 	if is_instance_valid(data):

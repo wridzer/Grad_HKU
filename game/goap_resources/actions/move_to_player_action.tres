@@ -1,6 +1,6 @@
 [gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://cw8xh37623b4b"]
 
-[ext_resource type="Script" path="res://Scripts/GOAP/actions/test_action.gd" id="1_gmovj"]
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_to_player_action.gd" id="1_gmovj"]
 
 [resource]
 script = ExtResource("1_gmovj")

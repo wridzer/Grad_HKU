@@ -14,6 +14,7 @@ extends Node2D
 		player_detector.body_exited.connect(_player_exited_room)
 
 var room_tiles: PackedVector2Array = []
+var objective: Node2D = null
 
 
 @warning_ignore("shadowed_variable")
@@ -30,6 +31,7 @@ func _init(start_pos = self.start_pos, width = self.width, height = self.height)
 
 func _player_entered_room(body: Node2D) -> void:
 	print(body.name + " entered room " + name)
+	Player.instance.room = self
 	
 	for enemy in enemies:
 		if is_instance_valid(enemy):
@@ -38,6 +40,7 @@ func _player_entered_room(body: Node2D) -> void:
 
 func _player_exited_room(body: Node2D) -> void:
 	print(body.name + " exited room " + name)
+	Player.instance.room = null
 	
 	for enemy in enemies:
 		if is_instance_valid(enemy):
