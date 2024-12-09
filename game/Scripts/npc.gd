@@ -22,8 +22,8 @@ var saved_spawn_pos: Vector2
 @onready var _name_label: Label = $NameLabel
 @onready var actionable: Area2D = $Actionable
 
-func _process(delta):
-	$GoapAgent.execute(delta, self, $Goap)
+func _process(delta) -> void:
+	Blackboard.add_data("npc_location", self.position)
 
 func _ready() -> void:
 	# Destroy instance if any other instance exists that is following the player
@@ -37,9 +37,9 @@ func _ready() -> void:
 	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + name)
 	
 	# Assert that all combat preferences are unique types
-	assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
-	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
-	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
+	#assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
+	#assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
+	#assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
 	
 	_health_component.die.connect(die)
 	_health_component.immune.connect(hit)

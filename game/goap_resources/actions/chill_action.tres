@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://bb2twqlko1jc1"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/chill_action.gd" id="1_olsgg"]
+
+[resource]
+script = ExtResource("1_olsgg")

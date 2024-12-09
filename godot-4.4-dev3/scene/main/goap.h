@@ -17,6 +17,12 @@ struct Plan {
 			actions(actions), cost(cost) {}
 };
 
+struct PlanTree {
+	Ref<GoapAction> action;
+	Dictionary state;
+	Vector<PlanTree> children;
+};
+
 class Goap : public Node {
 	GDCLASS(Goap, Node);
 
@@ -36,8 +42,8 @@ public:
 private:
 	Vector<Plan> _find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state);
 	Plan _get_cheapest_plan(const Vector<Plan> &plans);
-	bool _build_plans(Plan &current_plan, const Dictionary &desired_state);
-	Vector<Plan> _transform_tree_into_plans(const Plan &root_plan);
+	bool _build_plans(PlanTree &current_plan, const Dictionary &desired_state);
+	Vector<Plan> _transform_tree_into_plans(const PlanTree &root_plan);
 	void _print_plan(const Plan &plan);
 
 protected:

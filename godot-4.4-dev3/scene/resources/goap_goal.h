@@ -22,5 +22,5 @@ protected:
 	GDVIRTUAL0RC(StringName, _get_goal_name)
 	GDVIRTUAL0RC(bool, _is_goal_met)
 	GDVIRTUAL0RC(int, _get_priority);
-	GDVIRTUAL1(_get_desired_state, Dictionary);
+	GDVIRTUAL0RC(Dictionary, _get_desired_state);
 };

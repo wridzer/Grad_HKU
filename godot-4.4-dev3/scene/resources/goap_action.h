@@ -27,8 +27,8 @@ protected:
 	static void _bind_methods();
 
 	GDVIRTUAL0RC(StringName, _get_action_name)
-	GDVIRTUAL1(_get_preconditions, Dictionary)
-	GDVIRTUAL1(_get_effects, Dictionary)
+	GDVIRTUAL0RC(Dictionary, _get_preconditions)
+	GDVIRTUAL0RC(Dictionary, _get_effects)
 	GDVIRTUAL0RC(int, _get_cost);
 	GDVIRTUAL0RC(bool, _is_valid);
 	GDVIRTUAL2RC(bool, _perform, Node*, float);

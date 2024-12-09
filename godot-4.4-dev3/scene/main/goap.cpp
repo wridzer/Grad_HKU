@@ -22,7 +22,7 @@ void Goap::_bind_methods() {
 }
 
 Plan Goap::get_plan(Ref<GoapGoal> goal) {
-	printf("Goal: %s\n", String(goal->get_goal_name()));
+	print_line("Goal: ", String(goal->get_goal_name()));
 
 	Dictionary desired_state = goal->get_desired_state().duplicate();
 	if (desired_state.is_empty()) {
@@ -36,9 +36,7 @@ Plan Goap::get_plan(Ref<GoapGoal> goal) {
 }
 
 Vector<Plan> Goap::_find_best_plan(Ref<GoapGoal> goal, const Dictionary &desired_state) {
-	Plan root_plan;
-	root_plan.actions.push_back(goal);
-	root_plan.cost = 0;
+	PlanTree root_plan{ goal, desired_state, {} };
 
 	Vector<Plan> plans;
 	if (_build_plans(root_plan, desired_state)) {
@@ -60,7 +58,7 @@ Plan Goap::_get_cheapest_plan(const Vector<Plan> &plans) {
 	return best_plan;
 }
 
-bool Goap::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
+bool Goap::_build_plans(PlanTree &current_plan, const Dictionary &desired_state) {
 	bool has_followup = false;
 	Dictionary state = desired_state.duplicate();
 
@@ -87,11 +85,10 @@ bool Goap::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
 				new_desired_state[p] = preconditions[p];
 			}
 
-			Plan new_plan = current_plan;
-			new_plan.actions.push_back(action);
-			new_plan.cost += action->get_cost();
+			PlanTree new_plan{ action, state, {} };
 
 			if (new_desired_state.is_empty() || _build_plans(new_plan, new_desired_state)) {
+				current_plan.children.push_back(new_plan);
 				has_followup = true;
 			}
 		}
@@ -99,18 +96,26 @@ bool Goap::_build_plans(Plan &current_plan, const Dictionary &desired_state) {
 	return has_followup;
 }
 
-Vector<Plan> Goap::_transform_tree_into_plans(const Plan &root_plan) {
+Vector<Plan> Goap::_transform_tree_into_plans(const PlanTree &root_plan) {
 	Vector<Plan> plans;
 
-	if (root_plan.actions.is_empty()) {
-		plans.push_back(root_plan);
+	if (root_plan.children.is_empty()) {
+		Plan plan;
+		plan.actions.push_back(root_plan.action);
+		plans.push_back(plan);
 		return plans;
 	}
 
-	for (int i = 0; i < root_plan.actions.size(); i++) {
-		Plan plan_with_action = root_plan;
-		plan_with_action.actions.push_back(root_plan.actions[i]);
-		plans.push_back(plan_with_action);
+	for (int i = 0; i < root_plan.children.size(); i++) {
+		Vector<Plan> child_plans = _transform_tree_into_plans(root_plan.children[i]);
+		for (int j = 0; j < child_plans.size(); j++) {
+			Plan plan = child_plans[j];
+			if (root_plan.action != nullptr/* || root_plan.action->has_method("get_cost")*/) {
+				plan.actions.push_back(root_plan.action);
+				plan.cost += root_plan.action->get_cost();
+			}
+			plans.push_back(child_plans[j]);
+		}
 	}
 
 	return plans;

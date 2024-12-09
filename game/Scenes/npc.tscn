@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=36 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
 [ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/test_goap_goal.tres" id="9_cwxd6"]
 [ext_resource type="GoapAction" uid="uid://cw8xh37623b4b" path="res://goap_resources/actions/test_goap_action.tres" id="15_ffa3j"]
+[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/restore_energy_goal.tres" id="15_nw52t"]
+[ext_resource type="GoapAction" uid="uid://bb2twqlko1jc1" path="res://goap_resources/actions/chill_action.tres" id="17_2jxaa"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -343,9 +345,9 @@ max_lines_visible = 1
 language = "en"
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("9_cwxd6")])
+goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t")])
 
 [node name="Goap" type="Goap" parent="."]
-actions = Array[GoapAction]([ExtResource("15_ffa3j")])
+actions = Array[GoapAction]([ExtResource("15_ffa3j"), ExtResource("17_2jxaa")])
 
 [editable path="CharacterAnimations/Direction/Sword"]

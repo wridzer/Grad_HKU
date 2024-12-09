@@ -48,6 +48,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED)
 	
 	move_and_slide()
+	Blackboard.add_data("player_location", self.position)
 
 
 func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
