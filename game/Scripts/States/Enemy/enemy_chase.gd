@@ -42,8 +42,8 @@ func physics_update(delta: float) -> void:
 	var target_speed: float = lerp(enemy.min_chase_speed, enemy.max_chase_speed, (alignment + 1) * 0.5) 
 	
 	# Smoothly interpolate the current speed to the target speed
-	var smoothed_speed: Vector2 = lerp(enemy.get_velocity().length(), target_speed, enemy.speed_smoothing_value)
-
+	var smoothed_speed: float = lerp(enemy.get_velocity().length(), target_speed, enemy.speed_smoothing_value)
+	
 	# Calculate the new velocity
 	var new_velocity: Vector2 = (enemy.get_velocity() + steering_force).normalized() * smoothed_speed
 	
