@@ -29,6 +29,8 @@ display_name = "Kin"
 idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
+_shoot_priority = 13
+_block_priority = 12
 
 [node name="Npc_Ker" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
@@ -38,6 +40,8 @@ display_name = "Ker"
 idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
+_slash_priority = 13
+_shoot_priority = 12
 
 [node name="Npc_Plop" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
@@ -47,6 +51,8 @@ display_name = "Plop"
 idle_dialogue = ExtResource("9_vaxnm")
 hit_dialogue = ExtResource("10_0kxew")
 following_dialogue = ExtResource("11_0d40j")
+_slash_priority = 12
+_block_priority = 13
 
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1

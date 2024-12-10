@@ -16,15 +16,20 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {"close_to_enemy": true}
 
 
 func _get_effects() -> Dictionary:
-	return {"close_to_enemy" : false}
+	return {"block_enemy": true}
 
 
-func _perform(actor, delta) -> bool:
+func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	npc.velocity = Vector2.ZERO
 	npc.block()
 	return true
+
+
+func _perform_physics(actor, _delta) -> bool:
+	var npc = actor as Npc
+	npc.velocity = Vector2.ZERO
+	return false

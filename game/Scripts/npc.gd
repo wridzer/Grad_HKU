@@ -23,6 +23,9 @@ const MAX_ARROW_COUNT = 5
 @export var chase_speed: float = 70.0
 @export var flee_speed: float = 65.0
 @export var _max_chase_distance: float = 100.0
+@export var _slash_priority: int = 14
+@export var _shoot_priority: int = 14
+@export var _block_priority: int = 14
 
 var _affection: int
 var _arrows: Array[Arrow]
@@ -115,14 +118,18 @@ func choose() -> void:
 		npc_choices = data
 	npc_choices.append(_preferred_combat)
 	Blackboard.add_data("npc_choices", npc_choices)
+	
+	Blackboard.add_data("slash_priority", _slash_priority)
+	Blackboard.add_data("shoot_priority", _shoot_priority)
+	Blackboard.add_data("block_priority", _block_priority)
 
 
-func shoot(direction: Vector2) -> void:
+func shoot(arrow_direction: Vector2) -> void:
 	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
 	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
-	arrow.direction = direction
+	arrow.direction = arrow_direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
 	_arrows.append(arrow)

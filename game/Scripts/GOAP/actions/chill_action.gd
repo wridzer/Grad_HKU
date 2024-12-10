@@ -25,3 +25,9 @@ func _get_effects() -> Dictionary:
 func _perform(_actor, _delta) -> bool:
 	# Never complete performing idling
 	return false
+
+
+func _perform_physics(actor, _delta) -> bool:
+	var npc = actor as Npc
+	npc.velocity = Vector2.ZERO
+	return false

@@ -34,7 +34,7 @@ func _get_effects() -> Dictionary:
 	return {"close_to_enemy" : false}
 
 
-func _perform(actor, delta) -> bool:
+func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
 	
 	var npc_pos: Vector2 = npc.get_global_position()
@@ -54,5 +54,5 @@ func _perform(actor, delta) -> bool:
 		npc.set_velocity(target_direction * npc.flee_speed)
 		npc.look_at(target_direction)
 		npc.move_and_slide()
-
+	
 	return false

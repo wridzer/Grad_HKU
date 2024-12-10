@@ -23,7 +23,7 @@ func _get_effects() -> Dictionary:
 	return {"close_to_player" : true}
 
 
-func _perform(actor, delta) -> bool:
+func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var player_pos: Vector2 = Player.instance.get_global_position()
 	var npc_pos: Vector2 = npc.get_global_position()

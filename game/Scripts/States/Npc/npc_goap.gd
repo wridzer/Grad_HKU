@@ -24,6 +24,10 @@ func update(delta):
 	npc.goap_agent.execute(delta, npc, GoapPlanner)
 
 
+func physics_update(delta: float) -> void:
+	npc.goap_agent.physics_update(delta, npc, GoapPlanner)
+
+
 func exit() -> void:
 	Player.instance.following_npc = null
 	

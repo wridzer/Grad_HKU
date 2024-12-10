@@ -35,7 +35,7 @@ func _get_effects() -> Dictionary:
 
 
 func _perform(_actor, _delta) -> bool:
-	# Find a hiding spot
+	#TODO: Find a hiding spot
 	var hiding_spot: Vector2 = Vector2.ZERO
 	Blackboard.add_data("hiding_spot", hiding_spot)
 	return true
