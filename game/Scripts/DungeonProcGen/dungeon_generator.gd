@@ -26,11 +26,14 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 
 @warning_ignore("shadowed_global_identifier")
 @export var _seed: String
+
+@warning_ignore("unused_private_class_variable")
 @export var _generated: bool = false:
 	set(value):
 		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
 			generate()
 
+@warning_ignore("unused_private_class_variable")
 @export var _clear: bool = false:
 	set(value):
 		if Engine.is_editor_hint():

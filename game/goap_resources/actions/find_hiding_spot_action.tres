@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="FindHidingSpotAction" load_steps=2 format=3 uid="uid://cyvliej34wu3f"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/find_hiding_spot_action.gd" id="1_3flnj"]
+
+[resource]
+script = ExtResource("1_3flnj")

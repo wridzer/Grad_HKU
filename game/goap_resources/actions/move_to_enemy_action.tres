@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="MoveToEnemyAction" load_steps=2 format=3 uid="uid://cimr7sco3oype"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_to_enemy_action.gd" id="1_1snft"]
+
+[resource]
+script = ExtResource("1_1snft")

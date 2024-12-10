@@ -3,6 +3,8 @@ extends AnimatedCharacter
 
 enum CombatType {ATTACK, DEFEND, AVOID}
 
+const MAX_ARROW_COUNT = 5
+
 @export var _preferred_combat: CombatType
 @export var _adapatable_combat: CombatType
 @export var _unadaptable_combat: CombatType
@@ -14,8 +16,21 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var following_dialogue: DialogueResource
 @export var goap_agent: GoapAgent
 
-var _affection: int
+@export var follow_distance: float = 15.0
+@export var chase_distance: float = 10.0
+@export var flee_distance: float = 50.0
+@export var follow_speed: float = 60.0
+@export var chase_speed: float = 70.0
+@export var flee_speed: float = 65.0
+@export var _max_chase_distance: float = 100.0
 
+var _affection: int
+var _arrows: Array[Arrow]
+
+var squared_follow_distance: float = follow_distance * follow_distance
+var squared_chase_distance: float = chase_distance * chase_distance
+var _squared_max_chase_distance: float = _max_chase_distance * _max_chase_distance
+var squared_flee_distance: float = flee_distance * flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
@@ -39,9 +54,6 @@ func _ready() -> void:
 	assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
 	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
 	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
-	Blackboard.add_data("preferred_combat", _preferred_combat)
-	Blackboard.add_data("adapatable_combat", _adapatable_combat)
-	Blackboard.add_data("unadaptable_combat", _unadaptable_combat)
 	
 	_health_component.die.connect(die)
 	_health_component.immune.connect(hit)
@@ -55,17 +67,24 @@ func _ready() -> void:
 	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
+	
+	# Set Blackboard values
+	Blackboard.add_data("squared_follow_distance", squared_follow_distance)
+	Blackboard.add_data("squared_max_chase_distance", _squared_max_chase_distance)
 
 
-func _process(delta) -> void:
-	Blackboard.add_data("npc_location", self.position)
+func _process(_delta) -> void:
+	if Player.instance.following_npc == self:
+		Blackboard.add_data("npc_location", global_position)
 
 
 func die() -> void:
-	if Player.instance.following_npc == self:
-		Player.instance.following_npc = null
+	_health_component.gain_health(3)
 	
-	queue_free()
+	#if Player.instance.following_npc == self:
+		#Player.instance.following_npc = null
+	#
+	#queue_free()
 
 
 func hit(immune: bool) -> void:
@@ -88,9 +107,39 @@ func update_animation_parameters() -> void:
 
 
 func choose() -> void:
+	_health_component.set_blackboard_variables()
+	
 	var data = Blackboard.get_data("npc_choices")
 	var npc_choices: Array[CombatType] = []
 	if is_instance_valid(data):
 		npc_choices = data
 	npc_choices.append(_preferred_combat)
 	Blackboard.add_data("npc_choices", npc_choices)
+
+
+func shoot(direction: Vector2) -> void:
+	# Create a new arrow
+	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
+	var arrow: Arrow = arrow_resource.instantiate()
+	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
+	arrow.direction = direction
+	add_child(arrow)
+	arrow.reparent(get_parent())
+	_arrows.append(arrow)
+	
+	# There should only be MAX_ARROW_COUNT arrows at once
+	_reduce_arrows_to(MAX_ARROW_COUNT)
+	
+	# Remove arrow from list when freeing
+	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
+	
+	# Animate bow
+	super.shoot(direction)
+
+
+func _reduce_arrows_to(amount: int) -> void:
+	while _arrows.size() > amount:
+		if is_instance_valid(_arrows.front()):
+			_arrows.pop_front().queue_free()
+		else:
+			_arrows.pop_front()

@@ -1,0 +1,6 @@
+[gd_resource type="GoapGoal" script_class="HideGoal" load_steps=2 format=3 uid="uid://cxhnjevajye8j"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/goals/hide_goal.gd" id="1_fjajb"]
+
+[resource]
+script = ExtResource("1_fjajb")

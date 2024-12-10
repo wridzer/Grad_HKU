@@ -11,6 +11,7 @@ var _arrows: Array[Arrow]
 var _saved_spawn_pos: Vector2
 
 var following_npc: Npc = null
+var room: Room
 
 static var instance: Player = null
 

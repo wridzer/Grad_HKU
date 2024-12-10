@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="FindEnemyAction" load_steps=2 format=3 uid="uid://dxmoayb1d3r2s"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/find_enemy_action.gd" id="1_ejbtl"]
+
+[resource]
+script = ExtResource("1_ejbtl")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://nqudhm4qctrk"]
+[gd_scene load_steps=18 format=4 uid="uid://nqudhm4qctrk"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_q3wky"]
 [ext_resource type="PackedScene" uid="uid://dpdotgt3oya1o" path="res://Scenes/Levels/level_loader.tscn" id="2_415ri"]
@@ -15,6 +15,8 @@
 [ext_resource type="Resource" uid="uid://cug04ukn2doay" path="res://Dialogue/plop_idle.dialogue" id="9_vaxnm"]
 [ext_resource type="Resource" uid="uid://b7mlksh2fce4i" path="res://Dialogue/plop_hit.dialogue" id="10_0kxew"]
 [ext_resource type="Resource" uid="uid://cliiw6ci1lvp4" path="res://Dialogue/plop_following.dialogue" id="11_0d40j"]
+[ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="13_vlqc1"]
+[ext_resource type="Resource" uid="uid://cteaboydc06j8" path="res://Dialogue/mission_condition_failure.dialogue" id="15_wu44a"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")
@@ -49,6 +51,7 @@ following_dialogue = ExtResource("11_0d40j")
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1
 position = Vector2(88, -1)
+_mission_dialogue = ExtResource("13_vlqc1")
 
 [node name="Tilemaps" type="Node" parent="."]
 
@@ -72,6 +75,7 @@ tile_set = ExtResource("2_lbhg0")
 [node name="LevelLoader" parent="." instance=ExtResource("2_415ri")]
 position = Vector2(140, 9)
 _level_to_load = "res://Scenes/Levels/level_dungeon.tscn"
+condition_failure_dialogue = ExtResource("15_wu44a")
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)

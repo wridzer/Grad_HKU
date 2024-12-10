@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=40 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -13,9 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="5_r2ml8"]
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
-[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/test_goap_goal.tres" id="9_cwxd6"]
+[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="9_cwxd6"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_jrs23"]
-[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/restore_energy_goal.tres" id="15_nw52t"]
+[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="15_nw52t"]
+[ext_resource type="GoapGoal" uid="uid://3i8r3587yr0w" path="res://goap_resources/goals/find_enemy_goal.tres" id="17_pwfi6"]
+[ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="18_chuhk"]
+[ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="19_gd2ps"]
+[ext_resource type="GoapGoal" uid="uid://003imfexht8m" path="res://goap_resources/goals/kill_enemy_goal.tres" id="20_3mnsj"]
+[ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="21_htt4y"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -248,7 +253,6 @@ radius = 12.0
 z_index = 4
 collision_layer = 17
 script = ExtResource("1_kinge")
-_arrow_path = "res://Scenes/Items/arrow.tscn"
 goap_agent = NodePath("GoapAgent")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
@@ -348,6 +352,6 @@ max_lines_visible = 1
 language = "en"
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t")])
+goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("20_3mnsj"), ExtResource("21_htt4y")])
 
 [editable path="CharacterAnimations/Direction/Sword"]

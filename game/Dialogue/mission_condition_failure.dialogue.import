@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cteaboydc06j8"
+path="res://.godot/imported/mission_condition_failure.dialogue-74a90208b452897b834c417b1198ea75.tres"
+
+[deps]
+
+source_file="res://Dialogue/mission_condition_failure.dialogue"
+dest_files=["res://.godot/imported/mission_condition_failure.dialogue-74a90208b452897b834c417b1198ea75.tres"]
+
+[params]
+
+defaults=true

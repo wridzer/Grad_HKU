@@ -22,6 +22,8 @@ game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
 dialogue_manager="*res://Scenes/Managers/dialogue_manager.tscn"
 GoapPlanner="*res://Scenes/Managers/goap_planner.tscn"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+LayerNames="*res://addons/layerNames/layerNames.gd"
 
 [blackboard]
 
@@ -30,9 +32,9 @@ test2="test"
 test3=Vector2(1, 2)
 test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
-player_location=Vector2(577.333, 504)
+player_location=Vector2(40, -7)
 player_location2=Vector2(110.943, 0.422957)
-enemies_alive=9
+enemies_alive=10
 enemies_killed=3
 damage_done=9
 amount_blocked=7
@@ -106,7 +108,7 @@ bow={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Dialogue/ker_idle.dialogue", "res://Dialogue/ker_following.dialogue", "res://Dialogue/ker_hit.dialogue", "res://Dialogue/kin_following.dialogue", "res://Dialogue/kin_hit.dialogue", "res://Dialogue/kin_idle.dialogue", "res://Dialogue/mission.dialogue", "res://Dialogue/plop_following.dialogue", "res://Dialogue/plop_hit.dialogue", "res://Dialogue/plop_idle.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Dialogue/ker_idle.dialogue", "res://Dialogue/ker_following.dialogue", "res://Dialogue/ker_hit.dialogue", "res://Dialogue/kin_following.dialogue", "res://Dialogue/kin_hit.dialogue", "res://Dialogue/kin_idle.dialogue", "res://Dialogue/mission.dialogue", "res://Dialogue/plop_following.dialogue", "res://Dialogue/plop_hit.dialogue", "res://Dialogue/plop_idle.dialogue", "res://Dialogue/mission_condition_failure.dialogue")
 
 [layer_names]
 

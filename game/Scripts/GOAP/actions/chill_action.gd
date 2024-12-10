@@ -1,3 +1,4 @@
+class_name ChillAction
 extends GoapAction
 
 
@@ -10,7 +11,7 @@ func _get_cost() -> int:
 
 
 func _get_action_name() -> StringName:
-	return "chill"
+	return "chill_action"
 
 
 func _get_preconditions() -> Dictionary:
@@ -18,13 +19,9 @@ func _get_preconditions() -> Dictionary:
 
 
 func _get_effects() -> Dictionary:
-	var current_energy = 0
-	if Blackboard.get_data("energy"):
-		current_energy = Blackboard.get_data("energy") + 1
-	Blackboard.add_data("energy", current_energy)
-	return {"energy" : current_energy}
+	return {"idle" : true}
 
 
-func _perform(actor, delta) -> bool:
-	#actor.playidleanimation ofzo
-	return true
+func _perform(_actor, _delta) -> bool:
+	# Never complete performing idling
+	return false

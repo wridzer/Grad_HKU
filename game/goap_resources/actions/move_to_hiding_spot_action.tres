@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="MoveToHidingSpotAction" load_steps=2 format=3 uid="uid://cuqwq06g73f81"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_to_hiding_spot_action.gd" id="1_2432v"]
+
+[resource]
+script = ExtResource("1_2432v")

@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="MoveToObjectiveAction" load_steps=2 format=3 uid="uid://c7ec3e7upfhyl"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_to_objective_action.gd" id="1_eaumb"]
+
+[resource]
+script = ExtResource("1_eaumb")

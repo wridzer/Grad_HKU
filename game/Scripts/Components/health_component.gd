@@ -21,20 +21,30 @@ func gain_health(amount: int) -> void:
 		_health = _max_health
 	else:
 		_health += amount
+	
+	Blackboard.add_data("npc_health", _health)
 
 
 func take_damage(amount: int) -> void:
 	if _immunity_timer.time_left == 0:
 		_health -= amount
+		
 		if _health <= 0:
 			die.emit()
 			return
 		immune.emit(true)
 		_immunity_timer.start()
+		
+		Blackboard.add_data("npc_health", _health)
 
 
-func _on__immunity_timer_timeout() -> void:
+func _on_immunity_timer_timeout() -> void:
 	# Be able to take damage again
 	immune.emit(false)
 	
 	_immunity_timer.stop()
+
+
+func set_blackboard_variables() -> void:
+	Blackboard.add_data("npc_max_health", _max_health)
+	Blackboard.add_data("npc_health", _health)
