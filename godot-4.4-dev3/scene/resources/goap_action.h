@@ -22,6 +22,7 @@ public:
 	virtual bool is_valid();
 
 	bool perform(Node* _actor, float _delta);
+	bool perform_physics(Node *_actor, float _delta);
 
 protected:
 	static void _bind_methods();
@@ -32,5 +33,6 @@ protected:
 	GDVIRTUAL0RC(int, _get_cost);
 	GDVIRTUAL0RC(bool, _is_valid);
 	GDVIRTUAL2RC(bool, _perform, Node*, float);
+	GDVIRTUAL2RC(bool, _perform_physics, Node *, float);
 };
 #endif // !GOAP_ACTION
