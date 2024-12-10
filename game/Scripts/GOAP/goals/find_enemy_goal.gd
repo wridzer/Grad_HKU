@@ -7,8 +7,15 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("enemy")
-	return is_instance_valid(data)
+	if is_instance_valid(Player.instance.room):
+		var enemies_present: bool = Player.instance.room.enemies.size() > 0
+		Blackboard.add_data("enemies_present", enemies_present)
+		if enemies_present:
+			var data = Blackboard.get_data("enemy")
+			var enemy: Enemy = data
+			return is_instance_valid(enemy)
+	
+	return true
 
 
 func _get_priority() -> int:
