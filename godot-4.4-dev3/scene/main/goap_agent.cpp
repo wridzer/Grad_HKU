@@ -16,6 +16,7 @@ void GoapAgent::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_goals", "goal"), &GoapAgent::set_goals);
 	ClassDB::bind_method(D_METHOD("get_goals"), &GoapAgent::get_goals);
 	ClassDB::bind_method(D_METHOD("execute", "delta", "goap"), &GoapAgent::execute);
+	ClassDB::bind_method(D_METHOD("physics_update", "delta", "actor"), &GoapAgent::physics_update);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "goals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_goals", "get_goals");
 }
@@ -44,6 +45,18 @@ void GoapAgent::execute(float delta, Node* actor, Goap *goap) {
 	}
 
 	follow_plan(current_plan, delta, actor);
+}
+
+void GoapAgent::physics_update(float delta, Node *actor) {
+	if (actor == nullptr)
+		return;
+
+	if (current_plan.actions.size() == 0)
+		return;
+
+	int is_step_complete = current_plan.actions[current_plan_index]->perform_physics(actor, delta);
+	if (is_step_complete and current_plan_index < current_plan.actions.size() - 1)
+		current_plan_index += 1;
 }
 
 Ref<GoapGoal> GoapAgent::get_best_goal() {
