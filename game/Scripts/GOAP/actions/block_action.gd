@@ -23,8 +23,13 @@ func _get_effects() -> Dictionary:
 	return {"block_enemy": true}
 
 
-func _perform(actor, delta) -> bool:
+func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	npc.velocity = Vector2.ZERO
 	npc.block()
 	return true
+
+
+func _perform_physics(actor, _delta) -> bool:
+	var npc = actor as Npc
+	npc.velocity = Vector2.ZERO
+	return false

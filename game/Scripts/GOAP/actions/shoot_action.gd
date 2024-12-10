@@ -23,9 +23,14 @@ func _get_effects() -> Dictionary:
 	return {"shoot_enemy": true}
 
 
-func _perform(actor, delta) -> bool:
+func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	npc.velocity = Vector2.ZERO
 	var direction = (Blackboard.get_data("enemy").global_position - npc.global_position).normalized()
 	npc.shoot(direction)
 	return true
+
+
+func _perform_physics(actor, _delta) -> bool:
+	var npc = actor as Npc
+	npc.velocity = Vector2.ZERO
+	return false

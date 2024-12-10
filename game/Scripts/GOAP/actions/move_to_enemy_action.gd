@@ -31,7 +31,7 @@ func _get_effects() -> Dictionary:
 	return {"close_to_enemy" : true}
 
 
-func _perform(actor, delta) -> bool:
+func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
 	
 	var npc_pos: Vector2 = npc.get_global_position()
