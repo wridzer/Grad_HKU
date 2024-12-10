@@ -50,7 +50,7 @@ Ref<GoapGoal> GoapAgent::get_best_goal() {
 	Ref<GoapGoal> highest_priority;
 
 	for (auto goal : goals) {
-		if (goal.is_valid() && (highest_priority == nullptr || goal->get_priority() > highest_priority->get_priority()))
+		if (goal->is_goal_met() && (highest_priority == nullptr || goal->get_priority() > highest_priority->get_priority()))
 			highest_priority = goal;
 	}
 
