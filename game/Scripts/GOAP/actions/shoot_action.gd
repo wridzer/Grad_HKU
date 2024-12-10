@@ -16,16 +16,16 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {"close_to_enemy": true}
 
 
 func _get_effects() -> Dictionary:
-	return {"close_to_enemy" : false}
+	return {"shoot_enemy": true}
 
 
 func _perform(actor, delta) -> bool:
 	var npc = actor as Npc
 	npc.velocity = Vector2.ZERO
-	var direction = (Blackboard.get_data("enemy").global_position - global_position).normalized()
+	var direction = (Blackboard.get_data("enemy").global_position - npc.global_position).normalized()
 	npc.shoot(direction)
 	return true

@@ -1,9 +1,9 @@
-class_name KillEnemyGoal
+class_name SlashEnemyGoal
 extends GoapGoal
 
 
 func _get_goal_name() -> StringName:
-	return "kill_enemy_goal"
+	return "slash_enemy_goal"
 
 
 func _is_goal_met() -> bool:
@@ -12,8 +12,13 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
-	return 10
+	var data = Blackboard.get_data("slash_priority")
+	if is_instance_valid(data):
+		var slash_priority: int = data
+		return slash_priority
+	
+	return 0
 
 
 func _get_desired_state() -> Dictionary:
-	return {"hit_enemy" : true}
+	return {"slash_enemy" : true}

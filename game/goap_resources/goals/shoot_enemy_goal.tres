@@ -1,0 +1,6 @@
+[gd_resource type="GoapGoal" script_class="ShootEnemyGoal" load_steps=2 format=3 uid="uid://dk20a6m105o04"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/goals/shoot_enemy_goal.gd" id="1_fq6q1"]
+
+[resource]
+script = ExtResource("1_fq6q1")

@@ -16,11 +16,11 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {"close_to_enemy": true}
 
 
 func _get_effects() -> Dictionary:
-	return {"close_to_enemy" : false}
+	return {"block_enemy": true}
 
 
 func _perform(actor, delta) -> bool:
