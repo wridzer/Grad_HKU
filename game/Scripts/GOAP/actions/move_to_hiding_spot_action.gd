@@ -3,7 +3,13 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	return is_instance_valid(Blackboard.get_data("hiding_spot"))
+	if is_instance_valid(Blackboard.get_data("hiding_spot")):
+		var data = Blackboard.get_data("enemies_present")
+		if is_instance_valid(data):
+			var enemies_present: bool = data
+			return enemies_present
+	
+	return false
 
 
 func _get_cost() -> int:
@@ -27,10 +33,14 @@ func _perform(actor, delta) -> bool:
 	var npc = actor as Npc
 	
 	var npc_pos: Vector2 = npc.get_global_position()
-	var hiding_spot_pos: Vector2 = Blackboard.get_data("hiding_spot")
+	var data = Blackboard.get_data("hiding_spot")
+	if !is_instance_valid(data):
+		return true
+	var hiding_spot_pos: Vector2 = data
 	var squared_distance: float = npc_pos.distance_squared_to(hiding_spot_pos)
-
-	if squared_distance < 2:
+	
+	Blackboard.add_data("hide_goal_complete", squared_distance < npc.squared_follow_distance)
+	if squared_distance < npc.squared_follow_distance:
 		return true
 	else:
 		var target_direction: Vector2 = (hiding_spot_pos - npc_pos).normalized()

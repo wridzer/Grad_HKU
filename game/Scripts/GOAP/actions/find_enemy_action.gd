@@ -4,7 +4,9 @@ extends GoapAction
 
 func _is_valid() -> bool:
 	if is_instance_valid(Player.instance.room):
-		return Player.instance.room.enemies.size() > 0
+		var enemies_present: bool = Player.instance.room.enemies.size() > 0
+		Blackboard.add_data("enemies_present", enemies_present)
+		return enemies_present
 	else:
 		return false
 
@@ -18,7 +20,7 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"found_enemy" : false}
+	return {}
 
 
 func _get_effects() -> Dictionary:

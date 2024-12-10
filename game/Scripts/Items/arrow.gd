@@ -2,9 +2,9 @@ class_name Arrow
 extends Node2D
 
 
-const STARTING_DISTANCE: float = 2.0
-const STOPPING_DISTANCE: float = 2.0
-const SPEED: float = 120.0
+@export var starting_distance: float = 2.0
+@export var stopping_distance: float = 2.0
+@export var speed: float = 120.0
 
 var mouse_position: Vector2
 var direction: Vector2
@@ -18,15 +18,15 @@ var _hit: bool = false
 
 func _ready() -> void:
 	look_at(mouse_position)
-	_start_timer.wait_time = STARTING_DISTANCE / SPEED
-	_stop_timer.wait_time = STOPPING_DISTANCE / SPEED
+	_start_timer.wait_time = starting_distance / speed
+	_stop_timer.wait_time = stopping_distance / speed
 	_start_timer.start()
 
 
 func _physics_process(delta: float) -> void:
 	# Until hitting anything, move towards the predefined direction
 	if !_hit:
-		global_position += direction * SPEED * delta
+		global_position += direction * speed * delta
 
 	
 func _on_start_timer_timeout() -> void:

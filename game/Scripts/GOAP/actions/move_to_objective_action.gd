@@ -30,7 +30,8 @@ func _perform(actor, delta) -> bool:
 	var objective: Node2D = Player.instance.room.objective
 	var objective_pos: Vector2 = objective.get_global_position()
 	var squared_distance: float = npc_pos.distance_squared_to(objective_pos)
-
+	
+	Blackboard.add_data("objective_goal_complete", squared_distance < npc.squared_follow_distance)
 	if squared_distance < npc.squared_follow_distance:
 		return true
 	else:

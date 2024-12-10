@@ -3,10 +3,12 @@ extends AnimatedCharacter
 
 enum CombatType {ATTACK, DEFEND, AVOID}
 
+const MAX_ARROW_COUNT = 5
+
 @export var _preferred_combat: CombatType
 @export var _adapatable_combat: CombatType
 @export var _unadaptable_combat: CombatType
-@export_file var arrow_path: String
+@export_file var _arrow_path: String
 
 @export var display_name: String
 @export var idle_dialogue: DialogueResource
@@ -23,9 +25,11 @@ enum CombatType {ATTACK, DEFEND, AVOID}
 @export var _max_chase_distance: float = 100.0
 
 var _affection: int
+var _arrows: Array[Arrow]
 
 var squared_follow_distance: float = follow_distance * follow_distance
 var squared_chase_distance: float = chase_distance * chase_distance
+var _squared_max_chase_distance: float = _max_chase_distance * _max_chase_distance
 var squared_flee_distance: float = flee_distance * flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
@@ -63,10 +67,15 @@ func _ready() -> void:
 	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
+	
+	# Set Blackboard values
+	Blackboard.add_data("squared_follow_distance", squared_follow_distance)
+	Blackboard.add_data("squared_max_chase_distance", _squared_max_chase_distance)
 
 
 func _process(_delta) -> void:
-	Blackboard.add_data("npc_location", global_position)
+	if Player.instance.following_npc == self:
+		Blackboard.add_data("npc_location", global_position)
 
 
 func die() -> void:
@@ -106,3 +115,31 @@ func choose() -> void:
 		npc_choices = data
 	npc_choices.append(_preferred_combat)
 	Blackboard.add_data("npc_choices", npc_choices)
+
+
+func shoot(direction: Vector2) -> void:
+	# Create a new arrow
+	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
+	var arrow: Arrow = arrow_resource.instantiate()
+	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
+	arrow.direction = direction
+	add_child(arrow)
+	arrow.reparent(get_parent())
+	_arrows.append(arrow)
+	
+	# There should only be MAX_ARROW_COUNT arrows at once
+	_reduce_arrows_to(MAX_ARROW_COUNT)
+	
+	# Remove arrow from list when freeing
+	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
+	
+	# Animate bow
+	super.shoot(direction)
+
+
+func _reduce_arrows_to(amount: int) -> void:
+	while _arrows.size() > amount:
+		if is_instance_valid(_arrows.front()):
+			_arrows.pop_front().queue_free()
+		else:
+			_arrows.pop_front()

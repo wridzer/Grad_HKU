@@ -1,13 +1,19 @@
+class_name IdleGoal
 extends GoapGoal
 
+
 func _get_goal_name() -> StringName:
-	return "restore energy"
+	return "idle_goal"
+
 
 func _is_goal_met() -> bool:
-	return Blackboard.get_data("energy") >= 100
+	# Never stop idling
+	return false
+
 
 func _get_priority() -> int:
 	return 1
 
+
 func _get_desired_state() -> Dictionary:
-	return {"rested" : true}
+	return {"idle" : true}

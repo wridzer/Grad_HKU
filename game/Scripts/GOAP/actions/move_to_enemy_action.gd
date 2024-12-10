@@ -3,7 +3,13 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	return is_instance_valid(Blackboard.get_data("enemy"))
+	var data = Blackboard.get_data("enemies_present")
+	var other_data = Blackboard.get_data("enemy")
+	if is_instance_valid(data):
+		var enemies_present: bool = data
+		return enemies_present && is_instance_valid(other_data)
+	
+	return false
 
 
 func _get_cost() -> int:
@@ -18,7 +24,7 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"found_enemy" : true}
+	return {}
 
 
 func _get_effects() -> Dictionary:
@@ -29,7 +35,10 @@ func _perform(actor, delta) -> bool:
 	var npc = actor as Npc
 	
 	var npc_pos: Vector2 = npc.get_global_position()
-	var enemy: Enemy = Blackboard.get_data("enemy")
+	var data = Blackboard.get_data("enemy")
+	if !is_instance_valid(data):
+		return true
+	var enemy: Enemy = data
 	var enemy_pos: Vector2 = enemy.get_global_position()
 	var squared_distance: float = npc_pos.distance_squared_to(enemy_pos)
 
