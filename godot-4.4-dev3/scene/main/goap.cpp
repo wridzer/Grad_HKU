@@ -22,7 +22,7 @@ void Goap::_bind_methods() {
 }
 
 Plan Goap::get_plan(Ref<GoapGoal> goal) {
-	print_line("Goal: ", String(goal->get_goal_name()));
+	print_line("Goal: ", goal->get_goal_name(), " - Priority: ", goal->get_priority());
 
 	Dictionary desired_state = goal->get_desired_state().duplicate();
 	if (desired_state.is_empty()) {

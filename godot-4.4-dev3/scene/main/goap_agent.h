@@ -23,7 +23,9 @@ public:
 
 	void set_goals(TypedArray<GoapGoal> p_goals);
 	TypedArray<GoapGoal> get_goals() const { return GLTFTemplateConvert::to_array(goals); }
-	void execute(float delta, Node* actor, Goap* goap);
+	void execute(float delta, Node *actor, Goap *goap);
+
+	void physics_update(float delta, Node *actor);
 
 private:
 	Ref<GoapGoal> get_best_goal();

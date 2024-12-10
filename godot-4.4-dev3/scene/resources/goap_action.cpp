@@ -49,5 +49,11 @@ bool GoapAction::perform(Node* _actor, float _delta) {
 	return success;
 }
 
+bool GoapAction::perform_physics(Node *_actor, float _delta) {
+	bool success = false;
+	GDVIRTUAL_CALL(_perform_physics, _actor, _delta, success);
+	return success;
+}
+
 void GoapAction::_bind_methods() {
 }
