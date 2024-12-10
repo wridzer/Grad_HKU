@@ -24,7 +24,7 @@ func set_mission_type(type: String) -> void:
 	
 	var data = Blackboard.get_data("mission_choices")
 	var mission_choices: Array[MissionType] = []
-	if !is_instance_valid(data):
+	if is_instance_valid(data):
 		mission_choices = data
 	mission_choices.append(mission_type)
 	Blackboard.add_data("mission_choices", mission_choices)
