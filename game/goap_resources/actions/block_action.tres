@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="BlockAction" load_steps=2 format=3 uid="uid://b5r6otl3lrsdi"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/block_action.gd" id="1_cn65i"]
+
+[resource]
+script = ExtResource("1_cn65i")

@@ -30,10 +30,10 @@ const MAX_ARROW_COUNT = 5
 var _affection: int
 var _arrows: Array[Arrow]
 
-var squared_follow_distance: float = follow_distance * follow_distance
-var squared_chase_distance: float = chase_distance * chase_distance
-var _squared_max_chase_distance: float = _max_chase_distance * _max_chase_distance
-var squared_flee_distance: float = flee_distance * flee_distance
+var follow_distance_squared: float = follow_distance * follow_distance
+var chase_distance_squared: float = chase_distance * chase_distance
+var _max_chase_distance_squared: float = _max_chase_distance * _max_chase_distance
+var flee_distance_squared: float = flee_distance * flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
@@ -72,8 +72,8 @@ func _ready() -> void:
 	animation_player.active = true
 	
 	# Set Blackboard values
-	Blackboard.add_data("squared_follow_distance", squared_follow_distance)
-	Blackboard.add_data("squared_max_chase_distance", _squared_max_chase_distance)
+	Blackboard.add_data("follow_distance_squared", follow_distance_squared)
+	Blackboard.add_data("max_chase_distance_squared", _max_chase_distance_squared)
 
 
 func _process(_delta) -> void:

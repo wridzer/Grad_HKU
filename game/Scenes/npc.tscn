@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=42 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -20,6 +20,9 @@
 [ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="18_chuhk"]
 [ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="19_gd2ps"]
 [ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="21_htt4y"]
+[ext_resource type="GoapGoal" uid="uid://upejq3jkiuxh" path="res://goap_resources/goals/block_enemy_goal.tres" id="21_xmsnf"]
+[ext_resource type="GoapGoal" uid="uid://dk20a6m105o04" path="res://goap_resources/goals/shoot_enemy_goal.tres" id="22_ui6hl"]
+[ext_resource type="GoapGoal" uid="uid://byaoicxdikacr" path="res://goap_resources/goals/slash_enemy_goal.tres" id="23_ty3fi"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -352,6 +355,6 @@ max_lines_visible = 1
 language = "en"
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y")])
+goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
 
 [editable path="CharacterAnimations/Direction/Sword"]

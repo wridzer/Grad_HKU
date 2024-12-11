@@ -4,19 +4,21 @@ extends GoapAction
 
 func _is_valid() -> bool:
 	var data = Blackboard.get_data("enemies_present")
-	var other_data = Blackboard.get_data("enemy")
 	if is_instance_valid(data):
 		var enemies_present: bool = data
+		var other_data = Blackboard.get_data("enemy")
+		if enemies_present && is_instance_valid(other_data):
+			print("move_to_enemy valid")
 		return enemies_present && is_instance_valid(other_data)
 	
 	return false
 
 
 func _get_cost() -> int:
-	var squared_distance = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
-	if squared_distance > Blackboard.get_data("squared_max_chase_distance"):
-		return 1000
-	return int(squared_distance / 7)
+	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	if distance_squared > Blackboard.get_data("max_chase_distance_squared"):
+		return int(distance_squared)
+	return int(distance_squared / 50)
 
 
 func _get_action_name() -> StringName:
@@ -40,9 +42,9 @@ func _perform_physics(actor, _delta) -> bool:
 		return true
 	var enemy: Enemy = data
 	var enemy_pos: Vector2 = enemy.get_global_position()
-	var squared_distance: float = npc_pos.distance_squared_to(enemy_pos)
+	var distance_squared: float = npc_pos.distance_squared_to(enemy_pos)
 
-	if squared_distance < npc.squared_chase_distance:
+	if distance_squared < npc.chase_distance_squared:
 		return true
 	else:
 		var target_direction: Vector2 = (enemy_pos - npc_pos).normalized()

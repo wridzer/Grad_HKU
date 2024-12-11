@@ -13,8 +13,8 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var squared_distance = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("hiding_spot"))
-	return int(squared_distance / 7)
+	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("hiding_spot"))
+	return int(distance_squared / 50)
 
 
 func _get_action_name() -> StringName:
@@ -37,10 +37,10 @@ func _perform_physics(actor, _delta) -> bool:
 	if !is_instance_valid(data):
 		return true
 	var hiding_spot_pos: Vector2 = data
-	var squared_distance: float = npc_pos.distance_squared_to(hiding_spot_pos)
+	var distance_squared: float = npc_pos.distance_squared_to(hiding_spot_pos)
 	
-	Blackboard.add_data("hide_goal_complete", squared_distance < npc.squared_follow_distance)
-	if squared_distance < npc.squared_follow_distance:
+	Blackboard.add_data("hide_goal_complete", distance_squared < npc.follow_distance_squared)
+	if distance_squared < npc.follow_distance_squared:
 		return true
 	else:
 		var target_direction: Vector2 = (hiding_spot_pos - npc_pos).normalized()

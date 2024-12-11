@@ -13,9 +13,9 @@ func _is_valid() -> bool:
 
 func _get_cost() -> int:
 	# Reverse the distance cost with a maximum distance
-	var squared_distance = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
-	var squared_max_chase_distance = Blackboard.get_data("squared_max_chase_distance")
-	var normalized_distance = max(squared_max_chase_distance - squared_distance, 0) / squared_max_chase_distance
+	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	var max_chase_distance_squared = Blackboard.get_data("max_chase_distance_squared")
+	var normalized_distance = max(max_chase_distance_squared - distance_squared, 0) / max_chase_distance_squared
 	
 	return int((1.0 - normalized_distance) * 10)
 

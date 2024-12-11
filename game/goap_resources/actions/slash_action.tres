@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="SlashAction" load_steps=2 format=3 uid="uid://ckww702xlyxg4"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/slash_action.gd" id="1_l6wqq"]
+
+[resource]
+script = ExtResource("1_l6wqq")

@@ -10,8 +10,8 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var squared_distance = Blackboard.get_data("npc_location").distance_squared_to(Player.instance.room.objective.global_position)
-	return int(squared_distance / 7)
+	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Player.instance.room.objective.global_position)
+	return int(distance_squared / 50)
 
 
 func _get_action_name() -> StringName:
@@ -32,10 +32,10 @@ func _perform_physics(actor, _delta) -> bool:
 	var npc_pos: Vector2 = npc.get_global_position()
 	var objective: Node2D = Player.instance.room.objective
 	var objective_pos: Vector2 = objective.get_global_position()
-	var squared_distance: float = npc_pos.distance_squared_to(objective_pos)
+	var distance_squared: float = npc_pos.distance_squared_to(objective_pos)
 	
-	Blackboard.add_data("objective_goal_complete", squared_distance < npc.squared_follow_distance)
-	if squared_distance < npc.squared_follow_distance:
+	Blackboard.add_data("objective_goal_complete", distance_squared < npc.follow_distance_squared)
+	if distance_squared < npc.follow_distance_squared:
 		return true
 	else:
 		npc.set_velocity(Vector2.ZERO)

@@ -12,9 +12,9 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var squared_distance = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
-	var squared_max_chase_distance = Blackboard.get_data("squared_max_chase_distance")
-	var normalized_distance = max(squared_max_chase_distance - squared_distance, 0) / squared_max_chase_distance
+	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	var max_chase_distance_squared = Blackboard.get_data("max_chase_distance_squared")
+	var normalized_distance = max(max_chase_distance_squared - distance_squared, 0) / max_chase_distance_squared
 	
 	var health = Blackboard.get_data("npc_health")
 	var max_health = Blackboard.get_data("npc_max_health")
@@ -27,7 +27,7 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {}
 
 
 func _get_effects() -> Dictionary:
@@ -43,10 +43,10 @@ func _perform_physics(actor, _delta) -> bool:
 		return true
 	var enemy: Enemy = data
 	var enemy_pos: Vector2 = enemy.get_global_position()
-	var squared_distance: float = npc_pos.distance_squared_to(enemy_pos)
+	var distance_squared: float = npc_pos.distance_squared_to(enemy_pos)
 	
-	Blackboard.add_data("flee_goal_complete", squared_distance > npc.squared_flee_distance)
-	if squared_distance > npc.squared_flee_distance:
+	Blackboard.add_data("flee_goal_complete", distance_squared > npc.flee_distance_squared)
+	if distance_squared > npc.flee_distance_squared:
 		return true
 	else:
 		var target_direction: Vector2 = (npc_pos - enemy_pos).normalized()
