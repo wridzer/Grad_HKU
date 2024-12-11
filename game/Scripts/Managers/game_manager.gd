@@ -14,7 +14,7 @@ signal get_spawn_location
 enum MissionType {INVALID, ITEM, SLAY}
 
 @export var _level_parent: Node
-@export_file var _level_hub: String = "res://Scenes/Levels/level_hub.tscn"
+@export_file var _level_hub: String
 
 var mission_type: MissionType = MissionType.INVALID
 
