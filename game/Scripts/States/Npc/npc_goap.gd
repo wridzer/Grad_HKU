@@ -25,7 +25,7 @@ func update(delta):
 
 
 func physics_update(delta: float) -> void:
-	npc.goap_agent.physics_update(delta, npc, GoapPlanner)
+	npc.goap_agent.physics_update(delta, npc)
 
 
 func exit() -> void:
