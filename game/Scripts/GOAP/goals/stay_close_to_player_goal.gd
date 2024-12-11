@@ -7,7 +7,7 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("npc_location")
+	var data = Blackboard.get_data("npc_global_position")
 	var other_data = Blackboard.get_data("follow_distance_squared")
 	if is_instance_valid(data) && is_instance_valid(other_data):
 		var npc_pos: Vector2 = data

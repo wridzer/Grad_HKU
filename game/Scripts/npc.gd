@@ -78,7 +78,7 @@ func _ready() -> void:
 
 func _process(_delta) -> void:
 	if Player.instance.following_npc == self:
-		Blackboard.add_data("npc_location", global_position)
+		Blackboard.add_data("npc_global_position", global_position)
 
 
 func die() -> void:

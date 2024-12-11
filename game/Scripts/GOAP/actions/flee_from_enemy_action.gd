@@ -12,7 +12,7 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Blackboard.get_data("enemy").global_position)
 	var max_chase_distance_squared = Blackboard.get_data("max_chase_distance_squared")
 	var normalized_distance = max(max_chase_distance_squared - distance_squared, 0) / max_chase_distance_squared
 	

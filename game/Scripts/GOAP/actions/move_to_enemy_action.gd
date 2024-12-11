@@ -15,7 +15,7 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Blackboard.get_data("enemy").global_position)
 	if distance_squared > Blackboard.get_data("max_chase_distance_squared"):
 		return int(distance_squared)
 	return int(distance_squared / 50)

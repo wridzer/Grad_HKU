@@ -32,14 +32,27 @@ test2="test"
 test3=Vector2(1, 2)
 test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
-player_location=Vector2(40, -7)
+player_location=Vector2(941.352, 559.026)
 player_location2=Vector2(110.943, 0.422957)
-enemies_alive=10
+enemies_alive=8
 enemies_killed=3
 damage_done=9
 amount_blocked=7
-npc_location=Vector2(563, 504)
+npc_location=Vector2(124.59, 9.53476)
 energy=0
+squared_follow_distance=225.0
+squared_max_chase_distance=10000.0
+npc_max_health=3
+npc_health=2
+npc_choices=Array[int]([0])
+slash_priority=14
+shoot_priority=13
+block_priority=12
+mission_choices=Array[int]([1])
+enemies_present=true
+follow_distance_squared=225.0
+max_chase_distance_squared=10000.0
+npc_global_position=Vector2(121.151, 7.98342)
 
 [dotnet]
 

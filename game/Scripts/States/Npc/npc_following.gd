@@ -29,11 +29,11 @@ func physics_update(delta: float) -> void:
 	var distance_squared = npc_pos.distance_squared_to(player_pos)
 	
 	# TODO: npc animations
-	if distance_squared > npc.squared_follow_distance:
+	if distance_squared > npc.follow_distance_squared:
 		var direction: Vector2 = (player_pos - npc_pos).normalized()
 		npc.direction = direction
 		npc.set_velocity(direction * FOLLOW_SPEED)
-	elif distance_squared < npc.squared_follow_distance / 2:
+	elif distance_squared < npc.follow_distance_squared / 2:
 		var direction: Vector2 = (npc_pos - player_pos).normalized()
 		npc.direction = direction
 		npc.set_velocity(direction * FOLLOW_SPEED)

@@ -7,9 +7,10 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Player.instance.get_global_position())
+	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Player.instance.get_global_position())
 	var follow_distance_squared: float = Blackboard.get_data("follow_distance_squared")
-	return max(int(distance_squared - follow_distance_squared / 50), 0)
+	print(int(follow_distance_squared - distance_squared))
+	return max(int(follow_distance_squared - distance_squared), 0)
 
 
 func _get_action_name() -> StringName:

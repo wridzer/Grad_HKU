@@ -10,7 +10,7 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_location").distance_squared_to(Player.instance.room.objective.global_position)
+	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Player.instance.room.objective.global_position)
 	return int(distance_squared / 50)
 
 
