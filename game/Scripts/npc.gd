@@ -46,7 +46,7 @@ func _ready() -> void:
 	# Destroy instance if any other instance exists that is following the player
 	if Player.instance.following_npc:
 		if Player.instance.following_npc.display_name == display_name:
-			die()
+			queue_free()
 	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + name)
