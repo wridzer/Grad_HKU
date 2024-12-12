@@ -12,7 +12,9 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Blackboard.get_data("enemy").global_position)
+	var npc: Npc = Blackboard.get_data("npc")
+	var enemy: Enemy = Blackboard.get_data("enemy")
+	var distance_squared = npc.global_position.distance_squared_to(enemy.global_position)
 	return int(distance_squared / 7)
 
 

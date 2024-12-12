@@ -7,14 +7,12 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("npc_global_position")
-	var other_data = Blackboard.get_data("follow_distance_squared")
-	if is_instance_valid(data) && is_instance_valid(other_data):
-		var npc_pos: Vector2 = data
-		var player_pos: Vector2 = Player.instance.global_position
-		var distance_squared: float = npc_pos.distance_squared_to(player_pos)
-		var follow_distance_squared: float = other_data
-		return distance_squared < follow_distance_squared
+	var data = Blackboard.get_data("stay_close_to_player_goal_complete")
+	if is_instance_valid(data):
+		var stay_close_to_player_goal_complete: bool = data
+		if stay_close_to_player_goal_complete:
+			Blackboard.add_data("stay_close_to_player_goal_complete", false)
+			return true
 	
 	return false
 

@@ -10,7 +10,9 @@ func _is_goal_met() -> bool:
 	var data = Blackboard.get_data("objective_goal_complete")
 	if is_instance_valid(data):
 		var objective_goal_complete: bool = data
-		return objective_goal_complete
+		if objective_goal_complete:
+			Blackboard.add_data("objective_goal_complete", false)
+			return true
 	
 	return false
 

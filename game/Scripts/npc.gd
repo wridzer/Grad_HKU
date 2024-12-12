@@ -31,8 +31,10 @@ var _affection: int
 var _arrows: Array[Arrow]
 
 var follow_distance_squared: float = follow_distance * follow_distance
+var follow_equilibrium_distance_squared: float = follow_distance_squared / 2
+var min_follow_distance_squared: float = follow_equilibrium_distance_squared / 2 # Half of the follow distance
 var chase_distance_squared: float = chase_distance * chase_distance
-var _max_chase_distance_squared: float = _max_chase_distance * _max_chase_distance
+var max_chase_distance_squared: float = _max_chase_distance * _max_chase_distance
 var flee_distance_squared: float = flee_distance * flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
@@ -70,15 +72,6 @@ func _ready() -> void:
 	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
-	
-	# Set Blackboard values
-	Blackboard.add_data("follow_distance_squared", follow_distance_squared)
-	Blackboard.add_data("max_chase_distance_squared", _max_chase_distance_squared)
-
-
-func _process(_delta) -> void:
-	if Player.instance.following_npc == self:
-		Blackboard.add_data("npc_global_position", global_position)
 
 
 func die() -> void:
@@ -122,6 +115,8 @@ func choose() -> void:
 	Blackboard.add_data("slash_priority", _slash_priority)
 	Blackboard.add_data("shoot_priority", _shoot_priority)
 	Blackboard.add_data("block_priority", _block_priority)
+	
+	Blackboard.add_data("npc", self)
 
 
 func shoot(arrow_direction: Vector2) -> void:

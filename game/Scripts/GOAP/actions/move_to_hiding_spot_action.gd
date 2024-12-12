@@ -13,7 +13,8 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var distance_squared = Blackboard.get_data("npc_global_position").distance_squared_to(Blackboard.get_data("hiding_spot"))
+	var npc: Npc = Blackboard.get_data("npc")
+	var distance_squared = npc.global_position.distance_squared_to(Blackboard.get_data("hiding_spot"))
 	return int(distance_squared / 50)
 
 
