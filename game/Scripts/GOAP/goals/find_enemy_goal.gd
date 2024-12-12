@@ -12,8 +12,7 @@ func _is_goal_met() -> bool:
 		Blackboard.add_data("enemies_present", enemies_present)
 		if enemies_present:
 			var data = Blackboard.get_data("enemy")
-			var enemy: Enemy = data
-			return is_instance_valid(enemy)
+			return is_instance_valid(data)
 	
 	return true
 
