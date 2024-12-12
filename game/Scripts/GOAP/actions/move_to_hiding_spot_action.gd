@@ -40,8 +40,9 @@ func _perform_physics(actor, _delta) -> bool:
 	var hiding_spot_pos: Vector2 = data
 	var distance_squared: float = npc_pos.distance_squared_to(hiding_spot_pos)
 	
-	Blackboard.add_data("hide_goal_complete", distance_squared < npc.follow_distance_squared)
-	if distance_squared < npc.follow_distance_squared:
+	var condition: bool = distance_squared < npc.follow_distance_squared
+	Blackboard.add_data("hide_goal_complete", condition)
+	if condition:
 		return true
 	else:
 		var target_direction: Vector2 = (hiding_spot_pos - npc_pos).normalized()

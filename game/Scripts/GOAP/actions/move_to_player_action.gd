@@ -27,12 +27,15 @@ func _get_effects() -> Dictionary:
 
 func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
-	var player_pos: Vector2 = Player.instance.get_global_position()
 	var npc_pos: Vector2 = npc.get_global_position()
+	var player_pos: Vector2 = Player.instance.get_global_position()
 	var distance_squared = npc_pos.distance_squared_to(player_pos)
 	
-	Blackboard.add_data("stay_close_to_player_goal_complete", distance_squared < npc.follow_equilibrium_distance_squared)
-	if distance_squared < npc.follow_equilibrium_distance_squared:
+	# Let the goal know via blackboard that the npc
+	# has moved over the equilibrium and can idle
+	var condition: bool = distance_squared < npc.follow_equilibrium_distance_squared
+	Blackboard.add_data("stay_close_to_player_goal_complete", condition)
+	if condition:
 		return true
 	else:
 		var target_direction: Vector2 = (player_pos - npc_pos).normalized()

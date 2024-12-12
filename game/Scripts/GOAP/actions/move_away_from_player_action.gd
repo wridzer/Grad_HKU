@@ -31,6 +31,8 @@ func _perform_physics(actor, _delta) -> bool:
 	var npc_pos: Vector2 = npc.get_global_position()
 	var distance_squared = npc_pos.distance_squared_to(player_pos)
 	
+	# Let the goal know via blackboard that the npc
+	# has moved over the equilibrium and can idle
 	Blackboard.add_data("stay_close_to_player_goal_complete", distance_squared > npc.follow_equilibrium_distance_squared)
 	if distance_squared > npc.follow_equilibrium_distance_squared:
 		return true

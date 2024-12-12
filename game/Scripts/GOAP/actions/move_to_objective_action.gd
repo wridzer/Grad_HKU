@@ -34,8 +34,9 @@ func _perform_physics(actor, _delta) -> bool:
 	var objective_pos: Vector2 = objective.get_global_position()
 	var distance_squared: float = npc_pos.distance_squared_to(objective_pos)
 	
-	Blackboard.add_data("objective_goal_complete", distance_squared < npc.follow_distance_squared)
-	if distance_squared < npc.follow_distance_squared:
+	var condition: bool = distance_squared < npc.follow_distance_squared
+	Blackboard.add_data("objective_goal_complete", condition)
+	if condition:
 		return true
 	else:
 		npc.set_velocity(Vector2.ZERO)
