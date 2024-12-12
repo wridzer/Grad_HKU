@@ -7,7 +7,7 @@ Blackboard *Blackboard::singleton = nullptr;
 
 Variant Blackboard::get_data(const String &p_key) {
 	if (blackboard_data.has(p_key)) {
-		return blackboard_data[p_key];
+		return Variant(blackboard_data[p_key]);
 	}
 	return Variant();
 }

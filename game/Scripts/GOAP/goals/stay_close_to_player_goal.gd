@@ -7,7 +7,7 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("stay_close_to_player_goal_complete")
+	var data : bool = Blackboard.get_data("stay_close_to_player_goal_complete")
 	if !is_instance_valid(data):
 		print("false1")
 		return false
