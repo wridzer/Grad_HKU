@@ -35,7 +35,7 @@ void GoapAgent::execute(float delta, Node* actor, Goap *goap) {
 		current_plan = goap->get_plan(current_goal);
 		current_plan_index = 0;
 
-		print_line("Plan: ", current_plan.cost);
+		print_line("Plan:  - amount of actions: ", current_plan.actions.size(), " - costs: ", current_plan.cost);
 		for ( auto action : current_plan.actions) {
 			if (action != nullptr)
 				print_line("Action: ", action->get_action_name(), " - Cost: ", action->get_cost());
