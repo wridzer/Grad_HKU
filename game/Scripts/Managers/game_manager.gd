@@ -8,7 +8,7 @@ signal spawn(value: Vector2, offset: Vector2)
 signal npc_follow(display_name: String)
 @warning_ignore("unused_signal")
 signal npc_stop_following(display_name: String)
-signal switch_level_cleanup
+signal switch_level_cleanup(level_to_load: String)
 signal get_spawn_location
 
 enum MissionType {INVALID, ITEM, SLAY}
@@ -44,12 +44,13 @@ func _ready() -> void:
 
 func load_level(level_to_load: String = _level_hub) -> void:	
 	# Bring following npc with you when warping
-	if Player.instance.following_npc:
-		Player.instance.following_npc.get_parent().remove_child(Player.instance.following_npc)
-		_level_parent.get_parent().add_child(Player.instance.following_npc)
+	var data = Blackboard.get_data("npc")
+	if is_instance_valid(data):
+		var npc: Npc = data
+		npc.reparent(_level_parent.get_parent())
 	
 	# Remove leftover npc's
-	switch_level_cleanup.emit()
+	switch_level_cleanup.emit(level_to_load)
 	
 	# Add the level to load under "Level" to the scene tree
 	var scene = ResourceLoader.load(level_to_load, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)

@@ -44,8 +44,6 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	Player.instance.following_npc = null
-	
 	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
 	
 	game_manager.npc_stop_following.disconnect(stop_following)
@@ -55,7 +53,8 @@ func exit() -> void:
 
 
 func stop_following(display_name: String) -> void:
-	if display_name == npc.display_name && Player.instance.following_npc == npc:
+	if display_name == npc.display_name:
+		Blackboard.remove_data("npc")
 		finished.emit(state_type_to_int(StateType.IDLE))
 
 
@@ -65,5 +64,7 @@ func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 
 
 func activate_goap() -> void:
-	if Player.instance.following_npc == npc:
-		finished.emit(state_type_to_int(StateType.GOAP))
+	var data = Blackboard.get_data("npc")
+	if is_instance_valid(data):
+		if npc == data as Npc:
+			finished.emit(state_type_to_int(StateType.GOAP))

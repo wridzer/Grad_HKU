@@ -14,7 +14,6 @@ func get_state_type() -> int:
 func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
 	
-	game_manager.npc_stop_following.connect(stop_following)
 	game_manager.spawn.connect(spawn)
 	
 	super.enter(previous_state, data)
@@ -29,19 +28,11 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	Player.instance.following_npc = null
-	
 	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
 	
-	game_manager.npc_stop_following.disconnect(stop_following)
 	game_manager.spawn.disconnect(spawn)
 	
 	super.exit()
-
-
-func stop_following(display_name: String) -> void:
-	if display_name == npc.display_name && Player.instance.following_npc == npc:
-		finished.emit(state_type_to_int(StateType.IDLE))
 
 
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
