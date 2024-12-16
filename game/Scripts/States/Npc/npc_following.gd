@@ -15,7 +15,7 @@ func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
 	
 	game_manager.npc_stop_following.connect(stop_following)
-	game_manager.switch_level_cleanup.connect(activate_goap)
+	game_manager.toggle_goap.connect(activate_goap)
 	game_manager.spawn.connect(spawn)
 	
 	super.enter(previous_state, data)
@@ -46,6 +46,7 @@ func physics_update(delta: float) -> void:
 func exit() -> void:
 	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
 	
+	game_manager.toggle_goap.disconnect(activate_goap)
 	game_manager.npc_stop_following.disconnect(stop_following)
 	game_manager.spawn.disconnect(spawn)
 	
@@ -66,5 +67,6 @@ func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 func activate_goap() -> void:
 	var data = Blackboard.get_data("npc")
 	if is_instance_valid(data):
-		if npc == data as Npc:
+		var blackboard_npc: Npc = data
+		if npc == blackboard_npc:
 			finished.emit(state_type_to_int(StateType.GOAP))

@@ -12,9 +12,8 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
-	
 	game_manager.spawn.connect(spawn)
+	game_manager.toggle_goap.connect(disable_goap)
 	
 	super.enter(previous_state, data)
 
@@ -28,9 +27,8 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
-	
 	game_manager.spawn.disconnect(spawn)
+	game_manager.toggle_goap.disconnect(disable_goap)
 	
 	super.exit()
 
@@ -38,3 +36,7 @@ func exit() -> void:
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 	npc.saved_spawn_pos = spawn_pos
 	npc.position = spawn_pos + npc_offset
+
+
+func disable_goap() -> void:
+	finished.emit(state_type_to_int(StateType.FOLLOWING))

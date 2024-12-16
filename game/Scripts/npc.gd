@@ -50,7 +50,7 @@ func _ready() -> void:
 	if is_instance_valid(data):
 		var npc: Npc = data
 		if npc.display_name == display_name:
-			queue_free()
+			die()
 	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + name)
@@ -62,7 +62,9 @@ func _ready() -> void:
 	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
 	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
 	
-	_health_component.die.connect(die)
+	# Connect signals
+	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
+	_health_component.die.connect(respawn)
 	_health_component.immune.connect(hit)
 	_health_component.immune.connect(set_immunity_animation_param)
 	
@@ -77,6 +79,10 @@ func _ready() -> void:
 
 
 func die() -> void:
+	queue_free()
+
+
+func respawn() -> void:
 	_health_component.gain_health(3)
 
 
