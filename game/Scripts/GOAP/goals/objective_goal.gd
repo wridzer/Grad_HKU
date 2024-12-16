@@ -8,13 +8,11 @@ func _get_goal_name() -> StringName:
 
 func _is_goal_met() -> bool:
 	var data = Blackboard.get_data("objective_goal_complete")
-	if is_instance_valid(data):
-		var objective_goal_complete: bool = data
-		if objective_goal_complete:
-			Blackboard.add_data("objective_goal_complete", false)
-			return true
+	if !NpcGoap.is_bool_and_true(data):
+		return false
 	
-	return false
+	Blackboard.add_data("objective_goal_complete", false)
+	return true
 
 
 func _get_priority() -> int:
