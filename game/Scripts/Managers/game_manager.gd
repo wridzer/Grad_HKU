@@ -32,9 +32,6 @@ func set_mission_type(type: String) -> void:
 
 
 func _ready() -> void:
-	# Clear the blackboard data
-	Blackboard.clear_data()
-	
 	# Get the level parent node
 	var main = get_tree().root.get_node("Main")
 	if main and main.has_node("Level"):

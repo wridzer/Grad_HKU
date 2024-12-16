@@ -22,8 +22,6 @@ game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
 dialogue_manager="*res://Scenes/Managers/dialogue_manager.tscn"
 GoapPlanner="*res://Scenes/Managers/goap_planner.tscn"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-LayerNames="*res://addons/layerNames/layerNames.gd"
 
 [blackboard]
 
@@ -32,9 +30,9 @@ test2="test"
 test3=Vector2(1, 2)
 test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
-player_location=Vector2(1472.6, 1372.27)
+player_location=Vector2(600, 536)
 player_location2=Vector2(110.943, 0.422957)
-enemies_alive=5
+enemies_alive=8
 enemies_killed=3
 damage_done=9
 amount_blocked=7
@@ -48,8 +46,8 @@ npc_choices=Array[int]([0])
 slash_priority=14
 shoot_priority=13
 block_priority=12
-mission_choices=Array[int]([1])
-enemies_present=true
+mission_choices=Array[int]([2])
+enemies_present=false
 follow_distance_squared=225.0
 max_chase_distance_squared=10000.0
 npc_global_position=Vector2(121.151, 7.98342)

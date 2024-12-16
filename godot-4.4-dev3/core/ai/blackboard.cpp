@@ -99,7 +99,6 @@ void Blackboard::save_to_csv(const String &p_path) {
 		dir->make_dir_recursive(path.get_base_dir());
 	}
 
-	// Open or create file
 	Ref<FileAccess> file = nullptr;
 
 	if (FileAccess::exists(path)) {
@@ -118,12 +117,13 @@ void Blackboard::save_to_csv(const String &p_path) {
 	}
 	Vector<String> header = file->get_csv_line();
 
-	if (header != keys) {
+	file->seek_end(); // move cursor to end of file
+
+	if (header.is_empty() || header != keys) {
 		file->store_csv_line(keys);
 	}
 
 	// Add data
-	file->seek_end(); // move cursor to end of file
 	Vector<String> values;
 	for (auto a : blackboard_data) {
 		values.push_back(a.value.stringify());
