@@ -2,6 +2,8 @@
 
 #include "core/config/project_settings.h"
 #include <scene/main/node.h>
+#include "core/io/file_access.h"
+#include <core/io/dir_access.h>
 
 Blackboard *Blackboard::singleton = nullptr;
 
@@ -25,6 +27,7 @@ void Blackboard::add_data(const String &p_key, const Variant &p_data) {
 }
 
 void Blackboard::clear_data() {
+	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.csv");
 	blackboard_data.clear();
 }
 
@@ -80,4 +83,47 @@ void Blackboard::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove_data", "key"), &Blackboard::remove_data);
 	ClassDB::bind_method(D_METHOD("save_data"), &Blackboard::save_data);
 	ClassDB::bind_method(D_METHOD("load_data"), &Blackboard::load_data);
+}
+
+void Blackboard::save_to_csv(const String &p_path) {
+	String path = p_path.simplify_path();
+
+	// Create dir if not exists
+	Ref<DirAccess> dir = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+	if (!DirAccess::exists(path.get_base_dir())) {
+		dir->make_dir_recursive(path.get_base_dir());
+	}
+
+	// Open or create file
+	Ref<FileAccess> file = nullptr;
+
+	if (FileAccess::exists(path)) {
+		file = FileAccess::open(path, FileAccess::READ_WRITE);
+	} else {
+		// this fuckery is needed to create a file because FileAccess::WRITE creates a file but will truncate it
+		// file FileAccess::READ_WRITE will not create it but will write without truncating
+		file = FileAccess::open(path, FileAccess::WRITE); // Create file
+		file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
+	}
+
+	// Add header if not exists
+	Vector<String> keys;
+	for (KeyValue<String, Variant> pair : blackboard_data) {
+		keys.push_back(pair.key);
+	}
+	Vector<String> header = file->get_csv_line();
+
+	if (header != keys) {
+		file->store_csv_line(keys);
+	}
+
+	// Add data
+	file->seek_end(); // move cursor to end of file
+	Vector<String> values;
+	for (auto a : blackboard_data) {
+		values.push_back(a.value.stringify());
+	}
+	file->store_csv_line(values);
+
+	file->close();
 }
