@@ -13,7 +13,7 @@ func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.idle_dialogue))
 	
 	game_manager.npc_follow.connect(follow)
-	game_manager.switch_level_cleanup.connect(npc.die)
+	game_manager.switch_level_cleanup.connect(die)
 	
 	super.enter(previous_state, data)
 
@@ -27,7 +27,7 @@ func exit() -> void:
 	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
 	
 	game_manager.npc_follow.disconnect(follow)
-	game_manager.switch_level_cleanup.disconnect(npc.die)
+	game_manager.switch_level_cleanup.disconnect(die)
 	
 	super.exit()
 
@@ -37,7 +37,10 @@ func follow(display_name: String) -> void:
 		var data = Blackboard.get_data("npc")
 		if !is_instance_valid(data):
 			npc.choose()
-			
 			finished.emit(state_type_to_int(StateType.FOLLOWING))
 		else:
 			dialogue_manager.start_dialogue(npc.idle_dialogue, "already_following")
+
+
+func die() -> void:
+	npc.die()

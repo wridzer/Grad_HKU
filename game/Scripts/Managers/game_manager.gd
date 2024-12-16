@@ -8,8 +8,9 @@ signal spawn(value: Vector2, offset: Vector2)
 signal npc_follow(display_name: String)
 @warning_ignore("unused_signal")
 signal npc_stop_following(display_name: String)
-signal switch_level_cleanup(level_to_load: String)
+signal switch_level_cleanup
 signal get_spawn_location
+signal toggle_goap
 
 enum MissionType {INVALID, ITEM, SLAY}
 
@@ -50,7 +51,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 		npc.reparent(_level_parent.get_parent())
 	
 	# Remove leftover npc's
-	switch_level_cleanup.emit(level_to_load)
+	switch_level_cleanup.emit()
 	
 	# Add the level to load under "Level" to the scene tree
 	var scene = ResourceLoader.load(level_to_load, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
@@ -59,7 +60,10 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	# Remove the old level
 	_level_parent.get_child(0).queue_free()
 	
-	# Update utilities
+	# Toggle npc GOAP system
+	toggle_goap.emit()
+	
+	# Dump blackboard & update utilities
 	if level_to_load == _level_hub:
 		Blackboard.dump_data()
 		Blackboard.save_data()
