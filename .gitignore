@@ -16,3 +16,5 @@ mono_crash.*.json
 godot.lnk
 godot.exe.lnk
 godot-4.3
+game/blackboard_dump/blackboard.csv
+game/blackboard_dump/blackboard.csv.import
