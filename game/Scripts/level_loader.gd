@@ -5,7 +5,7 @@ extends Area2D
 @export var condition_failure_dialogue: DialogueResource
 
 var condition: bool:
-	get(): return is_instance_valid(Player.instance.following_npc) && \
+	get(): return is_instance_valid(Blackboard.get_data("npc")) && \
 				  game_manager.mission_type != game_manager.MissionType.INVALID
 
 @onready var _timer := $Timer

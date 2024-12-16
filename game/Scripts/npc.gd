@@ -46,8 +46,10 @@ var saved_spawn_pos: Vector2
 
 func _ready() -> void:
 	# Destroy instance if any other instance exists that is following the player
-	if Player.instance.following_npc:
-		if Player.instance.following_npc.display_name == display_name:
+	var data = Blackboard.get_data("npc")
+	if is_instance_valid(data):
+		var npc: Npc = data
+		if npc.display_name == display_name:
 			queue_free()
 	
 	# Assert that all necessary dialogue has been assigned
@@ -76,11 +78,6 @@ func _ready() -> void:
 
 func die() -> void:
 	_health_component.gain_health(3)
-	
-	#if Player.instance.following_npc == self:
-		#Player.instance.following_npc = null
-	#
-	#queue_free()
 
 
 func hit(immune: bool) -> void:
@@ -103,6 +100,7 @@ func update_animation_parameters() -> void:
 
 
 func choose() -> void:
+	Blackboard.add_data("npc", self)
 	_health_component.set_blackboard_variables()
 	
 	var data = Blackboard.get_data("npc_choices")
@@ -115,8 +113,6 @@ func choose() -> void:
 	Blackboard.add_data("slash_priority", _slash_priority)
 	Blackboard.add_data("shoot_priority", _shoot_priority)
 	Blackboard.add_data("block_priority", _block_priority)
-	
-	Blackboard.add_data("npc", self)
 
 
 func shoot(arrow_direction: Vector2) -> void:
