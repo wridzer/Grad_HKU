@@ -1,16 +1,19 @@
 class_name UtilitySystem
 extends Node
 
+
 static var instance: UtilitySystem = null
 var current_state : String
+
 
 func _ready() -> void:
 	# Singleton
 	if instance == null:
 		instance = self
 	if instance != self:
-		push_warning("Multiple players found in scene, deleting last loaded")
+		push_warning("Multiple utility systems found in scene, deleting last loaded")
 		queue_free()
+
 
 func calculate() -> void:
 	var damage_done : int = Blackboard.get_data("damage_done") if Blackboard.get_data("damage_done") else 0
@@ -26,8 +29,3 @@ func calculate() -> void:
 		current_state = "Defensive"
 	
 	print(current_state)
-
-func reset_values() -> void:
-	Blackboard.clear_data()
-	Blackboard.save_data()
-	print("data cleared")

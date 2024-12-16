@@ -23,6 +23,7 @@ public:
 	List<StringName> get_keys();
 	void add_data(const String &p_key, const Variant &p_data);
 	void clear_data();
+	void dump_data();
 	void remove_data(const String &p_key);
 
 

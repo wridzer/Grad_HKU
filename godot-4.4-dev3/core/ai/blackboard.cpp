@@ -27,8 +27,12 @@ void Blackboard::add_data(const String &p_key, const Variant &p_data) {
 }
 
 void Blackboard::clear_data() {
-	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.csv");
 	blackboard_data.clear();
+}
+
+void Blackboard::dump_data()
+{
+	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.csv");
 }
 
 void Blackboard::remove_data(const String &p_key) {
@@ -83,6 +87,7 @@ void Blackboard::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove_data", "key"), &Blackboard::remove_data);
 	ClassDB::bind_method(D_METHOD("save_data"), &Blackboard::save_data);
 	ClassDB::bind_method(D_METHOD("load_data"), &Blackboard::load_data);
+	ClassDB::bind_method(D_METHOD("dump_data"), &Blackboard::dump_data);
 }
 
 void Blackboard::save_to_csv(const String &p_path) {
