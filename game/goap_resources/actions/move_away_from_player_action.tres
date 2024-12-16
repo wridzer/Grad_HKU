@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="MoveAwayFromPlayerAction" load_steps=2 format=3 uid="uid://cawxa3prd1547"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_away_from_player_action.gd" id="1_vu4nx"]
+
+[resource]
+script = ExtResource("1_vu4nx")
