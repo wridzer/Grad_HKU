@@ -8,8 +8,7 @@ func _is_valid() -> bool:
 
 func _get_cost() -> int:
 	var npc: Npc = Blackboard.get_data("npc")
-	var distance_squared = npc.global_position.distance_squared_to(Player.instance.get_global_position())
-	print(int(npc.follow_distance_squared - distance_squared))
+	var distance_squared: float = npc.global_position.distance_squared_to(Player.instance.get_global_position())
 	return max(int(npc.follow_distance_squared - distance_squared), 0)
 
 
