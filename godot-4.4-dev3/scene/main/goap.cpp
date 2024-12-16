@@ -50,7 +50,6 @@ Plan Goap::_get_cheapest_plan(const Vector<Plan> &plans) {
 	best_plan.cost = std::numeric_limits<real_t>::max();
 
 	for (const auto &plan : plans) {
-		_print_plan(plan);
 		if (plan.cost < best_plan.cost) {
 			best_plan = plan;
 		}
@@ -102,6 +101,7 @@ Vector<Plan> Goap::_transform_tree_into_plans(const PlanTree &root_plan) {
 	if (root_plan.children.is_empty()) {
 		Plan plan;
 		plan.actions.push_back(root_plan.action);
+		plan.cost = root_plan.action->get_cost();
 		plans.push_back(plan);
 		return plans;
 	}
@@ -110,7 +110,7 @@ Vector<Plan> Goap::_transform_tree_into_plans(const PlanTree &root_plan) {
 		Vector<Plan> child_plans = _transform_tree_into_plans(root_plan.children[i]);
 		for (int j = 0; j < child_plans.size(); j++) {
 			Plan plan = child_plans[j];
-			if (root_plan.action != nullptr/* || root_plan.action->has_method("get_cost")*/) {
+			if (root_plan.action != nullptr) {
 				plan.actions.push_back(root_plan.action);
 				plan.cost += root_plan.action->get_cost();
 			}
