@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dtb0grb3pjub0"
+path="res://.godot/imported/dominic_idle.dialogue-dba8db52a9f2cb8e5e98ceeb1a006f7d.tres"
+
+[deps]
+
+source_file="res://Dialogue/dominic_idle.dialogue"
+dest_files=["res://.godot/imported/dominic_idle.dialogue-dba8db52a9f2cb8e5e98ceeb1a006f7d.tres"]
+
+[params]
+
+defaults=true

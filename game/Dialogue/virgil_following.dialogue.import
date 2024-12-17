@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cliiw6ci1lvp4"
+path="res://.godot/imported/virgil_following.dialogue-feebb69699ada552f96a30f4c091448e.tres"
+
+[deps]
+
+source_file="res://Dialogue/virgil_following.dialogue"
+dest_files=["res://.godot/imported/virgil_following.dialogue-feebb69699ada552f96a30f4c091448e.tres"]
+
+[params]
+
+defaults=true

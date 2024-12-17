@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://meljmnt76tu4"
+path="res://.godot/imported/rose_idle.dialogue-572550aacb8b80b7f02e171606034ae5.tres"
+
+[deps]
+
+source_file="res://Dialogue/rose_idle.dialogue"
+dest_files=["res://.godot/imported/rose_idle.dialogue-572550aacb8b80b7f02e171606034ae5.tres"]
+
+[params]
+
+defaults=true

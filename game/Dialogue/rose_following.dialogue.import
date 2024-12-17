@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://c7xo1vvpanwjt"
+path="res://.godot/imported/rose_following.dialogue-6a47d66d768a53d0818e1d9b5fc8ccd9.tres"
+
+[deps]
+
+source_file="res://Dialogue/rose_following.dialogue"
+dest_files=["res://.godot/imported/rose_following.dialogue-6a47d66d768a53d0818e1d9b5fc8ccd9.tres"]
+
+[params]
+
+defaults=true

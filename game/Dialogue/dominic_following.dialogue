@@ -1,0 +1,29 @@
+~ start
+% Dominic: Would you like me to retreat for now?
+% Dominic: Is it time for us to part?
+- Yes => yes
+- No => no
+
+~ yes
+%2 => niet
+% => wel
+
+~ wel
+% Dominic: It must be so.
+do game_manager.npc_stop_following.emit("Dominic")
+=> END!
+
+~ niet
+Dominic: I am not sure that is wise.
+	Pray reconsider.
+- Let's stay together => reconsider
+- Let's part => wel
+=> END
+
+~ reconsider
+Dominic: Wonderful! Let us continue.
+=> END
+
+~ no
+Dominic: Let us get back to the fight then.
+=> END

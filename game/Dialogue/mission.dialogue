@@ -1,8 +1,8 @@
 ~ start
 Mission Board: Pick your preferred mission type from the mission board.
-- Get item
+- Obtain item
 	=> item
-- Slay enemy
+- Slay enemies
 	=> slay
 
 ~ item
@@ -14,5 +14,5 @@ do game_manager.set_mission_type("SLAY")
 => gl
 
 ~ gl
-Mission Board: Good luck. If you change your mind feel free to choose again.
+Mission Board: Good luck. You may change your mind at any moment before starting the mission.
 => END
