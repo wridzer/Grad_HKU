@@ -5,12 +5,14 @@ extends Node
 @export var health: int
 @export var _max_health: int = 3
 @export var _immunity_length: float = .5
+var _owner: String = ""
 
 signal die
 signal health_gained
 signal immune
 
 @onready var _immunity_timer := $ImmunityTimer
+
 
 
 func _ready() -> void:
@@ -23,6 +25,8 @@ func gain_health(amount: int) -> void:
 	else:
 		health += amount
 	
+	if _owner != "enemy":
+		Blackboard.add_data(_owner + "_health", health)
 	health_gained.emit()
 
 
@@ -35,6 +39,10 @@ func take_damage(amount: int) -> void:
 			return
 		immune.emit(true)
 		_immunity_timer.start()
+		
+		if _owner != "enemy":
+			Blackboard.add_data(_owner + "_health", health)
+			Blackboard.increment_data(_owner + "_damage_taken", 1)
 
 
 func _on_immunity_timer_timeout() -> void:
@@ -44,6 +52,7 @@ func _on_immunity_timer_timeout() -> void:
 	_immunity_timer.stop()
 
 
-func set_health_blackboard_variables(blackboard_prefix: String) -> void:
-	Blackboard.add_data(blackboard_prefix + "_max_health", _max_health)
-	Blackboard.add_data(blackboard_prefix + "_health", health)
+func set_blackboard_variables() -> void:
+	if _owner != "enemy":
+		Blackboard.add_data(_owner + "_max_health", _max_health)
+		Blackboard.add_data(_owner + "_health", health)

@@ -33,6 +33,7 @@ func _ready() -> void:
 	input_manager.interact.connect(interact)
 	_health_component.die.connect(respawn)
 	_health_component.immune.connect(set_immunity_animation_param)
+	_health_component._owner = "player"
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -89,9 +90,11 @@ func update_animation_parameters() -> void:
 	
 	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
 		slash()
+		Blackboard.increment_data("sword_used_amount", 1)
 	
 	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
 		block()
+		Blackboard.increment_data("shield_used_amount", 1)
 	
 	if input_manager.bow && !animation_tree.get("parameters/conditions/shoot"):
 		var direction = (get_viewport().get_camera_2d().get_global_mouse_position() - global_position).normalized()
@@ -118,6 +121,8 @@ func shoot(direction: Vector2) -> void:
 	
 	# Animate bow
 	super.shoot(direction)
+	
+	Blackboard.increment_data("bow_used_amount", 1)
 
 
 func _reduce_arrows_to(amount: int) -> void:

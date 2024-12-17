@@ -26,6 +26,22 @@ void Blackboard::add_data(const String &p_key, const Variant &p_data) {
 	blackboard_data[p_key] = p_data;
 }
 
+void Blackboard::increment_data_int(const String &p_key, const int &p_data) {
+	if (blackboard_data.has(p_key)) {
+		blackboard_data[p_key] = (int)blackboard_data[p_key] + p_data;
+	} else {
+		blackboard_data[p_key] = p_data;
+	}
+}
+
+void Blackboard::increment_data_float(const String &p_key, const float &p_data) {
+	if (blackboard_data.has(p_key)) {
+		blackboard_data[p_key] = (float)blackboard_data[p_key] + p_data;
+	} else {
+		blackboard_data[p_key] = p_data;
+	}
+}
+
 void Blackboard::clear_data() {
 	blackboard_data.clear();
 }
@@ -88,6 +104,8 @@ void Blackboard::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("save_data"), &Blackboard::save_data);
 	ClassDB::bind_method(D_METHOD("load_data"), &Blackboard::load_data);
 	ClassDB::bind_method(D_METHOD("dump_data"), &Blackboard::dump_data);
+	ClassDB::bind_method(D_METHOD("increment_data", "key", "data"), &Blackboard::increment_data_int);
+	ClassDB::bind_method(D_METHOD("increment_data", "key", "data"), &Blackboard::increment_data_float);
 }
 
 void Blackboard::save_to_csv(const String &p_path) {
@@ -107,7 +125,6 @@ void Blackboard::save_to_csv(const String &p_path) {
 		// this fuckery is needed to create a file because FileAccess::WRITE creates a file but will truncate it
 		// file FileAccess::READ_WRITE will not create it but will write without truncating
 		file = FileAccess::open(path, FileAccess::WRITE); // Create file
-		file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
 	}
 
 	// Add header if not exists
@@ -117,11 +134,12 @@ void Blackboard::save_to_csv(const String &p_path) {
 	}
 	Vector<String> header = file->get_csv_line();
 
-	file->seek_end(); // move cursor to end of file
-
 	if (header.is_empty() || header != keys) {
 		file->store_csv_line(keys);
 	}
+
+	file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
+	file->seek_end(); // move cursor to end of file
 
 	// Add data
 	Vector<String> values;

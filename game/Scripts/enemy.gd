@@ -16,25 +16,17 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed") 
-	if (Blackboard.get_data("enemies_alive")):
-		Blackboard.add_data("enemies_alive", Blackboard.get_data("enemies_alive") + 1)
-	else:
-		Blackboard.add_data("enemies_alive", 1)
+	Blackboard.increment_data("enemies_alive", 1)
 	_health_component.die.connect(die)
 	_health_component.immune.connect(hit)
+	_health_component._owner = "enemy"
 
 
 func die() -> void:
-	if (Blackboard.get_data("enemies_killed")):
-		Blackboard.add_data("enemies_killed", Blackboard.get_data("enemies_killed") + 1)
-	else:
-		Blackboard.add_data("enemies_killed", 1)
-	Blackboard.add_data("enemies_alive", Blackboard.get_data("enemies_alive") - 1)
+	Blackboard.increment_data("enemies_killed", 1)
+	Blackboard.increment_data("enemies_alive", -1)
 	queue_free()
 
 
 func hit(_immune: bool) -> void:
-	if (Blackboard.get_data("damage_done")):
-		Blackboard.add_data("damage_done", Blackboard.get_data("damage_done") + 1)
-	else:
-		Blackboard.add_data("damage_done", 1)
+	Blackboard.increment_data("damage_done", 1)
