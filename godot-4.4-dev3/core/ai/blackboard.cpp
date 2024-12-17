@@ -125,6 +125,7 @@ void Blackboard::save_to_csv(const String &p_path) {
 		// this fuckery is needed to create a file because FileAccess::WRITE creates a file but will truncate it
 		// file FileAccess::READ_WRITE will not create it but will write without truncating
 		file = FileAccess::open(path, FileAccess::WRITE); // Create file
+		file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
 	}
 
 	// Add header if not exists
@@ -134,12 +135,11 @@ void Blackboard::save_to_csv(const String &p_path) {
 	}
 	Vector<String> header = file->get_csv_line();
 
+	file->seek_end(); // move cursor to end of file
+
 	if (header.is_empty() || header != keys) {
 		file->store_csv_line(keys);
 	}
-
-	file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
-	file->seek_end(); // move cursor to end of file
 
 	// Add data
 	Vector<String> values;
