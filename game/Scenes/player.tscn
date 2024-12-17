@@ -288,7 +288,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_856tq")]
-_health = 3
+health = 3
 _immunity_length = 1.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
