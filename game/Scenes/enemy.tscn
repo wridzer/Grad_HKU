@@ -71,7 +71,7 @@ sprite_frames = SubResource("SpriteFrames_mof70")
 frame_progress = 0.923811
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
-health = 1
+health = 3
 _immunity_length = 1.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]

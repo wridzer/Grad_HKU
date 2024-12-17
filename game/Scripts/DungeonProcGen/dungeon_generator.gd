@@ -350,6 +350,7 @@ func spawn_enemies(spawn_room: Room) -> void:
 			_step += 1
 			var enemy: Enemy = _enemy_scene.instantiate()
 			room.enemies.append(enemy)
+			enemy.dead.connect(room.erase_dead_enemy.bind())
 			room.add_child(enemy)
 			enemy.name = enemy.name + str(i)
 			enemy.owner = self

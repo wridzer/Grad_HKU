@@ -45,3 +45,7 @@ func _player_exited_room(body: Node2D) -> void:
 	for enemy in enemies:
 		if is_instance_valid(enemy):
 			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.IDLE))
+
+
+func erase_dead_enemy(enemy: Enemy) -> void:
+	enemies.erase(enemy)
