@@ -2,11 +2,12 @@ class_name HealthComponent
 extends Node
 
 
-@export var _health: int
+@export var health: int
 @export var _max_health: int = 3
 @export var _immunity_length: float = .5
 
 signal die
+signal health_gained
 signal immune
 
 @onready var _immunity_timer := $ImmunityTimer
@@ -17,25 +18,23 @@ func _ready() -> void:
 
 
 func gain_health(amount: int) -> void:
-	if _health + amount >= _max_health:
-		_health = _max_health
+	if health + amount >= _max_health:
+		health = _max_health
 	else:
-		_health += amount
+		health += amount
 	
-	Blackboard.add_data("npc_health", _health)
+	health_gained.emit()
 
 
 func take_damage(amount: int) -> void:
 	if _immunity_timer.time_left == 0:
-		_health -= amount
+		health -= amount
 		
-		if _health <= 0:
+		if health <= 0:
 			die.emit()
 			return
 		immune.emit(true)
 		_immunity_timer.start()
-		
-		Blackboard.add_data("npc_health", _health)
 
 
 func _on_immunity_timer_timeout() -> void:
@@ -45,6 +44,6 @@ func _on_immunity_timer_timeout() -> void:
 	_immunity_timer.stop()
 
 
-func set_blackboard_variables() -> void:
-	Blackboard.add_data("npc_max_health", _max_health)
-	Blackboard.add_data("npc_health", _health)
+func set_health_blackboard_variables(blackboard_prefix: String) -> void:
+	Blackboard.add_data(blackboard_prefix + "_max_health", _max_health)
+	Blackboard.add_data(blackboard_prefix + "_health", health)

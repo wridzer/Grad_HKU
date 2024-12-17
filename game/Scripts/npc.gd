@@ -66,6 +66,7 @@ func _ready() -> void:
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	_health_component.die.connect(respawn)
 	_health_component.immune.connect(hit)
+	_health_component.health_gained.connect(update_blackboard_health)
 	_health_component.immune.connect(set_immunity_animation_param)
 	
 	# Set display name label
@@ -88,7 +89,12 @@ func respawn() -> void:
 
 func hit(immune: bool) -> void:
 	if immune:
+		update_blackboard_health()
 		dialogue_manager.start_dialogue(hit_dialogue)
+
+
+func update_blackboard_health() -> void:
+	Blackboard.add_data("npc_health", _health_component.health)
 
 
 func update_animation_parameters() -> void:
@@ -107,7 +113,7 @@ func update_animation_parameters() -> void:
 
 func choose() -> void:
 	Blackboard.add_data("npc", self)
-	_health_component.set_blackboard_variables()
+	_health_component.set_health_blackboard_variables("npc")
 	
 	var data = Blackboard.get_data("npc_choices")
 	var npc_choices: Array[CombatType] = []
