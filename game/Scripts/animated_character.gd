@@ -10,7 +10,7 @@ func _process(_delta: float) -> void:
 	update_animation_parameters()
 
 
-func block() -> void:
+func block() -> bool:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
@@ -22,9 +22,10 @@ func block() -> void:
 	await get_tree().create_timer(animation_player.get_animation("character_animations/block_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/block", false)
+	return true
 
 
-func slash() -> void:
+func slash() -> bool:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
@@ -36,9 +37,10 @@ func slash() -> void:
 	await get_tree().create_timer(animation_player.get_animation("character_animations/slash_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/slash", false)
+	return true
 
 
-func shoot(direction: Vector2) -> void:
+func shoot(direction: Vector2) -> bool:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
@@ -49,6 +51,7 @@ func shoot(direction: Vector2) -> void:
 	await get_tree().create_timer(animation_player.get_animation("character_animations/shoot_right").length).timeout
 	
 	animation_tree.set("parameters/conditions/shoot", false)
+	return true
 
 
 func update_animation_parameters() -> void:

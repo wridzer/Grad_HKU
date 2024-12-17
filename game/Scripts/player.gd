@@ -102,25 +102,26 @@ func update_animation_parameters() -> void:
 		animation_tree.set("parameters/Walk/blend_position", input_manager.direction)
 	
 	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
-		slash()
 		Blackboard.increment_data("sword_used_amount", 1)
+		slash()
 	
 	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
-		block()
 		Blackboard.increment_data("shield_used_amount", 1)
+		block()
 	
 	if input_manager.bow && !animation_tree.get("parameters/conditions/shoot"):
+		Blackboard.increment_data("bow_used_amount", 1)
 		var direction = (get_viewport().get_camera_2d().get_global_mouse_position() - global_position).normalized()
-		shoot(direction)
+		await shoot(direction)
 	
 	super.update_animation_parameters()
 
 
-func shoot(direction: Vector2) -> void:
+func shoot(direction: Vector2) -> bool:
 	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
-	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
+	arrow.goal = get_viewport().get_camera_2d().get_global_mouse_position()
 	arrow.direction = direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
@@ -133,9 +134,7 @@ func shoot(direction: Vector2) -> void:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	super.shoot(direction)
-	
-	Blackboard.increment_data("bow_used_amount", 1)
+	return await super.shoot(direction)
 
 
 func _reduce_arrows_to(amount: int) -> void:

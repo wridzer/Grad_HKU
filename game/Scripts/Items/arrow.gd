@@ -6,7 +6,7 @@ extends Node2D
 @export var stopping_distance: float = 2.0
 @export var speed: float = 120.0
 
-var mouse_position: Vector2
+var goal: Vector2
 var direction: Vector2
 var _hit: bool = false
 
@@ -17,7 +17,7 @@ var _hit: bool = false
 
 
 func _ready() -> void:
-	look_at(mouse_position)
+	look_at(goal)
 	_start_timer.wait_time = starting_distance / speed
 	_stop_timer.wait_time = stopping_distance / speed
 	_start_timer.start()

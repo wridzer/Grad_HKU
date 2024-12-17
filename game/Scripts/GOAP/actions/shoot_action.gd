@@ -29,9 +29,11 @@ func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var enemy: Enemy = Blackboard.get_data("enemy")
 	var direction = (enemy.global_position - npc.global_position).normalized()
-	npc.shoot(direction)
-	Blackboard.remove_data("enemy")
-	return true
+	if await npc.shoot(direction):
+		Blackboard.remove_data("enemy")
+		return true
+	
+	return false
 
 
 func _perform_physics(actor, _delta) -> bool:

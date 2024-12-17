@@ -67,7 +67,6 @@ func _ready() -> void:
 	_health_component.die.connect(respawn)
 	_health_component.immune.connect(hit)
 	_health_component.health_gained.connect(update_blackboard_health)
-	_health_component._owner = "npc"
 	
 	# Set display name label
 	_name_label.text = display_name
@@ -131,11 +130,28 @@ func choose() -> void:
 	_health_component.set_health_blackboard_variables("npc")
 
 
-func shoot(arrow_direction: Vector2) -> void:
+func slash() -> bool:
+	if !animation_tree.get("parameters/conditions/slash"):
+		return false
+	
+	return await super.slash()
+
+
+func block() -> bool:
+	if !animation_tree.get("parameters/conditions/block"):
+		return false
+	
+	return await super.block();
+
+
+func shoot(arrow_direction: Vector2) -> bool:
+	if animation_tree.get("parameters/conditions/shoot"):
+		return false;
+
 	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
-	arrow.mouse_position = get_viewport().get_camera_2d().get_global_mouse_position()
+	arrow.goal = global_position + arrow_direction
 	arrow.direction = arrow_direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
@@ -148,7 +164,7 @@ func shoot(arrow_direction: Vector2) -> void:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	super.shoot(direction)
+	return await super.shoot(direction)
 
 
 func _reduce_arrows_to(amount: int) -> void:

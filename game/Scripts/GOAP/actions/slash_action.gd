@@ -27,10 +27,11 @@ func _get_effects() -> Dictionary:
 
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	npc.slash()
-	print("slash")
-	Blackboard.remove_data("enemy")
-	return true
+	if await npc.slash():
+		Blackboard.remove_data("enemy")
+		return true
+	
+	return false
 
 
 func _perform_physics(actor, _delta) -> bool:
