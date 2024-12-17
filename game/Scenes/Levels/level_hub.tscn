@@ -3,51 +3,51 @@
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_q3wky"]
 [ext_resource type="PackedScene" uid="uid://dpdotgt3oya1o" path="res://Scenes/Levels/level_loader.tscn" id="2_415ri"]
 [ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="2_lbhg0"]
-[ext_resource type="Resource" uid="uid://c7xo1vvpanwjt" path="res://Dialogue/kin_following.dialogue" id="3_5v3rr"]
-[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/ker_idle.dialogue" id="3_hs5g4"]
-[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/kin_idle.dialogue" id="3_xtaxt"]
-[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/kin_hit.dialogue" id="4_6a5rs"]
-[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/ker_hit.dialogue" id="4_ao885"]
+[ext_resource type="Resource" uid="uid://c7xo1vvpanwjt" path="res://Dialogue/rose_following.dialogue" id="3_5v3rr"]
+[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/dominic_idle.dialogue" id="3_hs5g4"]
+[ext_resource type="Resource" uid="uid://meljmnt76tu4" path="res://Dialogue/rose_idle.dialogue" id="3_xtaxt"]
+[ext_resource type="Resource" uid="uid://c700abupjy41r" path="res://Dialogue/rose_hit.dialogue" id="4_6a5rs"]
+[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/dominic_hit.dialogue" id="4_ao885"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/Levels/spawn_point.tscn" id="4_yhct4"]
 [ext_resource type="PackedScene" uid="uid://bdntcr5tudi1b" path="res://Scenes/npc.tscn" id="5_x4qe1"]
-[ext_resource type="Resource" uid="uid://e1ysdk534hu5" path="res://Dialogue/ker_following.dialogue" id="6_phc4w"]
+[ext_resource type="Resource" uid="uid://e1ysdk534hu5" path="res://Dialogue/dominic_following.dialogue" id="6_phc4w"]
 [ext_resource type="PackedScene" uid="uid://d3nmvrek3uub0" path="res://Scenes/mission_display.tscn" id="9_emmm7"]
-[ext_resource type="Resource" uid="uid://cug04ukn2doay" path="res://Dialogue/plop_idle.dialogue" id="9_vaxnm"]
-[ext_resource type="Resource" uid="uid://b7mlksh2fce4i" path="res://Dialogue/plop_hit.dialogue" id="10_0kxew"]
-[ext_resource type="Resource" uid="uid://cliiw6ci1lvp4" path="res://Dialogue/plop_following.dialogue" id="11_0d40j"]
+[ext_resource type="Resource" uid="uid://cug04ukn2doay" path="res://Dialogue/virgil_idle.dialogue" id="9_vaxnm"]
+[ext_resource type="Resource" uid="uid://b7mlksh2fce4i" path="res://Dialogue/virgil_hit.dialogue" id="10_0kxew"]
+[ext_resource type="Resource" uid="uid://cliiw6ci1lvp4" path="res://Dialogue/virgil_following.dialogue" id="11_0d40j"]
 [ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="13_vlqc1"]
 [ext_resource type="Resource" uid="uid://cteaboydc06j8" path="res://Dialogue/mission_condition_failure.dialogue" id="15_wu44a"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")
 
-[node name="Npc_Kin" parent="." instance=ExtResource("5_x4qe1")]
+[node name="Npc_Rose" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(72, -39)
 _adapatable_combat = 2
 _unadaptable_combat = 1
-display_name = "Kin"
+display_name = "Rose"
 idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
 _shoot_priority = 13
 _block_priority = 12
 
-[node name="Npc_Ker" parent="." instance=ExtResource("5_x4qe1")]
+[node name="Npc_Dominic" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
 _preferred_combat = 1
 _unadaptable_combat = 2
-display_name = "Ker"
+display_name = "Dominic"
 idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
 _slash_priority = 13
 _shoot_priority = 12
 
-[node name="Npc_Plop" parent="." instance=ExtResource("5_x4qe1")]
+[node name="Npc_Virgil" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
 _preferred_combat = 2
 _adapatable_combat = 1
-display_name = "Plop"
+display_name = "Virgil"
 idle_dialogue = ExtResource("9_vaxnm")
 hit_dialogue = ExtResource("10_0kxew")
 following_dialogue = ExtResource("11_0d40j")

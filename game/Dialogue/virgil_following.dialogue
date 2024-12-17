@@ -1,0 +1,13 @@
+~ start
+% Virgil: Do you want to split?
+- Yes => yes
+- No => no
+
+~ yes
+% Virgil: I'll see you later, okay?
+do game_manager.npc_stop_following.emit("Virgil")
+=> END!
+
+~ no
+Virgil: Right. Good.
+=> END

@@ -1,0 +1,29 @@
+~ start
+Rose: I'm Rose.
+% Rose: Are we going out there or what?
+% Rose: We pairing up?
+- Yes => yes
+- No => no
+
+~ yes
+=> wel
+
+~ wel
+% Rose: Let's hurry it up then.
+% Rose: Don't slow me down.
+do game_manager.npc_follow.emit("Rose")
+=> END
+
+~ niet
+Rose: Tough luck, I'm not going with you.
+=> END
+
+~ no
+% Rose: Don't waste my time.
+% Rose: Suit yourself.
+=> END
+
+~ already_following
+Rose: You're already paired up.
+	Deal with them first.
+=> END

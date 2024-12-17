@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cnsj4cr1gyx7n"
+path="res://.godot/imported/dominic_hit.dialogue-8b8ae4b708b3ac5f5f9a871252e38017.tres"
+
+[deps]
+
+source_file="res://Dialogue/dominic_hit.dialogue"
+dest_files=["res://.godot/imported/dominic_hit.dialogue-8b8ae4b708b3ac5f5f9a871252e38017.tres"]
+
+[params]
+
+defaults=true

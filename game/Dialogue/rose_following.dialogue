@@ -1,0 +1,13 @@
+~ start
+Rose: You want me to leave?
+- Yes => yes
+- No => no
+
+~ yes
+Rose: I run better solo anyway.
+do game_manager.npc_stop_following.emit("Rose")
+=> END
+
+~ no
+Rose: Then get on with it already.
+=> END

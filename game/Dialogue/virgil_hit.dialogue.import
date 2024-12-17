@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://b7mlksh2fce4i"
+path="res://.godot/imported/virgil_hit.dialogue-ac266e2f0efb613b3c747cd491f2068c.tres"
+
+[deps]
+
+source_file="res://Dialogue/virgil_hit.dialogue"
+dest_files=["res://.godot/imported/virgil_hit.dialogue-ac266e2f0efb613b3c747cd491f2068c.tres"]
+
+[params]
+
+defaults=true

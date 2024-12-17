@@ -1,0 +1,29 @@
+~ start
+Virgil: H- heya, I'm Virgil...
+% Virgil: Oh, you want to go together?
+% Virgil: Are we pairing up?
+- Yes => yes
+- No => no
+
+~ yes
+=> wel
+
+~ wel
+% Virgil: Alright, let's watch each other's backs.
+% Virgil: Let's be careful out there.
+do game_manager.npc_follow.emit("Virgil")
+=> END
+
+~ niet
+Virgil: I would... rather not.
+=> END
+
+~ no
+% Virgil: Oh- okay...
+% Virgil: No? Ah, alright...
+=> END
+
+~ already_following
+Virgil: Uhm...
+	You kinda already have a companion...
+=> END

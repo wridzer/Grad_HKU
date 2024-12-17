@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://e1ysdk534hu5"
+path="res://.godot/imported/dominic_following.dialogue-6a0208084528794af6df265b967afdf0.tres"
+
+[deps]
+
+source_file="res://Dialogue/dominic_following.dialogue"
+dest_files=["res://.godot/imported/dominic_following.dialogue-6a0208084528794af6df265b967afdf0.tres"]
+
+[params]
+
+defaults=true
