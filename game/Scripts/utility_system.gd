@@ -18,6 +18,19 @@ func _ready() -> void:
 func calculate() -> void:
 	calculate_playstyle()
 	calculate_weapon_usage()
+	reset_values()
+
+
+func reset_values() -> void:
+	var clear_values: Array[String] = [
+		"damage_done",
+		"amount_blocked",
+		"enemies_alive",
+		"sword_used_amount",
+		"shield_used_amount",
+		"bow_used_amount"
+	]
+	Blackboard.clear_utility_data(clear_values)
 
 
 func calculate_playstyle() -> void:
@@ -26,6 +39,9 @@ func calculate_playstyle() -> void:
 	var enemies_killed : int = Blackboard.get_data("amount_blocked") if Blackboard.get_data("amount_blocked") else 0
 	var enemies_left_alive : int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
 	
+	var enemy_killed_percentage = enemies_killed / (enemies_killed + enemies_left_alive) * 100
+	Blackboard.add_data("enemy_killed_percentage", enemy_killed_percentage)
+	
 	if  (enemies_left_alive >= enemies_killed):
 		current_state = "Avoiding"
 	elif (damage_done >= damage_blocked):
@@ -33,7 +49,11 @@ func calculate_playstyle() -> void:
 	else:
 		current_state = "Defensive"
 	
-	print(current_state)
+	var data: Array[String] = []
+	if(Blackboard.get_data("playstyle")):
+		data = Blackboard.get_data("playstyle")
+	data.append(current_state)
+	Blackboard.add_data("playstyle", data)
 
 
 func calculate_weapon_usage() -> void:

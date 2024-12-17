@@ -42,6 +42,14 @@ void Blackboard::increment_data_float(const String &p_key, const float &p_data) 
 	}
 }
 
+void Blackboard::clear_utility_data(const Array &p_keys) {
+	for (auto key : p_keys) {
+		if (blackboard_data.has(key)){
+			blackboard_data.erase(key);
+		}
+	}
+}
+
 void Blackboard::clear_data() {
 	blackboard_data.clear();
 }
@@ -106,6 +114,7 @@ void Blackboard::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("dump_data"), &Blackboard::dump_data);
 	ClassDB::bind_method(D_METHOD("increment_data", "key", "data"), &Blackboard::increment_data_int);
 	ClassDB::bind_method(D_METHOD("increment_data", "key", "data"), &Blackboard::increment_data_float);
+	ClassDB::bind_method(D_METHOD("clear_utility_data", "keys"), &Blackboard::clear_utility_data);
 }
 
 void Blackboard::save_to_csv(const String &p_path) {

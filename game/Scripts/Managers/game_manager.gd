@@ -62,7 +62,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	
 	# Dump blackboard & update utilities
 	if level_to_load == _level_hub:
-		UtilitySystem.instance.calculate()
+		UtilitySystem.instance.calculate() # This also has a clear function for run based data
 		Blackboard.dump_data()
 		Blackboard.save_data()
 	
