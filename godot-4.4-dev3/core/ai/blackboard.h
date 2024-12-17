@@ -22,6 +22,8 @@ public:
 	Variant get_data(const String &p_key);
 	List<StringName> get_keys();
 	void add_data(const String &p_key, const Variant &p_data);
+	void increment_data_int(const String &p_key, const int &p_data);
+	void increment_data_float(const String &p_key, const float &p_data);
 	void clear_data();
 	void dump_data();
 	void remove_data(const String &p_key);

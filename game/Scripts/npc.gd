@@ -68,6 +68,7 @@ func _ready() -> void:
 	_health_component.immune.connect(hit)
 	_health_component.health_gained.connect(update_blackboard_health)
 	_health_component.immune.connect(set_immunity_animation_param)
+	_health_component._owner = "npc"
 	
 	# Set display name label
 	_name_label.text = display_name
@@ -113,7 +114,6 @@ func update_animation_parameters() -> void:
 
 func choose() -> void:
 	Blackboard.add_data("npc", self)
-	_health_component.set_health_blackboard_variables("npc")
 	
 	var data = Blackboard.get_data("npc_choices")
 	var npc_choices: Array[CombatType] = []
