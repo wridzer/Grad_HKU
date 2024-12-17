@@ -3,10 +3,9 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	var data = Blackboard.get_data("enemies_present")
-	if is_instance_valid(data):
-		var enemies_present: bool = data
-		return enemies_present
+	if Blackboard.get_data("enemies_present"):
+		var data = Blackboard.get_data("enemy")
+		return is_instance_valid(data)
 	
 	return false
 
@@ -32,7 +31,7 @@ func _get_preconditions() -> Dictionary:
 
 
 func _get_effects() -> Dictionary:
-	return {"close_to_enemy" : false}
+	return {"close_to_enemy": false}
 
 
 func _perform_physics(actor, _delta) -> bool:
