@@ -3,13 +3,9 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	var data = Blackboard.get_data("enemies_present")
-	if is_instance_valid(data):
-		var enemies_present: bool = data
-		var other_data = Blackboard.get_data("enemy")
-		if enemies_present && is_instance_valid(other_data):
-			print("move_to_enemy valid")
-		return enemies_present && is_instance_valid(other_data)
+	if Blackboard.get_data("enemies_present"):
+		var data = Blackboard.get_data("enemy")
+		return is_instance_valid(data)
 	
 	return false
 

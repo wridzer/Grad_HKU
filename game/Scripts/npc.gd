@@ -17,7 +17,7 @@ const MAX_ARROW_COUNT = 5
 @export var goap_agent: GoapAgent
 
 @export var follow_distance: float = 15.0
-@export var chase_distance: float = 10.0
+@export var chase_distance: float = 15.0
 @export var flee_distance: float = 50.0
 @export var follow_speed: float = 60.0
 @export var chase_speed: float = 70.0
