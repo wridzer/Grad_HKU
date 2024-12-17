@@ -22,6 +22,8 @@ game_manager="*res://Scenes/Managers/game_manager.tscn"
 input_manager="*res://Scenes/Managers/input_manager.tscn"
 dialogue_manager="*res://Scenes/Managers/dialogue_manager.tscn"
 GoapPlanner="*res://Scenes/Managers/goap_planner.tscn"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+LayerNames="*res://addons/layerNames/layerNames.gd"
 
 [blackboard]
 
@@ -67,6 +69,17 @@ project/assembly_name="game"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/layerNames/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Art/": "yellow",
+"res://Dialogue/": "orange",
+"res://Scenes/": "red",
+"res://Scripts/": "green",
+"res://goap_resources/": "purple",
+"res://script_templates/": "teal"
+}
 
 [input]
 
