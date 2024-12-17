@@ -25,6 +25,12 @@ void GoapAgent::execute(float delta, Node* actor, Goap *goap) {
 	if (actor == nullptr)
 		return;
 
+	// debug names
+	for (auto goal : goals) {
+		if (goal != nullptr)
+			goal->get_goal_name();
+	}
+
 	GoapGoal* goal = *get_best_goal();
 
 	if (current_goal == nullptr || goal != current_goal) {
@@ -35,6 +41,7 @@ void GoapAgent::execute(float delta, Node* actor, Goap *goap) {
 		current_plan = goap->get_plan(current_goal);
 		current_plan_index = 0;
 
+		print_line("Goal: ", goal->get_goal_name(), " - Priority: ", goal->get_priority());
 		print_line("Plan:  - amount of actions: ", current_plan.actions.size(), " - costs: ", current_plan.cost);
 		for ( auto action : current_plan.actions) {
 			if (action != nullptr)

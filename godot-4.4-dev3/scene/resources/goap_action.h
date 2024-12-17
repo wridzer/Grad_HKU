@@ -11,6 +11,8 @@ public:
 	GoapAction();
 	~GoapAction();
 
+	StringName name;
+
 	virtual bool are_preconditions_met();
 	virtual void apply_effects();
 

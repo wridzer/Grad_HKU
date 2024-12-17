@@ -9,6 +9,8 @@ public:
 	GoapGoal();
 	~GoapGoal();
 
+	StringName name;
+
 	virtual StringName get_goal_name();
 	virtual bool is_goal_met();
 	virtual int get_priority();

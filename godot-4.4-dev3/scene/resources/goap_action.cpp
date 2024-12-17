@@ -16,6 +16,7 @@ void GoapAction::apply_effects() {
 StringName GoapAction::get_action_name() {
 	StringName action_name = "";
 	GDVIRTUAL_CALL(_get_action_name, action_name);
+	name = action_name;
 	return action_name;
 }
 

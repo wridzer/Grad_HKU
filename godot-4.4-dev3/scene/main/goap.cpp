@@ -22,7 +22,10 @@ void Goap::_bind_methods() {
 }
 
 Plan Goap::get_plan(Ref<GoapGoal> goal) {
-	print_line("Goal: ", goal->get_goal_name(), " - Priority: ", goal->get_priority());
+	//debug names
+	for (auto action : actions) {
+		action->get_action_name();
+	}
 
 	Dictionary desired_state = goal->get_desired_state().duplicate();
 	if (desired_state.is_empty()) {
@@ -114,7 +117,7 @@ Vector<Plan> Goap::_transform_tree_into_plans(const PlanTree &root_plan) {
 				plan.actions.push_back(root_plan.action);
 				plan.cost += root_plan.action->get_cost();
 			}
-			plans.push_back(child_plans[j]);
+			plans.push_back(plan);
 		}
 	}
 
