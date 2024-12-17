@@ -41,20 +41,19 @@ func calculate_weapon_usage() -> void:
 	var shield_used : int = Blackboard.get_data("shield_used_amount") if Blackboard.get_data("shield_used_amount") else 0
 	var bow_used : int = Blackboard.get_data("bow_used_amount") if Blackboard.get_data("bow_used_amount") else 0
 	
-	var total_use = bow_used + shield_used + sword_used
+	var total_use: float = bow_used + shield_used + sword_used
 	
 	if(total_use == 0):
 		return
-		
-	var input_vector = Vector3()
-	input_vector.x = sword_used/total_use*100
-	input_vector.y = shield_used/total_use*100
-	input_vector.z = bow_used/total_use*100
 	
+	var usage_percent_sword_shield_bow = Vector3(
+		sword_used /	total_use	*	100,
+		shield_used /	total_use	*	100,
+		bow_used /	total_use	*	100
+	)
 	
-	var new_usage_percent_sword_shield_bow = [input_vector]
-	var usage_percent_sword_shield_bow = Blackboard.get_data("usage_percent_sword_shield_bow")
-	if !is_instance_valid(usage_percent_sword_shield_bow):
-		usage_percent_sword_shield_bow = []
-	usage_percent_sword_shield_bow[usage_percent_sword_shield_bow.size()] = new_usage_percent_sword_shield_bow
-	Blackboard.add_data("usage_percent_sword_shield_bow", usage_percent_sword_shield_bow)
+	var data: Array[Vector3] = []
+	if(Blackboard.get_data("usage_percent_sword_shield_bow")):
+		data = Blackboard.get_data("usage_percent_sword_shield_bow")
+	data.append(usage_percent_sword_shield_bow)
+	Blackboard.add_data("usage_percent_sword_shield_bow", data)

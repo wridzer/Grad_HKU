@@ -62,9 +62,9 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	
 	# Dump blackboard & update utilities
 	if level_to_load == _level_hub:
+		UtilitySystem.instance.calculate()
 		Blackboard.dump_data()
 		Blackboard.save_data()
-		UtilitySystem.instance.calculate()
 	
 	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	get_spawn_location.emit()
