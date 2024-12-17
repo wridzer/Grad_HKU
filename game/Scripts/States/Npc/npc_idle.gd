@@ -10,7 +10,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.idle_dialogue))
+	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.idle_dialogue, npc.display_name))
 	
 	game_manager.npc_follow.connect(follow)
 	game_manager.switch_level_cleanup.connect(die)

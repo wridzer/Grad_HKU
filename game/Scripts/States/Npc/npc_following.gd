@@ -12,7 +12,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue))
+	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.following_dialogue, npc.display_name))
 	
 	game_manager.npc_stop_following.connect(stop_following)
 	game_manager.toggle_goap.connect(activate_goap)
