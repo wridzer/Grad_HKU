@@ -12,11 +12,9 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
-	var data = Blackboard.get_data("block_priority")
-	if is_instance_valid(data):
-		var block_priority: int = data
-		return block_priority
-	
+	if Blackboard.get_data("block_priority"):
+		return Blackboard.get_data("block_priority") 
+
 	return 0
 
 

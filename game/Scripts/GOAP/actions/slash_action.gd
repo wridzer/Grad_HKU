@@ -33,6 +33,7 @@ func _get_effects() -> Dictionary:
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
 	npc.slash()
+	Blackboard.remove_data("enemy")
 	return true
 
 

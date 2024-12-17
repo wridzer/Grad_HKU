@@ -7,10 +7,13 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("hide_goal_complete")
-	if !NpcGoap.is_valid_bool_and_true(data):
-		return false
+	var hide_goal_complete: bool = false
+	if Blackboard.get_data("hide_goal_complete"):
+		hide_goal_complete = Blackboard.get_data("hide_goal_complete")
 
+	if !hide_goal_complete && is_instance_valid(Blackboard.get_data("enemy")):
+		return false
+	
 	Blackboard.add_data("hide_goal_complete", false)
 	return true
 

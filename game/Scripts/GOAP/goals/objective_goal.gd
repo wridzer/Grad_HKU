@@ -7,8 +7,11 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	var data = Blackboard.get_data("objective_goal_complete")
-	if !NpcGoap.is_bool_and_true(data):
+	var objective_goal_complete: bool = false
+	if Blackboard.get_data("objective_goal_complete"):
+		objective_goal_complete = Blackboard.get_data("objective_goal_complete")
+	
+	if !objective_goal_complete && is_instance_valid(Blackboard.get_data("enemy")):
 		return false
 	
 	Blackboard.add_data("objective_goal_complete", false)

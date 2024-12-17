@@ -35,6 +35,7 @@ func _perform(actor, _delta) -> bool:
 	var enemy: Enemy = Blackboard.get_data("enemy")
 	var direction = (enemy.global_position - npc.global_position).normalized()
 	npc.shoot(direction)
+	Blackboard.remove_data("enemy")
 	return true
 
 

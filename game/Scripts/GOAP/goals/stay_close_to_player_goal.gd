@@ -9,7 +9,7 @@ func _get_goal_name() -> StringName:
 func _is_goal_met() -> bool:
 	# If the bool "stay_close_to_player_goal_complete", false
 	var data = Blackboard.get_data("stay_close_to_player_goal_complete")
-	if !NpcGoap.is_bool_and_true(data):
+	if !data:
 		return false
 	
 	var npc: Npc = Blackboard.get_data("npc")
