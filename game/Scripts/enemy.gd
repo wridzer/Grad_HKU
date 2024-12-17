@@ -21,7 +21,6 @@ func _ready() -> void:
 	Blackboard.increment_data("enemies_alive", 1)
 	_health_component.die.connect(die)
 	_health_component.immune.connect(hit)
-	_health_component._owner = "enemy"
 
 
 func die() -> void:

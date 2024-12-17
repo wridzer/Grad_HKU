@@ -67,7 +67,6 @@ func _ready() -> void:
 	_health_component.die.connect(respawn)
 	_health_component.immune.connect(hit)
 	_health_component.health_gained.connect(update_blackboard_health)
-	_health_component.immune.connect(set_immunity_animation_param)
 	_health_component._owner = "npc"
 	
 	# Set display name label
@@ -90,8 +89,11 @@ func respawn() -> void:
 
 func hit(immune: bool) -> void:
 	if immune:
+		Blackboard.increment_data("npc_damage_taken", 1)
 		update_blackboard_health()
 		dialogue_manager.start_dialogue(hit_dialogue)
+	
+	set_immunity_animation_param(immune)
 
 
 func update_blackboard_health() -> void:
@@ -125,6 +127,8 @@ func choose() -> void:
 	Blackboard.add_data("slash_priority", _slash_priority)
 	Blackboard.add_data("shoot_priority", _shoot_priority)
 	Blackboard.add_data("block_priority", _block_priority)
+	
+	_health_component.set_health_blackboard_variables("npc")
 
 
 func shoot(arrow_direction: Vector2) -> void:

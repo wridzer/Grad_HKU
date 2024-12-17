@@ -32,8 +32,9 @@ func _ready() -> void:
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	input_manager.interact.connect(interact)
 	_health_component.die.connect(respawn)
-	_health_component.immune.connect(set_immunity_animation_param)
-	_health_component._owner = "player"
+	_health_component.immune.connect(hit)
+	_health_component.health_gained.connect(update_blackboard_health)
+	_health_component.set_health_blackboard_variables("player")
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -69,6 +70,18 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 func respawn() -> void:
 	spawn(_saved_spawn_pos, Vector2.ZERO)
 	_health_component.gain_health(3)
+
+
+func update_blackboard_health() -> void:
+	Blackboard.add_data("player_health", _health_component.health)
+
+
+func hit(immune: bool) -> void:
+	if immune:
+		Blackboard.increment_data("player_damage_taken", 1)
+		update_blackboard_health()
+	
+	set_immunity_animation_param(immune)
 
 
 func interact() -> void:
