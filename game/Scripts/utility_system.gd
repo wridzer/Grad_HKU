@@ -67,9 +67,9 @@ func calculate_weapon_usage() -> void:
 		return
 	
 	var usage_percent_sword_shield_bow = Vector3(
-		sword_used /	total_use	*	100,
-		shield_used /	total_use	*	100,
-		bow_used /	total_use	*	100
+		sword_used / total_use * 100,
+		shield_used / total_use * 100,
+		bow_used / total_use * 100
 	)
 	
 	var data: Array[Vector3] = []

@@ -125,8 +125,9 @@ func choose() -> void:
 	Blackboard.add_data("npc_choices", npc_choices)
 	
 	Blackboard.add_data("slash_priority", _slash_priority)
-	Blackboard.add_data("shoot_priority", _shoot_priority)
 	Blackboard.add_data("block_priority", _block_priority)
+	Blackboard.add_data("shoot_priority", _shoot_priority)
+	Blackboard.add_data("adaptable_style", _adapatable_combat)
 	
 	_health_component.set_health_blackboard_variables("npc")
 
