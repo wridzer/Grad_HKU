@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=29 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -128,6 +128,11 @@ tracks/8/keys = {
 _data = {
 &"RESET": SubResource("Animation_laorx")
 }
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_frri1"]
+blend_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_ssrut"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
 atlas = ExtResource("3_y3655")
@@ -277,6 +282,25 @@ script = ExtResource("8_sibh1")
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
 visible = false
 
+[node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+z_index = 2
+material = SubResource("CanvasItemMaterial_frri1")
+position = Vector2(0, 3)
+scale = Vector2(2.5, 0.75)
+mesh = SubResource("BoxMesh_ssrut")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+z_index = 2
+material = SubResource("CanvasItemMaterial_frri1")
+position = Vector2(-1, 2)
+mesh = SubResource("BoxMesh_ssrut")
+
+[node name="MeshInstance2D3" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+z_index = 2
+material = SubResource("CanvasItemMaterial_frri1")
+position = Vector2(1, 2)
+mesh = SubResource("BoxMesh_ssrut")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_ed326")
@@ -303,6 +327,7 @@ _health_component = NodePath("../HealthComponent")
 shape = SubResource("CircleShape2D_jdjs5")
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 offset_left = 80.0
 offset_top = -81.0
 offset_right = 143.0
