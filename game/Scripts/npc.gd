@@ -91,7 +91,7 @@ func hit(immune: bool) -> void:
 	if immune:
 		Blackboard.increment_data("npc_damage_taken", 1)
 		update_blackboard_health()
-		dialogue_manager.start_dialogue(hit_dialogue)
+		#dialogue_manager.start_dialogue(hit_dialogue)
 	
 	set_immunity_animation_param(immune)
 
