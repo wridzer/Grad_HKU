@@ -8,8 +8,11 @@ func _get_goal_name() -> StringName:
 
 func _is_goal_met() -> bool:
 	# If the bool "stay_close_to_player_goal_complete", false
-	var data = Blackboard.get_data("stay_close_to_player_goal_complete")
-	if !data:
+	var stay_close_to_player_goal_complete: bool = false
+	if Blackboard.get_data("stay_close_to_player_goal_complete"):
+		stay_close_to_player_goal_complete = Blackboard.get_data("stay_close_to_player_goal_complete")
+	
+	if !stay_close_to_player_goal_complete:
 		return false
 	
 	var npc: Npc = Blackboard.get_data("npc")

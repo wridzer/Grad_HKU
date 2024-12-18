@@ -7,11 +7,17 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
+	# If there is no current objective, true
+	var data = Blackboard.get_data("objective")
+	if !is_instance_valid(data):
+		return true
+	
+	# If the objective goal is not yet completed, false
 	var objective_goal_complete: bool = false
 	if Blackboard.get_data("objective_goal_complete"):
 		objective_goal_complete = Blackboard.get_data("objective_goal_complete")
 	
-	if !objective_goal_complete && is_instance_valid(Blackboard.get_data("enemy")):
+	if !objective_goal_complete:
 		return false
 	
 	Blackboard.add_data("objective_goal_complete", false)
