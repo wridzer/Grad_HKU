@@ -257,6 +257,9 @@ collision_layer = 17
 script = ExtResource("1_kinge")
 _arrow_path = "res://Scenes/Items/arrow.tscn"
 goap_agent = NodePath("GoapAgent")
+_slash_priority = 40
+_shoot_priority = 40
+_block_priority = 40
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 

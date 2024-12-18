@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" script_class="MovePerpendicularToEnemyAction" load_steps=2 format=3 uid="uid://d4eba5mh7rm82"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/move_perpendicular_to_enemy_action.gd" id="1_gfy1v"]
+
+[resource]
+script = ExtResource("1_gfy1v")

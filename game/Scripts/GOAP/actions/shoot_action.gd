@@ -18,7 +18,7 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy": false}
+	return {"has_line_of_sight": true}
 
 
 func _get_effects() -> Dictionary:

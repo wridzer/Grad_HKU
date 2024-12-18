@@ -14,11 +14,12 @@ func _is_goal_met() -> bool:
 			var data = Blackboard.get_data("enemy")
 			return is_instance_valid(data)
 	
+	Blackboard.add_data("enemies_present", false)
 	return true
 
 
 func _get_priority() -> int:
-	return 15
+	return 100
 
 
 func _get_desired_state() -> Dictionary:

@@ -29,8 +29,8 @@ display_name = "Rose"
 idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
-_shoot_priority = 13
-_block_priority = 12
+_shoot_priority = 30
+_block_priority = 20
 
 [node name="Npc_Dominic" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
@@ -40,8 +40,8 @@ display_name = "Dominic"
 idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
-_slash_priority = 13
-_shoot_priority = 12
+_slash_priority = 30
+_shoot_priority = 20
 
 [node name="Npc_Virgil" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
@@ -51,8 +51,8 @@ display_name = "Virgil"
 idle_dialogue = ExtResource("9_vaxnm")
 hit_dialogue = ExtResource("10_0kxew")
 following_dialogue = ExtResource("11_0d40j")
-_slash_priority = 12
-_block_priority = 13
+_slash_priority = 20
+_block_priority = 30
 
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1
