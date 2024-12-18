@@ -41,8 +41,9 @@ func _perform_physics(actor, _delta) -> bool:
 	var enemy: Enemy = data
 	var enemy_pos: Vector2 = enemy.get_global_position()
 	var distance_squared: float = npc_pos.distance_squared_to(enemy_pos)
+	var target_direction: Vector2 
 	if distance_squared > npc.max_chase_distance_squared:
-		var target_direction: Vector2 = (enemy_pos - npc_pos).normalized()
+		target_direction = (enemy_pos - npc_pos).normalized()
 		npc.direction = target_direction
 		npc.set_velocity(target_direction * npc.follow_speed)
 		npc.animated_sprite_2d.look_at(enemy_pos)
@@ -56,7 +57,7 @@ func _perform_physics(actor, _delta) -> bool:
 	if !result:
 		return true
 	
-	var target_direction: Vector2 = (enemy_pos - npc_pos).normalized().rotated(deg_to_rad(90))
+	target_direction = (enemy_pos - npc_pos).normalized().rotated(deg_to_rad(90))
 	npc.direction = target_direction
 	npc.set_velocity(target_direction * npc.follow_speed)
 	npc.animated_sprite_2d.look_at(enemy_pos)
