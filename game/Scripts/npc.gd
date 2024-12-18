@@ -1,6 +1,7 @@
 class_name Npc
 extends AnimatedCharacter
 
+
 enum CombatType {ATTACK, DEFEND, AVOID}
 
 const MAX_ARROW_COUNT = 5
@@ -19,10 +20,10 @@ const MAX_ARROW_COUNT = 5
 @export var follow_distance: float = 15.0
 @export var chase_distance: float = 15.0
 @export var flee_distance: float = 50.0
-@export var follow_speed: float = 60.0
-@export var chase_speed: float = 70.0
+@export var follow_speed: float = 70.0
+@export var chase_speed: float = 65.0
 @export var flee_speed: float = 65.0
-@export var _max_chase_distance: float = 100.0
+@export var _max_chase_distance: float = 80.0
 @export var _slash_priority: int = 14
 @export var _shoot_priority: int = 14
 @export var _block_priority: int = 14
