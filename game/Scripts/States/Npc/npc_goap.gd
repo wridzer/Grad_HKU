@@ -20,13 +20,13 @@ func enter(previous_state: int, data := {}) -> void:
 		match npc._adapatable_combat:
 			0:
 				var base_priority = npc._slash_priority
-				Blackboard.add_data("slash_priority", base_priority + (player_usage[-1].x * 0.1))
+				Blackboard.add_data("slash_priority", base_priority + (player_usage[-1].x * 0.5))
 			1:
 				var base_priority = npc._block_priority
-				Blackboard.add_data("block_priority", base_priority + (player_usage[-1].y * 0.1))
+				Blackboard.add_data("block_priority", base_priority + (player_usage[-1].y * 0.5))
 			2:
 				var base_priority = npc._shoot_priority
-				Blackboard.add_data("shoot_priority", base_priority + (player_usage[-1].z * 0.1))
+				Blackboard.add_data("shoot_priority", base_priority + (player_usage[-1].z * 0.5))
 	
 	super.enter(previous_state, data)
 
