@@ -47,7 +47,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 		var npc: Npc = data
 		npc.reparent(_level_parent.get_parent())
 	
-	# Remove leftover npc's
+	# Perform any cleanup like: Remove leftover npc's, Reset health
 	switch_level_cleanup.emit()
 	
 	# Add the level to load under "Level" to the scene tree

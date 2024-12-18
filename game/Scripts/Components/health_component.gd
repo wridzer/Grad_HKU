@@ -13,7 +13,6 @@ signal immune
 @onready var _immunity_timer := $ImmunityTimer
 
 
-
 func _ready() -> void:
 	_immunity_timer.wait_time = _immunity_length
 
@@ -36,6 +35,11 @@ func take_damage(amount: int) -> void:
 			return
 		immune.emit(true)
 		_immunity_timer.start()
+
+
+func reset_health(blackboard_prefix: String) -> void:
+	health = _max_health
+	set_health_blackboard_variables(blackboard_prefix)
 
 
 func _on_immunity_timer_timeout() -> void:

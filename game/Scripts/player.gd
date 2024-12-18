@@ -30,6 +30,7 @@ func _ready() -> void:
 	# Connect signals
 	game_manager.spawn.connect(spawn)
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
+	game_manager.switch_level_cleanup.connect(_health_component.reset_health.bind("player"))
 	input_manager.interact.connect(interact)
 	_health_component.die.connect(respawn)
 	_health_component.immune.connect(hit)
