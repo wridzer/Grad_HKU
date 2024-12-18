@@ -40,8 +40,9 @@ var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
 @onready var _health_component: HealthComponent = $HealthComponent
-@onready var _name_label: Label = $NameLabel
 @onready var actionable: Area2D = $Actionable
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _name_label: Label = $AnimatedSprite2D/NameLabel
 
 
 func _ready() -> void:
@@ -131,14 +132,14 @@ func choose() -> void:
 
 
 func slash() -> bool:
-	if !animation_tree.get("parameters/conditions/slash"):
+	if animation_tree.get("parameters/conditions/slash"):
 		return false
 	
 	return await super.slash()
 
 
 func block() -> bool:
-	if !animation_tree.get("parameters/conditions/block"):
+	if animation_tree.get("parameters/conditions/block"):
 		return false
 	
 	return await super.block();

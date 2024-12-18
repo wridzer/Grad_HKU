@@ -316,6 +316,19 @@ script = ExtResource("10_jrs23")
 sprite_frames = SubResource("SpriteFrames_5qvlo")
 animation = &"hit"
 
+[node name="NameLabel" type="Label" parent="AnimatedSprite2D"]
+z_index = 5
+offset_left = -30.0
+offset_top = -14.0
+offset_right = 170.0
+offset_bottom = 11.0
+scale = Vector2(0.3, 0.3)
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
+max_lines_visible = 1
+language = "en"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
@@ -340,19 +353,6 @@ shape = SubResource("CircleShape2D_jdjs5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_fd4sv")
-
-[node name="NameLabel" type="Label" parent="."]
-z_index = 5
-offset_left = -30.0
-offset_top = -14.0
-offset_right = 170.0
-offset_bottom = 11.0
-scale = Vector2(0.3, 0.3)
-text = "name"
-horizontal_alignment = 1
-vertical_alignment = 1
-max_lines_visible = 1
-language = "en"
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
 goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
