@@ -18,7 +18,7 @@ func enter(previous_state: int, data := {}) -> void:
 	if Blackboard.get_data("usage_percent_sword_shield_bow"):
 		var player_usage: Array[Vector3] = Blackboard.get_data("usage_percent_sword_shield_bow")
 		var playable_combat_types = npc._adapatable_combat + npc._preferred_combat
-		match npc.playable_combat_types:
+		match playable_combat_types:
 			1: # Attack + Defend
 				var base_priority = npc._slash_priority
 				Blackboard.add_data("slash_priority", base_priority + (player_usage[-1].x * 0.5))
