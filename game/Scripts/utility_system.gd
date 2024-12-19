@@ -36,10 +36,11 @@ func reset_values() -> void:
 func calculate_playstyle() -> void:
 	var damage_done : int = Blackboard.get_data("damage_done") if Blackboard.get_data("damage_done") else 0
 	var damage_blocked : int = Blackboard.get_data("amount_blocked") if Blackboard.get_data("amount_blocked") else 0
-	var enemies_killed : int = Blackboard.get_data("amount_blocked") if Blackboard.get_data("amount_blocked") else 0
+	var enemies_killed : int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
 	var enemies_left_alive : int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
 	
-	var enemy_killed_percentage = enemies_killed / (enemies_killed + enemies_left_alive) * 100
+	var total_enemies: float = enemies_killed + enemies_left_alive
+	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
 	Blackboard.add_data("enemy_killed_percentage", enemy_killed_percentage)
 	
 	if  (enemies_left_alive >= enemies_killed):
