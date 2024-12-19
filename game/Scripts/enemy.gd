@@ -22,7 +22,7 @@ func _ready() -> void:
 	
 	Blackboard.increment_data("enemies_alive", 1)
 	
-	_health_component.die.connect(die)
+	_health_component.die.connect(die)		
 	_hurtbox_component.hurt.connect(hurt)
 
 
@@ -34,4 +34,5 @@ func die() -> void:
 
 
 func hurt(knockback_direction: Vector2) -> void:
+	velocity = knockback_direction * max_chase_speed
 	Blackboard.increment_data("damage_done", 1)

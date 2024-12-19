@@ -15,7 +15,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 	if !is_instance_valid(hitbox as HitboxComponent):
 		return
 	
-	var knockback_direction: Vector2 = hitbox.global_position - global_position
+	var knockback_direction: Vector2 = global_position - hitbox.global_position
 	hurt.emit(knockback_direction)
 	
 	hitbox.hit.emit()
