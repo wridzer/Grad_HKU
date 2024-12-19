@@ -17,6 +17,8 @@ signal dead
 @export_range(-50.0, 100.0) var shield_knockback_speed: float = 40
 @export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
+var immune: bool
+
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
@@ -50,6 +52,7 @@ func hurt(knockback_direction: Vector2, hitbox_type: HitboxComponent.HitboxType)
 				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": sword_stun_time})
 		HitboxComponent.HitboxType.SHIELD:
 			print("SHIELD knockback")
+			Blackboard.increment_data("shield_hit_enemy_amount", 1)
 			velocity = knockback_direction * shield_knockback_speed
 			
 			if shield_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
@@ -60,4 +63,10 @@ func hurt(knockback_direction: Vector2, hitbox_type: HitboxComponent.HitboxType)
 			velocity = knockback_direction * arrow_knockback_speed
 			
 			if arrow_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
-				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": shield_stun_time})
+				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": arrow_stun_time})
+
+
+func update():
+	# This works as long as there's no weapon that does enough damage to instantly kill an enemy
+	if immune:
+		_health_component.reset_health("enemy")

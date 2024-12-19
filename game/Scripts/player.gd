@@ -89,7 +89,7 @@ func update_immunity_animation(immune: bool) -> void:
 	set_immunity_animation_param(immune)
 
 
-func hurt(knockback_direction: Vector2) -> void:
+func hurt(_knockback_direction: Vector2) -> void:
 	Blackboard.increment_data("player_damage_taken", 1)
 	update_blackboard_health()
 
