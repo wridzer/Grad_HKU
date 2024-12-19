@@ -41,6 +41,7 @@ var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
 @onready var _health_component: HealthComponent = $HealthComponent
+@onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _name_label: Label = $AnimatedSprite2D/NameLabel
@@ -67,8 +68,9 @@ func _ready() -> void:
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	_health_component.die.connect(respawn)
-	_health_component.immune.connect(hit)
+	_health_component.immune.connect(update_immunity_animation)
 	_health_component.health_gained.connect(update_blackboard_health)
+	_hurtbox_component.hurt.connect(hurt)
 	
 	# Set display name label
 	_name_label.text = display_name
@@ -88,13 +90,13 @@ func respawn() -> void:
 	_health_component.gain_health(3)
 
 
-func hit(immune: bool) -> void:
-	if immune:
-		Blackboard.increment_data("npc_damage_taken", 1)
-		update_blackboard_health()
-		#dialogue_manager.start_dialogue(hit_dialogue)
-	
+func update_immunity_animation(immune: bool) -> void:
 	set_immunity_animation_param(immune)
+
+
+func hurt(_knockback_direction: Vector2) -> void:
+	Blackboard.increment_data("npc_damage_taken", 1)
+	update_blackboard_health()
 
 
 func update_blackboard_health() -> void:

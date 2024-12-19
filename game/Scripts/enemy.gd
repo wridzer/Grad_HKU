@@ -12,15 +12,18 @@ signal dead
 @export_range(0.0, 2.0) var stop_time: float = 0.5
 
 @onready var _health_component: HealthComponent = $HealthComponent
+@onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var state_machine: StateMachine = $StateMachine
 
 
 func _ready() -> void:
-	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed") 
+	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed")
+	
 	Blackboard.increment_data("enemies_alive", 1)
+	
 	_health_component.die.connect(die)
-	_health_component.immune.connect(hit)
+	_hurtbox_component.hurt.connect(hurt)
 
 
 func die() -> void:
@@ -30,5 +33,5 @@ func die() -> void:
 	queue_free()
 
 
-func hit(_immune: bool) -> void:
+func hurt(knockback_direction: Vector2) -> void:
 	Blackboard.increment_data("damage_done", 1)
