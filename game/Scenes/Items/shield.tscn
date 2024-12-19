@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://pwse5ov065ph"]
+[gd_scene load_steps=5 format=3 uid="uid://pwse5ov065ph"]
 
 [ext_resource type="Texture2D" uid="uid://cgplcfowi1neh" path="res://Art/Shield-0001.png" id="1_5w11x"]
 [ext_resource type="PackedScene" uid="uid://dmuxv52hjgxge" path="res://Scenes/Components/hitbox_component.tscn" id="2_twan6"]
@@ -14,9 +14,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlby3"]
-size = Vector2(20, 1.75)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5k85l"]
 radius = 5.0
 height = 15.0
@@ -28,24 +25,6 @@ z_index = 8
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xw6r0")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-process_mode = 4
-collision_layer = 0
-collision_mask = 22
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, -0.25)
-shape = SubResource("RectangleShape2D_qlby3")
-
-[node name="Area2D" type="Area2D" parent="."]
-process_mode = 4
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_qlby3")
 
 [node name="HitboxComponentShield" parent="." instance=ExtResource("2_twan6")]
 rotation = 1.5708

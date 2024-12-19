@@ -7,5 +7,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_hitbox_component_shield_body_entered(body: Node2D) -> void:
+	# does not work right now
 	if(body.scene_file_path == "res://Scenes/enemy.tscn"):
+		print("test")
 		Blackboard.increment_data("shield_hit_enemy_amount", 1)
