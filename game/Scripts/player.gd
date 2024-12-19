@@ -10,7 +10,12 @@ const MAX_ARROW_COUNT = 5
 var _arrows: Array[Arrow]
 var _saved_spawn_pos: Vector2
 
-var room: Room
+var room: Room:
+	set(value):
+		if !is_instance_valid(value):
+			Blackboard.remove_data("enemy")
+			Blackboard.add_data("enemies_present", false)
+		room = value
 
 static var instance: Player = null
 
@@ -71,8 +76,7 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 
 
 func respawn() -> void:
-	Blackboard.remove_data("enemy")
-	Blackboard.add_data("enemies_present", false)
+	room = null
 	spawn(_saved_spawn_pos, Vector2.ZERO)
 	_health_component.gain_health(3)
 

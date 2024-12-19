@@ -10,6 +10,12 @@ signal dead
 @export_range(0.5, 1.0) var turning_smoothing_value: float = 0.7
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.3
 @export_range(0.0, 2.0) var stop_time: float = 0.5
+@export_range(0.0, 5.0) var sword_stun_time: float = 0.2
+@export_range(0.0, 5.0) var shield_stun_time: float = 2
+@export_range(0.0, 5.0) var arrow_stun_time: float = 0
+@export_range(-50.0, 100.0) var sword_knockback_speed: float = 10
+@export_range(-50.0, 100.0) var shield_knockback_speed: float = 40
+@export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
@@ -22,7 +28,7 @@ func _ready() -> void:
 	
 	Blackboard.increment_data("enemies_alive", 1)
 	
-	_health_component.die.connect(die)		
+	_health_component.die.connect(die)
 	_hurtbox_component.hurt.connect(hurt)
 
 
@@ -33,6 +39,25 @@ func die() -> void:
 	queue_free()
 
 
-func hurt(knockback_direction: Vector2) -> void:
-	velocity = knockback_direction * max_chase_speed
-	Blackboard.increment_data("damage_done", 1)
+func hurt(knockback_direction: Vector2, hitbox_type: HitboxComponent.HitboxType) -> void:
+	match hitbox_type:
+		HitboxComponent.HitboxType.SWORD:
+			print("SWORD knockback")
+			Blackboard.increment_data("sword_hit_enemy_amount", 1)
+			velocity = knockback_direction * sword_knockback_speed
+			
+			if sword_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
+				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": sword_stun_time})
+		HitboxComponent.HitboxType.SHIELD:
+			print("SHIELD knockback")
+			velocity = knockback_direction * shield_knockback_speed
+			
+			if shield_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
+				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": shield_stun_time})
+		HitboxComponent.HitboxType.ARROW:
+			print("ARROW knockback")
+			Blackboard.increment_data("arrow_hit_enemy_amount", 1)
+			velocity = knockback_direction * arrow_knockback_speed
+			
+			if arrow_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
+				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": shield_stun_time})

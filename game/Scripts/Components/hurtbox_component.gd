@@ -2,7 +2,7 @@ class_name HurtboxComponent
 extends Area2D
 
 
-signal hurt(knockback_direction: Vector2)
+signal hurt(knockback_direction: Vector2, hitbox_type: HitboxComponent.HitboxType)
 
 @export var _health_component: HealthComponent
 
@@ -16,7 +16,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 		return
 	
 	var knockback_direction: Vector2 = global_position - hitbox.global_position
-	hurt.emit(knockback_direction)
+	hurt.emit(knockback_direction, hitbox.hitbox_type)
 	
 	hitbox.hit.emit()
 	_health_component.take_damage(hitbox.damage)

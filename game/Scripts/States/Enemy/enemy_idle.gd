@@ -17,7 +17,3 @@ func physics_update(delta: float) -> void:
 	var slowdown = min(delta / enemy.stop_time, 1.0)
 	enemy.set_velocity(enemy.velocity - enemy.velocity * slowdown)
 	super.physics_update(delta)
-
-
-func exit() -> void:
-	super.exit()

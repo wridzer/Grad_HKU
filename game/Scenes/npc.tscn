@@ -300,6 +300,10 @@ collision_layer = 16
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
 position = Vector2(0, 8)
 
+[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="3"]
+collision_layer = 16
+collision_mask = 8
+
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
@@ -361,3 +365,4 @@ shape = SubResource("CircleShape2D_fd4sv")
 goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
 
 [editable path="CharacterAnimations/Direction/Sword"]
+[editable path="CharacterAnimations/Direction/Shield"]

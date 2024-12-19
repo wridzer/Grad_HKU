@@ -34,8 +34,11 @@ func reset_values() -> void:
 
 
 func calculate_playstyle() -> void:
-	var damage_done : int = Blackboard.get_data("damage_done") if Blackboard.get_data("damage_done") else 0
-	var damage_blocked : int = Blackboard.get_data("amount_blocked") if Blackboard.get_data("amount_blocked") else 0
+	var sword_hit: int = Blackboard.get_data("sword_hit_enemy_amount") if Blackboard.get_data("sword_hit_enemy_amount") else 0
+	var shield_hit: int = Blackboard.get_data("shield_hit_enemy_amount") if Blackboard.get_data("shield_hit_enemy_amount") else 0
+	var arrow_hit: int = Blackboard.get_data("arrow_hit_enemy_amount") if Blackboard.get_data("arrow_hit_enemy_amount") else 0
+	var damage_done: int = sword_hit + arrow_hit
+	var damage_blocked: int = shield_hit
 	var enemies_killed : int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
 	var enemies_left_alive : int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
 	
@@ -43,7 +46,7 @@ func calculate_playstyle() -> void:
 	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
 	Blackboard.add_data("enemy_killed_percentage", enemy_killed_percentage)
 	
-	if  (enemies_left_alive >= enemies_killed):
+	if (enemies_left_alive >= enemies_killed):
 		current_state = "Avoiding"
 	elif (damage_done >= damage_blocked):
 		current_state = "Aggressive"

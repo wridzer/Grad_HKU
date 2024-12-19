@@ -277,6 +277,13 @@ collision_layer = 2
 position = Vector2(0, 8)
 script = ExtResource("8_sibh1")
 
+[node name="Area2D" parent="CharacterAnimations/Direction/Shield" index="2"]
+process_mode = 4
+
+[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="3"]
+collision_layer = 2
+collision_mask = 8
+
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("7_o3qdj")]
 
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
@@ -343,6 +350,7 @@ text = "Defensive"
 label_settings = SubResource("LabelSettings_6iiv1")
 
 [connection signal="body_entered" from="CharacterAnimations/Direction/Shield/Area2D" to="CharacterAnimations/Direction/Shield" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="CharacterAnimations/Direction/Shield/HitboxComponentShield" to="CharacterAnimations/Direction/Shield" method="_on_hitbox_component_shield_body_entered"]
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]

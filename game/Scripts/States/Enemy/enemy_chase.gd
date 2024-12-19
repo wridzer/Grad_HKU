@@ -56,7 +56,3 @@ func physics_update(delta: float) -> void:
 	
 	enemy.set_velocity(new_velocity)
 	super.physics_update(delta)
-
-
-func exit() -> void:
-	super.exit()

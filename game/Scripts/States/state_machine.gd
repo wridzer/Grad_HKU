@@ -8,6 +8,7 @@ extends Node
 	return _initial_state if _initial_state != null else get_child(0)
 ).call()
 
+var current_state_type: int = 0
 
 func _ready() -> void:
 	for state_node: State in find_children("*", "State"):
@@ -32,6 +33,7 @@ func transition_to_next_state(target_state: int, data: Dictionary = {}) -> void:
 			
 			var previous_state := _state
 			_state = state_node
+			current_state_type = target_state
 			_state.enter(previous_state.get_state_type(), data)
 			
 			return
