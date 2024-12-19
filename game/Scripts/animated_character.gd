@@ -10,12 +10,12 @@ func _process(_delta: float) -> void:
 	update_animation_parameters()
 
 
-func block() -> bool:
+func block(direction: Vector2) -> bool:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
 	# Most rigid way to get the right direction at this point is from the idle blend position
-	animation_tree.set("parameters/Block/blend_position", animation_tree.get("parameters/Idle/blend_position"))
+	animation_tree.set("parameters/Block/blend_position", direction)
 	animation_tree.set("parameters/conditions/block", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D
@@ -25,12 +25,12 @@ func block() -> bool:
 	return true
 
 
-func slash() -> bool:
+func slash(direction: Vector2) -> bool:
 	assert(is_instance_valid(animation_tree), "Please assign a valid AnimationTree to AnimatedCharacter")
 	assert(is_instance_valid(animation_player), "Please assign a valid AnimationPlayer to AnimatedCharacter")
 	
 	# Most rigid way to get the right direction at this point is from the idle blend position
-	animation_tree.set("parameters/Slash/blend_position", animation_tree.get("parameters/Idle/blend_position"))
+	animation_tree.set("parameters/Slash/blend_position", direction)
 	animation_tree.set("parameters/conditions/slash", true)
 	
 	# Can't find a way to get the length from the Animation Tree Blend Space 2D

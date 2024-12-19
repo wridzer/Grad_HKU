@@ -133,29 +133,29 @@ func choose() -> void:
 	_health_component.set_health_blackboard_variables("npc")
 
 
-func slash() -> bool:
+func slash(direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/slash"):
 		return false
 	
-	return await super.slash()
+	return await super.slash(direction)
 
 
-func block() -> bool:
+func block(direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/block"):
 		return false
 	
-	return await super.block();
+	return await super.block(direction);
 
 
-func shoot(arrow_direction: Vector2) -> bool:
+func shoot(direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/shoot"):
 		return false;
 
 	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
-	arrow.goal = global_position + arrow_direction
-	arrow.direction = arrow_direction
+	arrow.goal = global_position + direction
+	arrow.direction = direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
 	_arrows.append(arrow)

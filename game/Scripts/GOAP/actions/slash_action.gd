@@ -27,7 +27,9 @@ func _get_effects() -> Dictionary:
 
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	if await npc.slash():
+	var enemy: Enemy = Blackboard.get_data("enemy")
+	var direction = (enemy.global_position - npc.global_position).normalized()
+	if await npc.slash(direction):
 		Blackboard.remove_data("enemy")
 		return true
 	

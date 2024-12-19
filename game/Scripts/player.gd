@@ -99,6 +99,8 @@ func update_animation_parameters() -> void:
 	animation_tree.set("parameters/conditions/idle", input_manager.direction == Vector2.ZERO)
 	animation_tree.set("parameters/conditions/moving", input_manager.direction != Vector2.ZERO)
 	
+	var direction = (get_viewport().get_camera_2d().get_global_mouse_position() - global_position).normalized()
+	
 	if input_manager.direction.length() > 0:
 		animation_tree.set("parameters/Hit/blend_position", input_manager.direction)
 		animation_tree.set("parameters/Idle/blend_position", input_manager.direction)
@@ -106,15 +108,14 @@ func update_animation_parameters() -> void:
 	
 	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
 		Blackboard.increment_data("sword_used_amount", 1)
-		slash()
+		await slash(direction)
 	
 	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
 		Blackboard.increment_data("shield_used_amount", 1)
-		block()
+		await block(direction)
 	
 	if input_manager.bow && !animation_tree.get("parameters/conditions/shoot"):
 		Blackboard.increment_data("bow_used_amount", 1)
-		var direction = (get_viewport().get_camera_2d().get_global_mouse_position() - global_position).normalized()
 		await shoot(direction)
 	
 	super.update_animation_parameters()
