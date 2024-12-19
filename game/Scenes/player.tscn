@@ -277,9 +277,6 @@ collision_layer = 2
 position = Vector2(0, 8)
 script = ExtResource("8_sibh1")
 
-[node name="Area2D" parent="CharacterAnimations/Direction/Shield" index="2"]
-process_mode = 4
-
 [node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="3"]
 collision_layer = 2
 collision_mask = 8
