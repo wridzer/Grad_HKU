@@ -13,6 +13,7 @@ class GodotBuildApp:
         # Define paths based on your folder structure
         self.engine_path = os.path.abspath("godot-4.4-dev3")  # Engine source path
         self.project_path = os.path.abspath("game")           # Path to the Godot project
+        self.last_build_path = os.path.abspath("last_build.txt")  # Path to store last build info
         self.custom_templates_path = os.path.join(self.project_path, "custom_templates")
 
         # Platform Selection
@@ -53,23 +54,29 @@ class GodotBuildApp:
         self.build_button = ttk.Button(root, text="Build", command=self.run_build_thread)
         self.build_button.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
 
+        # Build update Label
+        self.build_label = tk.Label(root, text="Please build the new version of the engine", fg="red", font=("Ariel", 10, "bold"))
+        self.build_label.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+        self.build_label.grid_forget() # Hide initially
+        self.check_for_changes()
+
         # Output Display: Last line and full output toggle
         self.output_label = ttk.Label(root, text="", font=("Arial", 10))
-        self.output_label.grid(row=6, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+        self.output_label.grid(row=7, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 
         # Toggle button for full output
         self.show_output = False
         self.toggle_output_button = ttk.Button(root, text="Show Full Output", command=self.toggle_output)
-        self.toggle_output_button.grid(row=7, column=0, columnspan=2, padx=10, pady=5)
+        self.toggle_output_button.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
 
         # Full output display (hidden by default)
         self.output_box = scrolledtext.ScrolledText(root, height=10, width=50, state="disabled")
-        self.output_box.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
+        self.output_box.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
         self.output_box.grid_remove()  # Hide initially
 
         # Shortcuts to Open Engine and Project
-        ttk.Button(root, text="Open Engine", command=self.open_engine).grid(row=9, column=0, padx=10, pady=5)
-        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=9, column=1, padx=10, pady=5)
+        ttk.Button(root, text="Open Engine", command=self.open_engine).grid(row=10, column=0, padx=10, pady=5)
+        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=10, column=1, padx=10, pady=5)
 
     def toggle_output(self):
         # Toggle the visibility of the full output box
@@ -87,6 +94,8 @@ class GodotBuildApp:
         thread.start()
 
     def build_project(self):
+        self.build_label.grid_forget() # Hide the build label
+
         platform = self.platform_var.get()
         tools = "yes" if self.tools_var.get() else "no"
         target = self.target_var.get()
@@ -192,6 +201,53 @@ class GodotBuildApp:
             for line in iter(process.stdout.readline, ""):
                 # Show the last line in output label
                 self.output_label.config(text=f"{line.strip()}")
+
+    def get_latest_commit_for_subfolder(self):
+        try:
+            # Get the Git repository root path
+            repo_root = os.path.dirname(os.path.abspath(__file__))  # Top-level folder where the script is located
+
+            # Get the latest commit hash that affected the subfolder
+            commit_hash = subprocess.check_output(
+                ["git", "log", "-1", "--format=%H", "--", "godot-4.4-dev3"],
+                cwd=repo_root  # Use the root of the Git repository
+            ).decode().strip()
+            print(f"Latest commit hash for subfolder: {commit_hash}")
+            return commit_hash
+        except subprocess.CalledProcessError as e:
+            print(f"Error: {e}")
+            return None
+
+
+    def has_subfolder_changed_since_last_build(self):
+        # Read the last build commit hash
+        if os.path.exists(self.last_build_path):
+            with open(self.last_build_path, "r") as file:
+                last_build_commit = file.read().strip()
+        else:
+            last_build_commit = None
+
+        # Get the current commit hash for the subfolder
+        current_commit = self.get_latest_commit_for_subfolder()
+
+        # Check if the commits are different
+        return last_build_commit != current_commit, current_commit
+
+    def update_last_build_commit(self, commit_hash):
+        print(f"Updating last build commit to: {commit_hash}")
+        with open(self.last_build_path, "w+") as file:
+            file.write(commit_hash)
+
+    def check_for_changes(self):
+        changed, current_commit = self.has_subfolder_changed_since_last_build()
+        if changed:
+            print(f"The engine folder has changes since the last build.")
+            if current_commit:
+                # Save the current commit as the last build commit
+                self.update_last_build_commit(current_commit)
+            self.build_label.grid()  # Show the build label
+        else:
+            print(f"No changes detected in the engine folder.")
 
 if __name__ == "__main__":
     root = tk.Tk()
