@@ -15,9 +15,7 @@ void Goap::set_actions(TypedArray<GoapAction> p_actions) {
 void Goap::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_actions", "action"), &Goap::set_actions);
 	ClassDB::bind_method(D_METHOD("get_actions"), &Goap::get_actions);
-	//ClassDB::bind_method(D_METHOD("get_plan", "goal"), &Goap::get_plan);
 
-	//ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "goals", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_goals", "get_goals");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "actions", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL | PROPERTY_USAGE_EDITOR), "set_actions", "get_actions");
 }
 
