@@ -27,6 +27,10 @@ public:
 
 	void physics_update(float delta, Node *actor);
 
+	String get_current_goal_name();
+	Vector<String> get_current_plan_actions();
+	int Get_current_plan_index() const { return current_plan_index; }
+
 private:
 	Ref<GoapGoal> get_best_goal();
 	void follow_plan(Plan plan, float delta, Node* actor);

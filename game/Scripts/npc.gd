@@ -45,6 +45,7 @@ var saved_spawn_pos: Vector2
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _name_label: Label = $AnimatedSprite2D/NameLabel
+@onready var _info_window: Window = $GoapAgent/Window
 
 
 func _ready() -> void:
@@ -80,6 +81,10 @@ func _ready() -> void:
 	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
+	
+	# Disable info window
+	_info_window.set_process(false)
+	_info_window.visible = false
 
 
 func die() -> void:

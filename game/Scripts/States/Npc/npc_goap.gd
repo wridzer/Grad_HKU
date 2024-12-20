@@ -6,6 +6,7 @@ const STATE_TYPE = StateType.GOAP
 const FOLLOW_DISTANCE := 15.0
 const FOLLOW_SPEED := 60.0
 
+@onready var _info_window: Window = $"../../GoapAgent/Window"
 
 func get_state_type() -> int:
 	return state_type_to_int(STATE_TYPE)
@@ -14,6 +15,9 @@ func get_state_type() -> int:
 func enter(previous_state: int, data := {}) -> void:
 	game_manager.spawn.connect(spawn)
 	game_manager.toggle_goap.connect(disable_goap)
+	
+	_info_window.set_process(true)
+	_info_window.visible = true
 	
 	if Blackboard.get_data("usage_percent_sword_shield_bow"):
 		var player_usage: Array[Vector3] = Blackboard.get_data("usage_percent_sword_shield_bow")
@@ -52,6 +56,9 @@ func physics_update(delta: float) -> void:
 func exit() -> void:
 	game_manager.spawn.disconnect(spawn)
 	game_manager.toggle_goap.disconnect(disable_goap)
+	
+	_info_window.set_process(false)
+	_info_window.visible = false
 	
 	super.exit()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=43 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -23,6 +23,7 @@
 [ext_resource type="GoapGoal" uid="uid://upejq3jkiuxh" path="res://goap_resources/goals/block_enemy_goal.tres" id="21_xmsnf"]
 [ext_resource type="GoapGoal" uid="uid://dk20a6m105o04" path="res://goap_resources/goals/shoot_enemy_goal.tres" id="22_ui6hl"]
 [ext_resource type="GoapGoal" uid="uid://byaoicxdikacr" path="res://goap_resources/goals/slash_enemy_goal.tres" id="23_ty3fi"]
+[ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="24_pb6gn"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -300,10 +301,6 @@ collision_layer = 16
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
 position = Vector2(0, 8)
 
-[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="3"]
-collision_layer = 16
-collision_mask = 8
-
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
@@ -363,6 +360,38 @@ shape = SubResource("CircleShape2D_fd4sv")
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
 goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
+
+[node name="Window" type="Window" parent="GoapAgent"]
+auto_translate_mode = 1
+own_world_3d = true
+title = "Debug Goap info"
+initial_position = 3
+size = Vector2i(800, 600)
+current_screen = 0
+script = ExtResource("24_pb6gn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Blackboard_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Goap_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Action_plan_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]

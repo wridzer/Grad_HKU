@@ -62,6 +62,11 @@ player_health=1
 player_damage_taken=2
 npc_damage_taken=1
 
+[display]
+
+window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
+
 [dotnet]
 
 project/assembly_name="game"

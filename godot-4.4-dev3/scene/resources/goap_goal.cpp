@@ -32,5 +32,8 @@ Dictionary GoapGoal::get_desired_state() {
 }
 
 void GoapGoal::_bind_methods() {
-
+	ClassDB::bind_method(D_METHOD("get_goal_name"), &GoapGoal::get_goal_name);
+	ClassDB::bind_method(D_METHOD("is_goal_met"), &GoapGoal::is_goal_met);
+	ClassDB::bind_method(D_METHOD("get_priority"), &GoapGoal::get_priority);
+	ClassDB::bind_method(D_METHOD("get_desired_state"), &GoapGoal::get_desired_state);
 }
