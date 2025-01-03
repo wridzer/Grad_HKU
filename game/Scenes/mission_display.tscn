@@ -1,10 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3nmvrek3uub0"]
+[gd_scene load_steps=8 format=3 uid="uid://d3nmvrek3uub0"]
 
 [ext_resource type="Script" path="res://Scripts/mission_display.gd" id="1_ve4ia"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="1_yh8sa"]
-[ext_resource type="TileSet" uid="uid://dwlln5rqw6foq" path="res://Tilemaps/roguelike_rpg_tileset.tres" id="3_rfjs1"]
+[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wvo26"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kolxj"]
+atlas = ExtResource("4_wvo26")
+region = Rect2(412, 150, 16, 40)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1euiy"]
+load_path = "res://.godot/imported/roguelikeSheet_transparent.png-9c4a06107ae30cb5424a2c259651edd7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ichsn"]
+atlas = SubResource("CompressedTexture2D_1euiy")
+region = Rect2(323, 0, 16, 16)
 
 [node name="Mission Display" type="Node2D"]
 script = ExtResource("1_ve4ia")
@@ -14,11 +25,6 @@ position = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_oudfl")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-position = Vector2(8, 0)
-tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 19, 0, 0, 0, 0, 0)
-tile_set = ExtResource("3_rfjs1")
 
 [node name="NameLabel" type="Label" parent="."]
 z_index = 5
@@ -32,3 +38,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.88, 0, 0, 1)
+z_index = 8
+position = Vector2(4.76837e-07, -21.337)
+scale = Vector2(0.503571, 0.483152)
+texture = SubResource("AtlasTexture_kolxj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.88, 0.88, 0.88, 1)
+position = Vector2(0, -8)
+scale = Vector2(1.033, 1)
+texture = SubResource("AtlasTexture_ichsn")
