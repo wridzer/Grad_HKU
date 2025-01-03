@@ -24,14 +24,14 @@ const MAX_ARROW_COUNT = 5
 @export_range(15.0, 100.0) var max_follow_speed: float = 70.0
 @export_range(1.0, 20.0) var min_chase_speed: float = 30.0
 @export_range(15.0, 100.0) var max_chase_speed: float = 75.0
+@export_range(1.0, 6.0) var steering_value: float = 2.0
+@export_range(0.5, 1.0) var turning_smoothing_value: float = 0.5
+@export_range(0.0, 1.0) var speed_smoothing_value: float = 0.2
 @export var flee_speed: float = 60.0
 @export var _max_chase_distance: float = 80.0
 @export var _slash_priority: int = 14
 @export var _shoot_priority: int = 14
 @export var _block_priority: int = 14
-@export_range(1.0, 6.0) var steering_value: float = 2.0
-@export_range(0.5, 1.0) var turning_smoothing_value: float = 0.5
-@export_range(0.0, 1.0) var speed_smoothing_value: float = 0.2
 
 var _affection: int
 var _arrows: Array[Arrow]

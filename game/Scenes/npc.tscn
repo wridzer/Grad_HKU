@@ -259,6 +259,10 @@ collision_layer = 17
 script = ExtResource("1_kinge")
 _arrow_path = "res://Scenes/Items/arrow.tscn"
 goap_agent = NodePath("GoapAgent")
+min_follow_speed = 5.0
+steering_value = 2.5
+turning_smoothing_value = 0.8
+speed_smoothing_value = 0.05
 _slash_priority = 40
 _shoot_priority = 40
 _block_priority = 40
@@ -356,6 +360,30 @@ shape = SubResource("CircleShape2D_jdjs5")
 
 [node name="DangerSensorComponent" parent="." instance=ExtResource("14_4hwgr")]
 
+[node name="0" parent="DangerSensorComponent" index="0"]
+target_position = Vector2(10, 0)
+
+[node name="1" parent="DangerSensorComponent" index="1"]
+target_position = Vector2(7, -7)
+
+[node name="2" parent="DangerSensorComponent" index="2"]
+target_position = Vector2(0, -10)
+
+[node name="3" parent="DangerSensorComponent" index="3"]
+target_position = Vector2(-7, -7)
+
+[node name="4" parent="DangerSensorComponent" index="4"]
+target_position = Vector2(-10, 0)
+
+[node name="5" parent="DangerSensorComponent" index="5"]
+target_position = Vector2(-7, 7)
+
+[node name="6" parent="DangerSensorComponent" index="6"]
+target_position = Vector2(0, 10)
+
+[node name="7" parent="DangerSensorComponent" index="7"]
+target_position = Vector2(7, 7)
+
 [node name="Actionable" parent="." instance=ExtResource("5_jo4wx")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
@@ -398,3 +426,4 @@ size_flags_horizontal = 3
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]
+[editable path="DangerSensorComponent"]

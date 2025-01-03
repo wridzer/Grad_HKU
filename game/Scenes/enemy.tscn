@@ -49,11 +49,6 @@ radius = 6.0
 z_index = 3
 collision_layer = 5
 script = ExtResource("1_ewpuj")
-min_chase_speed = 4.0
-max_chase_speed = 80.0
-steering_value = 3.4
-turning_smoothing_value = 0.8
-speed_smoothing_value = 0.01
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("6_qadqw")

@@ -4,11 +4,11 @@ extends CharacterBody2D
 
 signal dead
 
-@export_range(1.0, 20.0) var min_chase_speed: float = 5.0
-@export_range(15.0, 100.0) var max_chase_speed: float = 50.0
-@export_range(1.0, 6.0) var steering_value: float = 1.4
-@export_range(0.5, 1.0) var turning_smoothing_value: float = 0.7
-@export_range(0.0, 1.0) var speed_smoothing_value: float = 0.3
+@export_range(1.0, 20.0) var min_chase_speed: float = 4.0
+@export_range(15.0, 100.0) var max_chase_speed: float = 80.0
+@export_range(1.0, 6.0) var steering_value: float = 3.4
+@export_range(0.5, 1.0) var turning_smoothing_value: float = 0.8
+@export_range(0.0, 1.0) var speed_smoothing_value: float = 0.01
 @export_range(0.0, 2.0) var stop_time: float = 0.5
 @export_range(0.0, 5.0) var sword_stun_time: float = 0.2
 @export_range(0.0, 5.0) var shield_stun_time: float = 2
