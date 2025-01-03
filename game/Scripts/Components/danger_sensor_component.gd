@@ -2,6 +2,8 @@ class_name DangerSensorComponent
 extends Node
 
 
+static var directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1),Vector2(0,1),Vector2(1,1)]
+
 @export var _danger_value: float = 5.0
 @export var _danger_secondary_value: float = 2.0
 @export var _raycasts: Array[RayCast2D]

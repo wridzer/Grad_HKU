@@ -55,8 +55,6 @@ steering_value = 3.4
 turning_smoothing_value = 0.8
 speed_smoothing_value = 0.01
 
-[node name="DangerSensorComponent" parent="." instance=ExtResource("9_mtrvr")]
-
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("6_qadqw")
 _initial_state = NodePath("EnemyIdle")
@@ -100,6 +98,8 @@ _health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jx768")
+
+[node name="DangerSensorComponent" parent="." instance=ExtResource("9_mtrvr")]
 
 [node name="DangerArea" type="Area2D" parent="."]
 visible = false

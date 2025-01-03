@@ -20,13 +20,18 @@ const MAX_ARROW_COUNT = 5
 @export var follow_distance: float = 15.0
 @export var chase_distance: float = 15.0
 @export var flee_distance: float = 50.0
-@export var follow_speed: float = 70.0
-@export var chase_speed: float = 65.0
-@export var flee_speed: float = 65.0
+@export_range(1.0, 20.0) var min_follow_speed: float = 10.0
+@export_range(15.0, 100.0) var max_follow_speed: float = 70.0
+@export_range(1.0, 20.0) var min_chase_speed: float = 30.0
+@export_range(15.0, 100.0) var max_chase_speed: float = 75.0
+@export var flee_speed: float = 60.0
 @export var _max_chase_distance: float = 80.0
 @export var _slash_priority: int = 14
 @export var _shoot_priority: int = 14
 @export var _block_priority: int = 14
+@export_range(1.0, 6.0) var steering_value: float = 2.0
+@export_range(0.5, 1.0) var turning_smoothing_value: float = 0.5
+@export_range(0.0, 1.0) var speed_smoothing_value: float = 0.2
 
 var _affection: int
 var _arrows: Array[Arrow]
@@ -42,6 +47,7 @@ var saved_spawn_pos: Vector2
 
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _name_label: Label = $AnimatedSprite2D/NameLabel

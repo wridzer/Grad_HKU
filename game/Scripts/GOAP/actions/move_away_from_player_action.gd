@@ -38,7 +38,7 @@ func _perform_physics(actor, _delta) -> bool:
 	else:
 		var target_direction: Vector2 = (npc_pos - player_pos).normalized()
 		npc.direction = target_direction
-		npc.set_velocity(target_direction * npc.follow_speed)
+		npc.set_velocity(target_direction * npc.max_follow_speed)
 		npc.animated_sprite_2d.look_at(player_pos)
 		npc.move_and_slide()
 

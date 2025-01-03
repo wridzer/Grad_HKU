@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=44 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
 [ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="9_cwxd6"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_jrs23"]
+[ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="14_4hwgr"]
 [ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="15_nw52t"]
 [ext_resource type="GoapGoal" uid="uid://3i8r3587yr0w" path="res://goap_resources/goals/find_enemy_goal.tres" id="17_pwfi6"]
 [ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="18_chuhk"]
@@ -352,6 +353,8 @@ _health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_jdjs5")
+
+[node name="DangerSensorComponent" parent="." instance=ExtResource("14_4hwgr")]
 
 [node name="Actionable" parent="." instance=ExtResource("5_jo4wx")]
 

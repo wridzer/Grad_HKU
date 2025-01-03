@@ -45,7 +45,7 @@ func _perform_physics(actor, _delta) -> bool:
 	if distance_squared > npc.max_chase_distance_squared:
 		target_direction = (enemy_pos - npc_pos).normalized()
 		npc.direction = target_direction
-		npc.set_velocity(target_direction * npc.follow_speed)
+		npc.set_velocity(target_direction * npc.max_follow_speed)
 		npc.animated_sprite_2d.look_at(enemy_pos)
 		npc.move_and_slide()
 		return false
@@ -59,7 +59,7 @@ func _perform_physics(actor, _delta) -> bool:
 	
 	target_direction = (enemy_pos - npc_pos).normalized().rotated(deg_to_rad(90))
 	npc.direction = target_direction
-	npc.set_velocity(target_direction * npc.follow_speed)
+	npc.set_velocity(target_direction * npc.max_follow_speed)
 	npc.animated_sprite_2d.look_at(enemy_pos)
 	npc.move_and_slide()
 	
