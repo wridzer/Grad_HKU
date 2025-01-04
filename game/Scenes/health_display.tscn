@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://byx8vd3x5u6q"]
+
+[ext_resource type="Script" path="res://Scripts/health_display.gd" id="1_s3oxt"]
+[ext_resource type="Texture2D" uid="uid://cvgs02d07442u" path="res://Art/heartpixelated.png" id="2_jaw68"]
+
+[node name="HealthDisplay" type="Node2D"]
+script = ExtResource("1_s3oxt")
+
+[node name="HealthSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_jaw68")

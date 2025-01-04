@@ -2,13 +2,13 @@ class_name HealthComponent
 extends Node
 
 
-@export var health: int
 @export var _max_health: int = 3
+@export var health: int = _max_health
 @export var _immunity_length: float = .5
 
 signal die
 signal health_gained
-signal immune
+signal immunity(immune: bool)
 
 @onready var _immunity_timer := $ImmunityTimer
 
@@ -27,13 +27,14 @@ func gain_health(amount: int) -> void:
 
 
 func take_damage(amount: int) -> void:
-	if _immunity_timer.time_left == 0:
+	if !immune():
 		health -= amount
 		
 		if health <= 0:
 			die.emit()
 			return
-		immune.emit(true)
+		
+		immunity.emit(true)
 		_immunity_timer.start()
 
 
@@ -44,9 +45,12 @@ func reset_health(blackboard_prefix: String) -> void:
 
 func _on_immunity_timer_timeout() -> void:
 	# Be able to take damage again
-	immune.emit(false)
-	
+	immunity.emit(false)
 	_immunity_timer.stop()
+
+
+func immune() -> bool:
+	return _immunity_timer.time_left != 0
 
 
 func set_health_blackboard_variables(blackboard_prefix: String) -> void:

@@ -75,9 +75,9 @@ func _ready() -> void:
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	_health_component.die.connect(respawn)
-	_health_component.immune.connect(update_immunity_animation)
+	_health_component.immunity.connect(update_immunity_animation)
 	_health_component.health_gained.connect(update_blackboard_health)
-	_hurtbox_component.hurt.connect(hurt)
+	_hurtbox_component.hurt.connect(func(_x, _y): hurt())
 	
 	# Set display name label
 	_name_label.text = display_name
@@ -105,7 +105,7 @@ func update_immunity_animation(immune: bool) -> void:
 	set_immunity_animation_param(immune)
 
 
-func hurt(_knockback_direction: Vector2) -> void:
+func hurt() -> void:
 	Blackboard.increment_data("npc_damage_taken", 1)
 	update_blackboard_health()
 

@@ -20,7 +20,7 @@ var room: Room:
 static var instance: Player = null
 
 @onready var _actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
-@onready var _camera_2d: Camera2D = $Camera2D
+@onready var _camera_2d: CameraControl = $Camera2D
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 
@@ -39,10 +39,10 @@ func _ready() -> void:
 	game_manager.switch_level_cleanup.connect(_health_component.reset_health.bind("player"))
 	input_manager.interact.connect(interact)
 	_health_component.die.connect(respawn)
-	_health_component.immune.connect(update_immunity_animation)
+	_health_component.immunity.connect(update_immunity_animation)
 	_health_component.health_gained.connect(update_blackboard_health)
 	_health_component.set_health_blackboard_variables("player")
-	_hurtbox_component.hurt.connect(hurt)
+	_hurtbox_component.hurt.connect(func(_x, _y): hurt())
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -89,7 +89,8 @@ func update_immunity_animation(immune: bool) -> void:
 	set_immunity_animation_param(immune)
 
 
-func hurt(_knockback_direction: Vector2) -> void:
+func hurt() -> void:
+	_camera_2d.apply_shake()
 	Blackboard.increment_data("player_damage_taken", 1)
 	update_blackboard_health()
 
