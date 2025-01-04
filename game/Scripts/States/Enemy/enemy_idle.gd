@@ -10,7 +10,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	enemy.immune = true
+	enemy.immunity(true)
 	super.enter(previous_state, data)
 
 
@@ -21,5 +21,5 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	enemy.immune = false
+	enemy.immunity(false)
 	super.exit()

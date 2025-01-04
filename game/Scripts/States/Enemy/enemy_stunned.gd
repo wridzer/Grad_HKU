@@ -7,6 +7,7 @@ var stun_timer: Timer
 
 var finish: Callable = finished.emit.bind(state_type_to_int(StateType.CHASE))
 
+
 func get_state_type() -> int:
 	return state_type_to_int(STATE_TYPE)
 

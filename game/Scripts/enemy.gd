@@ -18,10 +18,9 @@ signal dead
 @export_range(-50.0, 100.0) var shield_knockback_speed: float = 40
 @export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
-var immune: bool = false
-
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var _hitbox_component: HitboxComponent = $HitboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var state_machine: StateMachine = $StateMachine
 
@@ -33,6 +32,15 @@ func _ready() -> void:
 	
 	_health_component.die.connect(die)
 	_hurtbox_component.hurt.connect(hurt)
+
+
+func immunity(immune: bool) -> void:
+	if immune:
+		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+		_hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+	else:
+		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
+		_hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
 
 
 func die() -> void:
@@ -65,12 +73,3 @@ func hurt(knockback_direction: Vector2, hitbox_type: HitboxComponent.HitboxType)
 			
 			if arrow_stun_time > 0 && state_machine.current_state_type != EnemyState.state_type_to_int(EnemyState.StateType.STUNNED):
 				state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.STUNNED), {"stun_length": arrow_stun_time})
-
-
-func update():
-	# This works as long as there's no weapon that does enough damage to instantly kill an enemy
-	if immune:
-		_health_component.reset_health("enemy")
-		
-		# Hacky way to remove enemy knockback on immunity
-		_health_component._immunity_timer.start(.5)
