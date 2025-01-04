@@ -20,7 +20,7 @@ func _ready() -> void:
 			_goal_list.add_child(new_goal)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# clear window
 	var child_list = []
 	child_list.append(_blackboard_list.get_children())
