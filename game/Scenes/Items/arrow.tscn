@@ -30,7 +30,8 @@ height = 20.0
 [node name="Arrow" type="Node2D"]
 z_index = 8
 script = ExtResource("1_50fa1")
-starting_distance = 4.0
+starting_distance = 5.0
+stopping_distance = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 0.798226
