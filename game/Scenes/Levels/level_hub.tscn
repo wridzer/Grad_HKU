@@ -23,34 +23,34 @@ script = ExtResource("1_q3wky")
 
 [node name="Npc_Rose" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(72, -39)
-_adapatable_combat = 2
-_unadaptable_combat = 1
 display_name = "Rose"
 idle_dialogue = ExtResource("3_xtaxt")
 hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
+_adapatable_combat = 2
+_unadaptable_combat = 1
 _shoot_priority = 30
 _block_priority = 20
 
 [node name="Npc_Dominic" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
-_preferred_combat = 1
-_unadaptable_combat = 2
 display_name = "Dominic"
 idle_dialogue = ExtResource("3_hs5g4")
 hit_dialogue = ExtResource("4_ao885")
 following_dialogue = ExtResource("6_phc4w")
+_preferred_combat = 1
+_unadaptable_combat = 2
 _slash_priority = 30
 _shoot_priority = 20
 
 [node name="Npc_Virgil" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
-_preferred_combat = 2
-_adapatable_combat = 1
 display_name = "Virgil"
 idle_dialogue = ExtResource("9_vaxnm")
 hit_dialogue = ExtResource("10_0kxew")
 following_dialogue = ExtResource("11_0d40j")
+_preferred_combat = 2
+_adapatable_combat = 1
 _slash_priority = 20
 _block_priority = 30
 

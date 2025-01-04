@@ -10,6 +10,7 @@ signal dead
 @export_range(0.5, 1.0) var turning_smoothing_value: float = 0.8
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.01
 @export_range(0.0, 2.0) var stop_time: float = 0.5
+
 @export_range(0.0, 5.0) var sword_stun_time: float = 0.2
 @export_range(0.0, 5.0) var shield_stun_time: float = 2
 @export_range(0.0, 5.0) var arrow_stun_time: float = 0
@@ -17,7 +18,7 @@ signal dead
 @export_range(-50.0, 100.0) var shield_knockback_speed: float = 40
 @export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
-var immune: bool
+var immune: bool = false
 
 @onready var _health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
