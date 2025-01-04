@@ -3,12 +3,12 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if is_instance_valid(Player.instance.room):
-		var enemies_present: bool = Player.instance.room.enemies.size() > 0
-		Blackboard.add_data("enemies_present", enemies_present)
-		return enemies_present
-	else:
+	if !is_instance_valid(Player.instance.room):
 		return false
+	
+	var enemies_present: bool = Player.instance.room.enemies.size() > 0
+	Blackboard.add_data("enemies_present", enemies_present)
+	return enemies_present
 
 
 func _get_cost() -> int:

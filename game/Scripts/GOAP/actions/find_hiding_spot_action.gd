@@ -3,11 +3,11 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if Blackboard.get_data("enemies_present"):
-		var data = Blackboard.get_data("enemy")
-		return is_instance_valid(data)
+	if !Blackboard.get_data("enemies_present"):
+		return false
 	
-	return false
+	var data = Blackboard.get_data("enemy")
+	return is_instance_valid(data)
 
 
 func _get_cost() -> int:
@@ -26,8 +26,7 @@ func _get_action_name() -> StringName:
 
 func _get_preconditions() -> Dictionary:
 	return {"found_hiding_spot" : false,
-			"close_to_enemy" : false,
-			"found_enemy" : true}
+			"close_to_enemy" : false}
 
 
 func _get_effects() -> Dictionary:

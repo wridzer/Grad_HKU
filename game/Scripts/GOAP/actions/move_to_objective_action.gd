@@ -3,10 +3,10 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if is_instance_valid(Player.instance.room):
-		return is_instance_valid(Player.instance.room.objective)
+	if !is_instance_valid(Player.instance.room):
+		return false
 	
-	return false
+	return is_instance_valid(Player.instance.room.objective)
 
 
 func _get_cost() -> int:

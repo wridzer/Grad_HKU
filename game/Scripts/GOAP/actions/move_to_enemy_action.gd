@@ -3,20 +3,18 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if Blackboard.get_data("enemies_present"):
-		var data = Blackboard.get_data("enemy")
-		return is_instance_valid(data)
+	if !Blackboard.get_data("enemies_present"):
+		return false
 	
-	return false
+	var data = Blackboard.get_data("enemy")
+	return is_instance_valid(data)
 
 
 func _get_cost() -> int:
 	var npc: Npc = Blackboard.get_data("npc")
 	var enemy: Enemy = Blackboard.get_data("enemy")
 	var distance_squared = npc.global_position.distance_squared_to(enemy.global_position)
-	if distance_squared > npc.max_chase_distance_squared:
-		return int(distance_squared)
-	return int(distance_squared / 50)
+	return int(distance_squared / 40)
 
 
 func _get_action_name() -> StringName:
@@ -28,7 +26,8 @@ func _get_preconditions() -> Dictionary:
 
 
 func _get_effects() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {"close_to_enemy" : true,
+			"has_line_of_sight" : true}
 
 
 func _perform_physics(actor, _delta) -> bool:

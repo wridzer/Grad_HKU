@@ -3,7 +3,11 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	return Blackboard.get_data("enemies_present")
+	if !Blackboard.get_data("enemies_present"):
+		return false
+	
+	var data = Blackboard.get_data("enemy")
+	return is_instance_valid(data)
 
 
 func _get_cost() -> int:
