@@ -40,7 +40,7 @@ func take_damage(amount: int) -> void:
 
 func reset_health(blackboard_prefix: String) -> void:
 	health = _max_health
-	set_health_blackboard_variables(blackboard_prefix)
+	health_gained.emit()
 
 
 func _on_immunity_timer_timeout() -> void:

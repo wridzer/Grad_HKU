@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://divp2amo5ul71"]
+[gd_scene load_steps=19 format=3 uid="uid://divp2amo5ul71"]
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ewpuj"]
+[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="2_5c03w"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/enemy_idle.gd" id="3_1iy2t"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_ox5hm"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_egr5u"]
@@ -70,6 +71,11 @@ frame_progress = 0.923811
 [node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
 health = 3
 _immunity_length = 1.0
+
+[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("2_5c03w")]
+position = Vector2(-3, -6)
+scale = Vector2(0.005, 0.005)
+_health_component = NodePath("../HealthComponent")
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

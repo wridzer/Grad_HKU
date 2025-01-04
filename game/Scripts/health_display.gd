@@ -12,7 +12,7 @@ var _current_offset
 
 func _ready() -> void:
 	assert(is_instance_valid(_health_component), "Please assign a valid _health_component to HealthDisplay")
-	await _health_component.ready
+	
 	_current_offset = _offset
 	_health_sprites.append(_health_sprite)
 	update_health()
