@@ -306,6 +306,9 @@ collision_layer = 16
 [node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
 position = Vector2(0, 8)
 
+[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="1"]
+collision_layer = 16
+
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]

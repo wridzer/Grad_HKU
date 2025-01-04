@@ -42,6 +42,11 @@ _preferred_combat = 1
 _unadaptable_combat = 2
 _slash_priority = 30
 _shoot_priority = 20
+chase_distance = 10.0
+max_chase_speed = 85.0
+steering_value = 2.8
+turning_smoothing_value = 0.85
+speed_smoothing_value = 0.06
 
 [node name="Npc_Virgil" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
@@ -53,6 +58,7 @@ _preferred_combat = 2
 _adapatable_combat = 1
 _slash_priority = 20
 _block_priority = 30
+max_chase_speed = 70.0
 
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1
