@@ -70,3 +70,6 @@ func update():
 	# This works as long as there's no weapon that does enough damage to instantly kill an enemy
 	if immune:
 		_health_component.reset_health("enemy")
+		
+		# Hacky way to remove enemy knockback on immunity
+		_health_component._immunity_timer.start(.5)
