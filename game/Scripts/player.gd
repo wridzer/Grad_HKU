@@ -114,19 +114,28 @@ func update_animation_parameters() -> void:
 		animation_tree.set("parameters/Idle/blend_position", input_manager.direction)
 		animation_tree.set("parameters/Walk/blend_position", input_manager.direction)
 	
-	if input_manager.attack && !animation_tree.get("parameters/conditions/slash"):
+	# Make sure the player isn't already performing an action
+	if animation_tree.get("parameters/conditions/slash") || animation_tree.get("parameters/conditions/block")|| animation_tree.get("parameters/conditions/shoot"):
+		super.update_animation_parameters()
+		return
+	
+	if input_manager.attack:
 		Blackboard.increment_data("sword_used_amount", 1)
 		await slash(direction)
+		super.update_animation_parameters()
+		return
 	
-	if input_manager.block && !animation_tree.get("parameters/conditions/block"):
+	if input_manager.block:
 		Blackboard.increment_data("shield_used_amount", 1)
 		await block(direction)
+		super.update_animation_parameters()
+		return
 	
-	if input_manager.bow && !animation_tree.get("parameters/conditions/shoot"):
+	if input_manager.bow:
 		Blackboard.increment_data("bow_used_amount", 1)
 		await shoot(direction)
-	
-	super.update_animation_parameters()
+		super.update_animation_parameters()
+		return
 
 
 func shoot(direction: Vector2) -> bool:
