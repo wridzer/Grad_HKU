@@ -60,7 +60,7 @@ var _step: int = 0:
 	set(value):
 		_step = value
 		if _step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
-			await get_tree().create_timer(0).timeout
+			await get_tree().process_frame
 
 
 func _ready() -> void:
@@ -74,7 +74,7 @@ func generate() -> void:
 	assert(_max_room_amount >= _min_room_amount , "_max_room_amount < _min_room_amount")
 	assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 	assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
-	print("generating")
+	print("generating dungeon")
 	
 	# Apply seed when generating
 	if !_seed.is_empty():
@@ -100,6 +100,7 @@ func generate() -> void:
 
 
 func clear() -> void:
+	print("clearing dungeon")
 	_tile_map.clear()
 	_tile_map_doors.clear()
 	_rooms.clear()

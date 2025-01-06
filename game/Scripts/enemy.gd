@@ -1,3 +1,4 @@
+@tool
 class_name Enemy
 extends CharacterBody2D
 
@@ -26,6 +27,9 @@ signal dead
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed")
 	
 	Blackboard.increment_data("enemies_alive", 1)
