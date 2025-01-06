@@ -49,7 +49,7 @@ func _process(_delta: float) -> void:
 		if Blackboard.get_data(key):
 			var data = Blackboard.get_data(key)
 			var new_label = Label.new()
-			new_label.text = key + "	-	%d" % data
+			new_label.text = key + "   -   %d" % data
 			new_label.add_theme_font_size_override("font_size", font_size) 
 			_blackboard_list.add_child(new_label)
 	
