@@ -53,7 +53,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 			_clear_dungeon()
 
 # Generation instructions
-@export var _room_types: Dictionary[int, int] = {15: 15}
+@export var _room_types: Dictionary[int, int] = {14: 14}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
 @export_range(3, 10) var _min_room_amount: int = 3
 @export_range(3, 20) var _max_room_amount: int = 5
@@ -103,7 +103,7 @@ func _generate_dungeon() -> void:
 	if mission_type == MissionType.ITEM:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 		assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
-	print("generating dungeon with mission type: ", mission_type)
+	print("generating dungeon with mission type: ", MissionType.keys()[mission_type])
 	
 	# Apply seed when generating
 	if !_seed.is_empty():
@@ -439,7 +439,7 @@ func _choose_goal_room() -> Room:
 
 
 func _choose_spawn_room(goal_room: Room) -> Room:
-	var possible_spawn_rooms: Array[Room] = _rooms
+	var possible_spawn_rooms: Array[Room] = _rooms.duplicate()
 	possible_spawn_rooms.erase(goal_room)
 	
 	var spawn_room = possible_spawn_rooms.pick_random()
@@ -448,7 +448,7 @@ func _choose_spawn_room(goal_room: Room) -> Room:
 
 
 func _spawn_key_items(goal_room: Room) -> void:
-	var possible_key_rooms: Array[Room] = _rooms
+	var possible_key_rooms: Array[Room] = _rooms.duplicate()
 	possible_key_rooms.erase(goal_room)
 	
 	var key_item_amount = randi_range(_min_key_items, _max_key_items)
@@ -473,11 +473,10 @@ func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 		if room == spawn_room:
 			continue
 		
-		var enemy_count: int
-		if room == goal_room:
-			enemy_count = 1
-		else:
-			enemy_count = randi_range(_min_enemies_per_room, _max_enemies_per_room)
+		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
+		if is_instance_valid(goal_room):
+			if room == goal_room:
+				enemy_count = 1
 		
 		for i in range(enemy_count):
 			var enemy: Enemy = _enemy_scene.instantiate()
