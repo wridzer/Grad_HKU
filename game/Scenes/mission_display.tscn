@@ -35,8 +35,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ycomf"]
 radius = 6.0
 
-[node name="Mission Display" type="Area2D" node_paths=PackedStringArray("_exlamation_mark_sprite")]
-collision_mask = 2
+[node name="Mission Display" type="StaticBody2D" node_paths=PackedStringArray("_exlamation_mark_sprite")]
+collision_mask = 3
 script = ExtResource("1_ve4ia")
 _mission_dialogue = ExtResource("2_123cq")
 _exlamation_mark_sprite = NodePath("Sprite2DExclamationMark")
@@ -70,10 +70,8 @@ scale = Vector2(0.503571, 0.483152)
 texture = SubResource("AtlasTexture_kolxj")
 
 [node name="AnimatedSprite2DSign" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.88, 0.88, 0.88, 1)
 z_index = 5
-position = Vector2(0, -8)
-scale = Vector2(1.033, 1)
+position = Vector2(0, -7.5)
 sprite_frames = SubResource("SpriteFrames_4lb3t")
 animation = &"idle"
 

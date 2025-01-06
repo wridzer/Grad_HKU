@@ -14,5 +14,5 @@ func highlight() -> void:
 	animated_sprite.play("highlighted")
 
 
-func stop_highligh() -> void:
+func stop_highlight() -> void:
 	animated_sprite.play("idle")

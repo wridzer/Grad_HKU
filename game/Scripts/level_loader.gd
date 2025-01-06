@@ -6,7 +6,7 @@ extends Area2D
 
 var condition: bool:
 	get(): return is_instance_valid(Blackboard.get_data("npc")) && \
-				  game_manager.mission_type != game_manager.MissionType.INVALID
+				  DungeonGenerator.mission_type != DungeonGenerator.MissionType.INVALID
 
 @onready var _timer := $Timer
 

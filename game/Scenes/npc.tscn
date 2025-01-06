@@ -198,7 +198,7 @@ animations = [{
 "texture": ExtResource("11_n5nkc")
 }],
 "loop": true,
-"name": &"highlight",
+"name": &"highlighted",
 "speed": 5.0
 }, {
 "frames": [{
@@ -336,7 +336,7 @@ script = ExtResource("10_jrs23")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")
-animation = &"idle"
+animation = &"highlighted"
 
 [node name="NameLabel" type="Label" parent="AnimatedSprite2D"]
 z_index = 5

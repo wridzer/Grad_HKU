@@ -3,6 +3,8 @@ class_name DungeonGenerator
 extends Node
 
 
+enum MissionType {INVALID, ITEM, SLAY}
+
 # Tiles
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
 const BORDER_TILE: Vector2i = Vector2i(7, 0)
@@ -34,19 +36,21 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _generate_slay: bool = false:
 	set(value):
 		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
-			generate(GameManager.MissionType.SLAY)
+			mission_type = MissionType.SLAY
+			_generate_dungeon()
 
 @warning_ignore("unused_private_class_variable")
 @export var _generate_item: bool = false:
 	set(value):
 		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
-			generate(GameManager.MissionType.ITEM)
+			mission_type = MissionType.ITEM
+			_generate_dungeon()
 
 @warning_ignore("unused_private_class_variable")
 @export var _clear: bool = false:
 	set(value):
 		if Engine.is_editor_hint():
-			clear()
+			_clear_dungeon()
 
 # Generation instructions
 @export var _room_types: Dictionary[int, int] = {15: 15}
@@ -62,6 +66,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export_range(0.5, 5.0) var _enemy_wall_margin: float = 0.5
 @export_range(0.5, 5.0) var _key_wall_margin: float = 0.5
 
+static var mission_type: MissionType = MissionType.INVALID
 var _rooms: Array[Room] = []
 var _keys: Array = []
 var _step: int = 0:
@@ -73,14 +78,29 @@ var _step: int = 0:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint() &&  _dungeon_node.get_child_count() == 0:
-		generate(game_manager.mission_type)
+		_clear_dungeon()
+		_generate_dungeon()
 
 
-func generate(mission_type: GameManager.MissionType) -> void:
+static func set_mission_type(type: String) -> void:
+	mission_type = MissionType.get(type)
+	
+	var data = Blackboard.get_data("mission_choices")
+	var mission_choices: Array[DungeonGenerator.MissionType] = []
+	if is_instance_valid(data):
+		mission_choices = data
+	mission_choices.append(mission_type)
+	Blackboard.add_data("mission_choices", mission_choices)
+
+
+func _generate_dungeon() -> void:
 	assert(_dungeon_size > _border_margin, "dungeon_size needs to be bigger than _border_margin")
 	assert(!_room_types.is_empty(), "room_types is empty")
 	assert(_max_room_amount >= _min_room_amount , "_max_room_amount < _min_room_amount")
-	if mission_type == GameManager.MissionType.ITEM:
+	assert(is_instance_valid(_spawn_point_scene), "assign valid _spawn_point_scene")
+	assert(is_instance_valid(_enemy_scene), "assign valid _enemy_scene")
+	assert(is_instance_valid(_key_scene), "assign valid _key_scene")
+	if mission_type == MissionType.ITEM:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 		assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
 	print("generating dungeon with mission type: ", mission_type)
@@ -89,30 +109,30 @@ func generate(mission_type: GameManager.MissionType) -> void:
 	if !_seed.is_empty():
 		seed(_seed.hash())
 	
-	make_border()
+	_make_border()
 	for i in _max_room_amount:
-		make_room(MAX_RECURSION)
+		_make_room(MAX_RECURSION)
 	
 	# Only works for 3+ rooms
-	var mst_graph: AStar2D = get_minimum_spanning_tree()
-	var door_pairs: Array[DoorPair] = make_doors(mst_graph)
+	var mst_graph: AStar2D = _get_minimum_spanning_tree()
+	var door_pairs: Array[DoorPair] = _make_doors(mst_graph)
 	
-	make_walls(door_pairs)
-	make_hallways(door_pairs)
-	fill_background()
+	_make_walls(door_pairs)
+	_make_hallways(door_pairs)
+	_fill_background()
 	
-	var goal_room: Room = choose_goal_room()
-	var spawn_room: Room = choose_spawn_room(goal_room)
+	var goal_room: Room = _choose_goal_room()
+	var spawn_room: Room = _choose_spawn_room(goal_room)
 	
-	if mission_type == GameManager.MissionType.ITEM:
-		spawn_key_items(goal_room)
-		spawn_enemies(spawn_room, goal_room)
+	if mission_type == MissionType.ITEM:
+		_spawn_key_items(goal_room)
+		_spawn_enemies(spawn_room, goal_room)
 	else:
-		spawn_enemies(spawn_room)
-	make_spawn_point(spawn_room)
+		_spawn_enemies(spawn_room)
+	_make_spawn_point(spawn_room)
 
 
-func clear() -> void:
+func _clear_dungeon() -> void:
 	print("clearing dungeon")
 	_tile_map.clear()
 	_tile_map_doors.clear()
@@ -122,7 +142,7 @@ func clear() -> void:
 		child.queue_free()
 
 
-func make_border() -> void:
+func _make_border() -> void:
 	# Generate the border tiles
 	for i in range(-1, _dungeon_size + 1):
 		_step += 1
@@ -132,13 +152,13 @@ func make_border() -> void:
 		_tile_map.set_cell(Vector2i(-1, i), 0, BORDER_TILE, 0)
 
 
-func make_room(recursion: int) -> void:
+func _make_room(recursion: int) -> void:
 	if recursion <= 0:
 		if _rooms.size() < _min_room_amount:
 			print("Dungeon size too small to succesfully generate " + str(_min_room_amount) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
 			_dungeon_size = int(_dungeon_size * 1.2)
-			clear()
-			generate(game_manager.mission_type)
+			_clear_dungeon()
+			_generate_dungeon()
 		return
 	
 	_step += 1
@@ -155,7 +175,7 @@ func make_room(recursion: int) -> void:
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			for tile_type in ROOM_TILES:
 				if _tile_map.get_cell_atlas_coords(pos) == tile_type:
-					make_room(recursion - 1)
+					_make_room(recursion - 1)
 					return
 	
 	# Prevent wall/border overlap
@@ -163,7 +183,7 @@ func make_room(recursion: int) -> void:
 		for y in range(-_border_margin, height + _border_margin):
 			var pos: Vector2i = start_pos + Vector2i(x,y)
 			if _tile_map.get_cell_atlas_coords(pos) == BORDER_TILE:
-				make_room(recursion - 1)
+				_make_room(recursion - 1)
 				return
 	
 	# Generate the room tiles, and save room data
@@ -199,7 +219,7 @@ func make_room(recursion: int) -> void:
 	collision_shape.shape = rect_shape
 
 
-func get_minimum_spanning_tree() -> AStar2D:
+func _get_minimum_spanning_tree() -> AStar2D:
 	# Set up delaunay triangulation & minimum spanning tree graphs
 	var del_graph: AStar2D = AStar2D.new()
 	var mst_graph: AStar2D = AStar2D.new()
@@ -255,7 +275,7 @@ func get_minimum_spanning_tree() -> AStar2D:
 	return mst_graph
 
 
-func make_doors(hallway_graph: AStar2D) -> Array[DoorPair]:
+func _make_doors(hallway_graph: AStar2D) -> Array[DoorPair]:
 	var door_pairs: Array[DoorPair] = []
 	
 	# Populate the doors Array with start and end points
@@ -311,7 +331,7 @@ func make_doors(hallway_graph: AStar2D) -> Array[DoorPair]:
 	return door_pairs
 
 
-func make_walls(door_pairs: Array[DoorPair]) -> void:
+func _make_walls(door_pairs: Array[DoorPair]) -> void:
 	# Generate walls around the rooms
 	for room in _rooms:
 		var room_width_pos = room.start_pos.x + room.width
@@ -343,12 +363,12 @@ func make_walls(door_pairs: Array[DoorPair]) -> void:
 		
 		var sorted_coords: PackedVector2Array
 		sorted_coords = [door_from_position + surroundings[best_index], door_from_position + surroundings[posmod(best_index + 1, surroundings.size())], door_from_position + surroundings[posmod(best_index - 1, surroundings.size())], ]
-		door_pair.door_from.door_sprite_position = break_wall(sorted_coords)
+		door_pair.door_from.door_sprite_position = _break_wall(sorted_coords)
 		sorted_coords = [door_to_position - surroundings[best_index], door_to_position - surroundings[posmod(best_index + 1, surroundings.size())],door_to_position - surroundings[posmod(best_index - 1, surroundings.size())]]
-		door_pair.door_to.door_sprite_position = break_wall(sorted_coords)
+		door_pair.door_to.door_sprite_position = _break_wall(sorted_coords)
 
 
-func break_wall(sorted_coords: PackedVector2Array) -> Vector2i:
+func _break_wall(sorted_coords: PackedVector2Array) -> Vector2i:
 	for coord: Vector2i in sorted_coords:
 		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(coord)
 		for wall_tile in WALL_TILES_HOR + WALL_TILES_VER:
@@ -364,7 +384,7 @@ func break_wall(sorted_coords: PackedVector2Array) -> Vector2i:
 	return INVALID_TILE
 
 
-func make_hallways(door_pairs: Array[DoorPair]) -> void:
+func _make_hallways(door_pairs: Array[DoorPair]) -> void:
 	# Set up AStar pathfinding
 	var a_star: AStarGrid2D = AStarGrid2D.new()
 	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * _dungeon_size)
@@ -397,7 +417,7 @@ func make_hallways(door_pairs: Array[DoorPair]) -> void:
 				_tile_map.set_cell(point, 0, HALLWAY_TILES.pick_random(), 0)
 
 
-func fill_background() -> void:
+func _fill_background() -> void:
 	for x in range(_dungeon_size):
 		for y in range(_dungeon_size):
 			var pos: Vector2i = Vector2i(x,y)
@@ -405,20 +425,20 @@ func fill_background() -> void:
 				_tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
 
 
-func choose_goal_room() -> Room:
+func _choose_goal_room() -> Room:
 	var possible_goal_rooms: Array[Room] = []
 	for room in _rooms:
 		if room.doors.size() == 1:
 			possible_goal_rooms.append(room)
 	
 	var goal_room: Room = possible_goal_rooms.pick_random()
-	if game_manager.mission_type == GameManager.MissionType.ITEM:
+	if mission_type == MissionType.ITEM:
 		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
 		
 	return possible_goal_rooms.pick_random()
 
 
-func choose_spawn_room(goal_room: Room) -> Room:
+func _choose_spawn_room(goal_room: Room) -> Room:
 	var possible_spawn_rooms: Array[Room] = _rooms
 	possible_spawn_rooms.erase(goal_room)
 	
@@ -427,7 +447,7 @@ func choose_spawn_room(goal_room: Room) -> Room:
 	return spawn_room
 
 
-func spawn_key_items(goal_room: Room) -> void:
+func _spawn_key_items(goal_room: Room) -> void:
 	var possible_key_rooms: Array[Room] = _rooms
 	possible_key_rooms.erase(goal_room)
 	
@@ -448,7 +468,7 @@ func spawn_key_items(goal_room: Room) -> void:
 		key.translate(pos * _tile_map.rendering_quadrant_size)
 
 
-func spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
+func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 	for room in _rooms:
 		if room == spawn_room:
 			continue
@@ -473,7 +493,7 @@ func spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 			enemy.dead.connect(room.erase_dead_enemy)
 
 
-func make_spawn_point(spawn_room: Room) -> void:
+func _make_spawn_point(spawn_room: Room) -> void:
 	var spawn_point = _spawn_point_scene.instantiate()
 	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self

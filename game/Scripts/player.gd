@@ -62,7 +62,7 @@ func _physics_process(_delta: float) -> void:
 	Blackboard.add_data("player_location", self.position)
 
 
-func process(delta: float) -> void:
+func _process(delta: float) -> void:
 	update_actionable_highlight()
 	super._process(delta)
 
@@ -106,14 +106,19 @@ func update_animation_parameters() -> void:
 func update_actionable_highlight() -> void:
 	var actionables: Array[Area2D] = _actionable_finder.get_overlapping_areas()
 	
-	_highest_priority_actionable = actionables[0]
-	for actionable: Actionable in actionables:
-		if actionable.actionable_priority > _highest_priority_actionable.actionable_priority:
-			_highest_priority_actionable = actionable
+	if actionables.size() > 0:
+		_highest_priority_actionable = actionables[0]
+		for actionable: Actionable in actionables:
+			if actionable.actionable_priority > _highest_priority_actionable.actionable_priority:
+				_highest_priority_actionable = actionable
+				continue
+			
+			actionable.stop_highlight()
 		
-		actionable.stop_highlight()
-	
-	_highest_priority_actionable.highlight()
+		_highest_priority_actionable.highlight()
+	elif is_instance_valid(_highest_priority_actionable):
+		_highest_priority_actionable.stop_highlight()
+		_highest_priority_actionable = null
 
 
 func interact() -> void:

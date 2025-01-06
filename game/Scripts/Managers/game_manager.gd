@@ -1,4 +1,3 @@
-class_name GameManager
 extends Node
 
 
@@ -13,23 +12,8 @@ signal switch_level_cleanup
 signal get_spawn_location
 signal toggle_goap
 
-enum MissionType {INVALID, ITEM, SLAY}
-
 @export var _level_parent: Node
 @export_file var _level_hub: String
-
-var mission_type: MissionType = MissionType.INVALID
-
-
-func set_mission_type(type: String) -> void:
-	mission_type = MissionType.get(type)
-	
-	var data = Blackboard.get_data("mission_choices")
-	var mission_choices: Array[MissionType] = []
-	if is_instance_valid(data):
-		mission_choices = data
-	mission_choices.append(mission_type)
-	Blackboard.add_data("mission_choices", mission_choices)
 
 
 func _ready() -> void:

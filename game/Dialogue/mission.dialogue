@@ -6,11 +6,11 @@ Mission Board: Pick your preferred mission type from the mission board.
 	=> slay
 
 ~ item
-do game_manager.set_mission_type("ITEM")
+do DungeonGenerator.set_mission_type("ITEM")
 => gl
 
 ~ slay
-do game_manager.set_mission_type("SLAY")
+do DungeonGenerator.set_mission_type("SLAY")
 => gl
 
 ~ gl
