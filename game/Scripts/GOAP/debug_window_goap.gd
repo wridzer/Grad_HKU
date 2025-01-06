@@ -57,7 +57,7 @@ func _process(_delta: float) -> void:
 	var current_goal_found = false
 	for goal in _goal_list.get_children():
 		if goal.text == current_goal:
-			goal.set("theme_override_colors/font_color", Color.BLUE)
+			goal.set("theme_override_colors/font_color", Color.CYAN)
 			current_goal_found = true
 		elif !current_goal_found:
 			goal.set("theme_override_colors/font_color", Color.GREEN)
@@ -71,7 +71,7 @@ func _process(_delta: float) -> void:
 		if i <= plan_index:
 			new_label.set("theme_override_colors/font_color", Color.GREEN)
 		elif i == plan_index:
-			new_label.set("theme_override_colors/font_color", Color.BLUE)
+			new_label.set("theme_override_colors/font_color", Color.CYAN)
 		else:
 			new_label.set("theme_override_colors/font_color", Color.RED)
 		new_label.add_theme_font_size_override("font_size", font_size) 
