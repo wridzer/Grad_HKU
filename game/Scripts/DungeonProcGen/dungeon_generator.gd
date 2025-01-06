@@ -25,15 +25,22 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _tile_map_doors: TileMapLayer
 @export var _spawn_point_scene: PackedScene
 @export var _enemy_scene: PackedScene
+@export var _key_scene: PackedScene
 
 @warning_ignore("shadowed_global_identifier")
 @export var _seed: String
 
 @warning_ignore("unused_private_class_variable")
-@export var _generated: bool = false:
+@export var _generate_slay: bool = false:
 	set(value):
 		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
-			generate()
+			generate(GameManager.MissionType.SLAY)
+
+@warning_ignore("unused_private_class_variable")
+@export var _generate_item: bool = false:
+	set(value):
+		if Engine.is_editor_hint() && _dungeon_node.get_child_count() == 0:
+			generate(GameManager.MissionType.ITEM)
 
 @warning_ignore("unused_private_class_variable")
 @export var _clear: bool = false:
@@ -53,6 +60,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
 @export_range(0, 5) var _max_enemies_per_room: int = 3
 @export_range(0.5, 5.0) var _enemy_wall_margin: float = 0.5
+@export_range(0.5, 5.0) var _key_wall_margin: float = 0.5
 
 var _rooms: Array[Room] = []
 var _keys: Array = []
@@ -65,16 +73,17 @@ var _step: int = 0:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint() &&  _dungeon_node.get_child_count() == 0:
-		generate()
+		generate(game_manager.mission_type)
 
 
-func generate() -> void:
+func generate(mission_type: GameManager.MissionType) -> void:
 	assert(_dungeon_size > _border_margin, "dungeon_size needs to be bigger than _border_margin")
 	assert(!_room_types.is_empty(), "room_types is empty")
 	assert(_max_room_amount >= _min_room_amount , "_max_room_amount < _min_room_amount")
-	assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
-	assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
-	print("generating dungeon")
+	if mission_type == GameManager.MissionType.ITEM:
+		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
+		assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
+	print("generating dungeon with mission type: ", mission_type)
 	
 	# Apply seed when generating
 	if !_seed.is_empty():
@@ -95,7 +104,11 @@ func generate() -> void:
 	var goal_room: Room = choose_goal_room()
 	var spawn_room: Room = choose_spawn_room(goal_room)
 	
-	spawn_enemies(spawn_room)
+	if mission_type == GameManager.MissionType.ITEM:
+		spawn_key_items(goal_room)
+		spawn_enemies(spawn_room, goal_room)
+	else:
+		spawn_enemies(spawn_room)
 	make_spawn_point(spawn_room)
 
 
@@ -125,7 +138,7 @@ func make_room(recursion: int) -> void:
 			print("Dungeon size too small to succesfully generate " + str(_min_room_amount) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
 			_dungeon_size = int(_dungeon_size * 1.2)
 			clear()
-			generate()
+			generate(game_manager.mission_type)
 		return
 	
 	_step += 1
@@ -399,7 +412,9 @@ func choose_goal_room() -> Room:
 			possible_goal_rooms.append(room)
 	
 	var goal_room: Room = possible_goal_rooms.pick_random()
-	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
+	if game_manager.mission_type == GameManager.MissionType.ITEM:
+		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
+		
 	return possible_goal_rooms.pick_random()
 
 
@@ -407,15 +422,42 @@ func choose_spawn_room(goal_room: Room) -> Room:
 	var possible_spawn_rooms: Array[Room] = _rooms
 	possible_spawn_rooms.erase(goal_room)
 	
-	return possible_spawn_rooms.pick_random()
+	var spawn_room = possible_spawn_rooms.pick_random()
+	
+	return spawn_room
 
 
-func spawn_enemies(spawn_room: Room) -> void:
+func spawn_key_items(goal_room: Room) -> void:
+	var possible_key_rooms: Array[Room] = _rooms
+	possible_key_rooms.erase(goal_room)
+	
+	var key_item_amount = randi_range(_min_key_items, _max_key_items)
+	for i in range(key_item_amount):
+		var key_room = possible_key_rooms.pick_random()
+		possible_key_rooms.erase(key_room)
+		
+		var key: Key = _key_scene.instantiate()
+		key_room.add_child(key)
+		key.name = key.name + str(i)
+		key.owner = self
+		_keys.append(key)
+		_step += 1
+		var half_width: float = key_room.width / 2.0 - _key_wall_margin
+		var half_height: float = key_room.height / 2.0 - _key_wall_margin
+		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
+		key.translate(pos * _tile_map.rendering_quadrant_size)
+
+
+func spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 	for room in _rooms:
 		if room == spawn_room:
 			continue
 		
-		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
+		var enemy_count: int
+		if room == goal_room:
+			enemy_count = 1
+		else:
+			enemy_count = randi_range(_min_enemies_per_room, _max_enemies_per_room)
 		
 		for i in range(enemy_count):
 			var enemy: Enemy = _enemy_scene.instantiate()
