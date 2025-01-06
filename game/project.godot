@@ -78,10 +78,12 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://add
 [file_customization]
 
 folder_colors={
+"res://Animations/": "pink",
 "res://Art/": "yellow",
 "res://Dialogue/": "orange",
 "res://Scenes/": "red",
 "res://Scripts/": "green",
+"res://blackboard_dump/": "blue",
 "res://goap_resources/": "purple",
 "res://script_templates/": "teal"
 }

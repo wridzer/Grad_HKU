@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dwlln5rqw6foq"]
 
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_lctts"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_lctts"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_amndk"]
 resource_name = "roguelike-rpg"

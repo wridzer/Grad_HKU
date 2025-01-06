@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/mission_display.gd" id="1_ve4ia"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="1_yh8sa"]
-[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wvo26"]
+[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wvo26"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
 

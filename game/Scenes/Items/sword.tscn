@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3s2y63nra24b"]
 
-[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_ci852"]
+[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://Art/kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_ci852"]
 [ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="2_nl8bd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tpyv7"]
