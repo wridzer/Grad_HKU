@@ -37,17 +37,15 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _clear: bool = false:
 	set(value):
 		if Engine.is_editor_hint():
-			_tile_map.clear()
-			_tile_map_decor.clear()
-			_rooms.clear()
-			
-			for child in _dungeon_node.get_children():
-				child.queue_free()
+			clear()
 
 # Generation instructions
 @export var _room_types: Dictionary[int, int] = {15: 15}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
-@export_range(3, 20) var _room_amount: int = 5
+@export_range(3, 10) var _min_room_amount: int = 3
+@export_range(3, 20) var _max_room_amount: int = 5
+@export_range(1, 10) var _min_key_items: int = 3
+@export_range(3, 20) var _max_key_items: int = 4
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
@@ -70,6 +68,9 @@ func _ready() -> void:
 func generate() -> void:
 	assert(_dungeon_size > _border_margin, "dungeon_size needs to be bigger than _border_margin")
 	assert(!_room_types.is_empty(), "room_types is empty")
+	assert(_max_room_amount >= _min_room_amount , "_max_room_amount < _min_room_amount")
+	assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
+	assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
 	print("generating")
 	
 	# Apply seed when generating
@@ -77,7 +78,7 @@ func generate() -> void:
 		seed(_seed.hash())
 	
 	make_border()
-	for i in _room_amount:
+	for i in _max_room_amount:
 		make_room(MAX_RECURSION)
 	
 	# Only works for 3+ rooms
@@ -93,6 +94,15 @@ func generate() -> void:
 	make_spawn_point(spawn_room)
 
 
+func clear() -> void:
+	_tile_map.clear()
+	_tile_map_decor.clear()
+	_rooms.clear()
+	
+	for child in _dungeon_node.get_children():
+		child.queue_free()
+
+
 func make_border() -> void:
 	# Generate the border tiles
 	for i in range(-1, _dungeon_size + 1):
@@ -105,6 +115,11 @@ func make_border() -> void:
 
 func make_room(recursion: int) -> void:
 	if recursion <= 0:
+		if _rooms.size() < _min_room_amount:
+			print("Dungeon size too small to succesfully generate " + str(_min_room_amount) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
+			_dungeon_size = int(_dungeon_size * 1.2)
+			clear()
+			generate()
 		return
 	
 	_step += 1
@@ -282,19 +297,33 @@ func make_walls(doors: Array[PackedVector2Array]) -> void:
 			_tile_map.set_cell(Vector2i(room.start_pos.x - 1, i), 0, WALL_TILES_VER.pick_random(), 0)
 			_tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILES_VER.pick_random(), 0)
 	
+	# Break the best wall for each door
 	for door_pair in doors:
-		for door in door_pair:
-			var surroundings: PackedVector2Array = [Vector2(-1, 0) + door, Vector2(1, 0) + door, Vector2(0, -1) + door, Vector2(0, 1) + door]
-			break_random_wall(surroundings)
+		var door_direction = door_pair[0].direction_to(door_pair[1]).normalized()
+		var surroundings: PackedVector2Array = [Vector2(-1, 0), Vector2(0, 1), Vector2(1, 0), Vector2(0, -1)]
+		var best_index = 0
+		var best_interest = -INF
+		for index in range(surroundings.size()):
+			var interest: float = surroundings[index].dot(door_direction)
+			if index != 0:
+				if interest > best_interest:
+					best_interest = interest
+					best_index = index
+		
+		var sorted_coords: PackedVector2Array
+		sorted_coords = [door_pair[0] + surroundings[best_index], door_pair[0] + surroundings[posmod(best_index + 1, surroundings.size())], door_pair[0] + surroundings[posmod(best_index - 1, surroundings.size())], ]
+		break_wall(sorted_coords)
+		sorted_coords = [door_pair[1] - surroundings[best_index], door_pair[1] - surroundings[posmod(best_index + 1, surroundings.size())], door_pair[1] - surroundings[posmod(best_index - 1, surroundings.size())]]
+		break_wall(sorted_coords)
 
 
-func break_random_wall(locations: PackedVector2Array) -> void:
-	for point in locations:
-		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(point)
+func break_wall(sorted_coords: PackedVector2Array) -> void:
+	for coord in sorted_coords:
+		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(coord)
 		for wall_tile in WALL_TILES_HOR + WALL_TILES_VER:
 			if tile_atlas_coord == wall_tile:
 				_step += 1
-				_tile_map.set_cell(point, 0, INVALID_TILE, 0)
+				_tile_map.set_cell(coord, 0, INVALID_TILE, 0)
 				return
 
 
