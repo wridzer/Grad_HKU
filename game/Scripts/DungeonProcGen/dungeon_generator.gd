@@ -247,28 +247,31 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				var room_from: Room = _rooms[point_id]
 				var room_to: Room = _rooms[connection]
 				
+				# Calculate the midpoint between the two room centers
+				var midpoint: Vector2 = (room_from.room_position + room_to.room_position) / 2
+				
 				# Find the closest room tile to the other room (for both rooms)
 				var tile_from: Vector2i = room_from.room_tiles[0]
 				var tile_to: Vector2i = room_to.room_tiles[0]
 				
-				var current_shortest_dist_from = tile_from.distance_squared_to(room_to.room_position)
+				var current_shortest_dist_from = tile_from.distance_squared_to(midpoint)
 				for tile in room_from.room_tiles:
 					# Skip the first tile
 					if tile as Vector2i == tile_from:
 						continue
 					
-					var possible_shortest_dist = tile.distance_squared_to(room_to.room_position)
+					var possible_shortest_dist = tile.distance_squared_to(midpoint)
 					if possible_shortest_dist < current_shortest_dist_from:
 						tile_from = tile
 						current_shortest_dist_from = possible_shortest_dist
 				
-				var current_shortest_dist_to = tile_to.distance_squared_to(room_from.room_position)
+				var current_shortest_dist_to = tile_to.distance_squared_to(midpoint)
 				for tile in room_to.room_tiles:
 					# Skip the first tile
 					if tile as Vector2i == tile_to:
 						continue
 					
-					var possible_shortest_dist = tile.distance_squared_to(room_from.room_position)
+					var possible_shortest_dist = tile.distance_squared_to(midpoint)
 					if possible_shortest_dist < current_shortest_dist_to:
 						tile_to = tile
 						current_shortest_dist_to = possible_shortest_dist
@@ -307,7 +310,7 @@ func make_walls(doors: Array[PackedVector2Array]) -> void:
 			var interest: float = surroundings[index].dot(door_direction)
 			if index != 0:
 				if interest > best_interest:
-					best_interest = interest
+					best_interest = interest	
 					best_index = index
 		
 		var sorted_coords: PackedVector2Array
