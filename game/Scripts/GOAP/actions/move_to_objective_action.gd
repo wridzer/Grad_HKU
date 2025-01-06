@@ -19,7 +19,7 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"found_objective" : true}
+	return {}
 
 
 func _get_effects() -> Dictionary:
