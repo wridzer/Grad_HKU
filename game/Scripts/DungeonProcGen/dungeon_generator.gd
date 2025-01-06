@@ -6,7 +6,9 @@ extends Node
 # Tiles
 const INVALID_TILE: Vector2i = Vector2i(-1, -1)
 const BORDER_TILE: Vector2i = Vector2i(7, 0)
-const DOOR_TILE: Vector2i = Vector2i(32, 0)
+const OPEN_DOOR_TILE: Vector2i = Vector2i(37, 1)
+const CLOSED_DOOR_TILE: Vector2i = Vector2i(39, 0)
+const DOOR_BACKGROUND_TILE: Vector2i = Vector2i(6, 0)
 const ROOM_TILES: Array[Vector2i] = [Vector2i(7, 2), Vector2i(7, 3)]
 const WALL_TILES_HOR: Array[Vector2i] = [Vector2i(9, 2), Vector2i(9, 3)]
 const WALL_TILES_VER: Array[Vector2i] = [Vector2i(8, 2), Vector2i(8, 3)]
@@ -20,7 +22,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 # Prerequisites
 @export var _dungeon_node: Node2D
 @export var _tile_map: TileMapLayer
-@export var _tile_map_decor: TileMapLayer
+@export var _tile_map_doors: TileMapLayer
 @export var _spawn_point_scene: PackedScene
 @export var _enemy_scene: PackedScene
 
@@ -53,9 +55,10 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export_range(0.5, 5.0) var _enemy_wall_margin: float = 0.5
 
 var _rooms: Array[Room] = []
+var _keys: Array = []
 var _step: int = 0:
 	set(value):
-		_step += value
+		_step = value
 		if _step % STEPS_BEFORE_WAITING_FRAME == STEPS_BEFORE_WAITING_FRAME - 1:
 			await get_tree().create_timer(0).timeout
 
@@ -83,20 +86,22 @@ func generate() -> void:
 	
 	# Only works for 3+ rooms
 	var mst_graph: AStar2D = get_minimum_spanning_tree()
-	var doors: Array[PackedVector2Array] = make_doors(mst_graph)
+	var door_pairs: Array[DoorPair] = make_doors(mst_graph)
 	
-	make_walls(doors)
-	make_hallways(doors)
+	make_walls(door_pairs)
+	make_hallways(door_pairs)
 	fill_background()
 	
-	var spawn_room = _rooms.pick_random()
+	var goal_room: Room = choose_goal_room()
+	var spawn_room: Room = choose_spawn_room(goal_room)
+	
 	spawn_enemies(spawn_room)
 	make_spawn_point(spawn_room)
 
 
 func clear() -> void:
 	_tile_map.clear()
-	_tile_map_decor.clear()
+	_tile_map_doors.clear()
 	_rooms.clear()
 	
 	for child in _dungeon_node.get_children():
@@ -236,8 +241,8 @@ func get_minimum_spanning_tree() -> AStar2D:
 	return mst_graph
 
 
-func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
-	var doors: Array[PackedVector2Array] = []
+func make_doors(hallway_graph: AStar2D) -> Array[DoorPair]:
+	var door_pairs: Array[DoorPair] = []
 	
 	# Populate the doors Array with start and end points
 	for point_id in hallway_graph.get_point_ids():
@@ -250,44 +255,50 @@ func make_doors(hallway_graph: AStar2D) -> Array[PackedVector2Array]:
 				# Calculate the midpoint between the two room centers
 				var midpoint: Vector2 = (room_from.room_position + room_to.room_position) / 2
 				
-				# Find the closest room tile to the other room (for both rooms)
-				var tile_from: Vector2i = room_from.room_tiles[0]
-				var tile_to: Vector2i = room_to.room_tiles[0]
+				# Create the doors
+				var door_from: Door = Door.new()
+				door_from.room = room_from
+				door_from.door_position = room_from.room_tiles[0]
+				room_from.doors.append(door_from)
+				var door_to: Door = Door.new()
+				door_to.room = room_to
+				door_to.door_position = room_to.room_tiles[0]
+				room_to.doors.append(door_to)
 				
-				var current_shortest_dist_from = tile_from.distance_squared_to(midpoint)
+				# Find the closest room tile to the other room (for both rooms)
+				var current_shortest_dist_from = door_from.door_position.distance_squared_to(midpoint)
 				for tile in room_from.room_tiles:
 					# Skip the first tile
-					if tile as Vector2i == tile_from:
+					if tile as Vector2i == door_from.door_position:
 						continue
 					
 					var possible_shortest_dist = tile.distance_squared_to(midpoint)
 					if possible_shortest_dist < current_shortest_dist_from:
-						tile_from = tile
+						door_from.door_position = tile
 						current_shortest_dist_from = possible_shortest_dist
 				
-				var current_shortest_dist_to = tile_to.distance_squared_to(midpoint)
+				var current_shortest_dist_to = door_to.door_position.distance_squared_to(midpoint)
 				for tile in room_to.room_tiles:
 					# Skip the first tile
-					if tile as Vector2i == tile_to:
+					if tile as Vector2i == door_to.door_position:
 						continue
 					
 					var possible_shortest_dist = tile.distance_squared_to(midpoint)
 					if possible_shortest_dist < current_shortest_dist_to:
-						tile_to = tile
+						door_to.door_position = tile
 						current_shortest_dist_to = possible_shortest_dist
 				
-				# Save the door locations
-				var door: PackedVector2Array = [tile_from, tile_to]
-				doors.append(door)
-				
-				# Set the door tiles
-				_tile_map_decor.set_cell(tile_from, 0, DOOR_TILE, 0)
-				_tile_map_decor.set_cell(tile_to, 0, DOOR_TILE, 0)
+				# Create a door pair and save it
+				var door_pair: DoorPair = DoorPair.new()
+				door_pair.door_from = door_from
+				door_pair.door_to = door_to
+				door_pairs.append(door_pair)
 	
-	return doors
+	return door_pairs
 
 
-func make_walls(doors: Array[PackedVector2Array]) -> void:
+func make_walls(door_pairs: Array[DoorPair]) -> void:
+	# Generate walls around the rooms
 	for room in _rooms:
 		var room_width_pos = room.start_pos.x + room.width
 		var room_height_pos = room.start_pos.y + room.height
@@ -301,8 +312,11 @@ func make_walls(doors: Array[PackedVector2Array]) -> void:
 			_tile_map.set_cell(Vector2i(room_width_pos, i), 0, WALL_TILES_VER.pick_random(), 0)
 	
 	# Break the best wall for each door
-	for door_pair in doors:
-		var door_direction = door_pair[0].direction_to(door_pair[1]).normalized()
+	for door_pair in door_pairs:
+		var door_from_position: Vector2 = door_pair.door_from.door_position
+		var door_to_position: Vector2 = door_pair.door_to.door_position
+		
+		var door_direction = (door_from_position.direction_to(door_to_position)).normalized()
 		var surroundings: PackedVector2Array = [Vector2(-1, 0), Vector2(0, 1), Vector2(1, 0), Vector2(0, -1)]
 		var best_index = 0
 		var best_interest = -INF
@@ -310,27 +324,33 @@ func make_walls(doors: Array[PackedVector2Array]) -> void:
 			var interest: float = surroundings[index].dot(door_direction)
 			if index != 0:
 				if interest > best_interest:
-					best_interest = interest	
+					best_interest = interest
 					best_index = index
 		
 		var sorted_coords: PackedVector2Array
-		sorted_coords = [door_pair[0] + surroundings[best_index], door_pair[0] + surroundings[posmod(best_index + 1, surroundings.size())], door_pair[0] + surroundings[posmod(best_index - 1, surroundings.size())], ]
-		break_wall(sorted_coords)
-		sorted_coords = [door_pair[1] - surroundings[best_index], door_pair[1] - surroundings[posmod(best_index + 1, surroundings.size())], door_pair[1] - surroundings[posmod(best_index - 1, surroundings.size())]]
-		break_wall(sorted_coords)
+		sorted_coords = [door_from_position + surroundings[best_index], door_from_position + surroundings[posmod(best_index + 1, surroundings.size())], door_from_position + surroundings[posmod(best_index - 1, surroundings.size())], ]
+		door_pair.door_from.door_sprite_position = break_wall(sorted_coords)
+		sorted_coords = [door_to_position - surroundings[best_index], door_to_position - surroundings[posmod(best_index + 1, surroundings.size())],door_to_position - surroundings[posmod(best_index - 1, surroundings.size())]]
+		door_pair.door_to.door_sprite_position = break_wall(sorted_coords)
 
 
-func break_wall(sorted_coords: PackedVector2Array) -> void:
-	for coord in sorted_coords:
+func break_wall(sorted_coords: PackedVector2Array) -> Vector2i:
+	for coord: Vector2i in sorted_coords:
 		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(coord)
 		for wall_tile in WALL_TILES_HOR + WALL_TILES_VER:
 			if tile_atlas_coord == wall_tile:
 				_step += 1
-				_tile_map.set_cell(coord, 0, INVALID_TILE, 0)
-				return
+				
+				# Set tile as door
+				_tile_map.set_cell(coord, 0, DOOR_BACKGROUND_TILE, 0)
+				_tile_map_doors.set_cell(coord, 0, OPEN_DOOR_TILE, 0)
+				
+				return coord
+	
+	return INVALID_TILE
 
 
-func make_hallways(doors: Array[PackedVector2Array]) -> void:
+func make_hallways(door_pairs: Array[DoorPair]) -> void:
 	# Set up AStar pathfinding
 	var a_star: AStarGrid2D = AStarGrid2D.new()
 	a_star.region = Rect2i(Vector2i.ZERO, Vector2i.ONE * _dungeon_size)
@@ -340,7 +360,7 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 	
 	# Pass AStar the area to work with
 	for tile in _tile_map.get_used_cells():
-		if _tile_map_decor.get_cell_atlas_coords(tile) == DOOR_TILE:
+		if _tile_map.get_cell_atlas_coords(tile) == DOOR_BACKGROUND_TILE:
 			continue;
 		
 		var tile_atlas_coord = _tile_map.get_cell_atlas_coords(tile)
@@ -349,13 +369,13 @@ func make_hallways(doors: Array[PackedVector2Array]) -> void:
 				a_star.set_point_solid(Vector2i(tile))
 	
 	# Generate the hallway tiles
-	for door in doors:
-		var door_from: Vector2i = Vector2i(door[0])
-		var door_to: Vector2i = Vector2i(door[1])
+	for door_pair in door_pairs:
+		var door_from_position: Vector2i = door_pair.door_from.door_position
+		var door_to_position: Vector2i = door_pair.door_to.door_position
 		
-		a_star.set_point_solid(door_from, false)
-		a_star.set_point_solid(door_to, false)
-		var hallway: PackedVector2Array = a_star.get_point_path(door_from, door_to)
+		a_star.set_point_solid(door_from_position, false)
+		a_star.set_point_solid(door_to_position, false)
+		var hallway: PackedVector2Array = a_star.get_point_path(door_from_position, door_to_position)
 		
 		for point in hallway:
 			_step += 1
@@ -371,6 +391,24 @@ func fill_background() -> void:
 				_tile_map.set_cell(pos, 0, BACKGROUND_TILES.pick_random(), 0)
 
 
+func choose_goal_room() -> Room:
+	var possible_goal_rooms: Array[Room] = []
+	for room in _rooms:
+		if room.doors.size() == 1:
+			possible_goal_rooms.append(room)
+	
+	var goal_room: Room = possible_goal_rooms.pick_random()
+	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
+	return possible_goal_rooms.pick_random()
+
+
+func choose_spawn_room(goal_room: Room) -> Room:
+	var possible_spawn_rooms: Array[Room] = _rooms
+	possible_spawn_rooms.erase(goal_room)
+	
+	return possible_spawn_rooms.pick_random()
+
+
 func spawn_enemies(spawn_room: Room) -> void:
 	for room in _rooms:
 		if room == spawn_room:
@@ -379,17 +417,17 @@ func spawn_enemies(spawn_room: Room) -> void:
 		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
 		
 		for i in range(enemy_count):
-			_step += 1
 			var enemy: Enemy = _enemy_scene.instantiate()
 			room.enemies.append(enemy)
-			enemy.dead.connect(room.erase_dead_enemy.bind())
 			room.add_child(enemy)
 			enemy.name = enemy.name + str(i)
 			enemy.owner = self
+			_step += 1
 			var half_width: float = room.width / 2.0 - _enemy_wall_margin
 			var half_height: float = room.height / 2.0 - _enemy_wall_margin
 			var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 			enemy.translate(pos * _tile_map.rendering_quadrant_size)
+			enemy.dead.connect(room.erase_dead_enemy)
 
 
 func make_spawn_point(spawn_room: Room) -> void:

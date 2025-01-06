@@ -7,6 +7,7 @@ extends Node2D
 @export var height: int
 @export var room_position: Vector2
 @export var enemies: Array[Enemy] = []
+@export var doors: Array[Door] = []
 @export var player_detector: Area2D:
 	set(value):
 		player_detector = value
