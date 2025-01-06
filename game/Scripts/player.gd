@@ -9,6 +9,7 @@ const MAX_ARROW_COUNT = 5
 
 var _arrows: Array[Arrow]
 var _saved_spawn_pos: Vector2
+var _highest_priority_actionable: Actionable
 
 var room: Room:
 	set(value):
@@ -61,45 +62,9 @@ func _physics_process(_delta: float) -> void:
 	Blackboard.add_data("player_location", self.position)
 
 
-func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
-	var reenable_smoothing := _camera_2d.is_position_smoothing_enabled()
-	_camera_2d.set_position_smoothing_enabled(false)
-	
-	# Reset animation parameters
-	super.reset_animation_parameters()
-	
-	_saved_spawn_pos = spawn_pos
-	self.position = spawn_pos
-	
-	await get_tree().process_frame
-	_camera_2d.set_position_smoothing_enabled(reenable_smoothing)
-
-
-func respawn() -> void:
-	room = null
-	spawn(_saved_spawn_pos, Vector2.ZERO)
-	_health_component.gain_health(3)
-
-
-func update_blackboard_health() -> void:
-	Blackboard.add_data("player_health", _health_component.health)
-
-
-func update_immunity_animation(immune: bool) -> void:
-	set_immunity_animation_param(immune)
-
-
-func hurt() -> void:
-	_camera_2d.apply_shake()
-	Blackboard.increment_data("player_damage_taken", 1)
-	update_blackboard_health()
-
-
-func interact() -> void:
-	var actionables := _actionable_finder.get_overlapping_areas()
-	if actionables.size() > 0:
-		actionables[0].action.emit()
-		return
+func process(delta: float) -> void:
+	update_actionable_highlight()
+	super._process(delta)
 
 
 func update_animation_parameters() -> void:
@@ -136,6 +101,57 @@ func update_animation_parameters() -> void:
 		await shoot(direction)
 		super.update_animation_parameters()
 		return
+
+
+func update_actionable_highlight() -> void:
+	var actionables: Array[Area2D] = _actionable_finder.get_overlapping_areas()
+	
+	_highest_priority_actionable = actionables[0]
+	for actionable: Actionable in actionables:
+		if actionable.actionable_priority > _highest_priority_actionable.actionable_priority:
+			_highest_priority_actionable = actionable
+		
+		actionable.stop_highlight()
+	
+	_highest_priority_actionable.highlight()
+
+
+func interact() -> void:
+	_highest_priority_actionable.action.emit()
+
+
+func update_blackboard_health() -> void:
+	Blackboard.add_data("player_health", _health_component.health)
+
+
+func update_immunity_animation(immune: bool) -> void:
+	set_immunity_animation_param(immune)
+
+
+func hurt() -> void:
+	_camera_2d.apply_shake()
+	Blackboard.increment_data("player_damage_taken", 1)
+	update_blackboard_health()
+
+
+func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
+	var reenable_smoothing := _camera_2d.is_position_smoothing_enabled()
+	_camera_2d.set_position_smoothing_enabled(false)
+	
+	# Reset animation parameters
+	super.reset_animation_parameters()
+	
+	_saved_spawn_pos = spawn_pos
+	self.position = spawn_pos
+	
+	await get_tree().process_frame
+	_camera_2d.set_position_smoothing_enabled(reenable_smoothing)
+
+
+func respawn() -> void:
+	room = null
+	spawn(_saved_spawn_pos, Vector2.ZERO)
+	_health_component.gain_health(3)
 
 
 func shoot(direction: Vector2) -> bool:

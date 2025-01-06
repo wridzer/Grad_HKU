@@ -1,8 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3nmvrek3uub0"]
+[gd_scene load_steps=11 format=3 uid="uid://d3nmvrek3uub0"]
 
 [ext_resource type="Script" path="res://Scripts/mission_display.gd" id="1_ve4ia"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="1_yh8sa"]
+[ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="2_123cq"]
 [ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wvo26"]
+[ext_resource type="Texture2D" uid="uid://cu2g81fgholj1" path="res://Art/sign.png" id="5_0kswu"]
+[ext_resource type="Texture2D" uid="uid://b3fgv2a6m8ke4" path="res://Art/sign_highlighted.png" id="6_bvs1m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
 
@@ -10,24 +13,44 @@
 atlas = ExtResource("4_wvo26")
 region = Rect2(412, 150, 16, 40)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1euiy"]
-load_path = "res://.godot/imported/roguelikeSheet_transparent.png-9c4a06107ae30cb5424a2c259651edd7.ctex"
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lb3t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_bvs1m")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0kswu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ichsn"]
-atlas = SubResource("CompressedTexture2D_1euiy")
-region = Rect2(323, 0, 16, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ycomf"]
+radius = 6.0
 
-[node name="Mission Display" type="Node2D"]
+[node name="Mission Display" type="Area2D" node_paths=PackedStringArray("_exlamation_mark_sprite")]
+collision_mask = 2
 script = ExtResource("1_ve4ia")
+_mission_dialogue = ExtResource("2_123cq")
+_exlamation_mark_sprite = NodePath("Sprite2DExclamationMark")
 
-[node name="Actionable" parent="." instance=ExtResource("1_yh8sa")]
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("1_yh8sa")]
 position = Vector2(0, -1)
+actionable_priority = 1
+animated_sprite = NodePath("../AnimatedSprite2DSign")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_oudfl")
 
 [node name="NameLabel" type="Label" parent="."]
-z_index = 5
+z_index = 100
 offset_left = -14.0
 offset_top = -9.0
 offset_right = 186.0
@@ -39,15 +62,21 @@ vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2DExclamationMark" type="Sprite2D" parent="."]
 modulate = Color(0.88, 0, 0, 1)
-z_index = 8
+z_index = 100
 position = Vector2(4.76837e-07, -21.337)
 scale = Vector2(0.503571, 0.483152)
 texture = SubResource("AtlasTexture_kolxj")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2DSign" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.88, 0.88, 0.88, 1)
+z_index = 5
 position = Vector2(0, -8)
 scale = Vector2(1.033, 1)
-texture = SubResource("AtlasTexture_ichsn")
+sprite_frames = SubResource("SpriteFrames_4lb3t")
+animation = &"idle"
+
+[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_ycomf")

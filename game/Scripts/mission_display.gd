@@ -2,9 +2,9 @@ extends Node2D
 
 
 @export var _mission_dialogue: DialogueResource
+@export var _exlamation_mark_sprite: Sprite2D
 
 @onready var _actionable: Area2D = $Actionable
-@onready var _exlamation_mark_sprite: Sprite2D = $Sprite2D
 
 
 func _ready() -> void:
