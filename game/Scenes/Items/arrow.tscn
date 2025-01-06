@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://6gvj426uo7dc"]
 
 [ext_resource type="Script" path="res://Scripts/Items/arrow.gd" id="1_50fa1"]
-[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="2_5cqjg"]
+[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://Art/kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="2_5cqjg"]
 [ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="3_xna7g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2q4dp"]
