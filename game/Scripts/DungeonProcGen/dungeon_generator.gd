@@ -435,7 +435,7 @@ func _choose_goal_room() -> Room:
 	if mission_type == MissionType.ITEM:
 		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
 		
-	return possible_goal_rooms.pick_random()
+	return goal_room
 
 
 func _choose_spawn_room(goal_room: Room) -> Room:
