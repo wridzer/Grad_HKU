@@ -56,6 +56,9 @@ func stop_following(display_name: String) -> void:
 	if display_name == npc.display_name:
 		Blackboard.remove_data("npc")
 		finished.emit(state_type_to_int(StateType.IDLE))
+		
+	npc.info_window.set_process(false)
+	npc.info_window.visible = false
 
 
 func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:

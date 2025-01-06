@@ -253,7 +253,7 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_fd4sv"]
 radius = 12.0
 
-[node name="Npc" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent")]
+[node name="Npc" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window")]
 z_index = 4
 collision_layer = 17
 script = ExtResource("1_kinge")
@@ -266,6 +266,7 @@ min_follow_speed = 5.0
 steering_value = 2.5
 turning_smoothing_value = 0.8
 speed_smoothing_value = 0.05
+info_window = NodePath("GoapAgent/Window")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 
@@ -395,14 +396,17 @@ shape = SubResource("CircleShape2D_fd4sv")
 [node name="GoapAgent" type="GoapAgent" parent="."]
 goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
 
-[node name="Window" type="Window" parent="GoapAgent"]
+[node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_goap_agent")]
 auto_translate_mode = 1
 own_world_3d = true
+mode = 3
 title = "Debug Goap info"
-initial_position = 3
+initial_position = 1
 size = Vector2i(800, 600)
-current_screen = 0
+borderless = true
 script = ExtResource("24_pb6gn")
+_goap_agent = NodePath("..")
+font_size = 45
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
 

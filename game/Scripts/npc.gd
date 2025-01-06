@@ -36,6 +36,9 @@ const MAX_ARROW_COUNT = 5
 @export_range(0.5, 1.0) var turning_smoothing_value: float = 0.5
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.2
 
+# Info window vars
+@export var info_window : Window
+
 var _affection: int
 var _arrows: Array[Arrow]
 
@@ -54,7 +57,6 @@ var saved_spawn_pos: Vector2
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _name_label: Label = $AnimatedSprite2D/NameLabel
-@onready var _info_window: Window = $GoapAgent/Window
 
 
 func _ready() -> void:
@@ -92,8 +94,8 @@ func _ready() -> void:
 	animation_player.active = true
 	
 	# Disable info window
-	_info_window.set_process(false)
-	_info_window.visible = false
+	info_window.set_process(false)
+	info_window.visible = false
 
 
 func die() -> void:
@@ -147,6 +149,9 @@ func choose() -> void:
 	Blackboard.add_data("adaptable_style", _adapatable_combat)
 	
 	_health_component.set_health_blackboard_variables("npc")
+	
+	info_window.set_process(true)
+	info_window.visible = true
 
 
 func slash(direction: Vector2) -> bool:

@@ -4,7 +4,9 @@ extends Window
 @onready var _goal_list: VBoxContainer = $CanvasLayer/HBoxContainer/Goap_list
 @onready var _action_plan: VBoxContainer = $CanvasLayer/HBoxContainer/Action_plan_list
 
-@onready var _goap_agent: GoapAgent = $".."
+@export var _goap_agent: GoapAgent
+
+@export var font_size: int = 20
 
 func _ready() -> void:
 	# Populate goals list
@@ -17,6 +19,7 @@ func _ready() -> void:
 		for goal:GoapGoal in goals:
 			var new_goal = Label.new()
 			new_goal.text = goal.get_goal_name()
+			new_goal.add_theme_font_size_override("font_size", font_size) 
 			_goal_list.add_child(new_goal)
 
 
@@ -47,6 +50,7 @@ func _process(_delta: float) -> void:
 			var data = Blackboard.get_data(key)
 			var new_label = Label.new()
 			new_label.text = key + "	-	%d" % data
+			new_label.add_theme_font_size_override("font_size", font_size) 
 			_blackboard_list.add_child(new_label)
 	
 	# Color goal list
@@ -70,6 +74,7 @@ func _process(_delta: float) -> void:
 			new_label.set("theme_override_colors/font_color", Color.BLUE)
 		else:
 			new_label.set("theme_override_colors/font_color", Color.RED)
+		new_label.add_theme_font_size_override("font_size", font_size) 
 		_action_plan.add_child(new_label)
 	
 
