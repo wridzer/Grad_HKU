@@ -38,7 +38,7 @@ func take_damage(amount: int) -> void:
 		_immunity_timer.start()
 
 
-func reset_health(blackboard_prefix: String) -> void:
+func reset_health() -> void:
 	health = _max_health
 	health_gained.emit()
 
