@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 		# Color goal list
 		var current_goal_found: bool = false
 		for goal in _goal_list.get_children():
-			if goal.text == current_goal:
+			if goal.text == current_goal.replace("_", " "):
 				goal.set("theme_override_colors/font_color", Color.CYAN)
 				current_goal_found = true
 			elif !current_goal_found:
