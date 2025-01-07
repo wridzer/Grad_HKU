@@ -412,8 +412,10 @@ own_world_3d = true
 mode = 3
 title = "Debug Goap info"
 initial_position = 1
-size = Vector2i(800, 600)
+size = Vector2i(1920, 1080)
 borderless = true
+always_on_top = true
+unfocusable = true
 script = ExtResource("24_pb6gn")
 _blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
 _goal_list = NodePath("CanvasLayer/HBoxContainer/Goap_list")
@@ -433,6 +435,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 100
 
 [node name="Blackboard_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
 clip_contents = true
