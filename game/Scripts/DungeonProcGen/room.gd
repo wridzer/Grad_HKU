@@ -36,7 +36,7 @@ func _player_entered_room(body: Node2D) -> void:
 	
 	for enemy in enemies:
 		if is_instance_valid(enemy):
-			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.CHASE))
+			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.DOCILE))
 
 
 func _player_exited_room(body: Node2D) -> void:
