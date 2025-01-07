@@ -106,23 +106,25 @@ func update_animation_parameters() -> void:
 func update_actionable_highlight() -> void:
 	var actionables: Array[Area2D] = _actionable_finder.get_overlapping_areas()
 	
+	if is_instance_valid(_highest_priority_actionable):
+		_highest_priority_actionable.stop_highlight()
+		_highest_priority_actionable = null
+	
 	if actionables.size() > 0:
 		_highest_priority_actionable = actionables[0]
 		for actionable: Actionable in actionables:
+			actionable.stop_highlight()
 			if actionable.actionable_priority > _highest_priority_actionable.actionable_priority:
+				_highest_priority_actionable.stop_highlight()
 				_highest_priority_actionable = actionable
 				continue
-			
-			actionable.stop_highlight()
 		
 		_highest_priority_actionable.highlight()
-	elif is_instance_valid(_highest_priority_actionable):
-		_highest_priority_actionable.stop_highlight()
-		_highest_priority_actionable = null
 
 
 func interact() -> void:
-	_highest_priority_actionable.action.emit()
+	if is_instance_valid(_highest_priority_actionable):
+		_highest_priority_actionable.action.emit()
 
 
 func update_blackboard_health() -> void:
