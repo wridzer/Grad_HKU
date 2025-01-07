@@ -15,8 +15,10 @@ func _on_body_entered(player: Player) -> void:
 	if is_instance_valid(player):
 		if condition:
 			_timer.start()
-		else:
+		elif is_instance_valid(condition_failure_dialogue):
 			dialogue_manager.start_dialogue(condition_failure_dialogue)
+		else:
+			print("no level loader condition_failure_dialogue")
 
 
 func _on_body_exited(player: Player) -> void:

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6ba7ubqm1c5"]
+
+[ext_resource type="Script" path="res://Scripts/level_loader.gd" id="1_07jnm"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_l6mxv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8u7f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nun8"]
+atlas = ExtResource("2_l6mxv")
+region = Rect2(460, 306, 16, 16)
+
+[node name="LevelLoader" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_07jnm")
+_level_to_load = "res://Scenes/Levels/level_hub.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o8u7f")
+debug_color = Color(0.933333, 0.909804, 0, 0.321569)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_0nun8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

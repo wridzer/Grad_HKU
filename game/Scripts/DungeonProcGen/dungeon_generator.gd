@@ -22,13 +22,17 @@ const MAX_RECURSION: int = 15
 const STEPS_BEFORE_WAITING_FRAME: int = 20
 
 # Prerequisites
+@export_category("Prerequisites")
 @export var _dungeon_node: Node2D
 @export var _tile_map: TileMapLayer
 @export var _tile_map_doors: TileMapLayer
 @export var _spawn_point_scene: PackedScene
 @export var _enemy_scene: PackedScene
 @export var _key_scene: PackedScene
+@export var _level_loader: PackedScene
 
+# Generation buttons
+@export_category("Generate")
 @warning_ignore("shadowed_global_identifier")
 @export var _seed: String
 
@@ -53,12 +57,13 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 			_clear_dungeon()
 
 # Generation instructions
+@export_category("Generation Instructions")
 @export var _room_types: Dictionary[int, int] = {14: 14}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
-@export_range(3, 10) var _min_room_amount: int = 3
-@export_range(3, 20) var _max_room_amount: int = 5
-@export_range(1, 10) var _min_key_items: int = 3
-@export_range(3, 20) var _max_key_items: int = 4
+@export_range(3, 10) var _min_room_amount: int = 4
+@export_range(3, 11) var _max_room_amount: int = 5
+@export_range(1, 8) var _min_key_items: int = 2
+@export_range(1, 9) var _max_key_items: int = 3
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
@@ -102,7 +107,7 @@ func _generate_dungeon() -> void:
 	assert(is_instance_valid(_key_scene), "assign valid _key_scene")
 	if mission_type == MissionType.ITEM:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
-		assert(_max_room_amount >= _min_key_items + 1, "_max_room_amount < _min_key_items (one key item per room + final room)")
+		assert(_min_room_amount - 1 >= _max_key_items, "_min_room_amount - 1 < _max_key_items (can not add more keys if minimum rooms generates, and can not generate key in goal room)")
 	print("generating dungeon with mission type: ", MissionType.keys()[mission_type])
 	
 	# Apply seed when generating
@@ -129,7 +134,9 @@ func _generate_dungeon() -> void:
 		_spawn_enemies(spawn_room, goal_room)
 	else:
 		_spawn_enemies(spawn_room)
+	
 	_make_spawn_point(spawn_room)
+	_make_dungeon_exit(goal_room)
 
 
 func _clear_dungeon() -> void:
@@ -471,6 +478,10 @@ func _spawn_key_items(goal_room: Room) -> void:
 		key.no_keys.connect(_open_goal_room_door.bind(goal_room))
 
 
+func _open_goal_room_door(goal_room: Room) -> void:
+	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, OPEN_DOOR_TILE, 0)
+
+
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 	for room in _rooms:
 		if room == spawn_room:
@@ -478,6 +489,7 @@ func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 		
 		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
 		if is_instance_valid(goal_room):
+			print("goal room")
 			if room == goal_room:
 				enemy_count = 1
 		
@@ -502,5 +514,7 @@ func _make_spawn_point(spawn_room: Room) -> void:
 	spawn_point.translate(spawn_room.room_position * _tile_map.rendering_quadrant_size)
 
 
-func _open_goal_room_door(goal_room: Room) -> void:
-	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, OPEN_DOOR_TILE, 0)
+func _make_dungeon_exit(goal_room: Room) -> void:
+	var level_loader = _level_loader.instantiate()
+	goal_room.add_child(level_loader)
+	level_loader.owner = self
