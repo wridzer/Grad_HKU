@@ -3,8 +3,8 @@ extends EnemyState
 
 
 const STATE_TYPE = StateType.STUNNED
-var stun_timer: Timer
 
+var stun_timer: Timer
 var finish: Callable = finished.emit.bind(state_type_to_int(StateType.CHASE))
 
 
@@ -21,6 +21,9 @@ func enter(previous_state: int, data: Dictionary = {}) -> void:
 
 
 func physics_update(delta: float) -> void:
+	if is_equal_approx(enemy.velocity.length_squared(), 0):
+		return
+	
 	var slowdown = min(delta / enemy.stop_time, 1.0)
 	enemy.set_velocity(enemy.velocity - enemy.velocity * slowdown)
 	super.physics_update(delta)

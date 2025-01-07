@@ -2,7 +2,7 @@ class_name EnemyState
 extends State
 
 
-enum StateType {INVALID, IDLE, CHASE, STUNNED}
+enum StateType {INVALID, IDLE, DOCILE, CHASE, STUNNED}
 
 var enemy: Enemy
 

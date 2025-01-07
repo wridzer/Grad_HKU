@@ -11,6 +11,7 @@ signal dead
 @export_range(0.5, 1.0) var turning_smoothing_value: float = 0.8
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.01
 @export_range(0.0, 2.0) var stop_time: float = 0.5
+@export_range(5.0, 100.0) var _aggro_range: float = 50.0
 
 @export_range(0.0, 5.0) var sword_stun_time: float = 0.4
 @export_range(0.0, 5.0) var shield_stun_time: float = 3
@@ -19,8 +20,10 @@ signal dead
 @export_range(-50.0, 100.0) var shield_knockback_speed: float = 25
 @export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
+var aggro_range_squared = _aggro_range * _aggro_range
+
 @onready var _health_component: HealthComponent = $HealthComponent
-@onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var _hitbox_component: HitboxComponent = $HitboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var state_machine: StateMachine = $StateMachine
@@ -35,16 +38,16 @@ func _ready() -> void:
 	Blackboard.increment_data("enemies_alive", 1)
 	
 	_health_component.die.connect(die)
-	_hurtbox_component.hurt.connect(hurt)
+	hurtbox_component.hurt.connect(hurt)
 
 
 func immunity(immune: bool) -> void:
 	if immune:
 		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-		_hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+		hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
 	else:
 		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
-		_hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
+		hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
 
 
 func die() -> void:
