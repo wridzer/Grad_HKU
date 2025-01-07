@@ -35,6 +35,12 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
+	# If health is low
+	var npc: Npc = Blackboard.get_data("npc")
+	if Blackboard.get_data("npc_health") == 1:
+		return 80
+
+	# If npc want to shoot arrow but is to close
 	if Blackboard.get_data("shoot_priority"):
 		return Blackboard.get_data("shoot_priority") + 1
 

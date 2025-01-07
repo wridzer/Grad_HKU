@@ -103,7 +103,7 @@ func die() -> void:
 
 
 func respawn() -> void:
-	_health_component.gain_health(3)
+	_health_component.gain_health(1)
 
 
 func update_immunity_animation(immune: bool) -> void:
