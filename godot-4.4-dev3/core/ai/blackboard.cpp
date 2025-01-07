@@ -14,8 +14,8 @@ Variant Blackboard::get_data(const String &p_key) {
 	return Variant();
 }
 
-List<StringName> Blackboard::get_keys() {
-	List<StringName> keys;
+TypedArray<String> Blackboard::get_keys() const {
+	TypedArray<String> keys;
 	for (KeyValue<String, Variant> pair : blackboard_data) {
 		keys.push_back(pair.key);
 	}
@@ -105,7 +105,7 @@ Blackboard::~Blackboard() {
 
 void Blackboard::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_data", "key"), &Blackboard::get_data);
-	//ClassDB::bind_method(D_METHOD("get_keys"), &Blackboard::get_keys);
+	ClassDB::bind_method(D_METHOD("get_keys"), &Blackboard::get_keys);
 	ClassDB::bind_method(D_METHOD("add_data", "key", "data"), &Blackboard::add_data);
 	ClassDB::bind_method(D_METHOD("clear_data"), &Blackboard::clear_data);
 	ClassDB::bind_method(D_METHOD("remove_data", "key"), &Blackboard::remove_data);

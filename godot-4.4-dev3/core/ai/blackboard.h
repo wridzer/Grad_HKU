@@ -5,9 +5,6 @@
 #include "core/object/object.h"
 #include "core/templates/hash_map.h"
 
-template <typename T>
-class TypedArray;
-
 class Blackboard : public Object {
 	GDCLASS(Blackboard, Object);
 
@@ -20,7 +17,7 @@ public:
 
 	//get, add, clear and remove data from the blackboard
 	Variant get_data(const String &p_key);
-	List<StringName> get_keys();
+	TypedArray<String> get_keys() const;
 	void add_data(const String &p_key, const Variant &p_data);
 	void increment_data_int(const String &p_key, const int &p_data);
 	void increment_data_float(const String &p_key, const float &p_data);
