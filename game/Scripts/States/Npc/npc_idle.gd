@@ -39,7 +39,7 @@ func follow(display_name: String) -> void:
 			npc.choose()
 			finished.emit(state_type_to_int(StateType.FOLLOWING))
 		else:
-			dialogue_manager.start_dialogue(npc.idle_dialogue, "already_following")
+			dialogue_manager.start_dialogue(npc.idle_dialogue, display_name, "already_following")
 
 
 func die() -> void:

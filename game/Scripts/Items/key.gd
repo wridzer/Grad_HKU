@@ -1,6 +1,9 @@
+@tool
 class_name Key
 extends Node2D
 
+
+signal no_keys
 
 @onready var _actionable: Area2D = $Actionable
 
@@ -8,16 +11,20 @@ extends Node2D
 
 
 func _ready() -> void:
-	print("test")
-	_actionable.action.connect(_pickup)
+	if Engine.is_editor_hint():
+		return
+	
 	Blackboard.increment_data("keys", 1)
+	
+	_actionable.action.connect(_pickup)
 
 
 func _pickup() -> void:
+	Blackboard.increment_data("keys", -1)
+	
+	if Blackboard.get_data("keys") == 0:
+		no_keys.emit()
+	
 	# Tell the player how much keys are left
 	dialogue_manager.start_dialogue(pickup_dialogue)
-	Blackboard.increment_data("keys", -1)
-	var keys = Blackboard.get_data("keys")
-	print(keys)
-	print("picked up")
 	queue_free()

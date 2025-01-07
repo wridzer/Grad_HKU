@@ -63,6 +63,7 @@ separation = Vector2i(1, 1)
 38:0/0 = 0
 38:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -6.24303, -6.24303, 6.9367, -6.63941)
 39:0/0 = 0
+39:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
 40:0/0 = 0
 41:0/0 = 0
 42:0/0 = 0
