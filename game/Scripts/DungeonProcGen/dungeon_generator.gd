@@ -451,6 +451,8 @@ func _spawn_key_items(goal_room: Room) -> void:
 	var possible_key_rooms: Array[Room] = _rooms.duplicate()
 	possible_key_rooms.erase(goal_room)
 	
+	Blackboard.add_data("keys", 0)
+	
 	var key_item_amount = randi_range(_min_key_items, _max_key_items)
 	for i in range(key_item_amount):
 		var key_room = possible_key_rooms.pick_random()
@@ -466,6 +468,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		var half_height: float = key_room.height / 2.0 - _key_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key.translate(pos * _tile_map.rendering_quadrant_size)
+		key.no_keys.connect(_open_goal_room_door.bind(goal_room))
 
 
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
@@ -497,3 +500,7 @@ func _make_spawn_point(spawn_room: Room) -> void:
 	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self
 	spawn_point.translate(spawn_room.room_position * _tile_map.rendering_quadrant_size)
+
+
+func _open_goal_room_door(goal_room: Room) -> void:
+	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, OPEN_DOOR_TILE, 0)
