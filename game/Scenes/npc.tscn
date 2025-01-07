@@ -406,7 +406,7 @@ shape = SubResource("CircleShape2D_fd4sv")
 [node name="GoapAgent" type="GoapAgent" parent="."]
 goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
 
-[node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_goap_agent")]
+[node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_blackboard_list", "_goal_list", "_action_plan", "_goap_agent")]
 auto_translate_mode = 1
 own_world_3d = true
 mode = 3
@@ -415,31 +415,40 @@ initial_position = 1
 size = Vector2i(800, 600)
 borderless = true
 script = ExtResource("24_pb6gn")
+_blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
+_goal_list = NodePath("CanvasLayer/HBoxContainer/Goap_list")
+_action_plan = NodePath("CanvasLayer/HBoxContainer/Action_plan_list")
 _goap_agent = NodePath("..")
 font_size = 45
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer"]
+clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 517.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Blackboard_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 9
 
 [node name="Goap_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 9
 
 [node name="Action_plan_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 9
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]

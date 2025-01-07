@@ -1,8 +1,8 @@
 extends Window
 
-@onready var _blackboard_list: VBoxContainer = $CanvasLayer/HBoxContainer/Blackboard_list
-@onready var _goal_list: VBoxContainer = $CanvasLayer/HBoxContainer/Goap_list
-@onready var _action_plan: VBoxContainer = $CanvasLayer/HBoxContainer/Action_plan_list
+@export var _blackboard_list: VBoxContainer
+@export var _goal_list: VBoxContainer
+@export var _action_plan: VBoxContainer 
 
 @export var _goap_agent: GoapAgent
 
@@ -35,22 +35,16 @@ func _process(_delta: float) -> void:
 	var current_goal = _goap_agent.get_current_goal_name()
 	var plan = _goap_agent.get_current_plan_actions()
 	var plan_index = _goap_agent.Get_current_plan_index()
-	
-	# Populate blackboard list
-	var blackboard_keys: Array[String] = [
-		"damage_done",
-		"amount_blocked",
-		"enemies_alive",
-		"sword_used_amount",
-		"shield_used_amount",
-		"bow_used_amount"
-	]
-	for key in blackboard_keys:
-		if Blackboard.get_data(key):
-			var data = Blackboard.get_data(key)
+
+	var blackboard_keys = Blackboard.get_keys()
+	for i in range(0, blackboard_keys.size()):
+		if Blackboard.get_data(blackboard_keys[i]):
+			var data = Blackboard.get_data(blackboard_keys[i])
 			var new_label = Label.new()
-			new_label.text = key + "   -   %d" % data
-			new_label.add_theme_font_size_override("font_size", font_size) 
+			new_label.text = blackboard_keys[i] + "   -   %s" % str(data)
+			new_label.add_theme_font_size_override("font_size", font_size * 0.5)
+			new_label.size_flags_vertical = Control.SIZE_FILL
+			new_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			_blackboard_list.add_child(new_label)
 	
 	# Color goal list
