@@ -3,8 +3,7 @@ extends NpcState
 
 
 const STATE_TYPE = StateType.GOAP
-const FOLLOW_DISTANCE := 15.0
-const FOLLOW_SPEED := 60.0
+
 
 func get_state_type() -> int:
 	return state_type_to_int(STATE_TYPE)

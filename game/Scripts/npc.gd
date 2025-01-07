@@ -21,10 +21,10 @@ const MAX_ARROW_COUNT = 5
 @export var _shoot_priority: int = 14
 @export var _block_priority: int = 14
 
-@export var follow_distance: float = 15.0
-@export var chase_distance: float = 15.0
+@export var _follow_distance: float = 15.0
+@export var _chase_distance: float = 15.0
 @export var _max_chase_distance: float = 80.0
-@export var flee_distance: float = 50.0
+@export var _flee_distance: float = 50.0
 
 @export_range(1.0, 20.0) var min_follow_speed: float = 10.0
 @export_range(15.0, 100.0) var max_follow_speed: float = 70.0
@@ -42,12 +42,12 @@ const MAX_ARROW_COUNT = 5
 var _affection: int
 var _arrows: Array[Arrow]
 
-var follow_distance_squared: float = follow_distance * follow_distance
-var follow_equilibrium_distance_squared: float = follow_distance_squared / 2
-var min_follow_distance_squared: float = follow_equilibrium_distance_squared / 2 # Half of the follow distance
-var chase_distance_squared: float = chase_distance * chase_distance
+var follow_distance_squared: float = _follow_distance * _follow_distance
+var follow_equilibrium_distance_squared: float = follow_distance_squared * 0.5
+var min_follow_distance_squared: float = follow_equilibrium_distance_squared * 0.5 # Half of the follow distance
+var chase_distance_squared: float = _chase_distance * _chase_distance
 var max_chase_distance_squared: float = _max_chase_distance * _max_chase_distance
-var flee_distance_squared: float = flee_distance * flee_distance
+var flee_distance_squared: float = _flee_distance * _flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 

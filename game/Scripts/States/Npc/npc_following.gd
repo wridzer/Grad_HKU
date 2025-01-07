@@ -3,8 +3,6 @@ extends NpcState
 
 
 const STATE_TYPE = StateType.FOLLOWING
-const FOLLOW_DISTANCE := 15.0
-const FOLLOW_SPEED := 60.0
 
 
 func get_state_type() -> int:
@@ -31,11 +29,11 @@ func physics_update(delta: float) -> void:
 	if distance_squared > npc.follow_distance_squared:
 		var direction: Vector2 = (player_pos - npc_pos).normalized()
 		npc.direction = direction
-		npc.set_velocity(direction * FOLLOW_SPEED)
+		npc.set_velocity(direction * npc.max_follow_speed)
 	elif distance_squared < npc.follow_distance_squared / 2:
 		var direction: Vector2 = (npc_pos - player_pos).normalized()
 		npc.direction = direction
-		npc.set_velocity(direction * FOLLOW_SPEED)
+		npc.set_velocity(direction * npc.max_follow_speed)
 		
 	npc.animated_sprite_2d.look_at(player_pos)
 	
