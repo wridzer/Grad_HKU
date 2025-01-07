@@ -17,7 +17,7 @@ func _pickup() -> void:
 	# Tell the player how much keys are left
 	dialogue_manager.start_dialogue(pickup_dialogue)
 	Blackboard.increment_data("keys", -1)
-	var keys = Blackboard.get("keys")
+	var keys = Blackboard.get_data("keys")
 	print(keys)
 	print("picked up")
 	queue_free()

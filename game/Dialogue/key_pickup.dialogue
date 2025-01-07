@@ -2,5 +2,5 @@
 if Blackboard.get("keys") == 0
 	Dungeon Masterbatur: No keys left!
 else
-	Dungeon Masterbatur: Only {{Blackboard.get("keys")}} keys left!
+	Dungeon Masterbatur: Only {{Blackboard.get_data("keys")}} keys left!
 => END

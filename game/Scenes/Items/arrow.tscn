@@ -32,6 +32,7 @@ z_index = 8
 script = ExtResource("1_50fa1")
 starting_distance = 5.0
 stopping_distance = 5.0
+speed = 160.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 0.798226

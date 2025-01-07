@@ -12,11 +12,11 @@ signal dead
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.01
 @export_range(0.0, 2.0) var stop_time: float = 0.5
 
-@export_range(0.0, 5.0) var sword_stun_time: float = 0.2
-@export_range(0.0, 5.0) var shield_stun_time: float = 2
+@export_range(0.0, 5.0) var sword_stun_time: float = 0.4
+@export_range(0.0, 5.0) var shield_stun_time: float = 3
 @export_range(0.0, 5.0) var arrow_stun_time: float = 0
-@export_range(-50.0, 100.0) var sword_knockback_speed: float = 10
-@export_range(-50.0, 100.0) var shield_knockback_speed: float = 40
+@export_range(-50.0, 100.0) var sword_knockback_speed: float = 13
+@export_range(-50.0, 100.0) var shield_knockback_speed: float = 25
 @export_range(-50.0, 100.0) var arrow_knockback_speed: float = -5
 
 @onready var _health_component: HealthComponent = $HealthComponent
