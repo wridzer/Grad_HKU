@@ -10,6 +10,7 @@ extends Window
 
 var current_displayed_goal: String
 var goals: Array[GoapGoal]
+var frame_time: float = 0
 
 func _ready() -> void:
 	# Populate goals list
@@ -23,18 +24,22 @@ func _process(_delta: float) -> void:
 	var plan = _goap_agent.get_current_plan_actions()
 	var plan_index = _goap_agent.Get_current_plan_index()
 	
-	# Add blackboard values
-	var blackboard_keys = Blackboard.get_keys()
-	clear_container(_blackboard_list)
-	for i in range(0, blackboard_keys.size()):
-		if Blackboard.get_data(blackboard_keys[i]):
-			var data = Blackboard.get_data(blackboard_keys[i])
-			var new_label = Label.new()
-			new_label.text = blackboard_keys[i].replace("_", " ") + "   -   %s" % str(data)
-			new_label.add_theme_font_size_override("font_size", font_size * 0.5)
-			new_label.size_flags_vertical = Control.SIZE_FILL
-			new_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			_blackboard_list.add_child(new_label)		
+	# Delay for updating blackboard
+	frame_time += _delta
+	if frame_time >= 1:
+		frame_time = 0
+		# Add blackboard values
+		var blackboard_keys = Blackboard.get_keys()
+		clear_container(_blackboard_list)
+		for i in range(0, blackboard_keys.size()):
+			if Blackboard.get_data(blackboard_keys[i]):
+				var data = Blackboard.get_data(blackboard_keys[i])
+				var new_label = Label.new()
+				new_label.text = blackboard_keys[i].replace("_", " ") + "   -   %s" % str(data)
+				new_label.add_theme_font_size_override("font_size", font_size * 0.5)
+				new_label.size_flags_vertical = Control.SIZE_FILL
+				new_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				_blackboard_list.add_child(new_label)
 	
 
 	# Check if changes in Goap
