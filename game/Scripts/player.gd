@@ -124,6 +124,7 @@ func update_actionable_highlight() -> void:
 
 func interact() -> void:
 	if is_instance_valid(_highest_priority_actionable):
+		_highest_priority_actionable.interactor = self
 		_highest_priority_actionable.action.emit()
 
 
