@@ -29,7 +29,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _spawn_point_scene: PackedScene
 @export var _enemy_scene: PackedScene
 @export var _key_scene: PackedScene
-@export var _level_loader: PackedScene
+@export var _dungeon_exit_scene: PackedScene
 
 # Generation buttons
 @export_category("Generate")
@@ -127,7 +127,11 @@ func _generate_dungeon() -> void:
 	_fill_background()
 	
 	var goal_room: Room = _choose_goal_room()
+	if !is_instance_valid(goal_room):
+		return
 	var spawn_room: Room = _choose_spawn_room(goal_room)
+	if !is_instance_valid(spawn_room):
+		return
 	
 	if mission_type == MissionType.ITEM:
 		_spawn_key_items(goal_room)
@@ -438,10 +442,16 @@ func _choose_goal_room() -> Room:
 		if room.doors.size() == 1:
 			possible_goal_rooms.append(room)
 	
+	if possible_goal_rooms.size() == 0:
+		print("no possible goal rooms, retrying generation")
+		_clear_dungeon()
+		_generate_dungeon()
+		return null
+	
 	var goal_room: Room = possible_goal_rooms.pick_random()
 	if mission_type == MissionType.ITEM:
 		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
-		
+	
 	return goal_room
 
 
@@ -449,6 +459,12 @@ func _choose_spawn_room(goal_room: Room) -> Room:
 	var possible_spawn_rooms: Array[Room] = _rooms.duplicate()
 	possible_spawn_rooms.erase(goal_room)
 	
+	if possible_spawn_rooms.size() == 0:
+		print("no possible spawn rooms, retrying generation")
+		_clear_dungeon()
+		_generate_dungeon()
+		return null
+		
 	var spawn_room = possible_spawn_rooms.pick_random()
 	
 	return spawn_room
@@ -475,7 +491,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		var half_height: float = key_room.height / 2.0 - _key_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key.translate(pos * _tile_map.rendering_quadrant_size)
-		key.no_keys.connect(_open_goal_room_door.bind(goal_room))
+		key.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
 
 
 func _open_goal_room_door(goal_room: Room) -> void:
@@ -489,7 +505,6 @@ func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 		
 		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
 		if is_instance_valid(goal_room):
-			print("goal room")
 			if room == goal_room:
 				enemy_count = 1
 		
@@ -504,17 +519,21 @@ func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 			var half_height: float = room.height / 2.0 - _enemy_wall_margin
 			var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 			enemy.translate(pos * _tile_map.rendering_quadrant_size)
-			enemy.dead.connect(room.erase_dead_enemy)
+			enemy.died.connect(room.erase_dead_enemy)
 
 
 func _make_spawn_point(spawn_room: Room) -> void:
-	var spawn_point = _spawn_point_scene.instantiate()
+	var spawn_point: Node2D = _spawn_point_scene.instantiate()
 	spawn_room.add_child(spawn_point)
 	spawn_point.owner = self
 	spawn_point.translate(spawn_room.room_position * _tile_map.rendering_quadrant_size)
 
 
 func _make_dungeon_exit(goal_room: Room) -> void:
-	var level_loader = _level_loader.instantiate()
-	goal_room.add_child(level_loader)
-	level_loader.owner = self
+	var dungeon_exit: Node2D = _dungeon_exit_scene.instantiate()
+	goal_room.add_child(dungeon_exit)
+	dungeon_exit.owner = self
+	
+	if mission_type == MissionType.SLAY:
+		dungeon_exit.condition = func() -> bool: 
+			return Blackboard.get_data("enemies_alive") == 0

@@ -1,19 +1,20 @@
+@tool
 extends Area2D
 
 
 @export_file var _level_to_load: String
 @export var condition_failure_dialogue: DialogueResource
 
-var condition: bool:
-	get(): return is_instance_valid(Blackboard.get_data("npc")) && \
-				  DungeonGenerator.mission_type != DungeonGenerator.MissionType.INVALID
+var condition: Callable = func() -> bool: 
+	return is_instance_valid(Blackboard.get_data("npc")) && \
+		   DungeonGenerator.mission_type != DungeonGenerator.MissionType.INVALID
 
 @onready var _timer := $Timer
 
 
 func _on_body_entered(player: Player) -> void:
 	if is_instance_valid(player):
-		if condition:
+		if condition.call():
 			_timer.start()
 		elif is_instance_valid(condition_failure_dialogue):
 			dialogue_manager.start_dialogue(condition_failure_dialogue)

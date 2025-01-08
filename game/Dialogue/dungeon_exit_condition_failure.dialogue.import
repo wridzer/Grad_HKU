@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://de8wtiekdhqrr"
+path="res://.godot/imported/dungeon_exit_condition_failure.dialogue-11bfa31d6fd5a050e49e9f4803e0459b.tres"
+
+[deps]
+
+source_file="res://Dialogue/dungeon_exit_condition_failure.dialogue"
+dest_files=["res://.godot/imported/dungeon_exit_condition_failure.dialogue-11bfa31d6fd5a050e49e9f4803e0459b.tres"]
+
+[params]
+
+defaults=true

@@ -1,6 +1,6 @@
 ~ start
-if Blackboard.get("keys") == 0
-	Dungeon Masterbatur: No keys left!
+if Blackboard.get_data("keys") == 0
+	No keys left!
 else
-	Dungeon Masterbatur: Only {{Blackboard.get_data("keys")}} keys left!
+	Only {{Blackboard.get_data("keys")}} keys left!
 => END

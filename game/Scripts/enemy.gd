@@ -3,7 +3,7 @@ class_name Enemy
 extends CharacterBody2D
 
 
-signal dead
+signal died
 
 @export_range(1.0, 20.0) var min_chase_speed: float = 4.0
 @export_range(15.0, 100.0) var max_chase_speed: float = 80.0
@@ -53,7 +53,8 @@ func immunity(immune: bool) -> void:
 func die() -> void:
 	Blackboard.increment_data("enemies_killed", 1)
 	Blackboard.increment_data("enemies_alive", -1)
-	dead.emit(self)
+	
+	died.emit(self)
 	queue_free()
 
 

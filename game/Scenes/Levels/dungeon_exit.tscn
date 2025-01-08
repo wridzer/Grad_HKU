@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6ba7ubqm1c5"]
+[gd_scene load_steps=6 format=3 uid="uid://b6ba7ubqm1c5"]
 
 [ext_resource type="Script" path="res://Scripts/level_loader.gd" id="1_07jnm"]
+[ext_resource type="Resource" uid="uid://de8wtiekdhqrr" path="res://Dialogue/dungeon_exit_condition_failure.dialogue" id="2_kimh2"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_l6mxv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8u7f"]
@@ -14,6 +15,7 @@ collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_07jnm")
 _level_to_load = "res://Scenes/Levels/level_hub.tscn"
+condition_failure_dialogue = ExtResource("2_kimh2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_o8u7f")
