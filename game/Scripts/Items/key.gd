@@ -1,5 +1,5 @@
 @tool
-class_name Key
+class_name KeyPickup
 extends Node2D
 
 

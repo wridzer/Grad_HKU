@@ -1,5 +1,5 @@
 @tool
-class_name Heal
+class_name HealPickup
 extends Node2D
 
 @onready var _actionable: Area2D = $Actionable

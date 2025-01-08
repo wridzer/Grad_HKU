@@ -67,7 +67,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export_range(1, 10) var _min_key_items: int = 2
 @export_range(3, 20) var _max_key_items: int = 3
 @export_range(1, 10) var _min_heal_items: int = 3
-@export_range(3, 20) var _max_heal_items: int = 4
+@export_range(1, 20) var _max_heal_items: int = 4
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
@@ -113,6 +113,7 @@ func _generate_dungeon() -> void:
 	if mission_type == MissionType.ITEM:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 		assert(_min_room_amount - 1 >= _max_key_items, "_min_room_amount - 1 < _max_key_items (can not add more keys if minimum rooms generates, and can not generate key in goal room)")
+	assert(_min_heal_items <_max_room_amount, "_min_heal_items >= _max_room_amount, can only have 1 heal item per room excluding goal room")
 	print("generating dungeon with mission type: ", MissionType.keys()[mission_type])
 	
 	# Apply seed when generating
@@ -486,22 +487,23 @@ func _spawn_key_items(goal_room: Room) -> void:
 		var key_room = possible_key_rooms.pick_random()
 		possible_key_rooms.erase(key_room)
 		
-		var key: Key = _key_scene.instantiate()
-		key_room.add_child(key)
-		key.name = key.name + str(i)
-		key.owner = self
-		_keys.append(key)
+		var key_pickup: KeyPickup = _key_scene.instantiate()
+		key_room.add_child(key_pickup)
+		key_pickup.name = key_pickup.name + str(i)
+		key_pickup.owner = self
+		_keys.append(key_pickup)
 		_step += 1
 		var half_width: float = key_room.width / 2.0 - _item_wall_margin
 		var half_height: float = key_room.height / 2.0 - _item_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
-		key.translate(pos * _tile_map.rendering_quadrant_size)
-		key.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
+		key_pickup.translate(pos * _tile_map.rendering_quadrant_size)
+		key_pickup.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
 
 
 func _open_goal_room_door(goal_room: Room) -> void:
 	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, OPEN_DOOR_TILE, 0)
-	
+
+
 func _spawn_heal_items(goal_room: Room) -> void:
 	var possible_heal_rooms: Array[Room] = _rooms.duplicate()
 	possible_heal_rooms.erase(goal_room)
@@ -511,16 +513,16 @@ func _spawn_heal_items(goal_room: Room) -> void:
 		var heal_room = possible_heal_rooms.pick_random()
 		possible_heal_rooms.erase(heal_room)
 		
-		var heal: Heal = _heal_scene.instantiate()
-		heal_room.add_child(heal)
-		heal.name = heal.name + str(i)
-		heal.owner = self
-		_heals.append(heal)
+		var heal_pickup: HealPickup = _heal_scene.instantiate()
+		heal_room.add_child(heal_pickup)
+		heal_pickup.name = heal_pickup.name + str(i)
+		heal_pickup.owner = self
+		_heals.append(heal_pickup)
 		_step += 1
 		var half_width: float = heal_room.width / 2.0 - _item_wall_margin
 		var half_height: float = heal_room.height / 2.0 - _item_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
-		heal.translate(pos * _tile_map.rendering_quadrant_size)
+		heal_pickup.translate(pos * _tile_map.rendering_quadrant_size)
 
 
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
