@@ -29,6 +29,8 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _spawn_point_scene: PackedScene
 @export var _enemy_scene: PackedScene
 @export var _key_scene: PackedScene
+@export var _heal_scene: PackedScene
+@export var _level_loader: PackedScene
 @export var _dungeon_exit_scene: PackedScene
 
 # Generation buttons
@@ -61,19 +63,22 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 @export var _room_types: Dictionary[int, int] = {14: 14}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
 @export_range(3, 10) var _min_room_amount: int = 4
-@export_range(3, 11) var _max_room_amount: int = 5
-@export_range(1, 8) var _min_key_items: int = 2
-@export_range(1, 9) var _max_key_items: int = 3
+@export_range(3, 20) var _max_room_amount: int = 5
+@export_range(1, 10) var _min_key_items: int = 2
+@export_range(3, 20) var _max_key_items: int = 3
+@export_range(1, 10) var _min_heal_items: int = 3
+@export_range(3, 20) var _max_heal_items: int = 4
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
 @export_range(0, 5) var _max_enemies_per_room: int = 3
 @export_range(0.5, 5.0) var _enemy_wall_margin: float = 0.5
-@export_range(0.5, 5.0) var _key_wall_margin: float = 0.5
+@export_range(0.5, 5.0) var _item_wall_margin: float = 0.5
 
 static var mission_type: MissionType = MissionType.INVALID
 var _rooms: Array[Room] = []
 var _keys: Array = []
+var _heals: Array = []
 var _step: int = 0:
 	set(value):
 		_step = value
@@ -138,7 +143,7 @@ func _generate_dungeon() -> void:
 		_spawn_enemies(spawn_room, goal_room)
 	else:
 		_spawn_enemies(spawn_room)
-	
+	_spawn_heal_items(goal_room)
 	_make_spawn_point(spawn_room)
 	_make_dungeon_exit(goal_room)
 
@@ -487,8 +492,8 @@ func _spawn_key_items(goal_room: Room) -> void:
 		key.owner = self
 		_keys.append(key)
 		_step += 1
-		var half_width: float = key_room.width / 2.0 - _key_wall_margin
-		var half_height: float = key_room.height / 2.0 - _key_wall_margin
+		var half_width: float = key_room.width / 2.0 - _item_wall_margin
+		var half_height: float = key_room.height / 2.0 - _item_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key.translate(pos * _tile_map.rendering_quadrant_size)
 		key.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
@@ -496,6 +501,26 @@ func _spawn_key_items(goal_room: Room) -> void:
 
 func _open_goal_room_door(goal_room: Room) -> void:
 	_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, OPEN_DOOR_TILE, 0)
+	
+func _spawn_heal_items(goal_room: Room) -> void:
+	var possible_heal_rooms: Array[Room] = _rooms.duplicate()
+	possible_heal_rooms.erase(goal_room)
+	
+	var heal_item_amount = randi_range(_min_heal_items, _max_heal_items)
+	for i in range(heal_item_amount):
+		var heal_room = possible_heal_rooms.pick_random()
+		possible_heal_rooms.erase(heal_room)
+		
+		var heal: Heal = _heal_scene.instantiate()
+		heal_room.add_child(heal)
+		heal.name = heal.name + str(i)
+		heal.owner = self
+		_heals.append(heal)
+		_step += 1
+		var half_width: float = heal_room.width / 2.0 - _item_wall_margin
+		var half_height: float = heal_room.height / 2.0 - _item_wall_margin
+		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
+		heal.translate(pos * _tile_map.rendering_quadrant_size)
 
 
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:

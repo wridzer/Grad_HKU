@@ -9,6 +9,7 @@ signal action
 @export var actionable_priority: int = 0
 @export var animated_sprite: AnimatedSprite2D
 
+var interactor: AnimatedCharacter
 
 func highlight() -> void:
 	animated_sprite.play("highlighted")
