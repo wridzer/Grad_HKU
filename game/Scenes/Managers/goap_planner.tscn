@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://brwdipqkg1lef"]
+[gd_scene load_steps=15 format=3 uid="uid://brwdipqkg1lef"]
 
 [ext_resource type="GoapAction" uid="uid://bb2twqlko1jc1" path="res://goap_resources/actions/chill_action.tres" id="1_ol0y2"]
 [ext_resource type="GoapAction" uid="uid://cw8xh37623b4b" path="res://goap_resources/actions/move_to_player_action.tres" id="2_d1rke"]
@@ -13,6 +13,7 @@
 [ext_resource type="GoapAction" uid="uid://ckww702xlyxg4" path="res://goap_resources/actions/slash_action.tres" id="11_5rc80"]
 [ext_resource type="GoapAction" uid="uid://cawxa3prd1547" path="res://goap_resources/actions/move_away_from_player_action.tres" id="12_m6u6p"]
 [ext_resource type="GoapAction" uid="uid://d4eba5mh7rm82" path="res://goap_resources/actions/move_perpendicular_to_enemy_action.tres" id="13_8k7gj"]
+[ext_resource type="GoapAction" uid="uid://k51udbmeou10" path="res://goap_resources/actions/move_action.tres" id="14_pxri6"]
 
 [node name="Goap" type="Goap"]
-actions = Array[GoapAction]([ExtResource("1_ol0y2"), ExtResource("3_2rar5"), ExtResource("3_obwdg"), ExtResource("4_hi7s4"), ExtResource("5_6hvi3"), ExtResource("6_2jcqd"), ExtResource("7_tk6qe"), ExtResource("2_d1rke"), ExtResource("12_m6u6p"), ExtResource("9_wilm0"), ExtResource("10_lvt1p"), ExtResource("11_5rc80"), ExtResource("13_8k7gj")])
+actions = Array[GoapAction]([ExtResource("1_ol0y2"), ExtResource("3_2rar5"), ExtResource("3_obwdg"), ExtResource("4_hi7s4"), ExtResource("5_6hvi3"), ExtResource("6_2jcqd"), ExtResource("7_tk6qe"), ExtResource("2_d1rke"), ExtResource("12_m6u6p"), ExtResource("9_wilm0"), ExtResource("10_lvt1p"), ExtResource("11_5rc80"), ExtResource("13_8k7gj"), ExtResource("14_pxri6")])

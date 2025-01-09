@@ -12,7 +12,7 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	return 0
+	return 1
 
 
 func _get_action_name() -> StringName:
@@ -24,10 +24,11 @@ func _get_preconditions() -> Dictionary:
 
 
 func _get_effects() -> Dictionary:
-	return {"found_enemy" : true}
+	return {"found_enemy" : true, "has_destination" : true}
 
 
 func _perform(_actor, _delta) -> bool:
 	var enemy: Enemy = Player.instance.room.enemies.pick_random()
 	Blackboard.add_data("enemy", enemy)
+	Blackboard.add_data("destination", enemy.get_global_position())
 	return true

@@ -3,18 +3,11 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if !Blackboard.get_data("enemies_present"):
-		return false
-	
-	var data = Blackboard.get_data("enemy")
-	return is_instance_valid(data)
+	return true
 
 
 func _get_cost() -> int:
-	var npc: Npc = Blackboard.get_data("npc")
-	var enemy: Enemy = Blackboard.get_data("enemy")
-	var distance_squared = npc.global_position.distance_squared_to(enemy.global_position)
-	return int(distance_squared / 7)
+	return 1
 
 
 func _get_action_name() -> StringName:
@@ -22,25 +15,23 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy" : true}
+	return {"arrived_at_location" : true, "found_enemy" : true}
 
 
 func _get_effects() -> Dictionary:
-	return {"slash_enemy" : true}
+	return {"deal_damage" : true}
 
 
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var enemy: Enemy = Blackboard.get_data("enemy")
+	if enemy == null:
+		return true
 	var direction = (enemy.global_position - npc.global_position).normalized()
 	if await npc.slash(direction):
 		Blackboard.remove_data("enemy")
+		Blackboard.remove_data("arrived_at_location")
+		Blackboard.remove_data("found_enemy")
 		return true
 	
-	return false
-
-
-func _perform_physics(actor, _delta) -> bool:
-	var npc = actor as Npc
-	npc.velocity = Vector2.ZERO
 	return false

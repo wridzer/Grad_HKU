@@ -499,7 +499,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key_pickup.translate(pos * _tile_map.rendering_quadrant_size)
 		key_pickup.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
-		key_pickup.heal_used.connect(key_room.erase_used_heal)
+		key_pickup.key_used.connect(key_room.erase_used_heal)
 
 
 func _open_goal_room_door(goal_room: Room) -> void:

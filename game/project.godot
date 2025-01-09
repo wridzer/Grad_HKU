@@ -30,9 +30,9 @@ test2="test"
 test3=Vector2(1, 2)
 test4=Vector3(1, 2, 3)
 test5=Rect2(1, 2, 3, 4)
-player_location=Vector2(1086.99, 774.701)
+player_location=Vector2(722.621, 1078.25)
 player_location2=Vector2(110.943, 0.422957)
-enemies_alive=7
+enemies_alive=5
 enemies_killed=3
 damage_done=9
 amount_blocked=7
@@ -51,7 +51,7 @@ enemies_present=false
 follow_distance_squared=225.0
 max_chase_distance_squared=10000.0
 npc_global_position=Vector2(121.151, 7.98342)
-stay_close_to_player_goal_complete=true
+stay_close_to_player_goal_complete=false
 sword_used_amount=1
 flee_goal_complete=false
 hide_goal_complete=false
@@ -63,8 +63,9 @@ player_max_health=3
 spoken_to_Rose=1
 adaptable_style=2
 spoken_to_no_name=2
-keys=3
+keys=2
 bow_used_amount=1
+destination=Vector2(672.329, 1166.05)
 
 [display]
 

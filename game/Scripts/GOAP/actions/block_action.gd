@@ -22,11 +22,11 @@ func _get_action_name() -> StringName:
 
 
 func _get_preconditions() -> Dictionary:
-	return {"close_to_enemy": true}
+	return {"arrived_at_location": true, "found_enemy" : true}
 
 
 func _get_effects() -> Dictionary:
-	return {"block_enemy": true}
+	return {"deal_damage": true}
 
 
 func _perform(actor, _delta) -> bool:
@@ -35,6 +35,8 @@ func _perform(actor, _delta) -> bool:
 	var direction = (enemy.global_position - npc.global_position).normalized()
 	if await npc.block(direction):
 		Blackboard.remove_data("enemy")
+		Blackboard.remove_data("arrived_at_location")
+		Blackboard.remove_data("found_enemy")
 		return true
 	
 	return false

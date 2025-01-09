@@ -26,7 +26,7 @@ func _get_preconditions() -> Dictionary:
 
 
 func _get_effects() -> Dictionary:
-	return {"shoot_enemy": true}
+	return {"deal_damage": true}
 
 
 func _perform(actor, _delta) -> bool:
