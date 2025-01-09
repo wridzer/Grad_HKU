@@ -1,0 +1,6 @@
+[gd_resource type="GoapGoal" load_steps=2 format=3 uid="uid://7xqd8j0ovo54"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/goals/heal_goal.gd" id="1_rapj4"]
+
+[resource]
+script = ExtResource("1_rapj4")

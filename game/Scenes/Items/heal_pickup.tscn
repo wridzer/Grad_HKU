@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://duo2s4kiqf80j"]
 
-[ext_resource type="Script" path="res://Scripts/Items/heal.gd" id="1_svdg7"]
+[ext_resource type="Script" path="res://Scripts/Items/heal_pickup.gd" id="1_svdg7"]
 [ext_resource type="Texture2D" uid="uid://cey7oik0p15km" path="res://Art/heartpixelated_highlighted.png" id="3_uuv6n"]
 [ext_resource type="Texture2D" uid="uid://cvgs02d07442u" path="res://Art/heartpixelated.png" id="4_bbald"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_utlvn"]

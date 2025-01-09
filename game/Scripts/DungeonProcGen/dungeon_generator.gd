@@ -488,6 +488,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		possible_key_rooms.erase(key_room)
 		
 		var key_pickup: KeyPickup = _key_scene.instantiate()
+		key_room.heal_pickups.append(key_pickup)
 		key_room.add_child(key_pickup)
 		key_pickup.name = key_pickup.name + str(i)
 		key_pickup.owner = self
@@ -498,6 +499,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key_pickup.translate(pos * _tile_map.rendering_quadrant_size)
 		key_pickup.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
+		key_pickup.heal_used.connect(key_room.erase_used_heal)
 
 
 func _open_goal_room_door(goal_room: Room) -> void:
@@ -514,6 +516,7 @@ func _spawn_heal_items(goal_room: Room) -> void:
 		possible_heal_rooms.erase(heal_room)
 		
 		var heal_pickup: HealPickup = _heal_scene.instantiate()
+		heal_room.heal_pickups.append(heal_pickup)
 		heal_room.add_child(heal_pickup)
 		heal_pickup.name = heal_pickup.name + str(i)
 		heal_pickup.owner = self
@@ -523,6 +526,7 @@ func _spawn_heal_items(goal_room: Room) -> void:
 		var half_height: float = heal_room.height / 2.0 - _item_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		heal_pickup.translate(pos * _tile_map.rendering_quadrant_size)
+		heal_pickup.heal_used.connect(heal_room.erase_used_heal)
 
 
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:

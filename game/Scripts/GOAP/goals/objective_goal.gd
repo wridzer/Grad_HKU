@@ -16,9 +16,9 @@ func _is_goal_met() -> bool:
 	var objective_goal_complete: bool = false
 	if Blackboard.get_data("objective_goal_complete"):
 		objective_goal_complete = Blackboard.get_data("objective_goal_complete")
+		if !objective_goal_complete &&  Player.instance.room.key_pickups.size() > 0:
+			return false
 	
-	if !objective_goal_complete:
-		return false
 	
 	Blackboard.add_data("objective_goal_complete", false)
 	return true
@@ -29,4 +29,4 @@ func _get_priority() -> int:
 
 
 func _get_desired_state() -> Dictionary:
-	return {"close_to_objective" : true}
+	return {"objective_progress_up" : true}

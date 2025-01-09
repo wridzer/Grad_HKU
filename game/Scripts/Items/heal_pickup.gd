@@ -7,6 +7,7 @@ extends Node2D
 @export var pickup_dialogue: DialogueResource
 @export var heal_amount: int = 3
 
+signal heal_used
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -26,4 +27,5 @@ func _pickup() -> void:
 	else:
 		return
 		
+	heal_used.emit()
 	queue_free()
