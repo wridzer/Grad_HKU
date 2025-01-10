@@ -30,5 +30,5 @@ func _get_effects() -> Dictionary:
 func _perform(_actor, _delta) -> bool:
 	var enemy: Enemy = Player.instance.room.enemies.pick_random()
 	Blackboard.add_data("enemy", enemy)
-	Blackboard.add_data("destination", enemy.get_global_position())
+	Blackboard.add_data("destination_node", enemy)
 	return true

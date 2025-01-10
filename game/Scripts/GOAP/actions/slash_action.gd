@@ -7,6 +7,8 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
+	if Blackboard.get_data("slash_priority"):
+		return 100 - Blackboard.get_data("slash_priority") 
 	return 1
 
 
@@ -25,7 +27,7 @@ func _get_effects() -> Dictionary:
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var enemy: Enemy = Blackboard.get_data("enemy")
-	if enemy == null:
+	if enemy == null || !is_instance_valid(enemy):
 		return true
 	var direction = (enemy.global_position - npc.global_position).normalized()
 	if await npc.slash(direction):

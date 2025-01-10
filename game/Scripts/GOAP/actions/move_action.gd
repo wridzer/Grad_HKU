@@ -24,9 +24,10 @@ func _get_effects() -> Dictionary:
 func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var npc_pos: Vector2 = npc.get_global_position()
-	var destination = Blackboard.get_data("destination")
-	if is_instance_valid(destination):
+	var destination_node = Blackboard.get_data("destination_node")
+	if !is_instance_valid(destination_node):
 		return false
+	var destination = destination_node.get_global_position()
 	var distance_squared: float = npc_pos.distance_squared_to(destination)
 
 	if distance_squared < npc.chase_distance_squared:
