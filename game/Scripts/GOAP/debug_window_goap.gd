@@ -60,11 +60,11 @@ func _process(_delta: float) -> void:
 				goal.set("theme_override_colors/font_color", Color.RED)
 		
 		# Populate action plan List
+		clear_container(_action_plan)
 		for i in range(0, plan.size()):
-			clear_container(_action_plan)
 			var new_label = Label.new()
 			new_label.text = plan[i].replace("_", " ")
-			if i <= plan_index:
+			if i < plan_index:
 				new_label.set("theme_override_colors/font_color", Color.GREEN)
 			elif i == plan_index:
 				new_label.set("theme_override_colors/font_color", Color.CYAN)

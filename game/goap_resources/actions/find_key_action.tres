@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://c3r7ferakpu7s"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/find_key_action.gd" id="1_0ofv7"]
+
+[resource]
+script = ExtResource("1_0ofv7")

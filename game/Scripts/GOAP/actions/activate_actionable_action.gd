@@ -2,12 +2,7 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	if Blackboard.get_data("npc_near_heal"):
-		return true
-	if Blackboard.get_data("npc_near_key"):
-		return true
-	
-	return false
+	return true
 
 
 func _get_cost() -> int:
@@ -15,26 +10,22 @@ func _get_cost() -> int:
 
 
 func _get_action_name() -> StringName:
-	return "activate_actionable_action"
+	return "activate_actionable"
 
 
 func _get_preconditions() -> Dictionary:
-	return {"near_actionable" : true}
+	return {"arrived_at_location" : true, "actionable_found" : true}
 
 
 func _get_effects() -> Dictionary:
-	if Blackboard.get_data("npc_near_heal"):
-		return {"heal_up" : true}
-	if Blackboard.get_data("npc_near_key"):
-		return {"objective_progress_up" : true}
-	return {"" : true}
+	return {"actionable_activated" : true}
 
 
 func _perform(actor, _delta) -> bool:
-	var npc = actor as Npc
-	return false
-
-
-func _perform_physics(actor, _delta) -> bool:
-	var npc = actor as Npc
-	return false
+	var npc = actor as AnimatedCharacter
+	var actionable = Blackboard.get_data("destination_node")
+	if actionable == null || !is_instance_valid(actionable):
+		return false
+	actionable._actionable.interactor = npc
+	actionable._actionable.action.emit()
+	return true

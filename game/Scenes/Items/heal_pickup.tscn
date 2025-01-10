@@ -33,7 +33,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ay7va"]
 radius = 14.0
 
-[node name="Key" type="CharacterBody2D"]
+[node name="HealPickup" type="CharacterBody2D"]
 z_index = 3
 script = ExtResource("1_svdg7")
 

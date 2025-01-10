@@ -14,7 +14,7 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
-	return 90
+	return 50
 
 
 func _get_desired_state() -> Dictionary:
