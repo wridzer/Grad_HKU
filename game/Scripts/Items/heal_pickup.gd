@@ -27,5 +27,5 @@ func _pickup() -> void:
 	else:
 		return
 		
-	heal_used.emit()
+	heal_used.emit(self)
 	queue_free()

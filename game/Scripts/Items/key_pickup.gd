@@ -30,5 +30,5 @@ func _pickup() -> void:
 	# Tell the player how much keys are left
 	dialogue_manager.start_dialogue(pickup_dialogue)
 
-	key_used.emit()
+	key_used.emit(self)
 	queue_free()
