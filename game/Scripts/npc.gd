@@ -94,7 +94,7 @@ func _ready() -> void:
 	animation_player.active = true
 	
 	# Disable info window
-	info_window.set_process(false)
+	info_window.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
 	info_window.visible = false
 
 
@@ -150,7 +150,7 @@ func choose() -> void:
 	
 	_health_component.set_health_blackboard_variables("npc")
 	
-	info_window.set_process(true)
+	info_window.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
 	info_window.visible = true
 
 
