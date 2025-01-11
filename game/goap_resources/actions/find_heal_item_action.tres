@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://b1cli0xaq6d7d"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/find_heal_item_action.gd" id="1_vvav5"]
+
+[resource]
+script = ExtResource("1_vvav5")

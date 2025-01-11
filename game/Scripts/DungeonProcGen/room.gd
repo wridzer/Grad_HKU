@@ -7,6 +7,8 @@ extends Node2D
 @export var height: int
 @export var room_position: Vector2
 @export var enemies: Array[Enemy] = []
+@export var heal_pickups: Array[HealPickup] = []
+@export var key_pickups: Array[KeyPickup] = []
 @export var doors: Array[Door] = []
 @export var player_detector: Area2D:
 	set(value):
@@ -50,3 +52,9 @@ func _player_exited_room(body: Node2D) -> void:
 
 func erase_dead_enemy(enemy: Enemy) -> void:
 	enemies.erase(enemy)
+
+func erase_used_heal(heal_pickup: HealPickup) -> void:
+	heal_pickups.erase(heal_pickup)
+
+func erase_used_key(key_pickup: KeyPickup) -> void:
+	key_pickups.erase(key_pickup)

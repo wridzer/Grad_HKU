@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ba3eif8ej8hqu"]
 
-[ext_resource type="Script" path="res://Scripts/Items/key.gd" id="1_sysss"]
+[ext_resource type="Script" path="res://Scripts/Items/key_pickup.gd" id="1_sysss"]
 [ext_resource type="Resource" uid="uid://dsthqhugn46q4" path="res://Dialogue/key_pickup.dialogue" id="2_7t56e"]
 [ext_resource type="Texture2D" uid="uid://bfrmhrlatr3pe" path="res://Art/kenney_game-icons-expansion/PNG/White/2x/key.png" id="2_or1yq"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_n1ilt"]

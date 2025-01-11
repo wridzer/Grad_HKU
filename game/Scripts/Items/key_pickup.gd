@@ -9,6 +9,8 @@ signal no_keys_left
 
 @export var pickup_dialogue: DialogueResource
 
+signal key_used
+
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -27,4 +29,6 @@ func _pickup() -> void:
 	
 	# Tell the player how much keys are left
 	dialogue_manager.start_dialogue(pickup_dialogue)
+
+	key_used.emit(self)
 	queue_free()

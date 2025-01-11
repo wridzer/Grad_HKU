@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=43 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -18,13 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://dikssr1o05lx2" path="res://Art/npc_highlighted.png" id="11_n5nkc"]
 [ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="14_4hwgr"]
 [ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="15_nw52t"]
-[ext_resource type="GoapGoal" uid="uid://3i8r3587yr0w" path="res://goap_resources/goals/find_enemy_goal.tres" id="17_pwfi6"]
 [ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="18_chuhk"]
 [ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="19_gd2ps"]
 [ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="21_htt4y"]
-[ext_resource type="GoapGoal" uid="uid://upejq3jkiuxh" path="res://goap_resources/goals/block_enemy_goal.tres" id="21_xmsnf"]
-[ext_resource type="GoapGoal" uid="uid://dk20a6m105o04" path="res://goap_resources/goals/shoot_enemy_goal.tres" id="22_ui6hl"]
-[ext_resource type="GoapGoal" uid="uid://byaoicxdikacr" path="res://goap_resources/goals/slash_enemy_goal.tres" id="23_ty3fi"]
+[ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="22_c2iu8"]
+[ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="23_6uxte"]
 [ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="24_pb6gn"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
@@ -404,17 +402,17 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 shape = SubResource("CircleShape2D_fd4sv")
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("17_pwfi6"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("21_xmsnf"), ExtResource("22_ui6hl"), ExtResource("23_ty3fi")])
+goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("22_c2iu8"), ExtResource("23_6uxte")])
 
 [node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_blackboard_list", "_goal_list", "_action_plan", "_goap_agent")]
 auto_translate_mode = 1
 own_world_3d = true
 mode = 3
 title = "Debug Goap info"
-initial_position = 1
+initial_position = 3
 size = Vector2i(1920, 1080)
+current_screen = 0
 borderless = true
-always_on_top = true
 unfocusable = true
 script = ExtResource("24_pb6gn")
 _blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
@@ -425,12 +423,41 @@ font_size = 45
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
 
+[node name="PanelContainer" type="PanelContainer" parent="GoapAgent/Window/CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer/PanelContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 800
+alignment = 1
+
+[node name="Label" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Blackboard"
+
+[node name="Label2" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Goals"
+
+[node name="Label3" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Action plan"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer"]
 clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 517.0
+offset_left = 10.0
+offset_top = 90.0
+offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3

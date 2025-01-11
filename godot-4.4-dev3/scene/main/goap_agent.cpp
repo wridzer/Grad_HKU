@@ -99,7 +99,10 @@ void GoapAgent::follow_plan(Plan plan, float delta, Node* actor) {
 	if (plan.actions.size() == 0)
 		return;
 
-	int is_step_complete = plan.actions[current_plan_index]->perform(actor, delta);
-	if (is_step_complete and current_plan_index < plan.actions.size() - 1)
+	bool is_step_complete = plan.actions[current_plan_index]->perform(actor, delta);
+	if (is_step_complete){
 		current_plan_index += 1;
+		if (current_plan_index >= plan.actions.size())
+			current_plan_index = 0;
+	}
 }
