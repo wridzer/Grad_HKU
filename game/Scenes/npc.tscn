@@ -409,10 +409,10 @@ auto_translate_mode = 1
 own_world_3d = true
 mode = 3
 title = "Debug Goap info"
-initial_position = 1
+initial_position = 3
 size = Vector2i(1920, 1080)
+current_screen = 0
 borderless = true
-always_on_top = true
 unfocusable = true
 script = ExtResource("24_pb6gn")
 _blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
@@ -423,12 +423,41 @@ font_size = 45
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
 
+[node name="PanelContainer" type="PanelContainer" parent="GoapAgent/Window/CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer/PanelContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 800
+alignment = 1
+
+[node name="Label" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Blackboard"
+
+[node name="Label2" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Goals"
+
+[node name="Label3" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Action plan"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer"]
 clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 517.0
+offset_left = 10.0
+offset_top = 90.0
+offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
