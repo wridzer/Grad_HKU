@@ -488,7 +488,7 @@ func _spawn_key_items(goal_room: Room) -> void:
 		possible_key_rooms.erase(key_room)
 		
 		var key_pickup: KeyPickup = _key_scene.instantiate()
-		key_room.heal_pickups.append(key_pickup)
+		key_room.key_pickups.append(key_pickup)
 		key_room.add_child(key_pickup)
 		key_pickup.name = key_pickup.name + str(i)
 		key_pickup.owner = self

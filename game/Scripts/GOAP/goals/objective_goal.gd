@@ -27,8 +27,8 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
-	return 7
+	return 11
 
 
 func _get_desired_state() -> Dictionary:
-	return {"objective_progress_up" : true}
+	return {"objective_progress_up" : true, "actionable_activated" : true}
