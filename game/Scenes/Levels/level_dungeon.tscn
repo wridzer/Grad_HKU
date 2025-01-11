@@ -10,9 +10,6 @@
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("_dungeon_node", "_tile_map", "_tile_map_doors")]
 script = ExtResource("1_6uvhx")
-_dungeon_node = NodePath("Dungeon")
-_tile_map = NodePath("TileMapLayer")
-_tile_map_doors = NodePath("TileMapLayer2")
 _spawn_point_scene = ExtResource("2_8vk5u")
 _enemy_scene = ExtResource("3_ucs6u")
 _key_scene = ExtResource("4_nlgur")
@@ -20,6 +17,9 @@ _heal_scene = ExtResource("5_sp4sy")
 _level_loader = ExtResource("5_25tfg")
 _dungeon_exit_scene = ExtResource("5_25tfg")
 _extra_room_margin = 8
+_dungeon_node = NodePath("Dungeon")
+_tile_map = NodePath("TileMapLayer")
+_tile_map_doors = NodePath("TileMapLayer2")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = ExtResource("4_lg2bt")
