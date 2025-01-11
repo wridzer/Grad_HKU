@@ -56,7 +56,7 @@ void Blackboard::clear_data() {
 
 void Blackboard::dump_data()
 {
-	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.csv");
+	save_to_csv(OS::get_singleton()->get_executable_path() + "/blackboard_dump/blackboard.csv");
 }
 
 void Blackboard::remove_data(const String &p_key) {
