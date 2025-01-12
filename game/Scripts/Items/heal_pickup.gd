@@ -20,12 +20,13 @@ func _pickup() -> void:
 	var actor = _actionable.interactor
 	if is_instance_valid(actor as Player):
 		actor = actor as Player
-		actor._health_component.gain_health(heal_amount)
 	elif is_instance_valid(actor as Npc):
 		actor = actor as Npc
-		actor._health_component.gain_health(heal_amount)
 	else:
 		return
+	
+	if actor._health_component.health < actor._health_component._max_health:
+		actor._health_component.gain_health(heal_amount)
+		heal_used.emit(self)
+		queue_free()
 		
-	heal_used.emit(self)
-	queue_free()
