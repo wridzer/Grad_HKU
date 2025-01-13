@@ -16,6 +16,7 @@ var room: Room:
 		if !is_instance_valid(value):
 			Blackboard.remove_data("enemy")
 			Blackboard.add_data("enemies_present", false)
+			UtilitySystem.update_npc_fightstyle()
 		room = value
 
 static var instance: Player = null

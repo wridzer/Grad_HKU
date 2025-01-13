@@ -71,7 +71,13 @@ destination=Vector2(672.329, 1166.05)
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/size/resizable=false
+window/size/borderless=true
 window/subwindows/embed_subwindows=false
+window/stretch/scale=2.0
 window/per_pixel_transparency/allowed=true
 
 [dotnet]

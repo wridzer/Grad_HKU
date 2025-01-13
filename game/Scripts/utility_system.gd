@@ -60,7 +60,7 @@ func calculate_playstyle() -> void:
 	Blackboard.add_data("playstyle", data)
 
 
-func calculate_weapon_usage() -> void:
+static func calculate_weapon_usage() -> void:
 	var sword_used : int = Blackboard.get_data("sword_used_amount") if Blackboard.get_data("sword_used_amount") else 0
 	var shield_used : int = Blackboard.get_data("shield_used_amount") if Blackboard.get_data("shield_used_amount") else 0
 	var bow_used : int = Blackboard.get_data("bow_used_amount") if Blackboard.get_data("bow_used_amount") else 0
@@ -76,8 +76,34 @@ func calculate_weapon_usage() -> void:
 		bow_used / total_use * 100
 	)
 	
-	var data: Array[Vector3] = []
-	if(Blackboard.get_data("usage_percent_sword_shield_bow")):
-		data = Blackboard.get_data("usage_percent_sword_shield_bow")
-	data.append(usage_percent_sword_shield_bow)
-	Blackboard.add_data("usage_percent_sword_shield_bow", data)
+	Blackboard.add_data("usage_percent_sword_shield_bow", usage_percent_sword_shield_bow)
+
+
+static func update_npc_fightstyle() -> void:
+	var npc = Blackboard.get_data("npc")
+	if(!is_instance_valid(npc)):
+		return
+	npc = npc as Npc
+	calculate_weapon_usage()
+	if Blackboard.get_data("usage_percent_sword_shield_bow"):
+		var player_usage: Vector3 = Blackboard.get_data("usage_percent_sword_shield_bow")
+		var playable_combat_types = npc._adapatable_combat + npc._preferred_combat
+		match playable_combat_types:
+			1: # Attack + Defend
+				var base_priority = npc._slash_priority
+				Blackboard.add_data("slash_priority", base_priority + (player_usage.y * 0.5))
+				
+				base_priority = npc._block_priority
+				Blackboard.add_data("block_priority", base_priority + (player_usage.z * 0.5))
+			2: # Attack + Avoid
+				var base_priority = npc._slash_priority
+				Blackboard.add_data("slash_priority", base_priority + (player_usage.y * 0.5))
+				
+				base_priority = npc._shoot_priority
+				Blackboard.add_data("shoot_priority", base_priority + (player_usage.x * 0.5))
+			3: # Defend + Avoid
+				var base_priority = npc._block_priority
+				Blackboard.add_data("block_priority", base_priority + (player_usage.z * 0.5))
+				
+				base_priority = npc._shoot_priority
+				Blackboard.add_data("shoot_priority", base_priority + (player_usage.x * 0.5))

@@ -31,7 +31,7 @@ func _get_effects() -> Dictionary:
 
 func _perform(actor, _delta) -> bool:
 	var npc = actor as Npc
-	var enemy: Enemy = Blackboard.get_data("enemy")
+	var enemy = Blackboard.get_data("enemy")
 	if enemy == null || !is_instance_valid(enemy):
 		return true
 	var direction = (enemy.global_position - npc.global_position).normalized()
