@@ -65,7 +65,7 @@ func _ready() -> void:
 	if is_instance_valid(data):
 		var npc: Npc = data
 		if npc.display_name == display_name:
-			die()
+			npc.die()
 	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + name)
