@@ -572,4 +572,4 @@ func _make_dungeon_exit(goal_room: Room) -> void:
 	
 	if mission_type == MissionType.SLAY:
 		dungeon_exit.condition = func() -> bool: 
-			return Blackboard.get_data("enemies_alive") == 0
+			return Blackboard.get_data("enemies_alive") <= 0
