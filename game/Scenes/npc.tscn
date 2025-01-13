@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=44 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -24,6 +24,7 @@
 [ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="22_c2iu8"]
 [ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="23_6uxte"]
 [ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="24_pb6gn"]
+[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="25_roinp"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -478,6 +479,11 @@ size_flags_vertical = 9
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 9
+
+[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("25_roinp")]
+position = Vector2(-3, -6)
+scale = Vector2(0.005, 0.005)
+_health_component = NodePath("../HealthComponent")
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]
