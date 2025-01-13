@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3fgv2a6m8ke4" path="res://Art/sign_highlighted.png" id="6_bvs1m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
+radius = 8.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kolxj"]
 atlas = ExtResource("4_wvo26")
@@ -47,6 +48,7 @@ actionable_priority = 1
 animated_sprite = NodePath("../AnimatedSprite2DSign")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_oudfl")
 
 [node name="NameLabel" type="Label" parent="."]

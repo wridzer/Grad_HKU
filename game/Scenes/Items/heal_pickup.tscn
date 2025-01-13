@@ -31,13 +31,14 @@ radius = 4.0
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ay7va"]
-radius = 14.0
+radius = 6.0
 
 [node name="HealPickup" type="CharacterBody2D"]
 z_index = 3
 script = ExtResource("1_svdg7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 0.5)
 scale = Vector2(0.01, 0.01)
 sprite_frames = SubResource("SpriteFrames_mof70")
 animation = &"idle"
@@ -53,7 +54,6 @@ collision_layer = 128
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerArea"]
-position = Vector2(0, -1)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_2mt6e")
 

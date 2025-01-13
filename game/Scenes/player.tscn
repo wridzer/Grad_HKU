@@ -285,7 +285,6 @@ collision_mask = 8
 [node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("7_o3qdj")]
 
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
-visible = false
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
 z_index = 2
