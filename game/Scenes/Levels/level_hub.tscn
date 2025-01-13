@@ -30,8 +30,14 @@ _adapatable_combat = 2
 _unadaptable_combat = 1
 _shoot_priority = 30
 _block_priority = 20
+_agro_priority = 100
+_desired_health = 2
 _chase_distance = 10.0
 _max_chase_distance = 50.0
+
+[node name="HealthComponent" parent="Npc_Rose" index="4"]
+_max_health = 4
+health = 4
 
 [node name="Npc_Dominic" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(71, 42)
@@ -43,12 +49,17 @@ _preferred_combat = 1
 _unadaptable_combat = 2
 _slash_priority = 30
 _shoot_priority = 20
+_agro_priority = 50
 _chase_distance = 10.0
 _max_chase_distance = 50.0
 max_chase_speed = 85.0
 steering_value = 2.8
 turning_smoothing_value = 0.85
 speed_smoothing_value = 0.06
+
+[node name="HealthComponent" parent="Npc_Dominic" index="4"]
+_max_health = 5
+health = 5
 
 [node name="Npc_Virgil" parent="." instance=ExtResource("5_x4qe1")]
 position = Vector2(-8, -8)
@@ -60,6 +71,7 @@ _preferred_combat = 2
 _adapatable_combat = 1
 _slash_priority = 20
 _block_priority = 30
+_agro_priority = 25
 _chase_distance = 10.0
 max_chase_speed = 70.0
 
@@ -94,3 +106,16 @@ condition_failure_dialogue = ExtResource("15_wu44a")
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)
 _npc_offset = Vector2(10, 0)
+
+[editable path="Npc_Rose"]
+[editable path="Npc_Rose/CharacterAnimations/Direction/Sword"]
+[editable path="Npc_Rose/CharacterAnimations/Direction/Shield"]
+[editable path="Npc_Rose/DangerSensorComponent"]
+[editable path="Npc_Dominic"]
+[editable path="Npc_Dominic/CharacterAnimations/Direction/Sword"]
+[editable path="Npc_Dominic/CharacterAnimations/Direction/Shield"]
+[editable path="Npc_Dominic/DangerSensorComponent"]
+[editable path="Npc_Virgil"]
+[editable path="Npc_Virgil/CharacterAnimations/Direction/Sword"]
+[editable path="Npc_Virgil/CharacterAnimations/Direction/Shield"]
+[editable path="Npc_Virgil/DangerSensorComponent"]
