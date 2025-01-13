@@ -18,8 +18,9 @@ const HALLWAY_TILES: Array[Vector2i] = [Vector2i(8, 0), Vector2i(8, 1)]
 const BACKGROUND_TILES: Array[Vector2i] = [Vector2i(7, 0),Vector2i(7, 1),Vector2i(9, 0)]
 
 const MIN_WALL_MARGIN: int = 3
-const MAX_RECURSION: int = 15
-const STEPS_BEFORE_WAITING_FRAME: int = 20
+const MAX_RECURSION: int = 25
+const STEPS_BEFORE_WAITING_FRAME: int = 30
+const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 
 # Prerequisites
 @export_category("Prerequisites")
@@ -60,7 +61,7 @@ const STEPS_BEFORE_WAITING_FRAME: int = 20
 
 # Generation instructions
 @export_category("Generation Instructions")
-@export var _room_types: Dictionary[int, int] = {14: 14}
+@export var _room_types: Dictionary[int, Array] = {14: [12, 13 ,14], 13: [12, 13, 14], 12: [12, 13, 14]}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
 @export_range(3, 10) var _min_room_amount: int = 4
 @export_range(3, 20) var _max_room_amount: int = 5
@@ -135,6 +136,7 @@ func _generate_dungeon() -> void:
 	var goal_room: Room = _choose_goal_room()
 	if !is_instance_valid(goal_room):
 		return
+	
 	var spawn_room: Room = _choose_spawn_room(goal_room)
 	if !is_instance_valid(spawn_room):
 		return
@@ -182,7 +184,7 @@ func _make_room(recursion: int) -> void:
 	
 	# Generate a random room
 	var width: int = _room_types.keys().pick_random()
-	var height: int = _room_types[width]
+	var height: int = _room_types[width].pick_random()
 	var start_pos: Vector2i = Vector2i(randi_range(0, _dungeon_size - width), randi_range(0, _dungeon_size - height))
 	
 	# Prevent room overlap
