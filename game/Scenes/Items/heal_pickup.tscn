@@ -45,6 +45,7 @@ animation = &"idle"
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_neb5v")
+disabled = true
 debug_color = Color(0.996319, 0, 0.189017, 0.42)
 
 [node name="DangerArea" type="Area2D" parent="."]

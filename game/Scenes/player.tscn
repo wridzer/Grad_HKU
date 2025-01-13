@@ -234,7 +234,6 @@ font_size = 9
 [node name="Player" type="CharacterBody2D"]
 z_index = 4
 collision_layer = 2
-collision_mask = 9
 script = ExtResource("1_lxypx")
 _arrow_path = "res://Scenes/Items/arrow.tscn"
 
