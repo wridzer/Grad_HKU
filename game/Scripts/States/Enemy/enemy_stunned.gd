@@ -16,7 +16,7 @@ func enter(previous_state: int, data: Dictionary = {}) -> void:
 	stun_timer = Timer.new()
 	add_child(stun_timer)
 	stun_timer.start(data.get("stun_length", 0.1))
-	stun_timer.timeout.connect(finish)
+	stun_timer.timeout.connect(finish, CONNECT_ONE_SHOT)
 	super.enter(previous_state, data)
 
 
@@ -30,6 +30,5 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	stun_timer.timeout.disconnect(finish)
 	stun_timer.queue_free()
 	super.exit()
