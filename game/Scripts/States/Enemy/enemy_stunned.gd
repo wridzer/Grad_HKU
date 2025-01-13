@@ -12,7 +12,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data: Dictionary = {}) -> void:
-	enemy.stun_timer.timeout.connect(finish, CONNECT_ONE_SHOT)
+	enemy.stun_timer.timeout.connect(finish.call)
 	super.enter(previous_state, data)
 
 
@@ -26,5 +26,6 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
+	enemy.stun_timer.timeout.disconnect(finish.call)
 	enemy.stun_timer.stop()
 	super.exit()

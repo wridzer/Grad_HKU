@@ -12,7 +12,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	enemy.hurtbox_component.hurt.connect(func(_x, _y): finish.call(), CONNECT_ONE_SHOT)
+	enemy.hurtbox_component.hurt.connect(activate)
 	super.enter(previous_state, data)
 
 
@@ -22,6 +22,7 @@ func update(delta) -> void:
 	var player_distance_squared: float = Player.instance.global_position.distance_squared_to(enemy.global_position)
 	if npc_distance_squared < enemy.aggro_range_squared || player_distance_squared < enemy.aggro_range_squared:
 		finish.call()
+	
 	super.update(delta)
 
 
@@ -35,4 +36,9 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
+	enemy.hurtbox_component.hurt.disconnect(activate)
 	super.exit()
+
+
+func activate(_x, _y) -> void:
+	finish.call()
