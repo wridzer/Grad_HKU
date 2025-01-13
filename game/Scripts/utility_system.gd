@@ -28,7 +28,8 @@ func reset_values() -> void:
 		"enemies_alive",
 		"sword_used_amount",
 		"shield_used_amount",
-		"bow_used_amount"
+		"bow_used_amount",
+		"enemies_killed",
 	]
 	Blackboard.clear_utility_data(clear_values)
 
@@ -39,8 +40,8 @@ func calculate_playstyle() -> void:
 	var arrow_hit: int = Blackboard.get_data("arrow_hit_enemy_amount") if Blackboard.get_data("arrow_hit_enemy_amount") else 0
 	var damage_done: int = sword_hit + arrow_hit
 	var damage_blocked: int = shield_hit
-	var enemies_killed : int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
-	var enemies_left_alive : int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
+	var enemies_killed: int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
+	var enemies_left_alive: int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
 	
 	var total_enemies: float = enemies_killed + enemies_left_alive
 	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
