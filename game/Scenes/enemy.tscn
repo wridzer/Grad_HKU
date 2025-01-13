@@ -56,7 +56,7 @@ sword_stun_time = 0.5
 shield_stun_time = 2.5
 sword_knockback_speed = 10.0
 shield_knockback_speed = 20.0
-arrow_knockback_speed = 1.0
+arrow_knockback_speed = 5.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("6_qadqw")
@@ -120,3 +120,5 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerArea"]
 rotation = 1.5708
 shape = SubResource("CircleShape2D_2mt6e")
+
+[node name="StunTimer" type="Timer" parent="."]
