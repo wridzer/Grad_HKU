@@ -12,7 +12,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	enemy.hurtbox_component.hurt.connect(finish)
+	enemy.hurtbox_component.hurt.connect(func(x, y): finish.call())
 	super.enter(previous_state, data)
 
 
@@ -35,5 +35,5 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	enemy.hurtbox_component.hurt.disconnect(finish)
+	enemy.hurtbox_component.hurt.disconnect(func(x, y): finish.call())
 	super.exit()
