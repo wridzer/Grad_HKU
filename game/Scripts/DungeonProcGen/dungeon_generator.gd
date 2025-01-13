@@ -140,7 +140,7 @@ func _generate_dungeon() -> void:
 		return
 	
 	if mission_type == MissionType.ITEM:
-		_spawn_key_items(goal_room)
+		_spawn_key_items(spawn_room, goal_room)
 		_spawn_enemies(spawn_room, goal_room)
 	else:
 		_spawn_enemies(spawn_room)
@@ -476,7 +476,7 @@ func _choose_spawn_room(goal_room: Room) -> Room:
 	return spawn_room
 
 
-func _spawn_key_items(goal_room: Room) -> void:
+func _spawn_key_items(spawn_room: Room, goal_room: Room) -> void:
 	var possible_key_rooms: Array[Room] = _rooms.duplicate()
 	possible_key_rooms.erase(goal_room)
 	
@@ -484,7 +484,12 @@ func _spawn_key_items(goal_room: Room) -> void:
 	
 	var key_item_amount = randi_range(_min_key_items, _max_key_items)
 	for i in range(key_item_amount):
-		var key_room = possible_key_rooms.pick_random()
+		var key_room: Room
+		if !spawn_room.key_pickups:
+			key_room = spawn_room
+			possible_key_rooms.erase(spawn_room)
+		else:
+			key_room = possible_key_rooms.pick_random()
 		possible_key_rooms.erase(key_room)
 		
 		var key_pickup: KeyPickup = _key_scene.instantiate()
