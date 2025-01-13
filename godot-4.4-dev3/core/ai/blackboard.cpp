@@ -56,7 +56,7 @@ void Blackboard::clear_data() {
 
 void Blackboard::dump_data()
 {
-	save_to_csv(OS::get_singleton()->get_executable_path() + "/blackboard_dump/blackboard.csv");
+	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.txt");
 }
 
 void Blackboard::remove_data(const String &p_key) {
@@ -94,7 +94,7 @@ Blackboard::Blackboard() {
 
 Blackboard::~Blackboard() {
 	if (singleton == this) {
-		save_data();
+		//save_data();
 
 		// Ensure project settings are saved to disk
 		if (!blackboard_data.is_empty())
@@ -137,25 +137,82 @@ void Blackboard::save_to_csv(const String &p_path) {
 		file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
 	}
 
-	// Add header if not exists
-	Vector<String> keys;
-	for (KeyValue<String, Variant> pair : blackboard_data) {
-		keys.push_back(pair.key);
+	// Order current data
+	Vector<String> blackboard_data_headers = Vector<String>();
+	for (auto a : blackboard_data) {
+		blackboard_data_headers.append(a.key);
 	}
+	blackboard_data_headers.sort();
+
+	// Get header
 	Vector<String> header = file->get_csv_line();
 
-	file->seek_end(); // move cursor to end of file
-
-	if (header.is_empty() || header != keys) {
-		file->store_csv_line(keys);
+	// Create vector for existing lines
+	Vector<Vector<String>> existing_lines = Vector<Vector<String>>();
+	bool end_of_file = false;
+	while (!end_of_file) {
+		int i = 0;
+		Vector<String> line = file->get_csv_line();
+		if (line[0].is_empty()) {
+			end_of_file = true;
+		} else {
+			Vector<String> line_data = Vector<String>();
+			for (auto a : line) {
+				line_data.append(a);
+				i++;
+			}
+			existing_lines.append(line_data);
+		}
 	}
 
-	// Add data
-	Vector<String> values;
-	for (auto a : blackboard_data) {
-		values.push_back(a.value.stringify());
+	// Add new header for current data and empty values for existing lines
+	file = FileAccess::open(path, FileAccess::WRITE);
+
+	for (int i = 0; i < blackboard_data_headers.size(); i++) {
+		if (blackboard_data_headers[i] != header[i]) {
+			header.insert(i, blackboard_data_headers[i]);
+			for (auto a : existing_lines) {
+				a.insert(i, "");
+			}
+		}
 	}
-	file->store_csv_line(values);
+
+	// Write header
+	file->store_csv_line(header);
+
+	// Add old data, then current data
+	for (auto a : existing_lines) {
+		Vector<String> line = Vector<String>();
+		for (auto b : a) {
+			line.push_back(b);
+		}
+		file->store_csv_line(line);
+	}
+	Vector<String> line = Vector<String>();
+	for (auto a : blackboard_data_headers) {
+		line.push_back(get_data(a).stringify());
+	}
+	file->store_csv_line(line);
+
+	//// Add header if not exists
+	//Vector<String> keys;
+	//for (KeyValue<String, Variant> pair : blackboard_data) {
+	//	keys.push_back(pair.key);
+	//}
+	//Vector<String> header = file->get_csv_line();
+
+	//file->seek_end(); // move cursor to end of file
+
+	//if (header.is_empty() || header != keys) {
+	//	file->store_csv_line(keys);
+	//}
+
+	//// Add data
+	//Vector<String> values;
+	//for (auto a : blackboard_data) {
+	//	values.push_back(a.value.stringify());
+	//}
+	//file->store_csv_line(values);
 
 	file->close();
 }
