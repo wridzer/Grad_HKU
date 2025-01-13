@@ -194,25 +194,5 @@ void Blackboard::save_to_csv(const String &p_path) {
 	}
 	file->store_csv_line(line);
 
-	//// Add header if not exists
-	//Vector<String> keys;
-	//for (KeyValue<String, Variant> pair : blackboard_data) {
-	//	keys.push_back(pair.key);
-	//}
-	//Vector<String> header = file->get_csv_line();
-
-	//file->seek_end(); // move cursor to end of file
-
-	//if (header.is_empty() || header != keys) {
-	//	file->store_csv_line(keys);
-	//}
-
-	//// Add data
-	//Vector<String> values;
-	//for (auto a : blackboard_data) {
-	//	values.push_back(a.value.stringify());
-	//}
-	//file->store_csv_line(values);
-
 	file->close();
 }
