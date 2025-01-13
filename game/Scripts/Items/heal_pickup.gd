@@ -2,12 +2,14 @@
 class_name HealPickup
 extends Node2D
 
+
 @onready var _actionable: Area2D = $Actionable
 
 @export var pickup_dialogue: DialogueResource
 @export var heal_amount: int = 3
 
 signal heal_used
+
 
 func _ready() -> void:
 	if Engine.is_editor_hint():

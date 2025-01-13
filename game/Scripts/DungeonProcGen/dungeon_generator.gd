@@ -480,8 +480,6 @@ func _spawn_key_items(spawn_room: Room, goal_room: Room) -> void:
 	var possible_key_rooms: Array[Room] = _rooms.duplicate()
 	possible_key_rooms.erase(goal_room)
 	
-	Blackboard.add_data("keys", 0)
-	
 	var key_item_amount = randi_range(_min_key_items, _max_key_items)
 	for i in range(key_item_amount):
 		var key_room: Room
