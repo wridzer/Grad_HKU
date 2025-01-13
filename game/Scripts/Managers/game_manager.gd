@@ -12,6 +12,10 @@ signal switch_level_cleanup
 signal get_spawn_location
 signal toggle_goap
 
+var is_npc_following: bool: 
+	get: 
+		return is_instance_valid(Blackboard.get_data("npc"))
+
 @export var _level_parent: Node
 @export_file var _level_hub: String
 

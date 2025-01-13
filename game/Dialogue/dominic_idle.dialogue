@@ -6,11 +6,19 @@ Dominic: Greetings, I am Dominc!
 - No => no
 
 ~ yes
+if game_manager.is_npc_following:
+	if Blackboard.get_data("npc").display_name == "Rose":
+		=> already_following_rose
+	if Blackboard.get_data("npc").display_name == "Virgil":
+		=> already_following_virgil
 => wel
 
 ~ wel
 % Dominic: Off we go then!
 % Dominic: Let us head out.
+=> follow
+
+~ follow
 do game_manager.npc_follow.emit("Dominic")
 => END
 
@@ -23,7 +31,22 @@ Dominic: I would rather not.
 % Dominic: Are you certain?
 => END
 
-~ already_following
+~ already_following_rose
 Dominic: Hold on one moment.
 	You seem to have a companion already.
-=> END
+- you follow me => new_follow_rose
+- okay nvm => no
+
+~ already_following_virgil
+Dominic: Hold on one moment.
+	You seem to have a companion already.
+- you follow me => new_follow_virgil
+- okay nvm => no
+
+~ new_follow_rose
+do game_manager.npc_stop_following.emit("Rose")
+=> follow
+
+~ new_follow_virgil
+do game_manager.npc_stop_following.emit("Virgil")
+=> follow

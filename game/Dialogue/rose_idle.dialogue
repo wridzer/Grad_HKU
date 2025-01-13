@@ -6,11 +6,19 @@ Rose: I'm Rose.
 - No => no
 
 ~ yes
+if game_manager.is_npc_following:
+	if Blackboard.get_data("npc").display_name == "Dominic":
+		=> already_following_dominic
+	if Blackboard.get_data("npc").display_name == "Virgil":
+		=> already_following_virgil
 => wel
 
 ~ wel
 % Rose: Let's hurry it up then.
 % Rose: Don't slow me down.
+=> follow
+
+~ follow
 do game_manager.npc_follow.emit("Rose")
 => END
 
@@ -23,7 +31,22 @@ Rose: Tough luck, I'm not going with you.
 % Rose: Suit yourself.
 => END
 
-~ already_following
+~ already_following_dominic
 Rose: You're already paired up.
 	Deal with them first.
-=> END
+- you follow me => new_follow_dominic
+- okay nvm => no
+
+~ already_following_virgil
+Rose: You're already paired up.
+	Deal with them first.
+- you follow me => new_follow_virgil
+- okay nvm => no
+
+~ new_follow_dominic
+do game_manager.npc_stop_following.emit("Dominic")
+=> follow
+
+~ new_follow_virgil
+do game_manager.npc_stop_following.emit("Virgil")
+=> follow

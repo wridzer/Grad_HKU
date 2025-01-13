@@ -34,12 +34,8 @@ func exit() -> void:
 
 func follow(display_name: String) -> void:
 	if display_name == npc.display_name:
-		var data = Blackboard.get_data("npc")
-		if !is_instance_valid(data):
-			npc.choose()
-			finished.emit(state_type_to_int(StateType.FOLLOWING))
-		else:
-			dialogue_manager.start_dialogue(npc.idle_dialogue, display_name, "already_following")
+		npc.choose()
+		finished.emit(state_type_to_int(StateType.FOLLOWING))
 
 
 func die() -> void:

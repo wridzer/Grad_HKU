@@ -6,11 +6,19 @@ Virgil: H- heya, I'm Virgil...
 - No => no
 
 ~ yes
+if game_manager.is_npc_following:
+	if Blackboard.get_data("npc").display_name == "Dominic":
+		=> already_following_dominic
+	if Blackboard.get_data("npc").display_name == "Rose":
+		=> already_following_rose
 => wel
 
 ~ wel
 % Virgil: Alright, let's watch each other's backs.
 % Virgil: Let's be careful out there.
+=> follow
+
+~ follow
 do game_manager.npc_follow.emit("Virgil")
 => END
 
@@ -23,7 +31,24 @@ Virgil: I would... rather not.
 % Virgil: No? Ah, alright...
 => END
 
-~ already_following
+~ already_following_dominic
 Virgil: Uhm...
 	You kinda already have a companion...
+- you follow me => new_follow_dominic
+- okay nvm => no
+
+~ already_following_rose
+Virgil: Uhm...
+	You kinda already have a companion...
+- you follow me => new_follow_rose
+- okay nvm => no
+
+~ new_follow_dominic
+do game_manager.npc_stop_following.emit("Dominic")
+do game_manager.npc_follow.emit("Virgil")
+=> END
+
+~ new_follow_rose
+do game_manager.npc_stop_following.emit("Rose")
+do game_manager.npc_follow.emit("Virgil")
 => END
