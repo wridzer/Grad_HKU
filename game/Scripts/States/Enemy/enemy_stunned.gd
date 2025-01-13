@@ -4,7 +4,6 @@ extends EnemyState
 
 const STATE_TYPE = StateType.STUNNED
 
-var stun_timer: Timer
 var finish: Callable = finished.emit.bind(state_type_to_int(StateType.CHASE))
 
 
@@ -13,10 +12,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data: Dictionary = {}) -> void:
-	stun_timer = Timer.new()
-	add_child(stun_timer)
-	stun_timer.start(data.get("stun_length", 0.1))
-	stun_timer.timeout.connect(finish)
+	enemy.stun_timer.timeout.connect(finish, CONNECT_ONE_SHOT)
 	super.enter(previous_state, data)
 
 
@@ -30,6 +26,5 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	stun_timer.timeout.disconnect(finish)
-	stun_timer.queue_free()
+	enemy.stun_timer.stop()
 	super.exit()
