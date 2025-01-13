@@ -14,20 +14,22 @@ func _is_goal_met() -> bool:
 		
 	if Player.instance.room.heal_pickups.size() > 0:
 		var npc_health = Blackboard.get_data("npc_health")
-		#var npc_heal_health = Blackboard.get_data("npc_heal_health")
-		var npc_heal_health = 1
-		if (npc_health <= npc_heal_health):
+		var desired_health = Blackboard.get_data("desired_health")
+		if (npc_health <= desired_health):
 			return false
 			
 	return true
 
 
 func _get_priority() -> int:
-	# Get desired_health and current_health from NPC
-	# if health >= desried_healt:
-	#	return 0
-	# else:
-	# 	return (desired_health - current_health) / desired_health * 100
+	# Get data
+	var current_health = Blackboard.get_data("npc_health") if Blackboard.get_data("npc_health") else 30
+	var desired_health = Blackboard.get_data("desired_health") if Blackboard.get_data("desired_health") else 0
+	
+	if current_health >= desired_health:
+		return 0
+	else:
+		return 25 * (desired_health - current_health)
 	return 75
 
 
