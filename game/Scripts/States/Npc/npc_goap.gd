@@ -13,29 +13,6 @@ func enter(previous_state: int, data := {}) -> void:
 	game_manager.spawn.connect(spawn)
 	game_manager.toggle_goap.connect(disable_goap)
 	
-	if Blackboard.get_data("usage_percent_sword_shield_bow"):
-		var player_usage: Array[Vector3] = Blackboard.get_data("usage_percent_sword_shield_bow")
-		var playable_combat_types = npc._adapatable_combat + npc._preferred_combat
-		match playable_combat_types:
-			1: # Attack + Defend
-				var base_priority = npc._slash_priority
-				Blackboard.add_data("slash_priority", base_priority + (player_usage[-1].y * 0.5))
-				
-				base_priority = npc._block_priority
-				Blackboard.add_data("block_priority", base_priority + (player_usage[-1].z * 0.5))
-			2: # Attack + Avoid
-				var base_priority = npc._slash_priority
-				Blackboard.add_data("slash_priority", base_priority + (player_usage[-1].y * 0.5))
-				
-				base_priority = npc._shoot_priority
-				Blackboard.add_data("shoot_priority", base_priority + (player_usage[-1].x * 0.5))
-			3: # Defend + Avoid
-				var base_priority = npc._block_priority
-				Blackboard.add_data("block_priority", base_priority + (player_usage[-1].z * 0.5))
-				
-				base_priority = npc._shoot_priority
-				Blackboard.add_data("shoot_priority", base_priority + (player_usage[-1].x * 0.5))
-	
 	super.enter(previous_state, data)
 
 
