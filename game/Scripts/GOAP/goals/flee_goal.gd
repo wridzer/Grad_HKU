@@ -3,7 +3,7 @@ extends GoapGoal
 
 
 func _get_goal_name() -> StringName:
-	return "flee_goal"
+	return "flee"
 
 
 func _is_goal_met() -> bool:
@@ -35,10 +35,13 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
+	# Get data
+	var current_health = Blackboard.get_data("npc_health") if Blackboard.get_data("npc_health") else 30
+	var desired_health = Blackboard.get_data("desired_health") if Blackboard.get_data("desired_health") else 0
+	
 	# If health is low
-	var npc: Npc = Blackboard.get_data("npc")
-	if Blackboard.get_data("npc_health") == 1:
-		return 80
+	if current_health < desired_health:
+		return 100
 
 	# If npc want to shoot arrow but is to close
 	if Blackboard.get_data("shoot_priority"):

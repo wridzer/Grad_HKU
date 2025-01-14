@@ -3,19 +3,6 @@ extends GoapAction
 
 
 func _is_valid() -> bool:
-	#if !Blackboard.get_data("enemies_present"):
-		#return false
-	#
-	#var data = Blackboard.get_data("enemy")
-	#if !is_instance_valid(data):
-		#return false
-	#
-	#var npc: Npc = Blackboard.get_data("npc")
-	#var enemy: Enemy = data
-	#var distance_squared = npc.global_position.distance_squared_to(enemy.global_position)
-	#if distance_squared > npc.max_chase_distance_squared:
-		#return false
-	
 	return true
 
 

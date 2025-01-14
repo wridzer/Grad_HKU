@@ -3,7 +3,7 @@ extends GoapGoal
 
 
 func _get_goal_name() -> StringName:
-	return "idle_goal"
+	return "idle"
 
 
 func _is_goal_met() -> bool:

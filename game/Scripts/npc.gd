@@ -25,7 +25,7 @@ const MAX_ARROW_COUNT = 5
 
 @export var _follow_distance: float = 15.0
 @export var _chase_distance: float = 15.0
-@export var _max_chase_distance: float = 80.0
+@export var _max_chase_distance: float = 30.0
 @export var _flee_distance: float = 50.0
 
 @export_range(1.0, 20.0) var min_follow_speed: float = 10.0
@@ -118,7 +118,7 @@ func hurt() -> void:
 
 
 func update_blackboard_health() -> void:
-	Blackboard.add_data("npc_health", _health_component.health)
+	_health_component.set_health_blackboard_variables("npc")
 
 
 func update_animation_parameters() -> void:

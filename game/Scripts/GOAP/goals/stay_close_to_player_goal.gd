@@ -3,7 +3,7 @@ extends GoapGoal
 
 
 func _get_goal_name() -> StringName:
-	return "stay_close_to_player_goal"
+	return "stay_close_to_player"
 
 
 func _is_goal_met() -> bool:
@@ -31,7 +31,7 @@ func _is_goal_met() -> bool:
 
 
 func _get_priority() -> int:
-	return 10
+	return 24
 
 
 func _get_desired_state() -> Dictionary:

@@ -29,7 +29,7 @@ func _get_priority() -> int:
 	if current_health >= desired_health:
 		return 0
 	else:
-		return 25 * (desired_health - current_health)
+		return 50 * (desired_health - current_health)
 	return 75
 
 
