@@ -38,13 +38,3 @@ func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 
 func disable_goap() -> void:
 	finished.emit(state_type_to_int(StateType.FOLLOWING))
-
-
-static func is_bool_and_true(x: Variant) -> bool:
-	if !is_instance_valid(x):
-		if x:
-			return true
-		return false
-	
-	# Impossible to reach with bool
-	return false
