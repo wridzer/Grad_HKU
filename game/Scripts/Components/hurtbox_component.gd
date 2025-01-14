@@ -18,8 +18,9 @@ func _on_area_entered(hitbox: Area2D) -> void:
 	if _health_component.immune():
 		return
 	
-	var knockback_direction: Vector2 = global_position - hitbox.global_position
-	hurt.emit(knockback_direction, hitbox.hitbox_type)
-	
-	hitbox.hit.emit()
 	_health_component.take_damage(hitbox.damage)
+	
+	var knockback_direction: Vector2 = global_position - hitbox.global_position
+	
+	hurt.emit(knockback_direction, hitbox.hitbox_type)
+	hitbox.hit.emit()
