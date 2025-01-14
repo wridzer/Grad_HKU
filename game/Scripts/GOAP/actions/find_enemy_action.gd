@@ -28,7 +28,17 @@ func _get_effects() -> Dictionary:
 
 
 func _perform(_actor, _delta) -> bool:
-	var enemy: Enemy = Player.instance.room.enemies.pick_random()
-	Blackboard.add_data("enemy", enemy)
-	Blackboard.add_data("destination_node", enemy)
-	return true
+	var picked_enemy: Enemy
+	var distance = INF
+	var npc_pos = _actor.get_global_position()
+	for enemy in Player.instance.room.enemies:
+		var enemy_distance = npc_pos.distance_to(enemy.get_global_position())
+		if enemy_distance < distance:
+			picked_enemy = enemy
+			distance = enemy_distance
+	if picked_enemy != null:
+		Blackboard.add_data("enemy", picked_enemy)
+		Blackboard.add_data("destination_node", picked_enemy)
+		return true
+	else:
+		return false

@@ -28,12 +28,14 @@ hit_dialogue = ExtResource("4_6a5rs")
 following_dialogue = ExtResource("3_5v3rr")
 _adapatable_combat = 2
 _unadaptable_combat = 1
-_shoot_priority = 30
+_slash_priority = 50
+_shoot_priority = 10
 _block_priority = 20
 _agro_priority = 50
 _desired_health = 2
 _chase_distance = 5.0
-_max_chase_distance = 20.0
+_max_chase_distance = 50.0
+min_follow_speed = 7.5
 
 [node name="HealthComponent" parent="Npc_Rose" index="4"]
 _max_health = 4
@@ -51,7 +53,7 @@ _slash_priority = 30
 _shoot_priority = 20
 _agro_priority = 23
 _chase_distance = 5.0
-_max_chase_distance = 20.0
+_max_chase_distance = 50.0
 max_chase_speed = 85.0
 steering_value = 2.8
 turning_smoothing_value = 0.85
@@ -73,7 +75,7 @@ _slash_priority = 20
 _block_priority = 30
 _agro_priority = 10
 _chase_distance = 5.0
-_max_chase_distance = 20.0
+_max_chase_distance = 50.0
 max_chase_speed = 70.0
 
 [node name="Mission Display" parent="." instance=ExtResource("9_emmm7")]

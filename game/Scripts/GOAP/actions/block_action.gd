@@ -7,6 +7,17 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
+	var cost = 100
+	
+	# If npc is cornered by multiple enemies, it will use the shield
+	var npc = Blackboard.get_data("npc")
+	var npc_pos = npc.get_global_position()
+	for enemy in Player.instance.room.enemies:
+		var enemy_distance = npc_pos.distance_to(enemy.get_global_position())
+		if enemy_distance < 5:
+			cost -= 20
+	
+	
 	if Blackboard.get_data("block_priority"):
 		return 100 - Blackboard.get_data("block_priority") 
 	return 1

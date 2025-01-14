@@ -4,6 +4,8 @@ extends EnemyState
 
 const STATE_TYPE = StateType.CHASE
 
+var target: AnimatedCharacter
+
 
 func get_state_type() -> int:
 	return state_type_to_int(STATE_TYPE)
@@ -11,18 +13,26 @@ func get_state_type() -> int:
 
 func enter(previous_state: int, data := {}) -> void:
 	super.enter(previous_state, data)
+	var player_distance = enemy.global_position.distance_to(Player.instance.global_position)
+	target = Player.instance
+	var npc = Blackboard.get_data("npc")
+	if is_instance_valid(npc):
+		npc = npc as Npc
+		var npc_distance = enemy.global_position.distance_to(npc.global_position)
+		if npc_distance < player_distance:
+			target = npc
 
 
 func physics_update(delta: float) -> void:
-	# Initialze a context map and get the direction to the player
+	# Initialze a context map and get the direction to the target
 	var context_map: PackedFloat32Array = [0,0,0,0,0,0,0,0]
-	var player_direction: Vector2 = (Player.instance.global_position - enemy.global_position).normalized()
+	var target_direction: Vector2 = (target.global_position - enemy.global_position).normalized()
 	
 	# Get the best direction index using a loop, dot product and danger array
 	var best_index: int = 0
 	var best_interest: float = -INF
 	for index in range(DangerSensorComponent.directions.size()):
-		var interest: float = DangerSensorComponent.directions[index].dot(player_direction) - enemy.danger_sensor_component.danger_array[index]
+		var interest: float = DangerSensorComponent.directions[index].dot(target_direction) - enemy.danger_sensor_component.danger_array[index]
 		context_map[index] = interest
 		
 		if index != 0 && interest > best_interest:

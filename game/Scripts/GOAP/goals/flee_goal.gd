@@ -42,10 +42,26 @@ func _get_priority() -> int:
 	# If health is low
 	if current_health < desired_health:
 		return 100
+	
+	var slash_priority = Blackboard.get_data("slash_priority") if Blackboard.get_data("slash_priority") else 0
+	var block_priority = Blackboard.get_data("block_priority") if Blackboard.get_data("block_priority") else 0
+	var shoot_priority = Blackboard.get_data("shoot_priority") if Blackboard.get_data("shoot_priority") else 0
 
 	# If npc want to shoot arrow but is to close
-	if Blackboard.get_data("shoot_priority"):
-		return Blackboard.get_data("shoot_priority") + 1
+	if shoot_priority > slash_priority && shoot_priority > block_priority:
+		if Player.instance.room:
+			var picked_enemy: Enemy
+			var distance = INF
+			var npc = Blackboard.get_data("npc")
+			var npc_pos = npc.get_global_position()
+			for enemy in Player.instance.room.enemies:
+				var enemy_distance = npc_pos.distance_to(enemy.get_global_position())
+				if enemy_distance < distance:
+					picked_enemy = enemy
+					distance = enemy_distance
+			if picked_enemy != null && distance < npc._follow_distance:
+				return 100
+			
 
 	return 0
 
