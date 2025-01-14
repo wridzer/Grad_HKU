@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=32 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://enfh0jk6264s" path="res://Scenes/actionable_finder.tscn" id="9_2vmwd"]
 [ext_resource type="Script" path="res://Scripts/camera_control.gd" id="10_nkmy7"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="10_s1kec"]
+[ext_resource type="PackedScene" uid="uid://dfpbhfv5i6trw" path="res://Scenes/mission_report.tscn" id="12_hkga2"]
 
 [sub_resource type="Animation" id="Animation_laorx"]
 length = 0.001
@@ -311,20 +312,24 @@ sprite_frames = SubResource("SpriteFrames_ed326")
 animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+zoom = Vector2(8, 8)
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 script = ExtResource("10_nkmy7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
 layer = 50
-offset = Vector2(20, 20)
-scale = Vector2(0.05, 0.05)
-transform = Transform2D(0.05, 0, 0, 0.05, 20, 20)
-follow_viewport_scale = 1.555
+offset = Vector2(960, 540)
+scale = Vector2(4, 4)
+transform = Transform2D(4, 0, 0, 4, 960, 540)
 
 [node name="HealthDisplay" parent="Camera2D/CanvasLayer" node_paths=PackedStringArray("_health_component") instance=ExtResource("10_s1kec")]
+position = Vector2(-220, -115)
+scale = Vector2(0.05, 0.05)
 _health_component = NodePath("../../../HealthComponent")
+
+[node name="Mission Report" parent="Camera2D/CanvasLayer" instance=ExtResource("12_hkga2")]
+scale = Vector2(0.25, 0.25)
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_856tq")]
 health = 3

@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfpbhfv5i6trw"]
+
+[ext_resource type="Script" path="res://Scripts/mission_report.gd" id="1_rwao0"]
+[ext_resource type="Texture2D" uid="uid://dswsfweqvicyu" path="res://Art/mission_report.png" id="1_y8hhg"]
+[ext_resource type="Texture2D" uid="uid://cnbxumqvs7fol" path="res://Art/black_square.png" id="2_ehjma"]
+[ext_resource type="Texture2D" uid="uid://cvd41bixqd586" path="res://Art/kenney_game-icons/PNG/White/1x/cross.png" id="3_73ob5"]
+[ext_resource type="Theme" uid="uid://bq47308sv3dwg" path="res://mission_report_theme.tres" id="4_ussnp"]
+
+[sub_resource type="FontVariation" id="FontVariation_dyern"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbgrs"]
+atlas = ExtResource("3_73ob5")
+
+[node name="Mission Report" type="Node2D"]
+visible = false
+script = ExtResource("1_rwao0")
+
+[node name="Control" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background2" type="TextureRect" parent="Control"]
+modulate = Color(1, 1, 1, 0.341176)
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ehjma")
+expand_mode = 2
+
+[node name="Background" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -377.186
+offset_top = -540.0
+offset_right = 377.186
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_y8hhg")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Stats" type="RichTextLabel" parent="Control/Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_ussnp")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = SubResource("FontVariation_dyern")
+text = "Sword used X amount
+Shield used X amount
+Bow used X amount
+Fiends slain X
+Fiends left alive X
+Companion taken X"
+scroll_active = false
+language = "en_GB"
+
+[node name="CloseButton" type="Button" parent="Control/Background"]
+modulate = Color(0.78, 0, 0, 1)
+layout_mode = 0
+offset_left = 607.186
+offset_top = 102.0
+offset_right = 665.186
+offset_bottom = 160.0
+icon = SubResource("AtlasTexture_bbgrs")
+
+[connection signal="button_down" from="Control/Background/CloseButton" to="." method="_on_close_button_button_down"]
