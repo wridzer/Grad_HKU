@@ -7,13 +7,26 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	#var npc: Npc = Blackboard.get_data("npc")
-	#var enemy: Enemy = Blackboard.get_data("enemy")
-	#var distance_squared = npc.global_position.distance_squared_to(enemy.global_position)
-	#return int(distance_squared / 7)
+	var cost = 100
+	
+	# Find closest enemy, retract distance
+	# so when the npc is far away it will prefer the bow because it is easier,
+	# except for when the other weapons have higher prio
+	var picked_enemy: Enemy
+	var distance = INF
+	var npc = Blackboard.get_data("npc")
+	var npc_pos = npc.get_global_position()
+	for enemy in Player.instance.room.enemies:
+		var enemy_distance = npc_pos.distance_to(enemy.get_global_position())
+		if enemy_distance < distance:
+			picked_enemy = enemy
+			distance = enemy_distance
+	if picked_enemy != null:
+		cost = cost - (distance / 5)
 	
 	if Blackboard.get_data("shoot_priority"):
-		return 100 - Blackboard.get_data("shoot_priority")
+		return cost - Blackboard.get_data("shoot_priority")
+	
 	return 1
 
 
