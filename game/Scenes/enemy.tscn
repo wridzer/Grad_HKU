@@ -80,7 +80,7 @@ frame_progress = 0.923811
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ox5hm")]
 health = 3
-_immunity_length = 1.0
+_immunity_length = 0.4
 
 [node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("2_5c03w")]
 position = Vector2(-3, -6)
