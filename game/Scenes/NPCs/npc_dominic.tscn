@@ -1,32 +1,39 @@
-[gd_scene load_steps=46 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=45 format=3 uid="uid://s3ehrd1th7j5"]
 
-[ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
-[ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="2_howq1"]
-[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="2_sw6te"]
-[ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_xvmxr"]
-[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://Animations/character_animations.res" id="3_32tg2"]
-[ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="3_waukb"]
-[ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_wo31h"]
-[ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_6t8yg"]
-[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="4_x3qln"]
-[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="5_jo4wx"]
-[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="5_r2ml8"]
-[ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
-[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="9_cwxd6"]
-[ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_jrs23"]
-[ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="11_d4np2"]
-[ext_resource type="Texture2D" uid="uid://dikssr1o05lx2" path="res://Art/npc_highlighted.png" id="11_n5nkc"]
-[ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="14_4hwgr"]
-[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="15_nw52t"]
-[ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="18_chuhk"]
-[ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="19_gd2ps"]
-[ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="21_htt4y"]
-[ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="22_c2iu8"]
-[ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="23_6uxte"]
-[ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="24_pb6gn"]
-[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="25_roinp"]
-[ext_resource type="GoapGoal" uid="uid://cmo3y35ti5a2d" path="res://goap_resources/goals/revive_player_goal.tres" id="26_7ish3"]
+[ext_resource type="Script" path="res://Scripts/npc.gd" id="1_mxlfu"]
+[ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/dominic_idle.dialogue" id="2_3na83"]
+[ext_resource type="Resource" uid="uid://cnsj4cr1gyx7n" path="res://Dialogue/dominic_hit.dialogue" id="3_nrttn"]
+[ext_resource type="Resource" uid="uid://e1ysdk534hu5" path="res://Dialogue/dominic_following.dialogue" id="4_wa3mj"]
+[ext_resource type="Resource" uid="uid://5acjyyimvxhp" path="res://Dialogue/dominic_dungeon.dialogue" id="5_2ckfk"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="6_g3sxe"]
+[ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://Animations/character_animations.res" id="7_xnw7r"]
+[ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="8_q5h4n"]
+[ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="9_m4pfs"]
+[ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="10_qeanb"]
+[ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="11_y0ogk"]
+[ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="12_51pd0"]
+[ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="13_6rdh6"]
+[ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="14_mjfnq"]
+[ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="15_i2h7c"]
+[ext_resource type="Texture2D" uid="uid://cnnrr4atsr0jd" path="res://Art/nadja_art/NPC/Dominic_interact.png" id="16_7wudx"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="17_3a6d8"]
+[ext_resource type="Texture2D" uid="uid://bmny0qa1pmbdb" path="res://Art/nadja_art/NPC/Dominic_interact_01.png" id="17_vl4ij"]
+[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="18_re8ei"]
+[ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="19_okks5"]
+[ext_resource type="Texture2D" uid="uid://4v1n3kvoiblh" path="res://Art/nadja_art/NPC/Dominic.png" id="19_ss4kh"]
+[ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="20_dsnh8"]
+[ext_resource type="Texture2D" uid="uid://d0e04kpmioqk7" path="res://Art/nadja_art/NPC/Dominic_01.png" id="20_yir1e"]
+[ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="21_j85bc"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="22_d1gbr"]
+[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="23_mvaya"]
+[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="24_n5sak"]
+[ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="25_al30c"]
+[ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="26_swql6"]
+[ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="27_4x2u6"]
+[ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="28_xmo7c"]
+[ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="29_xqvgs"]
+[ext_resource type="GoapGoal" uid="uid://cmo3y35ti5a2d" path="res://goap_resources/goals/revive_player_goal.tres" id="30_bbu51"]
+[ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="31_lmd1t"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -145,58 +152,29 @@ _data = {
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
-atlas = ExtResource("2_ebpt7")
+atlas = ExtResource("17_3a6d8")
 region = Rect2(884, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
-atlas = ExtResource("2_ebpt7")
+atlas = ExtResource("17_3a6d8")
 region = Rect2(884, 510, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
-atlas = ExtResource("2_ebpt7")
+atlas = ExtResource("17_3a6d8")
 region = Rect2(901, 459, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
-atlas = ExtResource("2_ebpt7")
+atlas = ExtResource("17_3a6d8")
 region = Rect2(901, 510, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jvff1"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vvhqn"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(918, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7f6eg"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(935, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3jgnn"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w52uh"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8duvb"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(918, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_igp6d"]
-atlas = ExtResource("2_ebpt7")
-region = Rect2(935, 459, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_5qvlo"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vklk4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_n5nkc")
+"texture": ExtResource("16_7wudx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_vl4ij")
 }],
 "loop": true,
 "name": &"highlighted",
@@ -221,16 +199,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ava5m")
+"texture": ExtResource("19_ss4kh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jvff1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vvhqn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7f6eg")
+"texture": ExtResource("20_yir1e")
 }],
 "loop": true,
 "name": &"idle",
@@ -238,45 +210,50 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3jgnn")
+"texture": ExtResource("19_ss4kh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w52uh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8duvb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_igp6d")
+"texture": ExtResource("20_yir1e")
 }],
 "loop": true,
 "name": &"walk",
 "speed": 4.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cslfr"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qx51f"]
 radius = 3.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jdjs5"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2paek"]
 radius = 3.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fd4sv"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_dtit2"]
 radius = 6.0
 
-[node name="Npc" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window")]
+[node name="NpcDominic" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window")]
 z_index = 4
 collision_layer = 0
-script = ExtResource("1_kinge")
+script = ExtResource("1_mxlfu")
 _arrow_path = "res://Scenes/Items/arrow.tscn"
+display_name = "Dominic"
+idle_dialogue = ExtResource("2_3na83")
+hit_dialogue = ExtResource("3_nrttn")
+following_dialogue = ExtResource("4_wa3mj")
+dungeon_dialogue = ExtResource("5_2ckfk")
 _home_level = "res://Scenes/Levels/level_hub.tscn"
+_preferred_combat = 1
+_unadaptable_combat = 2
 goap_agent = NodePath("GoapAgent")
-_slash_priority = 40
-_shoot_priority = 40
+_slash_priority = 30
+_shoot_priority = 20
 _block_priority = 40
+_aggro_priority = 23
+_chase_distance = 5.0
+_max_chase_distance = 50.0
 min_follow_speed = 5.0
-steering_value = 2.5
-turning_smoothing_value = 0.8
-speed_smoothing_value = 0.05
+max_chase_speed = 85.0
+steering_value = 4.0
+turning_smoothing_value = 0.85
+speed_smoothing_value = 0.06
 info_window = NodePath("GoapAgent/Window")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
@@ -285,7 +262,7 @@ info_window = NodePath("GoapAgent/Window")
 active = false
 deterministic = false
 root_node = NodePath("../..")
-tree_root = ExtResource("2_xvmxr")
+tree_root = ExtResource("6_g3sxe")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/block = false
 parameters/conditions/hit = false
@@ -305,45 +282,45 @@ active = false
 root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_xvbyj"),
-&"character_animations": ExtResource("3_32tg2")
+&"character_animations": ExtResource("7_xnw7r")
 }
 
 [node name="Direction" type="Node2D" parent="CharacterAnimations"]
 
-[node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("4_x3qln")]
+[node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("8_q5h4n")]
 
 [node name="HitboxComponentSword" parent="CharacterAnimations/Direction/Sword" index="1"]
 collision_layer = 16
 
-[node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("5_r2ml8")]
+[node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("9_m4pfs")]
 position = Vector2(0, 8)
 
 [node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="1"]
 collision_layer = 16
 
-[node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("6_u67rn")]
+[node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("10_qeanb")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
-script = ExtResource("2_sw6te")
+script = ExtResource("11_y0ogk")
 _initial_state = NodePath("NpcIdle")
 
 [node name="NpcIdle" type="Node" parent="StateMachine"]
-script = ExtResource("3_waukb")
+script = ExtResource("12_51pd0")
 
 [node name="NpcFollowing" type="Node" parent="StateMachine"]
-script = ExtResource("2_howq1")
+script = ExtResource("13_6rdh6")
 
 [node name="NpcGoap" type="Node" parent="StateMachine"]
-script = ExtResource("10_jrs23")
+script = ExtResource("14_mjfnq")
 
 [node name="NpcDowned" type="Node" parent="StateMachine"]
-script = ExtResource("11_d4np2")
+script = ExtResource("15_i2h7c")
 
 [node name="SpriteHolder" type="Node2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteHolder"]
 rotation = -1.5708
-sprite_frames = SubResource("SpriteFrames_5qvlo")
+sprite_frames = SubResource("SpriteFrames_vklk4")
 animation = &"highlighted"
 
 [node name="NameLabel" type="Label" parent="SpriteHolder/AnimatedSprite2D"]
@@ -359,7 +336,7 @@ vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
 
-[node name="HealthDisplay" parent="SpriteHolder/AnimatedSprite2D" node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("25_roinp")]
+[node name="HealthDisplay" parent="SpriteHolder/AnimatedSprite2D" node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("18_re8ei")]
 position = Vector2(-4, -6)
 scale = Vector2(0.005, 0.005)
 _health_component = NodePath("../../../HealthComponent")
@@ -371,21 +348,22 @@ position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_cslfr")
+shape = SubResource("CircleShape2D_qx51f")
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_wo31h")]
-health = 3
+[node name="HealthComponent" parent="." instance=ExtResource("19_okks5")]
+_max_health = 5
+health = 5
 _immunity_length = 1.0
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("4_6t8yg")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("20_dsnh8")]
 collision_layer = 16
 collision_mask = 70
 _health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("CircleShape2D_jdjs5")
+shape = SubResource("CircleShape2D_2paek")
 
-[node name="DangerSensorComponent" parent="." instance=ExtResource("14_4hwgr")]
+[node name="DangerSensorComponent" parent="." instance=ExtResource("21_j85bc")]
 
 [node name="0" parent="DangerSensorComponent" index="0"]
 target_position = Vector2(10, 0)
@@ -411,14 +389,14 @@ target_position = Vector2(0, 10)
 [node name="7" parent="DangerSensorComponent" index="7"]
 target_position = Vector2(7, 7)
 
-[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("5_jo4wx")]
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("22_d1gbr")]
 animated_sprite = NodePath("../SpriteHolder/AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
-shape = SubResource("CircleShape2D_fd4sv")
+shape = SubResource("CircleShape2D_dtit2")
 
 [node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("9_cwxd6"), ExtResource("15_nw52t"), ExtResource("18_chuhk"), ExtResource("19_gd2ps"), ExtResource("21_htt4y"), ExtResource("22_c2iu8"), ExtResource("23_6uxte"), ExtResource("26_7ish3")])
+goals = Array[GoapGoal]([ExtResource("23_mvaya"), ExtResource("24_n5sak"), ExtResource("25_al30c"), ExtResource("26_swql6"), ExtResource("27_4x2u6"), ExtResource("28_xmo7c"), ExtResource("29_xqvgs"), ExtResource("30_bbu51")])
 
 [node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_blackboard_list", "_goal_list", "_action_plan", "_goap_agent")]
 auto_translate_mode = 1
@@ -430,7 +408,7 @@ size = Vector2i(1920, 1080)
 current_screen = 1
 borderless = true
 unfocusable = true
-script = ExtResource("24_pb6gn")
+script = ExtResource("31_lmd1t")
 _blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
 _goal_list = NodePath("CanvasLayer/HBoxContainer/Goap_list")
 _action_plan = NodePath("CanvasLayer/HBoxContainer/Action_plan_list")

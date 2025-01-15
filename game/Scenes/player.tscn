@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=31 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://enfh0jk6264s" path="res://Scenes/actionable_finder.tscn" id="9_2vmwd"]
 [ext_resource type="Script" path="res://Scripts/camera_control.gd" id="10_nkmy7"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="10_s1kec"]
+[ext_resource type="Texture2D" uid="uid://d14copyrb6u2e" path="res://Art/nadja_art/Player/Player.png" id="10_vlrri"]
+[ext_resource type="Texture2D" uid="uid://bn3v5hlne16x2" path="res://Art/nadja_art/Player/Player_01.png" id="11_wxevt"]
 [ext_resource type="PackedScene" uid="uid://dfpbhfv5i6trw" path="res://Scenes/mission_report.tscn" id="12_hkga2"]
 [ext_resource type="Texture2D" uid="uid://bcm5wd13wthy" path="res://Art/white_bg.png" id="13_cq4v0"]
 
@@ -154,22 +156,6 @@ region = Rect2(901, 459, 16, 16)
 atlas = ExtResource("3_y3655")
 region = Rect2(901, 510, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ava5m"]
-atlas = ExtResource("3_y3655")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jvff1"]
-atlas = ExtResource("3_y3655")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vvhqn"]
-atlas = ExtResource("3_y3655")
-region = Rect2(918, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7f6eg"]
-atlas = ExtResource("3_y3655")
-region = Rect2(935, 459, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_ed326"]
 animations = [{
 "frames": [{
@@ -191,16 +177,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ava5m")
+"texture": ExtResource("10_vlrri")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jvff1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vvhqn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7f6eg")
+"texture": ExtResource("11_wxevt")
 }],
 "loop": true,
 "name": &"idle",
@@ -208,16 +188,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ava5m")
+"texture": ExtResource("10_vlrri")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jvff1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vvhqn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7f6eg")
+"texture": ExtResource("11_wxevt")
 }],
 "loop": true,
 "name": &"walk",
@@ -289,6 +263,7 @@ collision_mask = 8
 [node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+visible = false
 z_index = 2
 material = SubResource("CanvasItemMaterial_frri1")
 position = Vector2(0, 3)
@@ -296,18 +271,20 @@ scale = Vector2(2.5, 0.75)
 mesh = SubResource("BoxMesh_ssrut")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+visible = false
 z_index = 2
 material = SubResource("CanvasItemMaterial_frri1")
 position = Vector2(-1, 2)
 mesh = SubResource("BoxMesh_ssrut")
 
 [node name="MeshInstance2D3" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
+visible = false
 z_index = 2
 material = SubResource("CanvasItemMaterial_frri1")
 position = Vector2(1, 2)
 mesh = SubResource("BoxMesh_ssrut")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/Direction"]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_ed326")
 animation = &"idle"

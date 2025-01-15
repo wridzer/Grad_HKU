@@ -60,7 +60,7 @@ func _perform_physics(actor, _delta) -> bool:
 		npc.set_velocity(target_direction * npc.max_follow_speed)
 	
 	# Move
-	npc.animated_sprite_2d.look_at(enemy_pos)
+	npc.sprite_holder.look_at(enemy_pos)
 	npc.move_and_slide()
 	
 	return false

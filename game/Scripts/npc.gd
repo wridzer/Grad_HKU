@@ -61,8 +61,9 @@ var saved_spawn_pos: Vector2
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var actionable: Actionable = $Actionable
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var name_label: Label = $AnimatedSprite2D/NameLabel
+@onready var animated_sprite_2d: AnimatedSprite2D = $SpriteHolder/AnimatedSprite2D
+@onready var sprite_holder = $SpriteHolder
+@onready var name_label: Label = $SpriteHolder/AnimatedSprite2D/NameLabel
 @onready var state_machine: StateMachine = $StateMachine
 
 

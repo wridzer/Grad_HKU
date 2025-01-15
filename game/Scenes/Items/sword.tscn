@@ -1,17 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3s2y63nra24b"]
+[gd_scene load_steps=5 format=3 uid="uid://b3s2y63nra24b"]
 
-[ext_resource type="Texture2D" uid="uid://c0ftagr5i3nj" path="res://Art/kenney_voxel-pack/Spritesheets/spritesheet_items.png" id="1_ci852"]
+[ext_resource type="Texture2D" uid="uid://hobp2danu4wv" path="res://Art/nadja_art/Weapons/Sword.png" id="1_36i7r"]
 [ext_resource type="Script" path="res://Scripts/Components/hitbox_component.gd" id="2_nl8bd"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tpyv7"]
-atlas = ExtResource("1_ci852")
-region = Rect2(0, 128, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6dbag"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tpyv7")
+"texture": ExtResource("1_36i7r")
 }],
 "loop": true,
 "name": &"default",
@@ -30,7 +26,6 @@ rotation = 1.0472
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(6, -6)
-scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_6dbag")
 
 [node name="HitboxComponentSword" type="Area2D" parent="."]

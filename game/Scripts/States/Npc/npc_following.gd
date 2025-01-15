@@ -35,7 +35,7 @@ func physics_update(delta: float) -> void:
 		npc.direction = direction
 		npc.set_velocity(direction * npc.max_follow_speed)
 		
-	npc.animated_sprite_2d.look_at(player_pos)
+	npc.sprite_holder.look_at(player_pos)
 	
 	super.physics_update(delta)
 

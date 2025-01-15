@@ -52,7 +52,7 @@ func _perform_physics(actor, _delta) -> bool:
 		var target_direction: Vector2 = (npc_pos - enemy_pos).normalized()
 		npc.direction = target_direction
 		npc.set_velocity(target_direction * npc.flee_speed)
-		npc.animated_sprite_2d.look_at(target_direction)
+		npc.sprite_holder.look_at(target_direction)
 		npc.move_and_slide()
 	
 	return false
