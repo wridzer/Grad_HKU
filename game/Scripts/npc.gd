@@ -44,7 +44,7 @@ const MAX_ARROW_COUNT = 5
 # Info window vars
 @export var info_window : Window
 
-var _affection: int
+var affection: int = 0
 var _arrows: Array[Arrow]
 
 var follow_distance_squared: float = _follow_distance * _follow_distance
@@ -59,7 +59,7 @@ var saved_spawn_pos: Vector2
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
-@onready var actionable: Area2D = $Actionable
+@onready var actionable: Actionable = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var name_label: Label = $AnimatedSprite2D/NameLabel
 @onready var state_machine: StateMachine = $StateMachine

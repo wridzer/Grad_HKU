@@ -3,7 +3,7 @@ class_name HealPickup
 extends Node2D
 
 
-@onready var actionable: Area2D = $Actionable
+@onready var actionable: Actionable = $Actionable
 
 @export var pickup_dialogue: DialogueResource
 @export var heal_amount: int = 3

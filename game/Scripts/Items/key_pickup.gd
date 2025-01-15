@@ -5,7 +5,7 @@ extends Node2D
 
 signal no_keys_left
 
-@onready var actionable: Area2D = $Actionable
+@onready var actionable: Actionable = $Actionable
 
 @export var pickup_dialogue: DialogueResource
 

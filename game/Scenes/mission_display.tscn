@@ -36,11 +36,11 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ycomf"]
 radius = 6.0
 
-[node name="MissionDisplay" type="StaticBody2D" node_paths=PackedStringArray("_exlamation_mark_sprite")]
+[node name="MissionDisplay" type="StaticBody2D" node_paths=PackedStringArray("_exclamation_mark_sprite")]
 collision_mask = 3
 script = ExtResource("1_ve4ia")
 _mission_dialogue = ExtResource("2_123cq")
-_exlamation_mark_sprite = NodePath("Sprite2DExclamationMark")
+_exclamation_mark_sprite = NodePath("Sprite2DExclamationMark")
 
 [node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("1_yh8sa")]
 position = Vector2(0, -1)

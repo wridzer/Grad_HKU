@@ -11,6 +11,7 @@ signal action
 
 var interactor: AnimatedCharacter
 
+
 func highlight() -> void:
 	animated_sprite.play("highlighted")
 

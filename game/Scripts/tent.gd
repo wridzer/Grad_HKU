@@ -3,7 +3,7 @@ extends Node2D
 
 @export var _tent_dialogue: DialogueResource
 
-@onready var _actionable: Area2D = $Actionable
+@onready var _actionable: Actionable = $Actionable
 
 
 func _ready() -> void:
