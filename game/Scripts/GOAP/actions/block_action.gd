@@ -18,7 +18,7 @@ func _get_cost() -> int:
 			cost -= 20
 	
 	if Blackboard.get_data("block_priority"):
-		return 100 - Blackboard.get_data("block_priority") 
+		return cost - Blackboard.get_data("block_priority") 
 	return 1
 
 
