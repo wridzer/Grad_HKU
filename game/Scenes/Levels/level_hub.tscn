@@ -41,6 +41,7 @@ _desired_health = 2
 _chase_distance = 5.0
 _max_chase_distance = 50.0
 min_follow_speed = 7.5
+steering_value = 4.0
 
 [node name="HealthComponent" parent="Npc_Rose" index="5"]
 _max_health = 4
@@ -61,7 +62,7 @@ _aggro_priority = 23
 _chase_distance = 5.0
 _max_chase_distance = 50.0
 max_chase_speed = 85.0
-steering_value = 2.8
+steering_value = 4.0
 turning_smoothing_value = 0.85
 speed_smoothing_value = 0.06
 
@@ -84,6 +85,7 @@ _aggro_priority = 10
 _chase_distance = 5.0
 _max_chase_distance = 50.0
 max_chase_speed = 70.0
+steering_value = 4.0
 
 [node name="MissionDisplay" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1

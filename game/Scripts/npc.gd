@@ -13,6 +13,7 @@ const MAX_ARROW_COUNT = 5
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
 @export var dungeon_dialogue: DialogueResource
+@export_file var _home_level: String
 
 @export var _preferred_combat: CombatType
 @export var _adapatable_combat: CombatType
@@ -116,6 +117,8 @@ func immunity(immune: bool) -> void:
 
 func downed() -> void:
 	state_machine.transition_to_next_state(NpcState.state_type_to_int(NpcState.StateType.DOWNED))
+	if Player.instance.health_component.health <= 0:
+		game_manager.load_level(_home_level)
 
 
 func die() -> void:

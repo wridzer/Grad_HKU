@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://b0x1mpt17ifjq"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/revive_action.gd" id="1_wi0p8"]
+
+[resource]
+script = ExtResource("1_wi0p8")
