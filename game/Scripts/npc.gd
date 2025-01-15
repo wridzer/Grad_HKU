@@ -173,29 +173,29 @@ func choose() -> void:
 	info_window.visible = true
 
 
-func slash(direction: Vector2) -> bool:
+func slash(anim_direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/slash"):
 		return false
 	
-	return await super.slash(direction)
+	return await super.slash(anim_direction)
 
 
-func block(direction: Vector2) -> bool:
+func block(anim_direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/block"):
 		return false
 	
-	return await super.block(direction);
+	return await super.block(anim_direction);
 
 
-func shoot(direction: Vector2) -> bool:
+func shoot(anim_direction: Vector2) -> bool:
 	if animation_tree.get("parameters/conditions/shoot"):
 		return false;
 
 	# Create a new arrow
 	var arrow_resource: Resource = ResourceLoader.load(_arrow_path, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
 	var arrow: Arrow = arrow_resource.instantiate()
-	arrow.goal = global_position + direction
-	arrow.direction = direction
+	arrow.goal = global_position + anim_direction
+	arrow.direction = anim_direction
 	add_child(arrow)
 	arrow.reparent(get_parent())
 	_arrows.append(arrow)
@@ -207,7 +207,7 @@ func shoot(direction: Vector2) -> bool:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	return await super.shoot(direction)
+	return await super.shoot(anim_direction)
 
 
 func _reduce_arrows_to(amount: int) -> void:

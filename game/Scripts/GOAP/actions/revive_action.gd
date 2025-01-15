@@ -21,6 +21,6 @@ func _get_effects() -> Dictionary:
 	return {"player_alive" : true}
 
 
-func _perform(actor, _delta) -> bool:
+func _perform(_actor, _delta) -> bool:
 	Player.instance.health_component.gain_health(1)
 	return true

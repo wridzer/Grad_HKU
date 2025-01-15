@@ -30,7 +30,6 @@ func _get_priority() -> int:
 		return 0
 	else:
 		return 60 * (desired_health - current_health)
-	return 75
 
 
 func _get_desired_state() -> Dictionary:

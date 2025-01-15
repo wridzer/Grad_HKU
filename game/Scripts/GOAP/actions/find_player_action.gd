@@ -21,6 +21,6 @@ func _get_effects() -> Dictionary:
 	return {"player_found" : true, "has_destination" : true}
 
 
-func _perform(actor, _delta) -> bool:
+func _perform(_actor, _delta) -> bool:
 	Blackboard.add_data("destination_node", Player.instance)
 	return true
