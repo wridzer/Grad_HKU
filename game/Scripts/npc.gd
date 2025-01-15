@@ -20,7 +20,7 @@ const MAX_ARROW_COUNT = 5
 @export var _slash_priority: int = 14
 @export var _shoot_priority: int = 14
 @export var _block_priority: int = 14
-@export var _agro_priority: int = 14
+@export var _aggro_priority: int = 14
 @export var _desired_health: int = 3
 
 @export var _follow_distance: float = 15.0
@@ -149,7 +149,7 @@ func choose() -> void:
 	Blackboard.add_data("block_priority", _block_priority)
 	Blackboard.add_data("shoot_priority", _shoot_priority)
 	Blackboard.add_data("adaptable_style", _adapatable_combat)
-	Blackboard.add_data("agro_priority", _agro_priority)
+	Blackboard.add_data("aggro_priority", _aggro_priority)
 	Blackboard.add_data("desired_health", _desired_health)
 	
 	_health_component.set_health_blackboard_variables("npc")

@@ -15,21 +15,21 @@ func _is_goal_met() -> bool:
 
 func _get_priority() -> int:
 	# Get data
-	var agro = Blackboard.get_data("agro_priority") if Blackboard.get_data("agro_priority") else 30
-	var player_agro = Blackboard.get_data("enemy_killed_percentage") if Blackboard.get_data("enemy_killed_percentage") else 30
+	var aggro = Blackboard.get_data("aggro_priority") if Blackboard.get_data("aggro_priority") else 30
+	var player_aggro = Blackboard.get_data("enemy_killed_percentage") if Blackboard.get_data("enemy_killed_percentage") else 30
 	
-	# Add player agro that is above 50, subtract less then 50
-	agro += (player_agro - 50)
+	# Add player aggro that is above 50, subtract less then 50
+	aggro += (player_aggro - 50)
 	
-	# Enemie agro
+	# Enemy aggro
 	if Player.instance.room:
-		for enemie in Player.instance.room.enemies:
-			if(enemie.state_machine._state.get_state_type() == EnemyState.StateType.CHASE):
-				agro += 50
+		for enemy in Player.instance.room.enemies:
+			if(enemy.state_machine._state.get_state_type() == EnemyState.StateType.CHASE):
+				aggro += 50
 				break
 	
-	Blackboard.add_data("npc_agro", agro)
-	return agro
+	Blackboard.add_data("npc_aggro", aggro)
+	return aggro
 
 
 func _get_desired_state() -> Dictionary:
