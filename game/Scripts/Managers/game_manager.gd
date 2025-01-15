@@ -14,6 +14,7 @@ signal toggle_goap
 signal return_to_hub
 signal day_time
 
+var day: int = 1
 var night_time: bool:
 	set(value):
 		Player.instance.night_time_filter.visible = value
@@ -21,8 +22,6 @@ var night_time: bool:
 			day += 1
 			day_time.emit()
 		night_time = value
-
-var day: int = 0
 
 var is_npc_following: bool: 
 	get: 
