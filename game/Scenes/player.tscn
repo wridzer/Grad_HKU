@@ -331,6 +331,7 @@ _health_component = NodePath("../../../HealthComponent")
 _hurtbox_component = NodePath("../../../HurtboxComponent")
 
 [node name="MissionReport" parent="Camera2D/CanvasLayer" instance=ExtResource("12_hkga2")]
+visible = false
 scale = Vector2(0.25, 0.25)
 
 [node name="NightTimeFilter" type="TextureRect" parent="Camera2D/CanvasLayer"]
