@@ -8,6 +8,7 @@ extends Node
 
 signal die
 signal health_gained
+signal respawn
 signal immunity(immune: bool)
 
 @onready var _immunity_timer := $ImmunityTimer
@@ -18,6 +19,9 @@ func _ready() -> void:
 
 
 func gain_health(amount: int) -> void:
+	if health <= 0:
+		respawn.emit()
+	
 	if health + amount >= _max_health:
 		health = _max_health
 	else:

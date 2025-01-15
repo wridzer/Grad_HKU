@@ -1,0 +1,6 @@
+[gd_resource type="GoapGoal" load_steps=2 format=3 uid="uid://cmo3y35ti5a2d"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/goals/revive_player_goal.gd" id="1_xatuq"]
+
+[resource]
+script = ExtResource("1_xatuq")

@@ -6,6 +6,7 @@ const SPEED := 70.0
 const MAX_ARROW_COUNT = 5
 
 @export_file var _arrow_path: String
+@export_file var _home_level: String
 
 var _arrows: Array[Arrow]
 var _saved_spawn_pos: Vector2
@@ -42,7 +43,8 @@ func _ready() -> void:
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
 	game_manager.switch_level_cleanup.connect(health_component.reset_health)
 	input_manager.interact.connect(interact)
-	health_component.die.connect(respawn)
+	health_component.die.connect(die)
+	health_component.respawn.connect(respawn)
 	health_component.immunity.connect(update_immunity_animation)
 	health_component.health_gained.connect(update_blackboard_health)
 	health_component.set_health_blackboard_variables("player")
@@ -158,9 +160,15 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 
 
 func respawn() -> void:
-	room = null
-	spawn(_saved_spawn_pos, Vector2.ZERO)
-	health_component.reset_health()
+	input_manager.toggle_input(true)
+	_hurtbox_component.immune = false
+	
+func die() -> void:
+	if Blackboard.get_data("npc_health") <= 0:
+		game_manager.load_level(_home_level)
+		return
+	input_manager.toggle_input(false)
+	_hurtbox_component.immune = true
 
 
 func shoot(direction: Vector2) -> bool:

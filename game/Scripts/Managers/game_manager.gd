@@ -74,3 +74,6 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	
 	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	get_spawn_location.emit()
+	
+	# Make sure player can move again
+	input_manager.toggle_input(true)

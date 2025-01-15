@@ -13,17 +13,29 @@ func get_state_type() -> int:
 
 func enter(previous_state: int, data := {}) -> void:
 	super.enter(previous_state, data)
+	set_target()
+
+func set_target() -> void:
+	target = null
 	var player_distance = enemy.global_position.distance_to(Player.instance.global_position)
-	target = Player.instance
+	if Player.instance.health_component.health > 0:
+		target = Player.instance
+		
 	var npc = Blackboard.get_data("npc")
 	if is_instance_valid(npc):
 		npc = npc as Npc
 		var npc_distance = enemy.global_position.distance_to(npc.global_position)
-		if npc_distance < player_distance:
-			target = npc
-
+		if npc.health_component.health > 0:
+			if npc_distance < player_distance || target == null:
+				target = npc
+	if target == null:
+		finished.emit(state_type_to_int(StateType.DOCILE))
 
 func physics_update(delta: float) -> void:
+	if target == null || target.health_component.health <= 0:
+		set_target()
+		return
+	
 	# Initialze a context map and get the direction to the target
 	var context_map: PackedFloat32Array = [0,0,0,0,0,0,0,0]
 	var target_direction: Vector2 = (target.global_position - enemy.global_position).normalized()
