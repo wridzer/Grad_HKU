@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=33 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://Scripts/camera_control.gd" id="10_nkmy7"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="10_s1kec"]
 [ext_resource type="PackedScene" uid="uid://dfpbhfv5i6trw" path="res://Scenes/mission_report.tscn" id="12_hkga2"]
+[ext_resource type="Texture2D" uid="uid://bcm5wd13wthy" path="res://Art/white_bg.png" id="13_cq4v0"]
 
 [sub_resource type="Animation" id="Animation_laorx"]
 length = 0.001
@@ -329,8 +330,27 @@ scale = Vector2(0.05, 0.05)
 _health_component = NodePath("../../../HealthComponent")
 _hurtbox_component = NodePath("../../../HurtboxComponent")
 
-[node name="Mission Report" parent="Camera2D/CanvasLayer" instance=ExtResource("12_hkga2")]
+[node name="MissionReport" parent="Camera2D/CanvasLayer" instance=ExtResource("12_hkga2")]
 scale = Vector2(0.25, 0.25)
+
+[node name="NightTimeFilter" type="TextureRect" parent="Camera2D/CanvasLayer"]
+visible = false
+modulate = Color(0.161, 0.044, 0.2, 0.462745)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1960.0
+offset_top = -1540.0
+offset_right = -1790.0
+offset_bottom = -1370.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1000, 1000)
+mouse_filter = 2
+texture = ExtResource("13_cq4v0")
+expand_mode = 2
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_856tq")]
 health = 3

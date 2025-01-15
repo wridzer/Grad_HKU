@@ -18,7 +18,6 @@ func _ready() -> void:
 func calculate() -> void:
 	calculate_playstyle()
 	calculate_weapon_usage()
-	reset_values()
 
 
 func reset_values() -> void:

@@ -50,3 +50,15 @@ do game_manager.npc_stop_following.emit("Dominic")
 ~ new_follow_virgil
 do game_manager.npc_stop_following.emit("Virgil")
 => follow
+
+~ start_night_Avoiding
+Rose: Good night
+=> END
+
+~ start_night_Aggressive
+Rose: Good night
+=> END
+
+~ start_night_Defensive
+Rose: Good night
+=> END

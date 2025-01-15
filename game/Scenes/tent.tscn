@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://ceh5ro36yh1k6"]
+
+[ext_resource type="Script" path="res://Scripts/tent.gd" id="1_abvnk"]
+[ext_resource type="Resource" uid="uid://brchi6trp2adv" path="res://Dialogue/tent.dialogue" id="2_jrrnf"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_3jrxe"]
+[ext_resource type="Texture2D" uid="uid://dfy5t6lx6asv2" path="res://Art/tent_highlighted.png" id="3_vgq4v"]
+[ext_resource type="Texture2D" uid="uid://dg5w2vk1bonq3" path="res://Art/tent.png" id="4_0ftxc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
+radius = 16.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lb3t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vgq4v")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_0ftxc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ycomf"]
+radius = 15.0
+
+[node name="Tent" type="StaticBody2D"]
+collision_mask = 3
+script = ExtResource("1_abvnk")
+_tent_dialogue = ExtResource("2_jrrnf")
+
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("3_3jrxe")]
+position = Vector2(0, -1)
+actionable_priority = 1
+animated_sprite = NodePath("../AnimatedSprite2DTent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_oudfl")
+
+[node name="AnimatedSprite2DTent" type="AnimatedSprite2D" parent="."]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_4lb3t")
+animation = &"idle"
+
+[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ycomf")

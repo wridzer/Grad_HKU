@@ -1,0 +1,15 @@
+~ start
+It's daytime, go to work!
+=> END
+
+~ start_night
+Go to sleep?
+- Yes => yes
+- No => no
+
+~ yes
+do game_manager.night_time = false
+=> END
+
+~ no
+=> END

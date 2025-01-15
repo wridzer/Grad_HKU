@@ -153,10 +153,8 @@ func choose() -> void:
 	Blackboard.add_data("npc", self)
 	
 	var data = Blackboard.get_data("npc_choices")
-	var npc_choices: Array[CombatType] = []
-	if is_instance_valid(data):
-		npc_choices = data
-	npc_choices.append(_preferred_combat)
+	var npc_choices: Array = data if data else []
+	npc_choices.append(display_name)
 	Blackboard.add_data("npc_choices", npc_choices)
 	
 	Blackboard.add_data("slash_priority", _slash_priority)

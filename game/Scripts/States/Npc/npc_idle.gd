@@ -10,7 +10,7 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.idle_dialogue, npc.display_name))
+	npc.actionable.action.connect(start_dialogue)
 	
 	game_manager.npc_follow.connect(follow)
 	game_manager.switch_level_cleanup.connect(die)
@@ -24,7 +24,7 @@ func physics_update(_delta: float) -> void:
 
 
 func exit() -> void:
-	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
+	npc.actionable.action.disconnect(start_dialogue)
 	
 	game_manager.npc_follow.disconnect(follow)
 	game_manager.switch_level_cleanup.disconnect(die)
@@ -40,3 +40,11 @@ func follow(display_name: String) -> void:
 
 func die() -> void:
 	npc.die()
+
+
+func start_dialogue() -> void:
+	if game_manager.night_time:
+		var playstyle: Array[String] = Blackboard.get_data("playstyle")
+		dialogue_manager.start_dialogue(npc.idle_dialogue, npc.display_name, "start_night_" + playstyle[-1])
+	else:
+		dialogue_manager.start_dialogue(npc.idle_dialogue, npc.display_name)
