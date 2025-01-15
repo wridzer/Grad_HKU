@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=3 uid="uid://bs20txhswp5q"]
+
+[ext_resource type="Script" path="res://Scripts/fireplace.gd" id="1_tdv2o"]
+[ext_resource type="Resource" uid="uid://dcoi6fav4i202" path="res://Dialogue/fireplace.dialogue" id="2_xsesf"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_3uwvx"]
+[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wydcg"]
+[ext_resource type="Texture2D" uid="uid://t6wwuflcnni8" path="res://Art/fireplace1highlighted.png" id="5_xkeig"]
+[ext_resource type="Texture2D" uid="uid://jyufnpc7tctp" path="res://Art/fireplace2highlighted.png" id="6_e0njt"]
+[ext_resource type="Texture2D" uid="uid://cqkb1dafjuqds" path="res://Art/fireplace1.png" id="7_tk400"]
+[ext_resource type="Texture2D" uid="uid://dh7hwlmei0wm5" path="res://Art/fireplace2.png" id="8_e6vdr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
+radius = 6.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kolxj"]
+atlas = ExtResource("4_wydcg")
+region = Rect2(412, 150, 16, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lb3t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xkeig")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_e0njt")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_tk400")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_e6vdr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ycomf"]
+radius = 6.0
+
+[node name="Fireplace" type="StaticBody2D" node_paths=PackedStringArray("_exclamation_mark_sprite")]
+collision_mask = 3
+script = ExtResource("1_tdv2o")
+_fireplace_dialogue = ExtResource("2_xsesf")
+_exclamation_mark_sprite = NodePath("Sprite2DExclamationMark")
+
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("3_3uwvx")]
+position = Vector2(0, -1)
+actionable_priority = 1
+animated_sprite = NodePath("../AnimatedSprite2DFireplace")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_oudfl")
+
+[node name="Sprite2DExclamationMark" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.88, 0, 0, 1)
+z_index = 100
+position = Vector2(4.76837e-07, -21.337)
+scale = Vector2(0.503571, 0.483152)
+texture = SubResource("AtlasTexture_kolxj")
+
+[node name="AnimatedSprite2DFireplace" type="AnimatedSprite2D" parent="."]
+z_index = 5
+position = Vector2(0, -7.5)
+sprite_frames = SubResource("SpriteFrames_4lb3t")
+animation = &"idle"
+
+[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_ycomf")

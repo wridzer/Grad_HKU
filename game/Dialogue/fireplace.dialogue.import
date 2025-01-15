@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dcoi6fav4i202"
+path="res://.godot/imported/fireplace.dialogue-ef4e8e318a96f39c0f309ee53e56bebd.tres"
+
+[deps]
+
+source_file="res://Dialogue/fireplace.dialogue"
+dest_files=["res://.godot/imported/fireplace.dialogue-ef4e8e318a96f39c0f309ee53e56bebd.tres"]
+
+[params]
+
+defaults=true

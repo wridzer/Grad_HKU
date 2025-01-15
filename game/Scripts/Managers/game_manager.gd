@@ -11,11 +11,18 @@ signal npc_stop_following(display_name: String)
 signal switch_level_cleanup
 signal get_spawn_location
 signal toggle_goap
+signal return_to_hub
+signal day_time
 
 var night_time: bool:
 	set(value):
 		Player.instance.night_time_filter.visible = value
+		if !value:
+			day += 1
+			day_time.emit()
 		night_time = value
+
+var day: int = 0
 
 var is_npc_following: bool: 
 	get: 
@@ -57,6 +64,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	# Dump blackboard & update utilities
 	if level_to_load == _level_hub:
 		night_time = true
+		return_to_hub.emit()
 		UtilitySystem.instance.calculate()
 		Blackboard.dump_data()
 		Blackboard.save_data()

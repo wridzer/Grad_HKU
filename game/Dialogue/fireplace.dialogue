@@ -1,0 +1,60 @@
+~ no_npc
+Please choose someone to sit at the fire with.
+- Dominic => Dominic
+- Rose => Rose
+- Virgil => Virgil
+=> END
+
+~ Dominic
+% [if game_manager.day == 1] => day_1_Dominic
+% [if game_manager.day == 2] => day_2_Dominic
+% [if game_manager.day == 3] => day_3_Dominic
+=> END
+
+~ Rose
+% [if game_manager.day == 1] => day_1_Rose
+% [if game_manager.day == 2] => day_2_Rose
+% [if game_manager.day == 3] => day_3_Rose
+=> END
+
+~ Virgil
+% [if game_manager.day == 1] => day_1_Virgil
+% [if game_manager.day == 2] => day_2_Virgil
+% [if game_manager.day == 3] => day_3_Virgil
+=> END
+
+~ day_1_Dominic
+Dominic: Greetings, I am Dominic! day 1
+=> END
+
+~ day_1_Rose
+Rose: I'm Rose. day 1
+=> END
+
+~ day_1_Virgil
+Virgil: H- heya, I'm Virgil... day 1
+=> END
+
+~ day_2_Dominic
+Dominic: Greetings, I am Dominic! day 2
+=> END
+
+~ day_2_Rose
+Rose: I'm Rose. day 2
+=> END
+
+~ day_2_Virgil
+Virgil: H- heya, I'm Virgil... day2
+=> END
+
+~ day_3_Dominic
+Dominic: Greetings, I am Dominic! day3
+=> END
+
+~ day_3_Rose
+Rose: I'm Rose. day3
+=> END
+
+~ day_3_Virgil
+Virgil: H- heya, I'm Virgil... day3
+=> END

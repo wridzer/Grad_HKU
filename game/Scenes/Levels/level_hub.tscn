@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://nqudhm4qctrk"]
+[gd_scene load_steps=22 format=4 uid="uid://nqudhm4qctrk"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_q3wky"]
 [ext_resource type="PackedScene" uid="uid://dpdotgt3oya1o" path="res://Scenes/Levels/level_loader.tscn" id="2_415ri"]
@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://b16n1w87erasq" path="res://Dialogue/virgil_dungeon.dialogue" id="14_e4hrh"]
 [ext_resource type="PackedScene" uid="uid://ceh5ro36yh1k6" path="res://Scenes/tent.tscn" id="15_tqh5u"]
 [ext_resource type="Resource" uid="uid://cteaboydc06j8" path="res://Dialogue/mission_condition_failure.dialogue" id="15_wu44a"]
+[ext_resource type="PackedScene" uid="uid://bs20txhswp5q" path="res://Scenes/fireplace.tscn" id="21_uppqn"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")
@@ -91,6 +92,9 @@ position = Vector2(88, -1)
 
 [node name="Tent" parent="." instance=ExtResource("15_tqh5u")]
 position = Vector2(33, 16)
+
+[node name="Fireplace" parent="." instance=ExtResource("21_uppqn")]
+position = Vector2(56, 16)
 
 [node name="Tilemaps" type="Node" parent="."]
 
