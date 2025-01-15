@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bdntcr5tudi1b"]
+[gd_scene load_steps=45 format=3 uid="uid://bdntcr5tudi1b"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_kinge"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_ebpt7"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="6_u67rn"]
 [ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="9_cwxd6"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_jrs23"]
+[ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="11_d4np2"]
 [ext_resource type="Texture2D" uid="uid://dikssr1o05lx2" path="res://Art/npc_highlighted.png" id="11_n5nkc"]
 [ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="14_4hwgr"]
 [ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="15_nw52t"]
@@ -333,6 +334,9 @@ script = ExtResource("2_howq1")
 [node name="NpcGoap" type="Node" parent="StateMachine"]
 script = ExtResource("10_jrs23")
 
+[node name="NpcDowned" type="Node" parent="StateMachine"]
+script = ExtResource("11_d4np2")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5qvlo")
 animation = &"highlighted"
@@ -355,12 +359,18 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
 
+[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cslfr")
+
 [node name="HealthComponent" parent="." instance=ExtResource("3_wo31h")]
 health = 3
 _immunity_length = 1.0
 
-[node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_cslfr")
+[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("25_roinp")]
+position = Vector2(-3, -6)
+scale = Vector2(0.005, 0.005)
+_health_component = NodePath("../HealthComponent")
+_hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("4_6t8yg")]
 collision_layer = 16
@@ -479,11 +489,6 @@ size_flags_vertical = 9
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 9
-
-[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("25_roinp")]
-position = Vector2(-3, -6)
-scale = Vector2(0.005, 0.005)
-_health_component = NodePath("../HealthComponent")
 
 [editable path="CharacterAnimations/Direction/Sword"]
 [editable path="CharacterAnimations/Direction/Shield"]

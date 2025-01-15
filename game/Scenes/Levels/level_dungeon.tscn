@@ -17,7 +17,6 @@ _spawn_point_scene = ExtResource("2_8vk5u")
 _enemy_scene = ExtResource("3_ucs6u")
 _key_scene = ExtResource("4_nlgur")
 _heal_scene = ExtResource("5_sp4sy")
-_level_loader = ExtResource("5_25tfg")
 _dungeon_exit_scene = ExtResource("5_25tfg")
 _min_heal_items = 3
 _extra_room_margin = 5

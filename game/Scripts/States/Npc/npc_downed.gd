@@ -1,8 +1,8 @@
-class_name NpcGoap
+class_name NpcDowned
 extends NpcState
 
 
-const STATE_TYPE = StateType.GOAP
+const STATE_TYPE = StateType.DOWNED
 
 
 func get_state_type() -> int:
@@ -10,9 +10,8 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	game_manager.spawn.connect(spawn)
+	npc.actionable.action.connect(revive)
 	game_manager.toggle_goap.connect(disable_goap)
-	npc.immunity(false)
 	
 	super.enter(previous_state, data)
 
@@ -22,21 +21,24 @@ func update(delta):
 
 
 func physics_update(delta: float) -> void:
-	npc.goap_agent.physics_update(delta, npc)
+	if is_equal_approx(npc.velocity.length_squared(), 0):
+		return
+	
+	var slowdown = min(delta / npc.stop_time, 1.0)
+	npc.set_velocity(npc.velocity - npc.velocity * slowdown)
+	super.physics_update(delta)
 
 
 func exit() -> void:
-	game_manager.spawn.disconnect(spawn)
 	game_manager.toggle_goap.disconnect(disable_goap)
-	npc.immunity(true)
-	
+	npc.actionable.action.disconnect(revive)
 	super.exit()
-
-
-func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
-	npc.saved_spawn_pos = spawn_pos
-	npc.position = spawn_pos + npc_offset
 
 
 func disable_goap() -> void:
 	finished.emit(state_type_to_int(StateType.FOLLOWING))
+
+
+func revive() -> void:
+	npc.health_component.reset_health()
+	npc.state_machine.transition_to_next_state(state_type_to_int(StateType.GOAP))

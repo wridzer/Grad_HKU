@@ -38,6 +38,8 @@ const MAX_ARROW_COUNT = 5
 @export_range(0.5, 1.0) var turning_smoothing_value: float = 0.5
 @export_range(0.0, 1.0) var speed_smoothing_value: float = 0.2
 
+@export_range(0.0, 2.0) var stop_time: float = 0.5
+
 # Info window vars
 @export var info_window : Window
 
@@ -53,12 +55,13 @@ var flee_distance_squared: float = _flee_distance * _flee_distance
 var direction: Vector2 = Vector2.ZERO
 var saved_spawn_pos: Vector2
 
-@onready var _health_component: HealthComponent = $HealthComponent
-@onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var _name_label: Label = $AnimatedSprite2D/NameLabel
+@onready var state_machine: StateMachine = $StateMachine
 
 
 func _ready() -> void:
@@ -81,10 +84,9 @@ func _ready() -> void:
 	
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
-	_health_component.die.connect(respawn)
-	_health_component.immunity.connect(update_immunity_animation)
-	_health_component.health_gained.connect(update_blackboard_health)
-	_hurtbox_component.hurt.connect(func(_x, _y): hurt())
+	health_component.die.connect(downed)
+	health_component.immunity.connect(update_immunity_animation)
+	health_component.health_gained.connect(update_blackboard_health)
 	
 	# Set display name label
 	_name_label.text = display_name
@@ -98,14 +100,24 @@ func _ready() -> void:
 	# Disable info window
 	info_window.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
 	info_window.visible = false
+	
+	hurtbox_component.hurt.connect(func(_x, _y): hurt())
+	immunity(true)
+
+
+func immunity(immune: bool) -> void:
+	if immune:
+		hurtbox_component.immune = true
+	else:
+		hurtbox_component.immune = false
+
+
+func downed() -> void:
+	state_machine.transition_to_next_state(NpcState.state_type_to_int(NpcState.StateType.DOWNED))
 
 
 func die() -> void:
 	queue_free()
-
-
-func respawn() -> void:
-	_health_component.gain_health(1)
 
 
 func update_immunity_animation(immune: bool) -> void:
@@ -118,7 +130,7 @@ func hurt() -> void:
 
 
 func update_blackboard_health() -> void:
-	_health_component.set_health_blackboard_variables("npc")
+	health_component.set_health_blackboard_variables("npc")
 
 
 func update_animation_parameters() -> void:
@@ -152,7 +164,7 @@ func choose() -> void:
 	Blackboard.add_data("aggro_priority", _aggro_priority)
 	Blackboard.add_data("desired_health", _desired_health)
 	
-	_health_component.set_health_blackboard_variables("npc")
+	health_component.set_health_blackboard_variables("npc")
 	
 	info_window.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
 	info_window.visible = true

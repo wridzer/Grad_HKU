@@ -45,10 +45,10 @@ func _ready() -> void:
 func immunity(immune: bool) -> void:
 	if immune:
 		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-		hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+		hurtbox_component.immune = true
 	else:
 		_hitbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
-		hurtbox_component.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
+		hurtbox_component.immune = false
 
 
 func die() -> void:

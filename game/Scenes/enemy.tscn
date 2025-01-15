@@ -82,10 +82,11 @@ frame_progress = 0.923811
 health = 3
 _immunity_length = 0.4
 
-[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component") instance=ExtResource("2_5c03w")]
+[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("2_5c03w")]
 position = Vector2(-3, -6)
 scale = Vector2(0.005, 0.005)
 _health_component = NodePath("../HealthComponent")
+_hurtbox_component = NodePath("../HurtboxComponent")
 
 [node name="PhysicsCollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

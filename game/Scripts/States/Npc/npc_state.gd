@@ -2,7 +2,7 @@ class_name NpcState
 extends State
 
 
-enum StateType {INVALID, IDLE, FOLLOWING, GOAP}
+enum StateType {INVALID, IDLE, FOLLOWING, GOAP, DOWNED}
 
 var npc: Npc
 
@@ -25,5 +25,5 @@ func string_to_state_type(state: int) -> StateType:
 	return StateType.find_key(state)
 
 
-func state_type_to_int(state: StateType) -> int:
+static func state_type_to_int(state: StateType) -> int:
 	return int(state)

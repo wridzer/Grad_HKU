@@ -17,7 +17,6 @@ func _get_cost() -> int:
 		if enemy_distance < 5:
 			cost -= 20
 	
-	
 	if Blackboard.get_data("block_priority"):
 		return 100 - Blackboard.get_data("block_priority") 
 	return 1

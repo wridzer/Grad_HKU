@@ -46,7 +46,7 @@ func _get_priority() -> int:
 	var slash_priority = Blackboard.get_data("slash_priority") if Blackboard.get_data("slash_priority") else 0
 	var block_priority = Blackboard.get_data("block_priority") if Blackboard.get_data("block_priority") else 0
 	var shoot_priority = Blackboard.get_data("shoot_priority") if Blackboard.get_data("shoot_priority") else 0
-
+	
 	# If npc want to shoot arrow but is to close
 	if shoot_priority > slash_priority && shoot_priority > block_priority:
 		if Player.instance.room:
@@ -61,8 +61,7 @@ func _get_priority() -> int:
 					distance = enemy_distance
 			if picked_enemy != null && distance < npc._follow_distance:
 				return 100
-			
-
+	
 	return 0
 
 

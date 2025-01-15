@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 				var data = Blackboard.get_data(blackboard_keys[i])
 				var new_label = Label.new()
 				new_label.text = blackboard_keys[i].replace("_", " ") + "   -   %s" % str(data)
-				new_label.add_theme_font_size_override("font_size", font_size * 0.5)
+				new_label.add_theme_font_size_override("font_size", int(font_size * 0.5))
 				new_label.size_flags_vertical = Control.SIZE_FILL
 				new_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 				_blackboard_list.add_child(new_label)

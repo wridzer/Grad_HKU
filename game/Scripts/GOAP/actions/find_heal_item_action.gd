@@ -21,7 +21,7 @@ func _get_effects() -> Dictionary:
 	return {"has_destination" : true, "actionable_found" : true, "health_up" : true}
 
 
-func _perform(actor, _delta) -> bool:
+func _perform(_actor, _delta) -> bool:
 	var heal_item: HealPickup = Player.instance.room.heal_pickups.pick_random()
 	Blackboard.add_data("destination_node", heal_item)
 	return true

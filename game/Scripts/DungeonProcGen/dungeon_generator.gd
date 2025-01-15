@@ -31,7 +31,6 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export var _enemy_scene: PackedScene
 @export var _key_scene: PackedScene
 @export var _heal_scene: PackedScene
-@export var _level_loader: PackedScene
 @export var _dungeon_exit_scene: PackedScene
 
 # Generation buttons

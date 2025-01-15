@@ -26,6 +26,7 @@ func _perform(actor, _delta) -> bool:
 	var actionable = Blackboard.get_data("destination_node")
 	if actionable == null || !is_instance_valid(actionable):
 		return false
-	actionable._actionable.interactor = npc
-	actionable._actionable.action.emit()
+	
+	actionable.actionable.interactor = npc
+	actionable.actionable.action.emit()
 	return true

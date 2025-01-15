@@ -23,7 +23,7 @@ static var instance: Player = null
 
 @onready var _actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
 @onready var _camera_2d: CameraControl = $Camera2D
-@onready var _health_component: HealthComponent = $HealthComponent
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 
 
@@ -38,12 +38,12 @@ func _ready() -> void:
 	# Connect signals
 	game_manager.spawn.connect(spawn)
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
-	game_manager.switch_level_cleanup.connect(_health_component.reset_health)
+	game_manager.switch_level_cleanup.connect(health_component.reset_health)
 	input_manager.interact.connect(interact)
-	_health_component.die.connect(respawn)
-	_health_component.immunity.connect(update_immunity_animation)
-	_health_component.health_gained.connect(update_blackboard_health)
-	_health_component.set_health_blackboard_variables("player")
+	health_component.die.connect(respawn)
+	health_component.immunity.connect(update_immunity_animation)
+	health_component.health_gained.connect(update_blackboard_health)
+	health_component.set_health_blackboard_variables("player")
 	_hurtbox_component.hurt.connect(func(_x, _y): hurt())
 	
 	# Enable animations
@@ -128,7 +128,7 @@ func interact() -> void:
 
 
 func update_blackboard_health() -> void:
-	Blackboard.add_data("player_health", _health_component.health)
+	Blackboard.add_data("player_health", health_component.health)
 
 
 func update_immunity_animation(immune: bool) -> void:
@@ -158,7 +158,7 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 func respawn() -> void:
 	room = null
 	spawn(_saved_spawn_pos, Vector2.ZERO)
-	_health_component.gain_health(3)
+	health_component.reset_health()
 
 
 func shoot(direction: Vector2) -> bool:

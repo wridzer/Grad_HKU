@@ -5,7 +5,7 @@ extends Node2D
 
 signal no_keys_left
 
-@onready var _actionable: Area2D = $Actionable
+@onready var actionable: Area2D = $Actionable
 
 @export var pickup_dialogue: DialogueResource
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 	
 	Blackboard.increment_data("keys", 1)
 	
-	_actionable.action.connect(_pickup)
+	actionable.action.connect(_pickup)
 
 
 func _pickup() -> void:

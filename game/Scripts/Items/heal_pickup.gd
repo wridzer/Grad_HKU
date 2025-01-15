@@ -3,7 +3,7 @@ class_name HealPickup
 extends Node2D
 
 
-@onready var _actionable: Area2D = $Actionable
+@onready var actionable: Area2D = $Actionable
 
 @export var pickup_dialogue: DialogueResource
 @export var heal_amount: int = 3
@@ -15,20 +15,24 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	_actionable.action.connect(_pickup)
+	actionable.action.connect(_pickup)
 
 
 func _pickup() -> void:
-	var actor = _actionable.interactor
+	var actor = actionable.interactor
+	var max_health: int = 3
 	if is_instance_valid(actor as Player):
 		actor = actor as Player
+		if Blackboard.get_data("player_max_health"):
+			max_health = Blackboard.get_data("player_max_health")
 	elif is_instance_valid(actor as Npc):
 		actor = actor as Npc
+		if Blackboard.get_data("npc_max_health"):
+			max_health = Blackboard.get_data("npc_max_health")
 	else:
 		return
 	
-	if actor._health_component.health < actor._health_component._max_health:
-		actor._health_component.gain_health(heal_amount)
+	if actor.health_component.health < max_health:
+		actor.health_component.gain_health(heal_amount)
 		heal_used.emit(self)
 		queue_free()
-		

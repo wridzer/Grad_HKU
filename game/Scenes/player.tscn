@@ -323,10 +323,11 @@ offset = Vector2(960, 540)
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 960, 540)
 
-[node name="HealthDisplay" parent="Camera2D/CanvasLayer" node_paths=PackedStringArray("_health_component") instance=ExtResource("10_s1kec")]
+[node name="HealthDisplay" parent="Camera2D/CanvasLayer" node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("10_s1kec")]
 position = Vector2(-220, -115)
 scale = Vector2(0.05, 0.05)
 _health_component = NodePath("../../../HealthComponent")
+_hurtbox_component = NodePath("../../../HurtboxComponent")
 
 [node name="Mission Report" parent="Camera2D/CanvasLayer" instance=ExtResource("12_hkga2")]
 scale = Vector2(0.25, 0.25)
