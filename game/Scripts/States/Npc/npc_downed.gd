@@ -10,8 +10,11 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
-	npc.actionable.action.connect(revive)
 	game_manager.toggle_goap.connect(disable_goap)
+	
+	npc.actionable.action.connect(revive)
+	
+	npc.name_label.text = "Please revive me!"
 	
 	super.enter(previous_state, data)
 
@@ -30,8 +33,12 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
-	game_manager.toggle_goap.disconnect(disable_goap)
 	npc.actionable.action.disconnect(revive)
+	
+	game_manager.toggle_goap.disconnect(disable_goap)
+	
+	npc.name_label.text = npc.display_name
+	
 	super.exit()
 
 

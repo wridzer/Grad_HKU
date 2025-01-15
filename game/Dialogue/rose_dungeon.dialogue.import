@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://c8aedbk45hegi"
+path="res://.godot/imported/rose_dungeon.dialogue-30d226afa23c4b3b4578f7d45e37de65.tres"
+
+[deps]
+
+source_file="res://Dialogue/rose_dungeon.dialogue"
+dest_files=["res://.godot/imported/rose_dungeon.dialogue-30d226afa23c4b3b4578f7d45e37de65.tres"]
+
+[params]
+
+defaults=true

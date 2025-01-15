@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://b16n1w87erasq"
+path="res://.godot/imported/virgil_dungeon.dialogue-8ee8e310f1f8a77c867cff2a200288da.tres"
+
+[deps]
+
+source_file="res://Dialogue/virgil_dungeon.dialogue"
+dest_files=["res://.godot/imported/virgil_dungeon.dialogue-8ee8e310f1f8a77c867cff2a200288da.tres"]
+
+[params]
+
+defaults=true

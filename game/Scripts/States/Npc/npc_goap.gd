@@ -10,8 +10,11 @@ func get_state_type() -> int:
 
 
 func enter(previous_state: int, data := {}) -> void:
+	npc.actionable.action.connect(dialogue_manager.start_dialogue.bind(npc.dungeon_dialogue, npc.display_name + "_dungeon"))
+	
 	game_manager.spawn.connect(spawn)
 	game_manager.toggle_goap.connect(disable_goap)
+	
 	npc.immunity(false)
 	
 	super.enter(previous_state, data)
@@ -26,8 +29,11 @@ func physics_update(delta: float) -> void:
 
 
 func exit() -> void:
+	npc.actionable.action.disconnect(dialogue_manager.start_dialogue)
+	
 	game_manager.spawn.disconnect(spawn)
 	game_manager.toggle_goap.disconnect(disable_goap)
+	
 	npc.immunity(true)
 	
 	super.exit()

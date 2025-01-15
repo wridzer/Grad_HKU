@@ -12,6 +12,7 @@ const MAX_ARROW_COUNT = 5
 @export var idle_dialogue: DialogueResource
 @export var hit_dialogue: DialogueResource
 @export var following_dialogue: DialogueResource
+@export var dungeon_dialogue: DialogueResource
 
 @export var _preferred_combat: CombatType
 @export var _adapatable_combat: CombatType
@@ -60,7 +61,7 @@ var saved_spawn_pos: Vector2
 @onready var danger_sensor_component: DangerSensorComponent = $DangerSensorComponent
 @onready var actionable: Area2D = $Actionable
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var _name_label: Label = $AnimatedSprite2D/NameLabel
+@onready var name_label: Label = $AnimatedSprite2D/NameLabel
 @onready var state_machine: StateMachine = $StateMachine
 
 
@@ -73,14 +74,15 @@ func _ready() -> void:
 			npc.die()
 	
 	# Assert that all necessary dialogue has been assigned
-	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + name)
-	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + name)
-	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + name)
+	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + display_name)
+	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + display_name)
+	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + display_name)
+	assert(is_instance_valid(dungeon_dialogue), "Please assign a valid dungeon_dialogue to " + display_name)
 	
 	# Assert that all combat preferences are unique types
-	assert(_preferred_combat != _adapatable_combat, name + "'s _preferred_combat and _adapatable_combat are the same")
-	assert(_adapatable_combat != _unadaptable_combat, name + "'s _adapatable_combat and _unadaptable_combat are the same")
-	assert(_unadaptable_combat != _preferred_combat, name + "'s _unadaptable_combat and _preferred_combat are the same")
+	assert(_preferred_combat != _adapatable_combat, display_name + "'s _preferred_combat and _adapatable_combat are the same")
+	assert(_adapatable_combat != _unadaptable_combat, display_name + "'s _adapatable_combat and _unadaptable_combat are the same")
+	assert(_unadaptable_combat != _preferred_combat, display_name + "'s _unadaptable_combat and _preferred_combat are the same")
 	
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
@@ -89,7 +91,7 @@ func _ready() -> void:
 	health_component.health_gained.connect(update_blackboard_health)
 	
 	# Set display name label
-	_name_label.text = display_name
+	name_label.text = display_name
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree

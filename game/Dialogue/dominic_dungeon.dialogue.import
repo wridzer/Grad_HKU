@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://5acjyyimvxhp"
+path="res://.godot/imported/dominic_dungeon.dialogue-263f7a6d1c5866387680cd5049ae4bcb.tres"
+
+[deps]
+
+source_file="res://Dialogue/dominic_dungeon.dialogue"
+dest_files=["res://.godot/imported/dominic_dungeon.dialogue-263f7a6d1c5866387680cd5049ae4bcb.tres"]
+
+[params]
+
+defaults=true
