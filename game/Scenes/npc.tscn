@@ -26,7 +26,7 @@
 [ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="23_6uxte"]
 [ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="24_pb6gn"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="25_roinp"]
-[ext_resource type="GoapGoal" uid="uid://cmo3y35ti5a2d" path="res://goap_resources/goals/revive_player_goal.tres" id="26_7ish3"]
+[ext_resource type="GoapGoal" path="res://goap_resources/goals/revive_player_goal.tres" id="26_7ish3"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001

@@ -26,7 +26,7 @@ static var instance: Player = null
 @onready var _camera_2d: CameraControl = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
-@onready var mission_report: MissionReport = $"Camera2D/CanvasLayer/MissionReport"
+@onready var mission_report: MissionReport = $Camera2D/CanvasLayer/MissionReport
 @onready var night_time_filter: CanvasItem = $Camera2D/CanvasLayer/NightTimeFilter
 
 
