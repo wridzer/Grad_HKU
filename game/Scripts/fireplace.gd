@@ -15,6 +15,10 @@ func _ready() -> void:
 
 
 func _toggle_fireplace_actionable(enable: bool) -> void:
+	# don't fireplace on day 1 or after any day after 2
+	if enable && (game_manager.day == 1 || game_manager.day > 2):
+		return
+	
 	_exclamation_mark_sprite.visible = enable
 	_actionable.set_process_mode(PROCESS_MODE_INHERIT if enable else PROCESS_MODE_DISABLED)
 
