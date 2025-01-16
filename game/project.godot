@@ -87,6 +87,7 @@ window/size/mode=2
 window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 window/per_pixel_transparency/allowed=true
+mouse_cursor/custom_image="res://Art/target_round_b.png"
 
 [dotnet]
 
