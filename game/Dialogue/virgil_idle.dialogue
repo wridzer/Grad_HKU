@@ -1,5 +1,7 @@
 ~ start
-Virgil: H- heya, I'm Virgil...
+if game_manager.day == 1 
+	Virgil: H- heya, I'm Virgil...
+
 % Virgil: Oh, you want to go together?
 % Virgil: Are we pairing up?
 - Yes => yes
@@ -54,13 +56,13 @@ do game_manager.npc_follow.emit("Virgil")
 => END
 
 ~ start_night_Avoiding
-Virgil: Good night
+Virgil: You got a good balance. You’re really something out there.
 => END
 
 ~ start_night_Aggressive
-Virgil: Good night
+Virgil: Hey, what you did out there? That was careless.
 => END
 
 ~ start_night_Defensive
-Virgil: Good night
+Virgil: You were being pretty careful. That’s- that’s good. Can’t have ourselves killed out there now can we? Haha…
 => END

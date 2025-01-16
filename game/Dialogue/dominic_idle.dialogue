@@ -1,9 +1,12 @@
 ~ start
-Dominic: Greetings, I am Dominic!
+if game_manager.day == 1 
+	Dominic: Greetings, I am Dominic!
+
 % Dominic: Would you like to travel together?
 % Dominic: Are you in search for a companion?
 - Yes => yes
 - No => no
+
 
 ~ yes
 if game_manager.is_npc_following:
@@ -12,6 +15,8 @@ if game_manager.is_npc_following:
 	if Blackboard.get_data("npc").display_name == "Virgil":
 		=> already_following_virgil
 => wel
+
+
 
 ~ wel
 % Dominic: Off we go then!
@@ -52,13 +57,13 @@ do game_manager.npc_stop_following.emit("Virgil")
 => follow
 
 ~ start_night_Avoiding
-Dominic: Good night
+Dominic: I do not see any sense in not announcing yourself like you did. There is no honour in an ambush.
 => END
 
 ~ start_night_Aggressive
-Dominic: Good night
+Dominic: I see you think the best defense is offense. Very well, I will watch your back!
 => END
 
 ~ start_night_Defensive
-Dominic: Good night
+Dominic: Wonderful show out there! A good defense is the best offense, like I always say!
 => END

@@ -1,6 +1,6 @@
 ~ start
 if Blackboard.get_data("keys") == 0
-	Last key found! Dungeon exit now available.
+	Last key found! You may now exit the dungeon.
 else
 	Only {{Blackboard.get_data("keys")}} keys left!
 => END

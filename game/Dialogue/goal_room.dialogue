@@ -1,3 +1,15 @@
 ~ start
-Goal room: Hi I'm the goal room in an item mission
+% [if game_manager.day == 1] => day_1_room
+% [if game_manager.day == 2] => day_2_room
+=> END
+
+~ day_1_room
+The room sprawls out before you, stairs already visible. A sense of relief washes over you, you somehow made it to the end.
+
+=> END 
+
+~ day_2_room
+You can feel it in your entire being, this is the final room.
+Something in you feels almost sad to leave this place. It's a nagging feeling, as if you have been here before...
+
 => END
