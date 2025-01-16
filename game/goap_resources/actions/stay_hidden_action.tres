@@ -1,0 +1,6 @@
+[gd_resource type="GoapAction" load_steps=2 format=3 uid="uid://dn072c5buarph"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/actions/stay_hidden_action.gd" id="1_p0t4c"]
+
+[resource]
+script = ExtResource("1_p0t4c")
