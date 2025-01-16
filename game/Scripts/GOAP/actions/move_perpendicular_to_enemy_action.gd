@@ -46,6 +46,11 @@ func _perform_physics(actor, _delta) -> bool:
 		var result: Dictionary = npc.get_world_2d().direct_space_state.intersect_ray(query)
 		if result == {}:
 			return true
+		else:
+			# Move to side
+			var target_direction: Vector2 = (enemy_pos - npc_pos).normalized().rotated(deg_to_rad(90))
+			npc.direction = target_direction
+			npc.set_velocity(target_direction * npc.max_follow_speed)
 		
 	elif distance > npc._max_chase_distance:
 		# Move closer
@@ -53,12 +58,6 @@ func _perform_physics(actor, _delta) -> bool:
 		npc.direction = target_direction
 		npc.set_velocity(target_direction * npc.max_follow_speed)
 		
-	else:
-		# Move to side
-		var target_direction: Vector2 = (enemy_pos - npc_pos).normalized().rotated(deg_to_rad(90))
-		npc.direction = target_direction
-		npc.set_velocity(target_direction * npc.max_follow_speed)
-	
 	# Move
 	npc.animation_direction.look_at(enemy_pos)
 	npc.move_and_slide()

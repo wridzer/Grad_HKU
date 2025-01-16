@@ -12,6 +12,9 @@ func _is_goal_met() -> bool:
 		
 	if Player.instance.room.enemies.size() <= 0:
 		return true
+				
+	if Player.instance.room.barrels.size() <= 0:
+		return true
 	
 	return false
 

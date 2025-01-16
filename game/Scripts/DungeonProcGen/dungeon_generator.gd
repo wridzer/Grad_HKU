@@ -70,8 +70,6 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export_range(3, 20) var _max_key_items: int = 3
 @export_range(1, 10) var _min_heal_items: int = 2
 @export_range(1, 20) var _max_heal_items: int = 3
-@export_range(1, 10) var _min_barrels: int = 2
-@export_range(1, 20) var _max_barrels: int = 3
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
@@ -119,7 +117,6 @@ func _generate_dungeon() -> void:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 		assert(_min_room_amount - 1 >= _max_key_items, "_min_room_amount - 1 < _max_key_items (can not add more keys if minimum rooms generates, and can not generate key in goal room)")
 	assert(_min_room_amount - 1 >=  _max_heal_items, "_min_room_amount - 1 < _max_heal_items, can only have 1 heal item per room excluding goal room")
-	assert(_min_room_amount - 1 >=  _max_barrels, "_min_room_amount - 1 < _max_barrels, can only have 1 barrels per room excluding goal room")
 	print("generating dungeon with mission type: ", MissionType.keys()[mission_type])
 	
 	# Apply seed when generating
@@ -546,11 +543,11 @@ func _spawn_heal_items(goal_room: Room) -> void:
 		heal_pickup.heal_used.connect(heal_room.erase_used_heal)
 
 
-func _spawn_barrels(room: Room) -> void:
+func _spawn_barrels(goal_room: Room) -> void:
 	var possible_barrel_rooms: Array[Room] = _rooms.duplicate()
-	possible_barrel_rooms.erase(room)
+	possible_barrel_rooms.erase(goal_room)
 	
-	var barrel_amount = randi_range(_min_barrels, _max_barrels)
+	var barrel_amount = possible_barrel_rooms.size()
 	for i in range(barrel_amount):
 		var barrel_room = possible_barrel_rooms.pick_random()
 		possible_barrel_rooms.erase(barrel_room)
