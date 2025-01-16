@@ -12,10 +12,7 @@ func _is_valid() -> bool:
 
 
 func _get_cost() -> int:
-	var npc: Npc = Blackboard.get_data("npc")
-	var distance = npc.global_position.distance_to(Player.instance.room.barrels[0].global_position)
-	
-	return distance
+	return 1
 
 
 func _get_action_name() -> StringName:
