@@ -39,6 +39,7 @@ animation = &"highlighted"
 
 [node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("3_kds1u")]
 position = Vector2(-0.5, 2.5)
+scale = Vector2(0.477437, 0.510036)
 actionable_priority = 1
 animated_sprite = NodePath("../AnimatedSprite2D")
 

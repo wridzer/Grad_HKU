@@ -219,6 +219,6 @@ func _reduce_arrows_to(amount: int) -> void:
 
 
 func toggle_hide(enabled: bool) -> void:
-	animated_sprite_2d.visible = !enabled
+	animation_direction.visible = !enabled
 	is_hidden = enabled
 	hurtbox_component.immune = enabled

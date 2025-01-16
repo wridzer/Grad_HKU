@@ -22,4 +22,5 @@ func _pickup() -> void:
 	else:
 		return
 		
-	actor.toggle_hide(true)		
+	actor.toggle_hide(true)
+	actor.global_position = self.global_position

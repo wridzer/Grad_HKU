@@ -29,4 +29,7 @@ func _perform(actor, _delta) -> bool:
 	
 	item.actionable.interactor = npc
 	item.actionable.action.emit()
+	
+	Blackboard.remove_data("destination_node")
+	
 	return true
