@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnbs5mtq1j2dw"]
+
+[ext_resource type="Script" path="res://Scripts/Items/barrel.gd" id="1_b8ccn"]
+[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_28gv3"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_kds1u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arjjr"]
+atlas = ExtResource("2_28gv3")
+region = Rect2(442, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1x1x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arjjr")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arjjr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e3i2j"]
+radius = 5.88236
+
+[node name="Barrel" type="Node2D"]
+script = ExtResource("1_b8ccn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_h1x1x")
+animation = &"highlighted"
+
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("3_kds1u")]
+position = Vector2(-0.5, 2.5)
+actionable_priority = 1
+animated_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+scale = Vector2(1.36, 1.48)
+shape = SubResource("CircleShape2D_e3i2j")

@@ -5,7 +5,6 @@
 [ext_resource type="GoapAction" uid="uid://dxmoayb1d3r2s" path="res://goap_resources/actions/find_enemy_action.tres" id="3_2rar5"]
 [ext_resource type="GoapAction" uid="uid://cyvliej34wu3f" path="res://goap_resources/actions/find_hiding_spot_action.tres" id="3_obwdg"]
 [ext_resource type="GoapAction" uid="uid://bgr75ol2xtiva" path="res://goap_resources/actions/flee_from_enemy_action.tres" id="4_hi7s4"]
-[ext_resource type="GoapAction" uid="uid://cuqwq06g73f81" path="res://goap_resources/actions/move_to_hiding_spot_action.tres" id="6_2jcqd"]
 [ext_resource type="GoapAction" uid="uid://b5r6otl3lrsdi" path="res://goap_resources/actions/block_action.tres" id="9_wilm0"]
 [ext_resource type="GoapAction" uid="uid://df7qmiphrntqe" path="res://goap_resources/actions/shoot_action.tres" id="10_lvt1p"]
 [ext_resource type="GoapAction" uid="uid://ckww702xlyxg4" path="res://goap_resources/actions/slash_action.tres" id="11_5rc80"]
@@ -16,7 +15,8 @@
 [ext_resource type="GoapAction" uid="uid://c3r7ferakpu7s" path="res://goap_resources/actions/find_key_action.tres" id="14_rbbf2"]
 [ext_resource type="GoapAction" uid="uid://davk3xb3446v6" path="res://goap_resources/actions/activate_actionable_action.tres" id="15_m2d5s"]
 [ext_resource type="GoapAction" uid="uid://xos43rabll7n" path="res://goap_resources/actions/find_player.tres" id="16_2ebno"]
+[ext_resource type="GoapAction" uid="uid://dn072c5buarph" path="res://goap_resources/actions/stay_hidden_action.tres" id="17_iqetm"]
 [ext_resource type="GoapAction" uid="uid://b0x1mpt17ifjq" path="res://goap_resources/actions/revive_action.tres" id="17_lsyg4"]
 
 [node name="Goap" type="Goap"]
-actions = Array[GoapAction]([ExtResource("1_ol0y2"), ExtResource("3_2rar5"), ExtResource("3_obwdg"), ExtResource("4_hi7s4"), ExtResource("6_2jcqd"), ExtResource("2_d1rke"), ExtResource("12_m6u6p"), ExtResource("9_wilm0"), ExtResource("10_lvt1p"), ExtResource("11_5rc80"), ExtResource("13_8k7gj"), ExtResource("14_pxri6"), ExtResource("13_b6l0n"), ExtResource("14_rbbf2"), ExtResource("15_m2d5s"), ExtResource("16_2ebno"), ExtResource("17_lsyg4")])
+actions = Array[GoapAction]([ExtResource("14_pxri6"), ExtResource("1_ol0y2"), ExtResource("3_2rar5"), ExtResource("4_hi7s4"), ExtResource("9_wilm0"), ExtResource("10_lvt1p"), ExtResource("11_5rc80"), ExtResource("13_8k7gj"), ExtResource("13_b6l0n"), ExtResource("14_rbbf2"), ExtResource("15_m2d5s"), ExtResource("2_d1rke"), ExtResource("12_m6u6p"), ExtResource("16_2ebno"), ExtResource("17_lsyg4"), ExtResource("3_obwdg"), ExtResource("17_iqetm")])

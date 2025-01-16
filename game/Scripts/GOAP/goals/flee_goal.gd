@@ -21,6 +21,11 @@ func _is_goal_met() -> bool:
 		return false
 	
 	var npc: Npc = Blackboard.get_data("npc")
+	
+	# If the npc is already hidden we can return
+	if npc.is_hidden:
+		return true
+		
 	var enemy: Enemy = data
 	var npc_pos: Vector2 = npc.get_global_position()
 	var enemy_pos: Vector2 = enemy.get_global_position()
@@ -62,7 +67,7 @@ func _get_priority() -> int:
 			if picked_enemy != null && distance < npc._follow_distance:
 				return 100
 	
-	return 0
+	return 1
 
 
 func _get_desired_state() -> Dictionary:

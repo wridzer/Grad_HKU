@@ -31,6 +31,7 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export var _enemy_scene: PackedScene
 @export var _key_scene: PackedScene
 @export var _heal_scene: PackedScene
+@export var _barrel_scene: PackedScene
 @export var _dungeon_exit_scene: PackedScene
 
 # Generation buttons
@@ -68,6 +69,8 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export_range(3, 20) var _max_key_items: int = 3
 @export_range(1, 10) var _min_heal_items: int = 2
 @export_range(1, 20) var _max_heal_items: int = 3
+@export_range(1, 10) var _min_barrels: int = 2
+@export_range(1, 20) var _max_barrels: int = 3
 @export_range(0, 10) var _extra_room_margin: int = 0
 @export_range(15, 40, 5) var _border_margin: int = 20
 @export_range(0, 5) var _min_enemies_per_room: int = 1
@@ -79,6 +82,7 @@ static var mission_type: MissionType = MissionType.INVALID
 var _rooms: Array[Room] = []
 var _keys: Array = []
 var _heals: Array = []
+var _barrels: Array = []
 var _step: int = 0:
 	set(value):
 		_step = value
@@ -114,6 +118,7 @@ func _generate_dungeon() -> void:
 		assert(_max_key_items >= _min_key_items, "_max_key_items < _min_key_items")
 		assert(_min_room_amount - 1 >= _max_key_items, "_min_room_amount - 1 < _max_key_items (can not add more keys if minimum rooms generates, and can not generate key in goal room)")
 	assert(_min_room_amount - 1 >=  _max_heal_items, "_min_room_amount - 1 < _max_heal_items, can only have 1 heal item per room excluding goal room")
+	assert(_min_room_amount - 1 >=  _max_barrels, "_min_room_amount - 1 < _max_barrels, can only have 1 barrels per room excluding goal room")
 	print("generating dungeon with mission type: ", MissionType.keys()[mission_type])
 	
 	# Apply seed when generating
@@ -146,6 +151,7 @@ func _generate_dungeon() -> void:
 	else:
 		_spawn_enemies(spawn_room)
 	_spawn_heal_items(goal_room)
+	_spawn_barrels(goal_room)
 	_make_spawn_point(spawn_room)
 	_make_dungeon_exit(goal_room)
 
@@ -531,6 +537,28 @@ func _spawn_heal_items(goal_room: Room) -> void:
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		heal_pickup.translate(pos * _tile_map.rendering_quadrant_size)
 		heal_pickup.heal_used.connect(heal_room.erase_used_heal)
+
+
+func _spawn_barrels(room: Room) -> void:
+	var possible_barrel_rooms: Array[Room] = _rooms.duplicate()
+	possible_barrel_rooms.erase(room)
+	
+	var barrel_amount = randi_range(_min_barrels, _max_barrels)
+	for i in range(barrel_amount):
+		var barrel_room = possible_barrel_rooms.pick_random()
+		possible_barrel_rooms.erase(barrel_room)
+		
+		var barrel: Barrel = _barrel_scene.instantiate()
+		barrel_room.barrels.append(barrel)
+		barrel_room.add_child(barrel)
+		barrel.name = barrel.name + str(i)
+		barrel.owner = self
+		_barrels.append(barrel)
+		_step += 1
+		var half_width: float = barrel_room.width / 2.0 - _item_wall_margin
+		var half_height: float = barrel_room.height / 2.0 - _item_wall_margin
+		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
+		barrel.translate(pos * _tile_map.rendering_quadrant_size)
 
 
 func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
