@@ -22,6 +22,8 @@ height = 15.0
 process_mode = 4
 visible = false
 z_index = 8
+position = Vector2(8, 0)
+rotation = -1.5708
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xw6r0")

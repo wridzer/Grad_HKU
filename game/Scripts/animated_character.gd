@@ -2,9 +2,9 @@ class_name AnimatedCharacter
 extends CharacterBody2D
 
 
-var animation_tree: AnimationTree
-var animation_player: AnimationPlayer
-
+@export var animation_tree: AnimationTree
+@export var animation_player: AnimationPlayer
+@export var animation_direction: Node2D
 
 func _process(_delta: float) -> void:
 	update_animation_parameters()

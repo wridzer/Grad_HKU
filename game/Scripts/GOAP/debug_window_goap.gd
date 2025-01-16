@@ -1,5 +1,6 @@
 extends Window
 
+
 @export var _blackboard_list: VBoxContainer
 @export var _goal_list: VBoxContainer
 @export var _action_plan: VBoxContainer 
@@ -11,6 +12,7 @@ extends Window
 var current_displayed_goal: String
 var goals: Array[GoapGoal]
 var frame_time: float = 0
+
 
 func _ready() -> void:
 	# Populate goals list

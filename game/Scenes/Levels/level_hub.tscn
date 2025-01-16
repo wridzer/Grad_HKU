@@ -8,24 +8,27 @@
 [ext_resource type="PackedScene" uid="uid://dfqtqx2hreskn" path="res://Scenes/NPCs/npc_virgil.tscn" id="4_ogu1r"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/Levels/spawn_point.tscn" id="4_yhct4"]
 [ext_resource type="PackedScene" uid="uid://d3nmvrek3uub0" path="res://Scenes/mission_display.tscn" id="9_emmm7"]
-[ext_resource type="PackedScene" path="res://Scenes/tent.tscn" id="15_tqh5u"]
+[ext_resource type="PackedScene" uid="uid://ceh5ro36yh1k6" path="res://Scenes/tent.tscn" id="15_tqh5u"]
 [ext_resource type="Resource" uid="uid://cteaboydc06j8" path="res://Dialogue/mission_condition_failure.dialogue" id="15_wu44a"]
 [ext_resource type="PackedScene" uid="uid://bs20txhswp5q" path="res://Scenes/fireplace.tscn" id="21_uppqn"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")
 
-[node name="Npc_Rose" parent="." instance=ExtResource("2_bl3e4")]
+[node name="NpcRose" parent="." instance=ExtResource("2_bl3e4")]
 position = Vector2(72, -39)
-rotation = 1.5708
+
+[node name="CharacterAnimations" parent="NpcRose" index="0"]
+rotation = -1.5708
 
 [node name="NpcDominic" parent="." instance=ExtResource("3_scwlw")]
 position = Vector2(71, 42)
-rotation = 1.5708
+
+[node name="CharacterAnimations" parent="NpcDominic" index="0"]
+rotation = -1.5708
 
 [node name="NpcVirgil" parent="." instance=ExtResource("4_ogu1r")]
 position = Vector2(-8, -8)
-rotation = 1.5708
 
 [node name="MissionDisplay" parent="." instance=ExtResource("9_emmm7")]
 z_index = 1
@@ -64,3 +67,12 @@ condition_failure_dialogue = ExtResource("15_wu44a")
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)
 _npc_offset = Vector2(10, 0)
+
+[editable path="NpcRose"]
+[editable path="NpcRose/CharacterAnimations/AnimationDirection/Sword"]
+[editable path="NpcRose/CharacterAnimations/AnimationDirection/Shield"]
+[editable path="NpcRose/DangerSensorComponent"]
+[editable path="NpcDominic"]
+[editable path="NpcDominic/CharacterAnimations/AnimationDirection/Sword"]
+[editable path="NpcDominic/CharacterAnimations/AnimationDirection/Shield"]
+[editable path="NpcDominic/DangerSensorComponent"]

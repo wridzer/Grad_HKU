@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=29 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://enfh0jk6264s" path="res://Scenes/actionable_finder.tscn" id="9_2vmwd"]
 [ext_resource type="Script" path="res://Scripts/camera_control.gd" id="10_nkmy7"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="10_s1kec"]
-[ext_resource type="Texture2D" uid="uid://d14copyrb6u2e" path="res://Art/nadja_art/Player/Player.png" id="10_vlrri"]
-[ext_resource type="Texture2D" uid="uid://bn3v5hlne16x2" path="res://Art/nadja_art/Player/Player_01.png" id="11_wxevt"]
+[ext_resource type="Texture2D" uid="uid://diime2isfptp8" path="res://Art/nadja_art/Player/Player.png" id="10_vlrri"]
+[ext_resource type="Texture2D" uid="uid://cuc50x38cgj1l" path="res://Art/nadja_art/Player/Player_01.png" id="11_wxevt"]
 [ext_resource type="PackedScene" uid="uid://dfpbhfv5i6trw" path="res://Scenes/mission_report.tscn" id="12_hkga2"]
 [ext_resource type="Texture2D" uid="uid://bcm5wd13wthy" path="res://Art/white_bg.png" id="13_cq4v0"]
 
@@ -24,7 +24,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterAnimations/Direction/Sword:rotation")
+tracks/0/path = NodePath("CharacterAnimations/AnimationDirection/Sword:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -36,7 +36,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterAnimations/Direction/Sword:process_mode")
+tracks/1/path = NodePath("CharacterAnimations/AnimationDirection/Sword:process_mode")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -48,7 +48,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterAnimations/Direction/Shield:position")
+tracks/2/path = NodePath("CharacterAnimations/AnimationDirection/Shield:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -60,7 +60,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterAnimations/Direction/Shield:process_mode")
+tracks/3/path = NodePath("CharacterAnimations/AnimationDirection/Shield:process_mode")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -72,7 +72,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CharacterAnimations/Direction/Shield:visible")
+tracks/4/path = NodePath("CharacterAnimations/AnimationDirection/Shield:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -84,7 +84,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CharacterAnimations/Direction/Sword:visible")
+tracks/5/path = NodePath("CharacterAnimations/AnimationDirection/Sword:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -96,7 +96,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CharacterAnimations/Direction:rotation")
+tracks/6/path = NodePath("CharacterAnimations/AnimationDirection:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -108,22 +108,10 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("CharacterAnimations/Direction/Bow:process_mode")
+tracks/7/path = NodePath("CharacterAnimations/AnimationDirection/Bow:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("CharacterAnimations/Direction/Bow:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -134,11 +122,6 @@ tracks/8/keys = {
 _data = {
 &"RESET": SubResource("Animation_laorx")
 }
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_frri1"]
-blend_mode = 2
-
-[sub_resource type="BoxMesh" id="BoxMesh_ssrut"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
 atlas = ExtResource("3_y3655")
@@ -207,11 +190,14 @@ radius = 3.0
 [sub_resource type="LabelSettings" id="LabelSettings_6iiv1"]
 font_size = 9
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "animation_player", "animation_direction")]
 z_index = 4
 collision_layer = 2
 script = ExtResource("1_lxypx")
 _arrow_path = "res://Scenes/Items/arrow.tscn"
+animation_tree = NodePath("CharacterAnimations/AnimationTree")
+animation_player = NodePath("CharacterAnimations/AnimationPlayer")
+animation_direction = NodePath("CharacterAnimations/AnimationDirection")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 
@@ -243,51 +229,29 @@ libraries = {
 }
 autoplay = "character_animations/RESET"
 
-[node name="Direction" type="Node2D" parent="CharacterAnimations"]
+[node name="AnimationDirection" type="Node2D" parent="CharacterAnimations"]
 
-[node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("6_s88px")]
+[node name="Sword" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("6_s88px")]
 
-[node name="HitboxComponentSword" parent="CharacterAnimations/Direction/Sword" index="1"]
+[node name="HitboxComponentSword" parent="CharacterAnimations/AnimationDirection/Sword" index="1"]
 collision_layer = 2
 
-[node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("7_1yosh")]
-position = Vector2(0, 8)
+[node name="Shield" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("7_1yosh")]
 script = ExtResource("8_sibh1")
 
-[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="1"]
+[node name="HitboxComponentShield" parent="CharacterAnimations/AnimationDirection/Shield" index="1"]
 collision_layer = 2
 collision_mask = 8
 
-[node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("7_o3qdj")]
+[node name="Bow" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("7_o3qdj")]
 
-[node name="ActionableFinder" parent="CharacterAnimations/Direction" instance=ExtResource("9_2vmwd")]
+[node name="ActionableFinder" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("9_2vmwd")]
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
-visible = false
-z_index = 2
-material = SubResource("CanvasItemMaterial_frri1")
-position = Vector2(0, 3)
-scale = Vector2(2.5, 0.75)
-mesh = SubResource("BoxMesh_ssrut")
-
-[node name="MeshInstance2D2" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
-visible = false
-z_index = 2
-material = SubResource("CanvasItemMaterial_frri1")
-position = Vector2(-1, 2)
-mesh = SubResource("BoxMesh_ssrut")
-
-[node name="MeshInstance2D3" type="MeshInstance2D" parent="CharacterAnimations/Direction"]
-visible = false
-z_index = 2
-material = SubResource("CanvasItemMaterial_frri1")
-position = Vector2(1, 2)
-mesh = SubResource("BoxMesh_ssrut")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/Direction"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/AnimationDirection"]
 z_index = 1
+rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_ed326")
-animation = &"idle"
+animation = &"walk"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(8, 8)
@@ -360,7 +324,7 @@ offset_bottom = 13.0
 text = "Defensive"
 label_settings = SubResource("LabelSettings_6iiv1")
 
-[connection signal="body_entered" from="CharacterAnimations/Direction/Shield/HitboxComponentShield" to="CharacterAnimations/Direction/Shield" method="_on_hitbox_component_shield_body_entered"]
+[connection signal="body_entered" from="CharacterAnimations/AnimationDirection/Shield/HitboxComponentShield" to="CharacterAnimations/AnimationDirection/Shield" method="_on_hitbox_component_shield_body_entered"]
 
-[editable path="CharacterAnimations/Direction/Sword"]
-[editable path="CharacterAnimations/Direction/Shield"]
+[editable path="CharacterAnimations/AnimationDirection/Sword"]
+[editable path="CharacterAnimations/AnimationDirection/Shield"]

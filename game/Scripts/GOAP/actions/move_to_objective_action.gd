@@ -43,7 +43,7 @@ func _perform_physics(actor, _delta) -> bool:
 		var context_map: PackedFloat32Array = [0,0,0,0,0,0,0,0]
 		var target_direction: Vector2 = (objective_pos - npc_pos).normalized()
 		npc.direction = target_direction
-		npc.sprite_holder.look_at(objective_pos)
+		npc.animation_direction.look_at(objective_pos)
 		
 		# Get the best direction index using a loop, dot product and danger array
 		var best_index: int = 0

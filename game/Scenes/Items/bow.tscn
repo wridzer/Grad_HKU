@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://do6he7lc4b3cx"]
 
-[ext_resource type="Texture2D" uid="uid://6sejmbeg1ct5" path="res://Art/nadja_art/Weapons/Bow.png" id="1_h00jp"]
+[ext_resource type="Texture2D" uid="uid://bnokeddvckis0" path="res://Art/nadja_art/Weapons/Bow.png" id="1_h00jp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xw6r0"]
 animations = [{
@@ -19,6 +19,6 @@ visible = false
 z_index = 8
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 3)
-rotation = 0.933751
+position = Vector2(3, 0)
+rotation = -0.785398
 sprite_frames = SubResource("SpriteFrames_xw6r0")

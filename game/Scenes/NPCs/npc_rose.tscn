@@ -15,17 +15,17 @@
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="13_8yoce"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="14_olhlp"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="15_lcetk"]
-[ext_resource type="Texture2D" uid="uid://djp7sbhdu603a" path="res://Art/nadja_art/NPC/Rose_interact.png" id="16_6mqjv"]
-[ext_resource type="Texture2D" uid="uid://wvjmjkx3df2e" path="res://Art/nadja_art/NPC/Rose_interact_01.png" id="17_ic637"]
+[ext_resource type="Texture2D" uid="uid://c3qmi5r88ujfi" path="res://Art/nadja_art/NPC/Rose_interact.png" id="16_6mqjv"]
+[ext_resource type="Texture2D" uid="uid://bqqrclyofhhtm" path="res://Art/nadja_art/NPC/Rose_interact_01.png" id="17_ic637"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="17_u8mok"]
-[ext_resource type="Texture2D" uid="uid://bsxriwc1ytyj4" path="res://Art/nadja_art/NPC/Rose_interact_02.png" id="18_qfdf4"]
+[ext_resource type="Texture2D" uid="uid://chfv74scucnof" path="res://Art/nadja_art/NPC/Rose_interact_02.png" id="18_qfdf4"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="18_ret0i"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="19_hc5ic"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="20_cb8ec"]
-[ext_resource type="Texture2D" uid="uid://bg74yigb2jce8" path="res://Art/nadja_art/NPC/Rose.png" id="20_fd1bb"]
-[ext_resource type="Texture2D" uid="uid://blytximqkkhgq" path="res://Art/nadja_art/NPC/Rose_01.png" id="21_8wlli"]
+[ext_resource type="Texture2D" uid="uid://d3lwtiff83ew7" path="res://Art/nadja_art/NPC/Rose.png" id="20_fd1bb"]
+[ext_resource type="Texture2D" uid="uid://57reob0kpy5p" path="res://Art/nadja_art/NPC/Rose_01.png" id="21_8wlli"]
 [ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="21_q6plj"]
-[ext_resource type="Texture2D" uid="uid://bsikckpdqmups" path="res://Art/nadja_art/NPC/Rose_02.png" id="22_day4h"]
+[ext_resource type="Texture2D" uid="uid://brwhw443bfr7q" path="res://Art/nadja_art/NPC/Rose_02.png" id="22_day4h"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="22_me4sw"]
 [ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="23_mxqs8"]
 [ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="24_ldhhy"]
@@ -42,7 +42,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterAnimations/Direction/Sword:position")
+tracks/0/path = NodePath("CharacterAnimations/AnimationDirection/Sword:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -54,7 +54,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterAnimations/Direction/Sword:rotation")
+tracks/1/path = NodePath("CharacterAnimations/AnimationDirection/Sword:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -66,7 +66,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CharacterAnimations/Direction/Sword:process_mode")
+tracks/2/path = NodePath("CharacterAnimations/AnimationDirection/Sword:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -78,7 +78,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CharacterAnimations/Direction/Shield:position")
+tracks/3/path = NodePath("CharacterAnimations/AnimationDirection/Shield:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -90,7 +90,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CharacterAnimations/Direction/Shield:rotation")
+tracks/4/path = NodePath("CharacterAnimations/AnimationDirection/Shield:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -102,7 +102,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CharacterAnimations/Direction/Shield:process_mode")
+tracks/5/path = NodePath("CharacterAnimations/AnimationDirection/Shield:process_mode")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -114,7 +114,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CharacterAnimations/Direction/Shield:visible")
+tracks/6/path = NodePath("CharacterAnimations/AnimationDirection/Shield:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -126,7 +126,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("CharacterAnimations/Direction/Sword:visible")
+tracks/7/path = NodePath("CharacterAnimations/AnimationDirection/Sword:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -138,7 +138,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("CharacterAnimations/Direction:rotation")
+tracks/8/path = NodePath("CharacterAnimations/AnimationDirection:rotation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -146,6 +146,18 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CharacterAnimations/AnimationDirection/Bow:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xvbyj"]
@@ -240,7 +252,7 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_alpp8"]
 radius = 6.0
 
-[node name="NpcRose" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window")]
+[node name="NpcRose" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window", "animation_tree", "animation_player", "animation_direction")]
 z_index = 4
 collision_layer = 0
 script = ExtResource("1_k8agu")
@@ -266,6 +278,9 @@ steering_value = 4.0
 turning_smoothing_value = 0.8
 speed_smoothing_value = 0.05
 info_window = NodePath("GoapAgent/Window")
+animation_tree = NodePath("CharacterAnimations/AnimationTree")
+animation_player = NodePath("CharacterAnimations/AnimationPlayer")
+animation_direction = NodePath("CharacterAnimations/AnimationDirection")
 
 [node name="CharacterAnimations" type="Node2D" parent="."]
 
@@ -296,20 +311,27 @@ libraries = {
 &"character_animations": ExtResource("7_ls0hx")
 }
 
-[node name="Direction" type="Node2D" parent="CharacterAnimations"]
+[node name="AnimationDirection" type="Node2D" parent="CharacterAnimations"]
 
-[node name="Sword" parent="CharacterAnimations/Direction" instance=ExtResource("8_2hjfq")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/AnimationDirection"]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_s4eef")
+animation = &"idle"
 
-[node name="HitboxComponentSword" parent="CharacterAnimations/Direction/Sword" index="1"]
+[node name="Sword" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("8_2hjfq")]
+rotation = 1.0472
+
+[node name="HitboxComponentSword" parent="CharacterAnimations/AnimationDirection/Sword" index="1"]
 collision_layer = 16
 
-[node name="Shield" parent="CharacterAnimations/Direction" instance=ExtResource("9_d06pd")]
+[node name="Shield" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("9_d06pd")]
 position = Vector2(0, 8)
+rotation = 0.0
 
-[node name="HitboxComponentShield" parent="CharacterAnimations/Direction/Shield" index="1"]
+[node name="HitboxComponentShield" parent="CharacterAnimations/AnimationDirection/Shield" index="1"]
 collision_layer = 16
 
-[node name="Bow" parent="CharacterAnimations/Direction" instance=ExtResource("10_r4i6n")]
+[node name="Bow" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("10_r4i6n")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initial_state")]
 script = ExtResource("11_4ir5y")
@@ -327,31 +349,26 @@ script = ExtResource("14_olhlp")
 [node name="NpcDowned" type="Node" parent="StateMachine"]
 script = ExtResource("15_lcetk")
 
-[node name="SpriteHolder" type="Node2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteHolder"]
-rotation = -1.5708
-sprite_frames = SubResource("SpriteFrames_s4eef")
-animation = &"highlighted"
-
-[node name="HealthDisplay" parent="SpriteHolder/AnimatedSprite2D" node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("19_hc5ic")]
-position = Vector2(-4, -6)
+[node name="HealthDisplay" parent="." node_paths=PackedStringArray("_health_component", "_hurtbox_component") instance=ExtResource("19_hc5ic")]
+position = Vector2(-4, -8)
 scale = Vector2(0.005, 0.005)
-_health_component = NodePath("../../../HealthComponent")
-_hurtbox_component = NodePath("../../../HurtboxComponent")
+_health_component = NodePath("../HealthComponent")
+_hurtbox_component = NodePath("../HurtboxComponent")
 
-[node name="NameLabel" type="Label" parent="SpriteHolder/AnimatedSprite2D"]
+[node name="NameLabel" type="Label" parent="."]
 z_index = 5
 offset_left = -30.0
-offset_top = -14.0
+offset_top = -16.0
 offset_right = 170.0
-offset_bottom = 11.0
+offset_bottom = 9.0
 scale = Vector2(0.3, 0.3)
 text = "name"
 horizontal_alignment = 1
 vertical_alignment = 1
 max_lines_visible = 1
 language = "en"
+
+[node name="SpriteHolder" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
@@ -401,7 +418,7 @@ target_position = Vector2(0, 10)
 target_position = Vector2(7, 7)
 
 [node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("22_me4sw")]
-animated_sprite = NodePath("../SpriteHolder/AnimatedSprite2D")
+animated_sprite = NodePath("../CharacterAnimations/AnimationDirection/AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_alpp8")
@@ -421,7 +438,7 @@ borderless = true
 unfocusable = true
 script = ExtResource("31_t5glo")
 _blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
-_goal_list = NodePath("CanvasLayer/HBoxContainer/Goap_list")
+_goal_list = NodePath("CanvasLayer/HBoxContainer/Goal_list")
 _action_plan = NodePath("CanvasLayer/HBoxContainer/Action_plan_list")
 _goap_agent = NodePath("..")
 font_size = 45
@@ -474,7 +491,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 9
 
-[node name="Goap_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
+[node name="Goal_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 9
@@ -484,6 +501,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 9
 
-[editable path="CharacterAnimations/Direction/Sword"]
-[editable path="CharacterAnimations/Direction/Shield"]
+[editable path="CharacterAnimations/AnimationDirection/Sword"]
+[editable path="CharacterAnimations/AnimationDirection/Shield"]
 [editable path="DangerSensorComponent"]

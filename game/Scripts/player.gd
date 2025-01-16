@@ -22,7 +22,7 @@ var room: Room:
 
 static var instance: Player = null
 
-@onready var _actionable_finder: Area2D = $CharacterAnimations/Direction/ActionableFinder
+@onready var _actionable_finder: Area2D = $CharacterAnimations/AnimationDirection/ActionableFinder
 @onready var _camera_2d: CameraControl = $Camera2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
@@ -104,6 +104,8 @@ func update_animation_parameters() -> void:
 		await shoot(input_manager.mouse_direction)
 		super.update_animation_parameters()
 		return
+	
+	animation_direction.look_at(get_viewport().get_camera_2d().get_global_mouse_position())
 
 
 func update_actionable_highlight() -> void:
