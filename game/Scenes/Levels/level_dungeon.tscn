@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://tm0wihh7f04q"]
+[gd_scene load_steps=9 format=3 uid="uid://tm0wihh7f04q"]
 
 [ext_resource type="Script" path="res://Scripts/DungeonProcGen/dungeon_generator.gd" id="1_6uvhx"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/Levels/spawn_point.tscn" id="2_8vk5u"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ba3eif8ej8hqu" path="res://Scenes/Items/key_pickup.tscn" id="4_nlgur"]
 [ext_resource type="PackedScene" uid="uid://b6ba7ubqm1c5" path="res://Scenes/Levels/dungeon_exit.tscn" id="5_25tfg"]
 [ext_resource type="PackedScene" uid="uid://duo2s4kiqf80j" path="res://Scenes/Items/heal_pickup.tscn" id="5_sp4sy"]
+[ext_resource type="Resource" uid="uid://snsgl0pbdjyo" path="res://Dialogue/goal_room.dialogue" id="7_iawjp"]
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("_dungeon_node", "_tile_map", "_tile_map_doors")]
 script = ExtResource("1_6uvhx")
@@ -18,6 +19,7 @@ _enemy_scene = ExtResource("3_ucs6u")
 _key_scene = ExtResource("4_nlgur")
 _heal_scene = ExtResource("5_sp4sy")
 _dungeon_exit_scene = ExtResource("5_25tfg")
+_goal_room_dialogue = ExtResource("7_iawjp")
 _min_heal_items = 3
 _extra_room_margin = 5
 

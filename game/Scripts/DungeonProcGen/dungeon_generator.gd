@@ -32,6 +32,7 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export var _key_scene: PackedScene
 @export var _heal_scene: PackedScene
 @export var _dungeon_exit_scene: PackedScene
+@export var _goal_room_dialogue: DialogueResource
 
 # Generation buttons
 @export_category("Generate")
@@ -458,8 +459,14 @@ func _choose_goal_room() -> Room:
 	var goal_room: Room = possible_goal_rooms.pick_random()
 	if mission_type == MissionType.ITEM:
 		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
+		goal_room.player_detector.body_entered.connect(_start_goal_room_dialogue.bind(goal_room))
 	
 	return goal_room
+
+
+func _start_goal_room_dialogue(_body: Node2D, goal_room: Room) -> void:
+	dialogue_manager.start_dialogue(_goal_room_dialogue)
+	goal_room.player_detector.body_entered.disconnect(_start_goal_room_dialogue)
 
 
 func _choose_spawn_room(goal_room: Room) -> Room:

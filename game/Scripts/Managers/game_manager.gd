@@ -19,6 +19,8 @@ var night_time: bool:
 	set(value):
 		Player.instance.night_time_filter.visible = value
 		if !value:
+			# Reset values on start of new day
+			UtilitySystem.instance.reset_values()
 			day += 1
 			day_time.emit()
 		night_time = value
@@ -67,9 +69,6 @@ func load_level(level_to_load: String = _level_hub) -> void:
 		UtilitySystem.instance.calculate()
 		Blackboard.dump_data()
 		Blackboard.save_data()
-	else:
-		# Reset values on start of run
-		UtilitySystem.instance.reset_values()
 	
 	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	get_spawn_location.emit()

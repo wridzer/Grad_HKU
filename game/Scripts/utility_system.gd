@@ -29,6 +29,7 @@ func reset_values() -> void:
 		"shield_used_amount",
 		"bow_used_amount",
 		"enemies_killed",
+		"keys",
 	]
 	Blackboard.clear_utility_data(clear_values)
 

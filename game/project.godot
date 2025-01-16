@@ -169,7 +169,7 @@ bow={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Dialogue/mission.dialogue", "res://Dialogue/mission_condition_failure.dialogue", "res://Dialogue/dominic_following.dialogue", "res://Dialogue/dominic_hit.dialogue", "res://Dialogue/dominic_idle.dialogue", "res://Dialogue/rose_following.dialogue", "res://Dialogue/rose_hit.dialogue", "res://Dialogue/rose_idle.dialogue", "res://Dialogue/virgil_following.dialogue", "res://Dialogue/virgil_hit.dialogue", "res://Dialogue/virgil_idle.dialogue", "res://Dialogue/key_pickup.dialogue", "res://Dialogue/dungeon_exit_condition_failure.dialogue", "res://Dialogue/dominic_dungeon.dialogue", "res://Dialogue/rose_dungeon.dialogue", "res://Dialogue/virgil_dungeon.dialogue", "res://Dialogue/tent.dialogue", "res://Dialogue/fireplace.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Dialogue/mission.dialogue", "res://Dialogue/mission_condition_failure.dialogue", "res://Dialogue/dominic_following.dialogue", "res://Dialogue/dominic_hit.dialogue", "res://Dialogue/dominic_idle.dialogue", "res://Dialogue/rose_following.dialogue", "res://Dialogue/rose_hit.dialogue", "res://Dialogue/rose_idle.dialogue", "res://Dialogue/virgil_following.dialogue", "res://Dialogue/virgil_hit.dialogue", "res://Dialogue/virgil_idle.dialogue", "res://Dialogue/key_pickup.dialogue", "res://Dialogue/dungeon_exit_condition_failure.dialogue", "res://Dialogue/dominic_dungeon.dialogue", "res://Dialogue/rose_dungeon.dialogue", "res://Dialogue/virgil_dungeon.dialogue", "res://Dialogue/tent.dialogue", "res://Dialogue/fireplace.dialogue", "res://Dialogue/goal_room.dialogue")
 
 [layer_names]
 

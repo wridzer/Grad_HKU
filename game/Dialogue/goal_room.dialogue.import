@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://snsgl0pbdjyo"
+path="res://.godot/imported/goal_room.dialogue-00f18ff543d0a756ddef3ef5393fa806.tres"
+
+[deps]
+
+source_file="res://Dialogue/goal_room.dialogue"
+dest_files=["res://.godot/imported/goal_room.dialogue-00f18ff543d0a756ddef3ef5393fa806.tres"]
+
+[params]
+
+defaults=true
