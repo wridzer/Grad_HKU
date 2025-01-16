@@ -47,6 +47,7 @@ const MAX_ARROW_COUNT = 5
 
 var affection: int = 0
 var _arrows: Array[Arrow]
+var is_hidden : bool = false
 
 var follow_distance_squared: float = _follow_distance * _follow_distance
 var follow_equilibrium_distance_squared: float = follow_distance_squared * 0.5
@@ -215,3 +216,9 @@ func _reduce_arrows_to(amount: int) -> void:
 			_arrows.pop_front().queue_free()
 		else:
 			_arrows.pop_front()
+
+
+func toggle_hide(enabled: bool) -> void:
+	animated_sprite_2d.visible = !enabled
+	is_hidden = enabled
+	hurtbox_component.immune = enabled

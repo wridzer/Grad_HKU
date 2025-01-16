@@ -4,6 +4,7 @@ extends AnimatedCharacter
 
 const SPEED := 70.0
 const MAX_ARROW_COUNT = 5
+var is_hidden : bool = false
 
 @export_file var _arrow_path: String
 @export_file var _home_level: String
@@ -28,6 +29,7 @@ static var instance: Player = null
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var mission_report: MissionReport = $Camera2D/CanvasLayer/MissionReport
 @onready var night_time_filter: CanvasItem = $Camera2D/CanvasLayer/NightTimeFilter
+@onready var _animated_sprite_2d: AnimatedSprite2D = $CharacterAnimations/Direction/AnimatedSprite2D
 
 
 func _ready() -> void:	
@@ -199,3 +201,9 @@ func _reduce_arrows_to(amount: int) -> void:
 			_arrows.pop_front().queue_free()
 		else:
 			_arrows.pop_front()
+
+func toggle_hide(enabled: bool) -> void:
+	return # early return because we don't want players to hide
+	input_manager.toggle_input(enabled)
+	_animated_sprite_2d.visible = enabled
+	is_hidden = enabled

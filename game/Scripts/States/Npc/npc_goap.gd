@@ -22,6 +22,9 @@ func enter(previous_state: int, data := {}) -> void:
 
 func update(delta):
 	npc.goap_agent.execute(delta, npc, GoapPlanner)
+	if npc.is_hidden:
+		if npc.goap_agent.get_current_goal_name() != "hide":
+			npc.toggle_hide(false)
 
 
 func physics_update(delta: float) -> void:

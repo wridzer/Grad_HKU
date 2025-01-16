@@ -23,10 +23,10 @@ func _get_effects() -> Dictionary:
 
 func _perform(actor, _delta) -> bool:
 	var npc = actor as AnimatedCharacter
-	var actionable = Blackboard.get_data("destination_node")
-	if actionable == null || !is_instance_valid(actionable):
+	var item = Blackboard.get_data("destination_node")
+	if item == null || !is_instance_valid(item):
 		return false
 	
-	actionable.actionable.interactor = npc
-	actionable.actionable.action.emit()
+	item.actionable.interactor = npc
+	item.actionable.action.emit()
 	return true

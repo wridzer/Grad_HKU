@@ -9,6 +9,7 @@ extends Node2D
 @export var enemies: Array[Enemy] = []
 @export var heal_pickups: Array[HealPickup] = []
 @export var key_pickups: Array[KeyPickup] = []
+@export var barrels: Array[Barrel] = []
 @export var doors: Array[Door] = []
 @export var player_detector: Area2D:
 	set(value):

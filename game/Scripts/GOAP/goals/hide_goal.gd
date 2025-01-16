@@ -7,26 +7,26 @@ func _get_goal_name() -> StringName:
 
 
 func _is_goal_met() -> bool:
-	# If there is no current enemy, no reason to hide, true
-	var data = Blackboard.get_data("enemy")
-	if !is_instance_valid(data):
+	if Player.instance.room == null:
+		return true
+		
+	if Player.instance.room.enemies.size() <= 0:
 		return true
 	
-	# If the hide goal is not yet completed, false
-	var hide_goal_complete: bool = false
-	if Blackboard.get_data("hide_goal_complete"):
-		hide_goal_complete = Blackboard.get_data("hide_goal_complete")
-	
-	if !hide_goal_complete:
-		return false
-	
-	Blackboard.add_data("hide_goal_complete", false)
-	return true
+	return false
 
 
 func _get_priority() -> int:
-	return 8
+	# Get data
+	var current_health = Blackboard.get_data("npc_health") if Blackboard.get_data("npc_health") else 30
+	var desired_health = Blackboard.get_data("desired_health") if Blackboard.get_data("desired_health") else 0
+	
+	# If health is low
+	if current_health < desired_health:
+		return 99
+	
+	return 0
 
 
 func _get_desired_state() -> Dictionary:
-	return {"close_to_hiding_spot" : true}
+	return {"hidden" : true}

@@ -22,5 +22,5 @@ func _get_effects() -> Dictionary:
 
 
 func _perform(_actor, _delta) -> bool:
-	Player.instance.health_component.gain_health(1)
+	Player.instance.health_component.gain_health(3)
 	return true
