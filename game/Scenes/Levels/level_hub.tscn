@@ -19,7 +19,7 @@ script = ExtResource("1_q3wky")
 position = Vector2(72, -39)
 
 [node name="CharacterAnimations" parent="NpcRose" index="0"]
-rotation = -1.5708
+rotation = 1.5708
 
 [node name="NpcDominic" parent="." instance=ExtResource("3_scwlw")]
 position = Vector2(71, 42)
