@@ -22,7 +22,7 @@ func _get_cost() -> int:
 			picked_enemy = enemy
 			distance = enemy_distance
 	if picked_enemy != null:
-		cost = cost - (distance / 2)
+		cost = cost - (distance)
 	
 	if Blackboard.get_data("shoot_priority"):
 		return cost - Blackboard.get_data("shoot_priority")

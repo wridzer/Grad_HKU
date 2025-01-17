@@ -31,7 +31,7 @@ func _perform_physics(actor, _delta) -> bool:
 	var npc = actor as Npc
 	var data = Blackboard.get_data("enemy")
 	if !is_instance_valid(data):
-		return false
+		return true
 	var enemy: Enemy = data
 	var npc_pos: Vector2 = npc.get_global_position()
 	var enemy_pos: Vector2 = enemy.get_global_position()
