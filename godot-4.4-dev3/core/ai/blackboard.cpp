@@ -56,7 +56,11 @@ void Blackboard::clear_data() {
 
 void Blackboard::dump_data()
 {
-	save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.txt");
+	OS* os = OS::get_singleton();
+	if (os->has_feature("editor"))
+		save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.txt");
+	else
+		save_to_csv(os->get_executable_path().get_base_dir() + "/blackboard_dump/blackboard.txt");
 }
 
 void Blackboard::remove_data(const String &p_key) {
@@ -118,23 +122,22 @@ void Blackboard::_bind_methods() {
 }
 
 void Blackboard::save_to_csv(const String &p_path) {
-	String path = p_path.simplify_path();
-
 	// Create dir if not exists
 	Ref<DirAccess> dir = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-	if (!DirAccess::exists(path.get_base_dir())) {
-		dir->make_dir_recursive(path.get_base_dir());
+	if (!DirAccess::exists(p_path.get_base_dir())) {
+		print_line(p_path.get_base_dir());
+		dir->make_dir_recursive_absolute(p_path.get_base_dir());
 	}
 
 	Ref<FileAccess> file = nullptr;
 
-	if (FileAccess::exists(path)) {
-		file = FileAccess::open(path, FileAccess::READ_WRITE);
+	if (FileAccess::exists(p_path)) {
+		file = FileAccess::open(p_path, FileAccess::READ_WRITE);
 	} else {
 		// this fuckery is needed to create a file because FileAccess::WRITE creates a file but will truncate it
 		// file FileAccess::READ_WRITE will not create it but will write without truncating
-		file = FileAccess::open(path, FileAccess::WRITE); // Create file
-		file = FileAccess::open(path, FileAccess::READ_WRITE); // Open file for writing without truncating
+		file = FileAccess::open(p_path, FileAccess::WRITE); // Create file
+		file = FileAccess::open(p_path, FileAccess::READ_WRITE); // Open file for writing without truncating
 	}
 
 	// Order current data
@@ -166,9 +169,9 @@ void Blackboard::save_to_csv(const String &p_path) {
 	}
 
 	// Add new header for current data and empty values for existing lines
-	file = FileAccess::open(path, FileAccess::WRITE);
+	file = FileAccess::open(p_path, FileAccess::WRITE);
 
-	for (int i = 0; i < blackboard_data_headers.size(); i++) {
+	for (int i = 0; i < blackboard_data_headers.size() - 1; i++) {
 		if (blackboard_data_headers[i] != header[i]) {
 			header.insert(i, blackboard_data_headers[i]);
 			for (auto a : existing_lines) {
