@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://s3ehrd1th7j5"]
+[gd_scene load_steps=41 format=3 uid="uid://s3ehrd1th7j5"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_mxlfu"]
 [ext_resource type="Resource" uid="uid://dtb0grb3pjub0" path="res://Dialogue/dominic_idle.dialogue" id="2_3na83"]
@@ -10,13 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="8_q5h4n"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="9_m4pfs"]
 [ext_resource type="PackedScene" uid="uid://do6he7lc4b3cx" path="res://Scenes/Items/bow.tscn" id="10_qeanb"]
+[ext_resource type="Texture2D" uid="uid://y3fvxel1v3o0" path="res://Art/nadja_art/NPC/Dominic_hurt.png" id="10_v0wqy"]
 [ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="11_y0ogk"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="12_51pd0"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="13_6rdh6"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="14_mjfnq"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="15_i2h7c"]
 [ext_resource type="Texture2D" uid="uid://hbypxm4oqdnj" path="res://Art/nadja_art/NPC/Dominic_interact.png" id="16_7wudx"]
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="17_3a6d8"]
 [ext_resource type="Texture2D" uid="uid://drmync5ilnpby" path="res://Art/nadja_art/NPC/Dominic_interact_01.png" id="17_vl4ij"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="18_re8ei"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="19_okks5"]
@@ -163,22 +163,6 @@ _data = {
 &"RESET": SubResource("Animation_6e80b")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
-atlas = ExtResource("17_3a6d8")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
-atlas = ExtResource("17_3a6d8")
-region = Rect2(884, 510, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
-atlas = ExtResource("17_3a6d8")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
-atlas = ExtResource("17_3a6d8")
-region = Rect2(901, 510, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_vklk4"]
 animations = [{
 "frames": [{
@@ -194,16 +178,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wsuc0")
+"texture": ExtResource("10_v0wqy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_krhfj")
+"texture": ExtResource("20_yir1e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vkrkf")
+"texture": ExtResource("10_v0wqy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i0ynp")
+"texture": ExtResource("19_ss4kh")
 }],
 "loop": true,
 "name": &"hit",
@@ -305,7 +289,7 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/AnimationDirection"]
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_vklk4")
-animation = &"idle"
+animation = &"hit"
 
 [node name="Sword" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("8_q5h4n")]
 

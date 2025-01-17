@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dfqtqx2hreskn"]
+[gd_scene load_steps=41 format=3 uid="uid://dfqtqx2hreskn"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_rurcg"]
 [ext_resource type="Resource" uid="uid://cug04ukn2doay" path="res://Dialogue/virgil_idle.dialogue" id="2_1k30o"]
@@ -13,9 +13,9 @@
 [ext_resource type="Script" path="res://Scripts/States/state_machine.gd" id="7_yc41p"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_idle.gd" id="8_e0r4g"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_following.gd" id="9_q35xw"]
+[ext_resource type="Texture2D" uid="uid://dma75j0lif7dx" path="res://Art/nadja_art/NPC/Virgil_hurt.png" id="10_3fqvj"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_sjl4h"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="11_35dkx"]
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="13_rkm2a"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="14_h6f22"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="15_xqiul"]
 [ext_resource type="Texture2D" uid="uid://cvmpuv0crv1f8" path="res://Art/nadja_art/NPC/Virgil_interact.png" id="16_nupsm"]
@@ -163,22 +163,6 @@ _data = {
 &"RESET": SubResource("Animation_6e80b")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
-atlas = ExtResource("13_rkm2a")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
-atlas = ExtResource("13_rkm2a")
-region = Rect2(884, 510, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
-atlas = ExtResource("13_rkm2a")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
-atlas = ExtResource("13_rkm2a")
-region = Rect2(901, 510, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_7lvjg"]
 animations = [{
 "frames": [{
@@ -194,16 +178,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wsuc0")
+"texture": ExtResource("10_3fqvj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_krhfj")
+"texture": ExtResource("20_mhm7q")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vkrkf")
+"texture": ExtResource("10_3fqvj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i0ynp")
+"texture": ExtResource("19_5gnpg")
 }],
 "loop": true,
 "name": &"hit",
@@ -305,8 +289,7 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterAnimations/AnimationDirection"]
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_7lvjg")
-animation = &"idle"
-frame_progress = 0.179212
+animation = &"hit"
 
 [node name="Sword" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("4_fkrb7")]
 

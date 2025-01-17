@@ -1,10 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://yo1y4je8hvir"]
+[gd_scene load_steps=25 format=3 uid="uid://yo1y4je8hvir"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_lxypx"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://sg776dpvlovm" path="res://Animations/player_animation_node_state_machine.tres" id="2_dhl6a"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_856tq"]
 [ext_resource type="AnimationLibrary" uid="uid://cfhhu5dvmd7dh" path="res://Animations/character_animations.res" id="3_d2i3i"]
-[ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="3_y3655"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="5_c8efr"]
 [ext_resource type="PackedScene" uid="uid://b3s2y63nra24b" path="res://Scenes/Items/sword.tscn" id="6_s88px"]
 [ext_resource type="PackedScene" uid="uid://pwse5ov065ph" path="res://Scenes/Items/shield.tscn" id="7_1yosh"]
@@ -12,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Items/shield.gd" id="8_sibh1"]
 [ext_resource type="Script" path="res://Scripts/UI_text.gd" id="8_t5qnf"]
 [ext_resource type="PackedScene" uid="uid://enfh0jk6264s" path="res://Scenes/actionable_finder.tscn" id="9_2vmwd"]
+[ext_resource type="Texture2D" uid="uid://bo50640oeflbo" path="res://Art/nadja_art/Player/Player_hurt.png" id="9_mdcmv"]
 [ext_resource type="Script" path="res://Scripts/camera_control.gd" id="10_nkmy7"]
 [ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="10_s1kec"]
 [ext_resource type="Texture2D" uid="uid://diime2isfptp8" path="res://Art/nadja_art/Player/Player.png" id="10_vlrri"]
@@ -123,36 +123,20 @@ _data = {
 &"RESET": SubResource("Animation_laorx")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wsuc0"]
-atlas = ExtResource("3_y3655")
-region = Rect2(884, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krhfj"]
-atlas = ExtResource("3_y3655")
-region = Rect2(884, 510, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vkrkf"]
-atlas = ExtResource("3_y3655")
-region = Rect2(901, 459, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i0ynp"]
-atlas = ExtResource("3_y3655")
-region = Rect2(901, 510, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_ed326"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wsuc0")
+"texture": ExtResource("9_mdcmv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_krhfj")
+"texture": ExtResource("11_wxevt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vkrkf")
+"texture": ExtResource("9_mdcmv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i0ynp")
+"texture": ExtResource("10_vlrri")
 }],
 "loop": true,
 "name": &"hit",
@@ -251,7 +235,7 @@ collision_mask = 8
 z_index = 1
 rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_ed326")
-animation = &"walk"
+animation = &"hit"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(8, 8)
