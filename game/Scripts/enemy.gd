@@ -53,6 +53,7 @@ func immunity(immune: bool) -> void:
 
 func die() -> void:
 	Blackboard.increment_data("enemies_killed", 1)
+	Blackboard.increment_data("enemies_killed_in_room", 1)
 	Blackboard.increment_data("enemies_alive", -1)
 	
 	died.emit(self)

@@ -44,6 +44,7 @@ const MAX_ARROW_COUNT = 5
 
 # Info window vars
 @export var info_window : Window
+@export var window_on : bool
 
 var affection: int = 0
 var _arrows: Array[Arrow]
@@ -169,8 +170,9 @@ func choose() -> void:
 	
 	health_component.set_health_blackboard_variables("npc")
 	
-	info_window.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
-	info_window.visible = true
+	if window_on:
+		info_window.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
+		info_window.visible = true
 
 
 func slash(anim_direction: Vector2) -> bool:

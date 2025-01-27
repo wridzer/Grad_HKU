@@ -108,3 +108,13 @@ static func update_npc_fightstyle() -> void:
 				
 				base_priority = npc._shoot_priority
 				Blackboard.add_data("shoot_priority", base_priority + (player_usage.x * 0.5))
+
+static func update_agro() -> void:
+	var enemies_killed: int = Blackboard.get_data("enemies_killed_in_room") if Blackboard.get_data("enemies_killed") else 0
+	var enemies_left_alive: int = Blackboard.get_data("enemies_in_room") if Blackboard.get_data("enemies_alive") else 0
+	if enemies_killed == 0 && enemies_left_alive == 0:
+		return
+	
+	var total_enemies: float = enemies_killed + enemies_left_alive
+	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
+	Blackboard.add_data("enemy_killed_percentage_in_room", enemy_killed_percentage)
