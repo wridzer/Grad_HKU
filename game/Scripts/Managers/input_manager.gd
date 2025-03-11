@@ -2,6 +2,7 @@ extends Node
 
 
 signal interact
+signal pause(paused)
 
 var direction: Vector2 = Vector2.ZERO
 var mouse_direction: Vector2 = Vector2.ZERO
@@ -14,6 +15,7 @@ var disabled: bool = false
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = !get_tree().paused
+		pause.emit(get_tree().paused)
 	
 	if get_tree().paused:
 		return
