@@ -46,7 +46,7 @@ const MAX_ARROW_COUNT = 5
 @export var info_window : Window
 @export var window_on : bool
 
-var affection: int = 0
+var level: int = 1
 var _arrows: Array[Arrow]
 var is_hidden : bool = false
 
@@ -68,7 +68,7 @@ var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
-	# Destroy instance if any other instance exists that is following the player
+	# Destroy instance if any other instance exists
 	var data = Blackboard.get_data("npc")
 	if is_instance_valid(data):
 		var npc: Npc = data
@@ -141,7 +141,6 @@ func update_blackboard_health() -> void:
 
 func update_animation_parameters() -> void:
 	# Set blend position parameters and display correct animation direction
-	# TODO: npc animations
 	animation_tree.set("parameters/conditions/idle", direction == Vector2.ZERO)
 	animation_tree.set("parameters/conditions/moving", direction != Vector2.ZERO)
 	
@@ -175,18 +174,18 @@ func choose() -> void:
 		info_window.visible = true
 
 
-func slash(anim_direction: Vector2) -> bool:
+func slash() -> bool:
 	if animation_tree.get("parameters/conditions/slash"):
 		return false
 	
-	return await super.slash(anim_direction)
+	return await attack_animation("slash", level)
 
 
-func block(anim_direction: Vector2) -> bool:
+func block() -> bool:
 	if animation_tree.get("parameters/conditions/block"):
 		return false
 	
-	return await super.block(anim_direction);
+	return await attack_animation("block", level)
 
 
 func shoot(anim_direction: Vector2) -> bool:
@@ -209,7 +208,7 @@ func shoot(anim_direction: Vector2) -> bool:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	return await super.shoot(anim_direction)
+	return await attack_animation("shoot", level)
 
 
 func _reduce_arrows_to(amount: int) -> void:

@@ -198,12 +198,9 @@ parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/shoot = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(0, -1)
-parameters/Hit/blend_position = Vector2(0, -1)
-parameters/Idle/blend_position = Vector2(0, -1)
-parameters/Shoot/blend_position = Vector2(0, -1)
-parameters/Slash/blend_position = Vector2(0, -1)
-parameters/Walk/blend_position = Vector2(0, -1)
+parameters/Block/blend_position = 1.0
+parameters/Shoot/blend_position = 1.0
+parameters/Slash/blend_position = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
 active = false
@@ -217,11 +214,13 @@ autoplay = "character_animations/RESET"
 [node name="AnimationDirection" type="Node2D" parent="CharacterAnimations"]
 
 [node name="Sword" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("6_s88px")]
+rotation = 1.0472
 
 [node name="HitboxComponentSword" parent="CharacterAnimations/AnimationDirection/Sword" index="1"]
 collision_layer = 2
 
 [node name="Shield" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("7_1yosh")]
+position = Vector2(0, 8)
 script = ExtResource("8_sibh1")
 
 [node name="HitboxComponentShield" parent="CharacterAnimations/AnimationDirection/Shield" index="1"]
@@ -229,6 +228,7 @@ collision_layer = 2
 collision_mask = 8
 
 [node name="Bow" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("7_o3qdj")]
+process_mode = 0
 
 [node name="ActionableFinder" parent="CharacterAnimations/AnimationDirection" instance=ExtResource("9_2vmwd")]
 

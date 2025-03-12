@@ -47,6 +47,7 @@ func _perform(actor, _delta) -> bool:
 	var enemy = Blackboard.get_data("enemy")
 	if enemy == null || !is_instance_valid(enemy):
 		return true
+	
 	var direction = (enemy.global_position - npc.global_position).normalized()
 	if await npc.shoot(direction):
 		Blackboard.remove_data("enemy")

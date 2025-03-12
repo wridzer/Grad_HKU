@@ -298,12 +298,9 @@ parameters/conditions/idle = true
 parameters/conditions/moving = false
 parameters/conditions/shoot = false
 parameters/conditions/slash = false
-parameters/Block/blend_position = Vector2(0, -1)
-parameters/Hit/blend_position = Vector2(0, -1)
-parameters/Idle/blend_position = Vector2(0, -1)
-parameters/Shoot/blend_position = Vector2(0, 0)
-parameters/Slash/blend_position = Vector2(0, -1)
-parameters/Walk/blend_position = Vector2(0, -1)
+parameters/Block/blend_position = 1.0
+parameters/Shoot/blend_position = 1.0
+parameters/Slash/blend_position = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterAnimations"]
 active = false

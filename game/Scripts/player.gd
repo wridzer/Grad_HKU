@@ -32,7 +32,6 @@ static var instance: Player = null
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var mission_report: MissionReport = $Camera2D/CanvasLayer/MissionReport
 @onready var night_time_filter: CanvasItem = $Camera2D/CanvasLayer/NightTimeFilter
-@onready var _animated_sprite_2d: AnimatedSprite2D = $CharacterAnimations/Direction/AnimatedSprite2D
 
 
 func _ready() -> void:	
@@ -94,17 +93,23 @@ func update_animation_parameters() -> void:
 	
 	if input_manager.attack:
 		Blackboard.increment_data("sword_used_amount", 1)
-		await slash(input_manager.mouse_direction)
+		var level = 1
+		if Blackboard.get_data("sword_level"):
+			level = Blackboard.get_data("sword_level")
+		await attack_animation("slash", level)
 		super.update_animation_parameters()
 		return
 	
 	if input_manager.block:
 		Blackboard.increment_data("shield_used_amount", 1)
-		await block(input_manager.mouse_direction)
+		var level = 1
+		if Blackboard.get_data("shield_level"):
+			level = Blackboard.get_data("shield_level")
+		await attack_animation("block", level)
 		super.update_animation_parameters()
 		return
 	
-	if input_manager.bow:
+	if input_manager.shoot:
 		Blackboard.increment_data("bow_used_amount", 1)
 		await shoot(input_manager.mouse_direction)
 		super.update_animation_parameters()
@@ -169,7 +174,8 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 func respawn() -> void:
 	input_manager.toggle_input(true)
 	_hurtbox_component.immune = false
-	
+
+
 func die() -> void:
 	if Blackboard.get_data("npc_health") <= 0:
 		game_manager.load_level(_home_level)
@@ -195,7 +201,10 @@ func shoot(direction: Vector2) -> bool:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	return await super.shoot(direction)
+	var level = 1
+	if Blackboard.get_data("bow_level"):
+		level = Blackboard.get_data("bow_level")
+	return await attack_animation("shoot", level)
 
 
 func _reduce_arrows_to(amount: int) -> void:
@@ -204,9 +213,3 @@ func _reduce_arrows_to(amount: int) -> void:
 			_arrows.pop_front().queue_free()
 		else:
 			_arrows.pop_front()
-
-func toggle_hide(enabled: bool) -> void:
-	return # early return because we don't want players to hide
-	input_manager.toggle_input(enabled)
-	_animated_sprite_2d.visible = enabled
-	is_hidden = enabled

@@ -29,8 +29,8 @@ func _perform(actor, _delta) -> bool:
 	var enemy = Blackboard.get_data("enemy")
 	if enemy == null || !is_instance_valid(enemy):
 		return true
-	var direction = (enemy.global_position - npc.global_position).normalized()
-	if await npc.slash(direction):
+	
+	if await npc.slash():
 		Blackboard.remove_data("enemy")
 		Blackboard.remove_data("arrived_at_location")
 		Blackboard.remove_data("found_enemy")
