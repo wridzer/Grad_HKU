@@ -29,10 +29,10 @@ func _get_effects() -> Dictionary:
 func _perform_physics(actor, _delta) -> bool:
 	# Get needed data
 	var npc = actor as Npc
-	var data = Blackboard.get_data("enemy")
-	if !is_instance_valid(data):
+	var enemy = Blackboard.get_data("enemy")
+	if !is_instance_valid(enemy):
 		return true
-	var enemy: Enemy = data
+	enemy = enemy as Enemy
 	var npc_pos: Vector2 = npc.get_global_position()
 	var enemy_pos: Vector2 = enemy.get_global_position()
 	

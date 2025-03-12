@@ -15,6 +15,7 @@ func enter(previous_state: int, data := {}) -> void:
 	super.enter(previous_state, data)
 	set_target()
 
+
 func set_target() -> void:
 	target = null
 	var player_distance = enemy.global_position.distance_to(Player.instance.global_position)
@@ -22,14 +23,16 @@ func set_target() -> void:
 		target = Player.instance
 		
 	var npc = Blackboard.get_data("npc")
-	if is_instance_valid(npc):
-		npc = npc as Npc
-		var npc_distance = enemy.global_position.distance_to(npc.global_position)
-		if npc.health_component.health > 0 && !npc.is_hidden:
-			if npc_distance < player_distance || target == null:
-				target = npc
-	if target == null:
-		finished.emit(state_type_to_int(StateType.DOCILE))
+	if !is_instance_valid(npc):
+		if target == null:
+			finished.emit(state_type_to_int(StateType.DOCILE))
+	npc = npc as Npc
+	
+	var npc_distance = enemy.global_position.distance_to(npc.global_position)
+	if npc.health_component.health > 0 && !npc.is_hidden:
+		if npc_distance < player_distance || target == null:
+			target = npc
+
 
 func physics_update(delta: float) -> void:
 	if target == null || target.health_component.health <= 0 || target.is_hidden:

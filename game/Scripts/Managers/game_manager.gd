@@ -44,9 +44,9 @@ func _ready() -> void:
 
 func load_level(level_to_load: String = _level_hub) -> void:	
 	# Bring following npc with you when warping
-	var data = Blackboard.get_data("npc")
-	if is_instance_valid(data):
-		var npc: Npc = data
+	var npc = Blackboard.get_data("npc")
+	if is_instance_valid(npc):
+		npc = npc as Node
 		npc.reparent(_level_parent.get_parent())
 	
 	# Perform any cleanup like: Remove leftover npc's, Reset health

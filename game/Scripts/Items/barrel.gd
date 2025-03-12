@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _pickup() -> void:
-	var actor:AnimatedCharacter = actionable.interactor
+	var actor: AnimatedCharacter = actionable.interactor
 	if is_instance_valid(actor as Player):
 		actor = actor as Player
 	elif is_instance_valid(actor as Npc):

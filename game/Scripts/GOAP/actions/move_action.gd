@@ -27,6 +27,7 @@ func _perform_physics(actor, _delta) -> bool:
 	var destination_node = Blackboard.get_data("destination_node")
 	if !is_instance_valid(destination_node):
 		return false
+	destination_node = destination_node as Node2D
 	var destination = destination_node.get_global_position()
 	var distance_squared: float = npc_pos.distance_squared_to(destination)
 

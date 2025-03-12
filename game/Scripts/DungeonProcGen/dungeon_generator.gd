@@ -98,10 +98,10 @@ func _ready() -> void:
 static func set_mission_type(type: String) -> void:
 	mission_type = MissionType.get(type)
 	
-	var data = Blackboard.get_data("mission_choices")
-	var mission_choices: Array[DungeonGenerator.MissionType] = []
-	if is_instance_valid(data):
-		mission_choices = data
+	var mission_choices = Blackboard.get_data("mission_choices")
+	if !is_instance_valid(mission_choices):
+		mission_choices = []
+	mission_choices = mission_choices as Array[DungeonGenerator.MissionType]
 	mission_choices.append(mission_type)
 	Blackboard.add_data("mission_choices", mission_choices)
 

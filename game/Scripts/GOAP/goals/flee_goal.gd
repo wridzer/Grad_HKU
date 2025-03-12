@@ -8,8 +8,8 @@ func _get_goal_name() -> StringName:
 
 func _is_goal_met() -> bool:
 	# If there is no current enemy, no reason to flee, true
-	var data = Blackboard.get_data("enemy")
-	if !is_instance_valid(data):
+	var enemy = Blackboard.get_data("enemy")
+	if !is_instance_valid(enemy):
 		return true
 	
 	# If the flee goal is not yet completed, false
@@ -26,7 +26,7 @@ func _is_goal_met() -> bool:
 	if npc.is_hidden:
 		return true
 		
-	var enemy: Enemy = data
+	enemy = enemy as Enemy
 	var npc_pos: Vector2 = npc.get_global_position()
 	var enemy_pos: Vector2 = enemy.get_global_position()
 	var distance_squared = npc_pos.distance_squared_to(enemy_pos)

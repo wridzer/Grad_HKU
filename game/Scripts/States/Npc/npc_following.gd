@@ -65,8 +65,9 @@ func spawn(spawn_pos: Vector2, npc_offset: Vector2) -> void:
 
 
 func activate_goap() -> void:
-	var data = Blackboard.get_data("npc")
-	if is_instance_valid(data):
-		var blackboard_npc: Npc = data
-		if npc == blackboard_npc:
-			finished.emit(state_type_to_int(StateType.GOAP))
+	var blackboard_npc = Blackboard.get_data("npc")
+	if !is_instance_valid(blackboard_npc):
+		return
+	blackboard_npc = blackboard_npc as Npc
+	if npc == blackboard_npc:
+		finished.emit(state_type_to_int(StateType.GOAP))
