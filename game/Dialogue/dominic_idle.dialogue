@@ -7,7 +7,6 @@ if game_manager.day == 1
 - Yes => yes
 - No => no
 
-
 ~ yes
 if game_manager.is_npc_following:
 	if Blackboard.get_data("npc").display_name == "Rose":
@@ -15,8 +14,6 @@ if game_manager.is_npc_following:
 	if Blackboard.get_data("npc").display_name == "Virgil":
 		=> already_following_virgil
 => wel
-
-
 
 ~ wel
 % Dominic: Off we go then!
@@ -56,14 +53,14 @@ do game_manager.npc_stop_following.emit("Rose")
 do game_manager.npc_stop_following.emit("Virgil")
 => follow
 
-~ start_night_Avoiding
-Dominic: I do not see any sense in not announcing yourself like you did. There is no honour in an ambush.
-=> END
-
 ~ start_night_Aggressive
 Dominic: I see you think the best defense is offense. Very well, I will watch your back!
 => END
 
 ~ start_night_Defensive
 Dominic: Wonderful show out there! A good defense is the best offense, like I always say!
+=> END
+
+~ start_night_Evasive
+Dominic: I do not see any sense in not announcing yourself like you did. There is no honour in an ambush.
 => END

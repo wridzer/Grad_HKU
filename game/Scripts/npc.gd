@@ -2,7 +2,7 @@ class_name Npc
 extends AnimatedCharacter
 
 
-enum CombatType {ATTACK, DEFEND, AVOID}
+enum Playstyle {AGGRESSIVE, DEFENSIVE, EVASIVE}
 
 const MAX_ARROW_COUNT = 5
 
@@ -15,13 +15,12 @@ const MAX_ARROW_COUNT = 5
 @export var dungeon_dialogue: DialogueResource
 @export_file var _home_level: String
 
-@export var _preferred_combat: CombatType
-@export var _adapatable_combat: CombatType
-@export var _unadaptable_combat: CombatType
+@export var preferred_playstyle: Playstyle
+@export var adapatable_playstyle: Playstyle
 @export var goap_agent: GoapAgent
-@export var _slash_priority: int = 14
-@export var _shoot_priority: int = 14
-@export var _block_priority: int = 14
+@export var base_slash_priority: int = 14
+@export var base_shoot_priority: int = 14
+@export var base_block_priority: int = 14
 @export var _aggro_priority: int = 14
 @export var _desired_health: int = 3
 
@@ -81,10 +80,8 @@ func _ready() -> void:
 	assert(is_instance_valid(following_dialogue), "Please assign a valid following_dialogue to " + display_name)
 	assert(is_instance_valid(dungeon_dialogue), "Please assign a valid dungeon_dialogue to " + display_name)
 	
-	# Assert that all combat preferences are unique types
-	assert(_preferred_combat != _adapatable_combat, display_name + "'s _preferred_combat and _adapatable_combat are the same")
-	assert(_adapatable_combat != _unadaptable_combat, display_name + "'s _adapatable_combat and _unadaptable_combat are the same")
-	assert(_unadaptable_combat != _preferred_combat, display_name + "'s _unadaptable_combat and _preferred_combat are the same")
+	# Assert that all playstyles are unique types
+	assert(preferred_playstyle != adapatable_playstyle, display_name + "'s preferred_playstyle and adapatable_playstyle are the same")
 	
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
@@ -160,13 +157,11 @@ func choose() -> void:
 	npc_choices.append(display_name)
 	Blackboard.add_data("npc_choices", npc_choices)
 	
-	Blackboard.add_data("slash_priority", _slash_priority)
-	Blackboard.add_data("block_priority", _block_priority)
-	Blackboard.add_data("shoot_priority", _shoot_priority)
-	Blackboard.add_data("adaptable_style", _adapatable_combat)
+	Blackboard.add_data("slash_priority", base_slash_priority)
+	Blackboard.add_data("block_priority", base_block_priority)
+	Blackboard.add_data("shoot_priority", base_shoot_priority)
 	Blackboard.add_data("aggro_priority", _aggro_priority)
 	Blackboard.add_data("desired_health", _desired_health)
-	
 	health_component.set_health_blackboard_variables("npc")
 	
 	if window_on:
@@ -223,3 +218,4 @@ func toggle_hide(enabled: bool) -> void:
 	animation_direction.visible = !enabled
 	is_hidden = enabled
 	hurtbox_component.immune = enabled
+	super.toggle_hide(enabled)

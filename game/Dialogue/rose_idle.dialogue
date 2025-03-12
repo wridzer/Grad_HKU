@@ -53,14 +53,14 @@ do game_manager.npc_stop_following.emit("Dominic")
 do game_manager.npc_stop_following.emit("Virgil")
 => follow
 
-~ start_night_Avoiding
-Rose: Not really my style, but at least it gets the job done. Throats need to be slit one way or another.
-=> END
-
 ~ start_night_Aggressive
 Rose: Now you got it! Let’s raze them all to the ground.
 => END
 
 ~ start_night_Defensive
 Rose: You were slow. The enemy won’t wait for you out there. Try and keep up.
+=> END
+
+~ start_night_Evasive
+Rose: Not really my style, but at least it gets the job done. Throats need to be slit one way or another.
 => END

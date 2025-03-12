@@ -18,8 +18,8 @@ var room: Room:
 		if !is_instance_valid(value):
 			Blackboard.remove_data("enemy")
 			Blackboard.add_data("enemies_present", false)
-			UtilitySystem.update_npc_fightstyle()
-			UtilitySystem.update_agro()
+			UtilitySystem.update_npc_playstyle_priorities()
+			UtilitySystem.update_aggro()
 		else:
 			Blackboard.add_data("enemies_in_room" , value.enemies.size())
 		room = value

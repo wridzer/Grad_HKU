@@ -66,7 +66,6 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	if level_to_load == _level_hub:
 		night_time = true
 		return_to_hub.emit()
-		UtilitySystem.instance.calculate()
 		Blackboard.dump_data()
 		Blackboard.save_data()
 	

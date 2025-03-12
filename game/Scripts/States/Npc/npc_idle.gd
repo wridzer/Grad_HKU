@@ -44,7 +44,7 @@ func die() -> void:
 
 func start_dialogue() -> void:
 	if game_manager.night_time:
-		var playstyle: Array[String] = Blackboard.get_data("playstyle")
-		dialogue_manager.start_dialogue(npc.idle_dialogue, npc.display_name, "start_night_" + playstyle[-1])
+		var last_playstyle: String = UtilitySystem.get_last_playstyle()
+		dialogue_manager.start_dialogue(npc.idle_dialogue, npc.display_name, "start_night_" + last_playstyle)
 	else:
 		dialogue_manager.start_dialogue(npc.idle_dialogue, npc.display_name)

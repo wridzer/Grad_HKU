@@ -8,7 +8,7 @@ var direction: Vector2 = Vector2.ZERO
 var mouse_direction: Vector2 = Vector2.ZERO
 var attack: bool = false
 var block: bool = false
-var bow: bool = false
+var shoot: bool = false
 var disabled: bool = false
 
 
@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 	
 	attack = Input.is_action_just_pressed("attack")
 	block = Input.is_action_just_pressed("block")
-	bow = Input.is_action_just_pressed("bow")
+	shoot = Input.is_action_just_pressed("shoot")
 	
 	# Debug go to hub action
 	if Input.is_action_just_pressed("debug_gotohub"):
