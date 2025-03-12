@@ -67,19 +67,26 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
 anchor_top = 0.2
-anchor_right = 0.9
-anchor_bottom = 0.8
+anchor_right = 0.899
+anchor_bottom = 0.887
+offset_left = -0.437202
+offset_right = -0.180481
+offset_bottom = 0.039978
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_ussnp")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_dyern")
-text = "Sword used X amount
-Shield used X amount
-Bow used X amount
-Fiends slain X
-Fiends left alive X
-Companion taken X"
+text = "Sword used: X times
+Shield used: X times
+Bow used: X times
+Enemies slain: X
+Enemies left alive: X
+Companion taken: X
+Companion level: X
+Sword level: X
+Shield level: X
+Bow level: X"
 scroll_active = false
 language = "en_GB"
 

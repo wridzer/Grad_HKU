@@ -41,8 +41,13 @@ cache/0/50/0/descent = 0.0
 cache/0/50/0/underline_position = 0.0
 cache/0/50/0/underline_thickness = 0.0
 cache/0/50/0/scale = 1.0
+cache/0/42/0/ascent = 0.0
+cache/0/42/0/descent = 0.0
+cache/0/42/0/underline_position = 0.0
+cache/0/42/0/underline_thickness = 0.0
+cache/0/42/0/scale = 1.0
 
 [resource]
 default_base_scale = 100.0
 default_font = SubResource("FontFile_hv4e8")
-default_font_size = 50
+default_font_size = 42
