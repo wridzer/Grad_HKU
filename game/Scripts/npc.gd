@@ -88,9 +88,14 @@ func _ready() -> void:
 	health_component.die.connect(downed)
 	health_component.immunity.connect(update_immunity_animation)
 	health_component.health_gained.connect(update_blackboard_health)
+	hurtbox_component.hurt.connect(func(_x, _y): hurt())
 	
 	# Set display name label
 	name_label.text = display_name
+	
+	# Disable info window
+	info_window.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+	info_window.visible = false
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -98,12 +103,10 @@ func _ready() -> void:
 	animation_tree.active = true
 	animation_player.active = true
 	
-	# Disable info window
-	info_window.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-	info_window.visible = false
-	
-	hurtbox_component.hurt.connect(func(_x, _y): hurt())
+	# Enable immunity at start
 	immunity(true)
+	
+	super._ready()
 
 
 func immunity(immune: bool) -> void:

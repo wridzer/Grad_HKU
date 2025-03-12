@@ -59,6 +59,8 @@ func _ready() -> void:
 	animation_player = $CharacterAnimations/AnimationPlayer
 	animation_tree.active = true
 	animation_player.active = true
+	
+	super._ready()
 
 
 func _physics_process(_delta: float) -> void:

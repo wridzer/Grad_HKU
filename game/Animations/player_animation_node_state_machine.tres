@@ -51,6 +51,7 @@ min_space = 0.0
 max_space = 3.0
 snap = 1.0
 value_label = "level"
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g56al"]
 animation = &"character_animations/slash_1"
@@ -72,6 +73,7 @@ min_space = 0.0
 max_space = 3.0
 snap = 1.0
 value_label = "level"
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8ncs"]
 animation = &"character_animations/walk"
@@ -207,4 +209,4 @@ states/Start/position = Vector2(99, 494.855)
 states/Walk/node = SubResource("AnimationNodeAnimation_n8ncs")
 states/Walk/position = Vector2(527.556, 612)
 transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_lq11t"), "RESET", "Idle", SubResource("AnimationNodeStateMachineTransition_ge6jk"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_2bkuu"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_o2112"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_xtffj"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_a3hyd"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_wqov2"), "Hit", "Walk", SubResource("AnimationNodeStateMachineTransition_v1yvc"), "Hit", "Block", SubResource("AnimationNodeStateMachineTransition_aq3su"), "Idle", "Block", SubResource("AnimationNodeStateMachineTransition_vpdr6"), "Walk", "Block", SubResource("AnimationNodeStateMachineTransition_hoks4"), "Block", "Hit", SubResource("AnimationNodeStateMachineTransition_1xokf"), "Block", "Idle", SubResource("AnimationNodeStateMachineTransition_uhum8"), "Block", "Walk", SubResource("AnimationNodeStateMachineTransition_gafaa"), "Shoot", "Idle", SubResource("AnimationNodeStateMachineTransition_1l486"), "Shoot", "Walk", SubResource("AnimationNodeStateMachineTransition_eo6x7"), "Shoot", "Hit", SubResource("AnimationNodeStateMachineTransition_8tchs"), "Hit", "Shoot", SubResource("AnimationNodeStateMachineTransition_iv61s"), "Walk", "Shoot", SubResource("AnimationNodeStateMachineTransition_aqp74"), "Idle", "Shoot", SubResource("AnimationNodeStateMachineTransition_kxlcc"), "Idle", "Slash", SubResource("AnimationNodeStateMachineTransition_ibb27"), "Hit", "Slash", SubResource("AnimationNodeStateMachineTransition_x54yj"), "Walk", "Slash", SubResource("AnimationNodeStateMachineTransition_is1ce"), "Slash", "Idle", SubResource("AnimationNodeStateMachineTransition_pfbjd"), "Slash", "Hit", SubResource("AnimationNodeStateMachineTransition_eouou"), "Slash", "Walk", SubResource("AnimationNodeStateMachineTransition_mgsbj")]
-graph_offset = Vector2(47, 222)
+graph_offset = Vector2(150, 469)
