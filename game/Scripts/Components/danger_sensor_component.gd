@@ -9,6 +9,17 @@ static var directions: PackedVector2Array = [Vector2(1,0),Vector2(1,-1),Vector2(
 @export var _raycasts: Array[RayCast2D]
 
 var danger_array: Array
+var debug_raycast_collisions: bool:
+	set(visible):
+		var tree: SceneTree = get_tree()
+		tree.debug_collisions_hint = visible
+		
+		# Force redraw
+		for raycast in _raycasts:
+			var parent: Node = raycast.get_parent()
+			if parent:
+				parent.remove_child(raycast)
+				parent.add_child(raycast)
 
 
 func _physics_process(_delta: float) -> void:
