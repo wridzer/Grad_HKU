@@ -169,20 +169,35 @@ static func calculate_level_ups() -> void:
 	match last_playstyle:
 		"Aggressive":
 			if npc.adapatable_playstyle == Npc.Playstyle.EVASIVE:
-				npc.level += 1
-			Blackboard.increment_data("sword_level", 1)
+				npc.level = min(3, npc.level + 1)
+			elif npc.preferred_playstyle == Npc.Playstyle.AGGRESSIVE:
+				npc.level = min(2, npc.level + 1)
+			else:
+				npc.level = max(1, npc.level - 1)
+			
+			Blackboard.add_data("sword_level", min(3, sword_level + 1))
 			Blackboard.add_data("shield_level", max(1, shield_level - 1))
 			Blackboard.add_data("bow_level", max(1, bow_level - 1))
 		"Defensive":
 			if npc.adapatable_playstyle == Npc.Playstyle.AGGRESSIVE:
-				npc.level += 1
-			Blackboard.increment_data("shield_level", 1)
+				npc.level = min(3, npc.level + 1)
+			elif npc.preferred_playstyle == Npc.Playstyle.DEFENSIVE:
+				npc.level = min(2, npc.level + 1)
+			else:
+				npc.level = max(1, npc.level - 1)
+			
+			Blackboard.add_data("shield_level", min(3, sword_level + 1))
 			Blackboard.add_data("sword_level", max(1, sword_level - 1))
 			Blackboard.add_data("bow_level", max(1, bow_level - 1))
 		"Evasive":
 			if npc.adapatable_playstyle == Npc.Playstyle.DEFENSIVE:
-				npc.level += 1
-			Blackboard.increment_data("bow_level", 1)
+				npc.level = min(3, npc.level + 1)
+			elif npc.preferred_playstyle == Npc.Playstyle.EVASIVE:
+				npc.level = min(2, npc.level + 1)
+			else:
+				npc.level = max(1, npc.level - 1)
+			
+			Blackboard.add_data("bow_level", min(3, sword_level + 1))
 			Blackboard.add_data("sword_level", max(1, sword_level - 1))
 			Blackboard.add_data("shield_level", max(1, shield_level - 1))
 
