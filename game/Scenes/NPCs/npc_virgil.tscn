@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dfqtqx2hreskn"]
+[gd_scene load_steps=33 format=3 uid="uid://dfqtqx2hreskn"]
 
 [ext_resource type="Script" path="res://Scripts/npc.gd" id="1_rurcg"]
 [ext_resource type="Resource" uid="uid://cug04ukn2doay" path="res://Dialogue/virgil_idle.dialogue" id="2_1k30o"]
@@ -24,16 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://di00aoah5eh3v" path="res://Scenes/Components/danger_sensor_component.tscn" id="17_ue0k1"]
 [ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="18_48e6k"]
 [ext_resource type="Texture2D" uid="uid://dl1hdkguonl0k" path="res://Art/nadja_art/NPC/Virgil.png" id="19_5gnpg"]
-[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="19_hlwcf"]
-[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="20_c17ey"]
 [ext_resource type="Texture2D" uid="uid://dw2ypgka72pqt" path="res://Art/nadja_art/NPC/Virgil_01.png" id="20_mhm7q"]
-[ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="21_qb467"]
-[ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="22_7evnf"]
-[ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="23_qbv31"]
-[ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="24_ajdhj"]
-[ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="25_mc32d"]
-[ext_resource type="GoapGoal" uid="uid://cmo3y35ti5a2d" path="res://goap_resources/goals/revive_player_goal.tres" id="26_0vjen"]
-[ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="27_5pbuk"]
+[ext_resource type="PackedScene" uid="uid://72fuf1hmrs11" path="res://Scenes/GOAP/goap_agent.tscn" id="26_e08fs"]
 
 [sub_resource type="Animation" id="Animation_6e80b"]
 length = 0.001
@@ -225,7 +217,7 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ie4eq"]
 radius = 6.0
 
-[node name="NpcVirgil" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "info_window", "animation_tree", "animation_player", "animation_direction")]
+[node name="NpcVirgil" type="CharacterBody2D" node_paths=PackedStringArray("goap_agent", "animation_tree", "animation_player", "animation_direction")]
 z_index = 4
 collision_layer = 0
 script = ExtResource("1_rurcg")
@@ -250,7 +242,6 @@ max_chase_speed = 70.0
 steering_value = 3.4
 turning_smoothing_value = 0.8
 speed_smoothing_value = 0.05
-info_window = NodePath("GoapAgent/Window")
 animation_tree = NodePath("CharacterAnimations/AnimationTree")
 animation_player = NodePath("CharacterAnimations/AnimationPlayer")
 animation_direction = NodePath("CharacterAnimations/AnimationDirection")
@@ -388,83 +379,7 @@ animated_sprite = NodePath("../CharacterAnimations/AnimationDirection/AnimatedSp
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
 shape = SubResource("CircleShape2D_ie4eq")
 
-[node name="GoapAgent" type="GoapAgent" parent="."]
-goals = Array[GoapGoal]([ExtResource("19_hlwcf"), ExtResource("20_c17ey"), ExtResource("21_qb467"), ExtResource("22_7evnf"), ExtResource("23_qbv31"), ExtResource("24_ajdhj"), ExtResource("25_mc32d"), ExtResource("26_0vjen")])
-
-[node name="Window" type="Window" parent="GoapAgent" node_paths=PackedStringArray("_blackboard_list", "_goal_list", "_action_plan", "_goap_agent")]
-auto_translate_mode = 1
-own_world_3d = true
-mode = 3
-title = "Debug Goap info"
-initial_position = 3
-size = Vector2i(1920, 1080)
-current_screen = 2
-borderless = true
-unfocusable = true
-script = ExtResource("27_5pbuk")
-_blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
-_goal_list = NodePath("CanvasLayer/HBoxContainer/Goal_list")
-_action_plan = NodePath("CanvasLayer/HBoxContainer/Action_plan_list")
-_goap_agent = NodePath("..")
-font_size = 45
-
-[node name="CanvasLayer" type="CanvasLayer" parent="GoapAgent/Window"]
-
-[node name="PanelContainer" type="PanelContainer" parent="GoapAgent/Window/CanvasLayer"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 80.0
-grow_horizontal = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer/PanelContainer"]
-clip_contents = true
-layout_mode = 2
-theme_override_constants/separation = 800
-alignment = 1
-
-[node name="Label" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Blackboard"
-
-[node name="Label2" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Goals"
-
-[node name="Label3" type="Label" parent="GoapAgent/Window/CanvasLayer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Action plan"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GoapAgent/Window/CanvasLayer"]
-clip_contents = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 90.0
-offset_right = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 100
-
-[node name="Blackboard_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 9
-
-[node name="Goal_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 9
-
-[node name="Action_plan_list" type="VBoxContainer" parent="GoapAgent/Window/CanvasLayer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 9
+[node name="GoapAgent" parent="." instance=ExtResource("26_e08fs")]
 
 [editable path="CharacterAnimations/AnimationDirection/Sword"]
 [editable path="CharacterAnimations/AnimationDirection/Shield"]

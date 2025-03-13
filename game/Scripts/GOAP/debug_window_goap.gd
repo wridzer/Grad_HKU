@@ -19,6 +19,9 @@ func _ready() -> void:
 	goals = _goap_agent.get_goals()
 	sort_goals()
 	
+	visible = false
+	set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
+
 
 func _process(_delta: float) -> void:
 	# Get current data

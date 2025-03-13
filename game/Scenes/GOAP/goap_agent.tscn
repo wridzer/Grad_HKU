@@ -1,0 +1,21 @@
+[gd_scene load_steps=11 format=3 uid="uid://72fuf1hmrs11"]
+
+[ext_resource type="GoapGoal" uid="uid://bsknje6x7gnsv" path="res://goap_resources/goals/stay_close_to_player_goal.tres" id="1_f6wb1"]
+[ext_resource type="GoapGoal" uid="uid://bih2aoi2635w8" path="res://goap_resources/goals/idle_goal.tres" id="2_gnnhe"]
+[ext_resource type="GoapGoal" uid="uid://bkxbsp5u0qf85" path="res://goap_resources/goals/flee_goal.tres" id="3_mehwd"]
+[ext_resource type="GoapGoal" uid="uid://cxhnjevajye8j" path="res://goap_resources/goals/hide_goal.tres" id="4_kwf64"]
+[ext_resource type="GoapGoal" uid="uid://df32knt1rrmky" path="res://goap_resources/goals/objective_goal.tres" id="5_1qq45"]
+[ext_resource type="GoapGoal" uid="uid://dabg1iauj2163" path="res://goap_resources/goals/attack_goal.tres" id="6_r7vtj"]
+[ext_resource type="GoapGoal" uid="uid://7xqd8j0ovo54" path="res://goap_resources/goals/heal_goal.tres" id="7_ca5ww"]
+[ext_resource type="GoapGoal" uid="uid://cmo3y35ti5a2d" path="res://goap_resources/goals/revive_player_goal.tres" id="8_q60fp"]
+[ext_resource type="PackedScene" uid="uid://cdt8qfqr74s11" path="res://Scenes/GOAP/debug_window_goap.tscn" id="9_1rxvr"]
+[ext_resource type="Script" path="res://Scripts/GOAP/goap_agent.gd" id="9_4rr6s"]
+
+[node name="GoapAgent" type="GoapAgent" node_paths=PackedStringArray("debug_window")]
+goals = Array[GoapGoal]([ExtResource("1_f6wb1"), ExtResource("2_gnnhe"), ExtResource("3_mehwd"), ExtResource("4_kwf64"), ExtResource("5_1qq45"), ExtResource("6_r7vtj"), ExtResource("7_ca5ww"), ExtResource("8_q60fp")])
+script = ExtResource("9_4rr6s")
+enable_debug_window = true
+debug_window = NodePath("Window")
+
+[node name="Window" parent="." node_paths=PackedStringArray("_goap_agent") instance=ExtResource("9_1rxvr")]
+_goap_agent = NodePath("..")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=18 format=3 uid="uid://brwdipqkg1lef"]
+
+[ext_resource type="GoapAction" uid="uid://k51udbmeou10" path="res://goap_resources/actions/move_action.tres" id="1_lcrs5"]
+[ext_resource type="GoapAction" uid="uid://bb2twqlko1jc1" path="res://goap_resources/actions/chill_action.tres" id="2_g2n1h"]
+[ext_resource type="GoapAction" uid="uid://dxmoayb1d3r2s" path="res://goap_resources/actions/find_enemy_action.tres" id="3_gu8yb"]
+[ext_resource type="GoapAction" uid="uid://bgr75ol2xtiva" path="res://goap_resources/actions/flee_from_enemy_action.tres" id="4_48vxe"]
+[ext_resource type="GoapAction" uid="uid://b5r6otl3lrsdi" path="res://goap_resources/actions/block_action.tres" id="5_67gtp"]
+[ext_resource type="GoapAction" uid="uid://df7qmiphrntqe" path="res://goap_resources/actions/shoot_action.tres" id="6_cdecm"]
+[ext_resource type="GoapAction" uid="uid://ckww702xlyxg4" path="res://goap_resources/actions/slash_action.tres" id="7_3c3dd"]
+[ext_resource type="GoapAction" uid="uid://d4eba5mh7rm82" path="res://goap_resources/actions/move_perpendicular_to_enemy_action.tres" id="8_ad10m"]
+[ext_resource type="GoapAction" uid="uid://b1cli0xaq6d7d" path="res://goap_resources/actions/find_heal_item_action.tres" id="9_m8vci"]
+[ext_resource type="GoapAction" uid="uid://c3r7ferakpu7s" path="res://goap_resources/actions/find_key_action.tres" id="10_5gant"]
+[ext_resource type="GoapAction" uid="uid://davk3xb3446v6" path="res://goap_resources/actions/activate_actionable_action.tres" id="11_cyrcy"]
+[ext_resource type="GoapAction" uid="uid://cw8xh37623b4b" path="res://goap_resources/actions/move_to_player_action.tres" id="12_xe0v5"]
+[ext_resource type="GoapAction" uid="uid://cawxa3prd1547" path="res://goap_resources/actions/move_away_from_player_action.tres" id="13_degfx"]
+[ext_resource type="GoapAction" uid="uid://xos43rabll7n" path="res://goap_resources/actions/find_player.tres" id="14_yr2ck"]
+[ext_resource type="GoapAction" uid="uid://b0x1mpt17ifjq" path="res://goap_resources/actions/revive_action.tres" id="15_8lnc4"]
+[ext_resource type="GoapAction" uid="uid://cyvliej34wu3f" path="res://goap_resources/actions/find_hiding_spot_action.tres" id="16_kdeef"]
+[ext_resource type="GoapAction" uid="uid://dn072c5buarph" path="res://goap_resources/actions/stay_hidden_action.tres" id="17_7275j"]
+
+[node name="Goap" type="Goap"]
+actions = Array[GoapAction]([ExtResource("1_lcrs5"), ExtResource("2_g2n1h"), ExtResource("3_gu8yb"), ExtResource("4_48vxe"), ExtResource("5_67gtp"), ExtResource("6_cdecm"), ExtResource("7_3c3dd"), ExtResource("8_ad10m"), ExtResource("9_m8vci"), ExtResource("10_5gant"), ExtResource("11_cyrcy"), ExtResource("12_xe0v5"), ExtResource("13_degfx"), ExtResource("14_yr2ck"), ExtResource("15_8lnc4"), ExtResource("16_kdeef"), ExtResource("17_7275j")])

@@ -41,10 +41,6 @@ const MAX_ARROW_COUNT = 5
 
 @export_range(0.0, 2.0) var stop_time: float = 0.5
 
-# Info window vars
-@export var info_window : Window
-@export var window_on : bool
-
 var level: int = 1
 var _arrows: Array[Arrow]
 var is_hidden : bool = false
@@ -92,10 +88,6 @@ func _ready() -> void:
 	
 	# Set display name label
 	name_label.text = display_name
-	
-	# Disable info window
-	info_window.set_process_mode(ProcessMode.PROCESS_MODE_DISABLED)
-	info_window.visible = false
 	
 	# Enable animations
 	animation_tree = $CharacterAnimations/AnimationTree
@@ -167,9 +159,8 @@ func choose() -> void:
 	Blackboard.add_data("desired_health", _desired_health)
 	health_component.set_health_blackboard_variables("npc")
 	
-	if window_on:
-		info_window.set_process_mode(ProcessMode.PROCESS_MODE_INHERIT)
-		info_window.visible = true
+	if goap_agent.enable_debug_window:
+		goap_agent.activate_debug_window()
 
 
 func slash() -> bool:

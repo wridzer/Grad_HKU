@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdt8qfqr74s11"]
+
+[ext_resource type="Script" path="res://Scripts/GOAP/debug_window_goap.gd" id="1_4px74"]
+
+[node name="Window" type="Window" node_paths=PackedStringArray("_blackboard_list", "_goal_list", "_action_plan")]
+auto_translate_mode = 1
+own_world_3d = true
+mode = 2
+title = "Debug Goap info"
+initial_position = 3
+size = Vector2i(1920, 1080)
+current_screen = 2
+visible = false
+unfocusable = true
+script = ExtResource("1_4px74")
+_blackboard_list = NodePath("CanvasLayer/HBoxContainer/Blackboard_list")
+_goal_list = NodePath("CanvasLayer/HBoxContainer/Goal_list")
+_action_plan = NodePath("CanvasLayer/HBoxContainer/Action_plan_list")
+font_size = 45
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/separation = 800
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Blackboard"
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Goals"
+
+[node name="Label3" type="Label" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Action plan"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 90.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 100
+
+[node name="Blackboard_list" type="VBoxContainer" parent="CanvasLayer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+
+[node name="Goal_list" type="VBoxContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
+
+[node name="Action_plan_list" type="VBoxContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 9
