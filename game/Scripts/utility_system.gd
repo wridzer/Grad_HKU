@@ -166,40 +166,63 @@ static func calculate_level_ups() -> void:
 		return
 	npc = npc as Npc
 	
+	var new_npc_level: int
+	var new_sword_level: int
+	var new_shield_level: int
+	var new_bow_level: int
+	
 	match last_playstyle:
 		"Aggressive":
 			if npc.adapatable_playstyle == Npc.Playstyle.EVASIVE:
-				npc.level = min(3, npc.level + 1)
+				new_npc_level = min(3, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.AGGRESSIVE:
-				npc.level = min(2, npc.level + 1)
+				new_npc_level = min(2, npc.level + 1)
 			else:
-				npc.level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - 1)
 			
-			Blackboard.add_data("sword_level", min(3, sword_level + 1))
-			Blackboard.add_data("shield_level", max(1, shield_level - 1))
-			Blackboard.add_data("bow_level", max(1, bow_level - 1))
+			new_sword_level = min(3, sword_level + 1)
+			new_shield_level = max(1, shield_level - 1)
+			new_bow_level = max(1, bow_level - 1)
 		"Defensive":
 			if npc.adapatable_playstyle == Npc.Playstyle.AGGRESSIVE:
-				npc.level = min(3, npc.level + 1)
+				new_npc_level = min(3, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.DEFENSIVE:
-				npc.level = min(2, npc.level + 1)
+				new_npc_level = min(2, npc.level + 1)
 			else:
-				npc.level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - 1)
 			
-			Blackboard.add_data("shield_level", min(3, sword_level + 1))
-			Blackboard.add_data("sword_level", max(1, sword_level - 1))
-			Blackboard.add_data("bow_level", max(1, bow_level - 1))
+			new_sword_level = max(1, sword_level - 1)
+			new_shield_level = min(3, shield_level + 1)
+			new_bow_level = max(1, bow_level - 1)
 		"Evasive":
 			if npc.adapatable_playstyle == Npc.Playstyle.DEFENSIVE:
-				npc.level = min(3, npc.level + 1)
+				new_npc_level = min(3, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.EVASIVE:
-				npc.level = min(2, npc.level + 1)
+				new_npc_level = min(2, npc.level + 1)
 			else:
-				npc.level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - 1)
 			
-			Blackboard.add_data("bow_level", min(3, sword_level + 1))
-			Blackboard.add_data("sword_level", max(1, sword_level - 1))
-			Blackboard.add_data("shield_level", max(1, shield_level - 1))
+			new_sword_level = max(1, sword_level - 1)
+			new_shield_level = max(1, shield_level - 1)
+			new_bow_level = min(3, bow_level + 1)
+	
+	Blackboard.add_data("sword_level", sword_level)
+	Blackboard.add_data("shield_level", shield_level)
+	Blackboard.add_data("bow_level", bow_level)
+	
+	Blackboard.add_data("npc_level_report", get_level_report(npc.level, new_npc_level))
+	Blackboard.add_data("sword_level_report", get_level_report(sword_level, new_sword_level))
+	Blackboard.add_data("shield_level_report", get_level_report(shield_level, new_shield_level))
+	Blackboard.add_data("bow_level_report", get_level_report(bow_level, new_bow_level))
+
+
+static func get_level_report(old_level: int, new_level: int) -> String:
+	var level_report: String = str(new_level) + "/3"
+	if old_level < new_level:
+		level_report += " (+1)"
+	elif old_level > new_level:
+		level_report += " (-1)"
+	return level_report
 
 
 static func get_last_playstyle() -> String:

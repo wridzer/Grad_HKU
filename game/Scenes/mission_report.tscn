@@ -77,16 +77,17 @@ grow_vertical = 2
 theme = ExtResource("4_ussnp")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_dyern")
-text = "Sword used: X times
+text = "Playstyle: X
+Sword used: X times
 Shield used: X times
 Bow used: X times
 Enemies slain: X
 Enemies left alive: X
 Companion taken: X
-Companion level: X
-Sword level: X
-Shield level: X
-Bow level: X"
+Companion level: X/3
+Sword level: X/3
+Shield level: X/3
+Bow level: X/3"
 scroll_active = false
 language = "en_GB"
 

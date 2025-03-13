@@ -7,7 +7,10 @@ extends Node2D
 
 
 func do_mission_report() -> void:
-	var data = Blackboard.get_data("sword_used_amount")
+	var playstyle = UtilitySystem.get_last_playstyle()
+	var data
+	
+	data = Blackboard.get_data("sword_used_amount")
 	var sword_used_amount: String = str(data) if data else "0"
 	
 	data = Blackboard.get_data("shield_used_amount")
@@ -25,21 +28,21 @@ func do_mission_report() -> void:
 	data = Blackboard.get_data("npc_choices")
 	var npc_name: String = (data as Array)[-1] if data else "None"
 	
-	data = Blackboard.get_data("npc")
-	var npc_level: String = str((data as Npc).level) if is_instance_valid(data) else "0"
+	data = Blackboard.get_data("npc_level_report")
+	var npc_level: String = str(data) if data else "0/3"
 	
-	data = Blackboard.get_data("sword_level")
-	var sword_level: String = str(data) if data else "0"
+	data = Blackboard.get_data("sword_level_report")
+	var sword_level: String = str(data) if data else "0/3"
 	
-	data = Blackboard.get_data("shield_level")
-	var shield_level: String = str(data) if data else "0"
+	data = Blackboard.get_data("shield_level_report")
+	var shield_level: String = str(data) if data else "0/3"
 	
-	data = Blackboard.get_data("bow_level")
-	var bow_level: String = str(data) if data else "0"
-	
+	data = Blackboard.get_data("bow_level_report")
+	var bow_level: String = str(data) if data else "0/3"
 	
 	stats.text = \
-"Sword used: " + sword_used_amount + " times
+"Playstyle: " + playstyle + "
+Sword used: " + sword_used_amount + " times
 Shield used: " + shield_used_amount + " times
 Bow used: " + bow_used_amount + " times
 Enemies slain: " + enemies_killed + "
