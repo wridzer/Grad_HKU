@@ -201,43 +201,51 @@ static func calculate_level_ups() -> void:
 	
 	match last_playstyle:
 		"Aggressive":
-			if npc.adapatable_playstyle == Npc.Playstyle.EVASIVE:
+			if npc.adapatable_playstyle == Npc.Playstyle.AGGRESSIVE: # Dominic
 				new_npc_level = minf(3.99, npc.level + 1)
-			elif npc.preferred_playstyle == Npc.Playstyle.AGGRESSIVE:
-				new_npc_level = min(2.5, npc.level + .6)
-			else:
+			elif npc.preferred_playstyle == Npc.Playstyle.AGGRESSIVE: # Rose
+				new_npc_level = min(3.99, npc.level + .6)
+			else: # Virgil
 				new_npc_level = max(1, npc.level - .4)
 			
 			new_sword_level = min(3.99, sword_level + 1)
 			new_shield_level = max(1, shield_level - .4)
 			new_bow_level = max(1, bow_level - .4)
 		"Defensive":
-			if npc.adapatable_playstyle == Npc.Playstyle.AGGRESSIVE:
+			if npc.adapatable_playstyle == Npc.Playstyle.DEFENSIVE: # Virgil
 				new_npc_level = min(3.99, npc.level + 1)
-			elif npc.preferred_playstyle == Npc.Playstyle.DEFENSIVE:
-				new_npc_level = min(2.5, npc.level + .6)
-			else:
+			elif npc.preferred_playstyle == Npc.Playstyle.DEFENSIVE: # Dominic
+				new_npc_level = min(3.99, npc.level + .6)
+			else: # Rose
 				new_npc_level = max(1, npc.level - .4)
 			
 			new_sword_level = max(1, sword_level - .4)
 			new_shield_level = min(3.99, shield_level + 1)
 			new_bow_level = max(1, bow_level - .4)
 		"Evasive":
-			if npc.adapatable_playstyle == Npc.Playstyle.DEFENSIVE:
+			if npc.adapatable_playstyle == Npc.Playstyle.EVASIVE: # Rose
 				new_npc_level = min(3.99, npc.level + 1)
-			elif npc.preferred_playstyle == Npc.Playstyle.EVASIVE:
-				new_npc_level = min(2.5, npc.level + .6)
-			else:
+			elif npc.preferred_playstyle == Npc.Playstyle.EVASIVE: # Virgil
+				new_npc_level = min(3.99, npc.level + .6)
+			else: # Dominic
 				new_npc_level = max(1, npc.level - .4)
 			
 			new_sword_level = max(1, sword_level - .4)
 			new_shield_level = max(1, shield_level - .4)
-			new_bow_level = min(3, bow_level + 1)
+			new_bow_level = min(3.99, bow_level + 1)
 	
-	npc.level = floori(new_npc_level)
-	Blackboard.add_data("sword_level", sword_level)
-	Blackboard.add_data("shield_level", shield_level)
-	Blackboard.add_data("bow_level", bow_level)
+	var npc_choices = Blackboard.get_data("npc_choices")
+	if !npc_choices:
+		npc_choices = [""]
+	npc_choices = npc_choices as Array
+	
+	var npc_name: String = npc_choices[-1]
+	if npc_name != "":
+		Blackboard.add_data(npc_name + "_level", new_npc_level)
+	
+	Blackboard.add_data("sword_level", new_sword_level)
+	Blackboard.add_data("shield_level", new_shield_level)
+	Blackboard.add_data("bow_level", new_bow_level)
 	
 	Blackboard.add_data("npc_level_report", get_level_report(floori(npc.level), floori(new_npc_level)))
 	Blackboard.add_data("sword_level_report", get_level_report(floori(sword_level), floori(new_sword_level)))

@@ -147,10 +147,14 @@ func update_animation_parameters() -> void:
 func choose() -> void:
 	Blackboard.add_data("npc", self)
 	
-	var data = Blackboard.get_data("npc_choices")
-	var npc_choices: Array = data if data else []
+	var npc_choices = Blackboard.get_data("npc_choices")
+	if !npc_choices:
+		npc_choices = []
+	npc_choices = npc_choices as Array
 	npc_choices.append(display_name)
 	Blackboard.add_data("npc_choices", npc_choices)
+	
+	level = Blackboard.get_data(display_name + "_level") if Blackboard.get_data(display_name + "_level") else level
 	
 	Blackboard.add_data("slash_priority", base_slash_priority)
 	Blackboard.add_data("block_priority", base_block_priority)
