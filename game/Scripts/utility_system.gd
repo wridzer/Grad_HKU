@@ -74,7 +74,8 @@ func calculate_playstyle() -> void:
 	var points_defensive: int = 0
 	var points_evasive: int = 0
 	
-	# Weapon usage heuristic
+	# Weapon usage heuristic:
+	#Simple +4 of weapon class most used
 	match max(sword_used, shield_used, bow_used):
 		sword_used:
 			points_aggressive += 4
@@ -83,7 +84,8 @@ func calculate_playstyle() -> void:
 		bow_used:
 			points_evasive += 4
 	
-	# Nudge the player in the right direction with the npc playstyle heuristic
+	# Chosen npc playstyle heuristic
+	# Nudge the player in the right direction for the correct adaptive playstyle
 	match npc.adapatable_playstyle:
 		npc.Playstyle.AGGRESSIVE:
 			points_defensive += 2
@@ -92,19 +94,23 @@ func calculate_playstyle() -> void:
 		npc.Playstyle.EVASIVE:
 			points_aggressive += 2
 	
-	# Player Health/Damage heuristics
-	points_aggressive = points_aggressive + (player_damage_taken - player_max_health)
-	points_defensive = points_defensive + player_heal_count
-	points_evasive = points_evasive + (player_max_health - player_damage_taken)
+	# Player health heuristic:
+	# Basic playstyle analysis on taking damage and heals, with limiting factors: -3 or +3 points
+	points_aggressive = points_aggressive + max(3, (player_damage_taken - player_max_health))
+	points_defensive = points_defensive + max(3, player_heal_count)
+	points_evasive = points_evasive + min(-3, (player_max_health - player_damage_taken))
 	
 	# Mission type heuristic
+	# Item missions require you to be less aggressive
 	if mission_choices.count(DungeonGenerator.MissionType.ITEM) > mission_choices.count(DungeonGenerator.MissionType.SLAY):
-		points_evasive += 3
-		points_defensive += 3
+		points_evasive += 2
+		points_defensive += 2
 	else:
-		points_aggressive += 3
+		points_aggressive += 2
 	
-	# Enemies left alive heuristic, and fix possible ties
+	# Enemies killed/alive heuristic
+	# Determine the evasiveness using kill count
+	# This last heuristic also fixes possible ties
 	if enemies_left_alive < enemies_killed:
 		points_aggressive += 3
 		points_defensive += 3
