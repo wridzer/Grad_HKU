@@ -83,11 +83,6 @@ func update_animation_parameters() -> void:
 	animation_tree.set("parameters/conditions/idle", input_manager.direction == Vector2.ZERO)
 	animation_tree.set("parameters/conditions/moving", input_manager.direction != Vector2.ZERO)
 	
-	if input_manager.mouse_direction.length() > 0:
-		animation_tree.set("parameters/Hit/blend_position", input_manager.mouse_direction)
-		animation_tree.set("parameters/Idle/blend_position", input_manager.mouse_direction)
-		animation_tree.set("parameters/Walk/blend_position", input_manager.mouse_direction)
-	
 	# Make sure the player isn't already performing an action
 	if animation_tree.get("parameters/conditions/slash") || animation_tree.get("parameters/conditions/block")|| animation_tree.get("parameters/conditions/shoot"):
 		super.update_animation_parameters()
