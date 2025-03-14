@@ -7,8 +7,6 @@ extends Node2D
 
 
 func do_mission_report() -> void:
-	var data
-	
 	visible = true
 	
 	if !Blackboard.get_data("mission_success"):
@@ -19,6 +17,7 @@ fired and sent to hell."
 		return
 	
 	var playstyle = UtilitySystem.get_last_playstyle()
+	var data
 	
 	data = Blackboard.get_data("sword_used_amount")
 	var sword_used_amount: String = str(data) if data else "0"
