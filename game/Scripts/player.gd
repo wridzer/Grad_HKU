@@ -90,18 +90,24 @@ func update_animation_parameters() -> void:
 	
 	if input_manager.attack:
 		Blackboard.increment_data("sword_used_amount", 1)
-		var level = 1
+		
+		# Determine animation level
+		var level: int = 1
 		if Blackboard.get_data("sword_level"):
-			level = Blackboard.get_data("sword_level")
+			level = floori(Blackboard.get_data("sword_level"))
+		
 		await attack_animation("slash", level)
 		super.update_animation_parameters()
 		return
 	
 	if input_manager.block:
 		Blackboard.increment_data("shield_used_amount", 1)
-		var level = 1
+		
+		# Determine animation level
+		var level: int = 1
 		if Blackboard.get_data("shield_level"):
-			level = Blackboard.get_data("shield_level")
+			level = floori(Blackboard.get_data("shield_level"))
+		
 		await attack_animation("block", level)
 		super.update_animation_parameters()
 		return
@@ -197,10 +203,12 @@ func shoot(direction: Vector2) -> bool:
 	# Remove arrow from list when freeing
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
-	# Animate bow
-	var level = 1
+	# Determine animation level
+	var level: int = 1
 	if Blackboard.get_data("bow_level"):
-		level = Blackboard.get_data("bow_level")
+		level = floori(Blackboard.get_data("bow_level"))
+	
+	# Animate bow
 	return await attack_animation("shoot", level)
 
 

@@ -41,7 +41,7 @@ const MAX_ARROW_COUNT = 5
 
 @export_range(0.0, 2.0) var stop_time: float = 0.5
 
-var level: int = 1
+var level: float = 1.00
 var _arrows: Array[Arrow]
 var is_hidden : bool = false
 
@@ -167,14 +167,14 @@ func slash() -> bool:
 	if animation_tree.get("parameters/conditions/slash"):
 		return false
 	
-	return await attack_animation("slash", level)
+	return await attack_animation("slash", floori(level))
 
 
 func block() -> bool:
 	if animation_tree.get("parameters/conditions/block"):
 		return false
 	
-	return await attack_animation("block", level)
+	return await attack_animation("block", floori(level))
 
 
 func shoot(anim_direction: Vector2) -> bool:
@@ -197,7 +197,7 @@ func shoot(anim_direction: Vector2) -> bool:
 	arrow.tree_exiting.connect(func(): _arrows.erase(arrow))
 	
 	# Animate bow
-	return await attack_animation("shoot", level)
+	return await attack_animation("shoot", floori(level))
 
 
 func _reduce_arrows_to(amount: int) -> void:

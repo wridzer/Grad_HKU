@@ -38,27 +38,35 @@ func reset_values() -> void:
 
 
 func calculate_playstyle() -> void:
-	var sword_hit: int = Blackboard.get_data("sword_hit_enemy_amount") if Blackboard.get_data("sword_hit_enemy_amount") else 0
-	var shield_hit: int = Blackboard.get_data("shield_hit_enemy_amount") if Blackboard.get_data("shield_hit_enemy_amount") else 0
-	var arrow_hit: int = Blackboard.get_data("arrow_hit_enemy_amount") if Blackboard.get_data("arrow_hit_enemy_amount") else 0
-	var damage_done: int = sword_hit + arrow_hit
-	var damage_blocked: int = shield_hit
+	var npc = Blackboard.get_data("npc")
+	if !is_instance_valid(npc):
+		return
+	npc = npc as Npc
+	
+	# Calculate enemy killed/left alive data
 	var enemies_killed: int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
 	var enemies_left_alive: int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
-	var sword_used: int = Blackboard.get_data("sword_used_amount") if Blackboard.get_data("sword_used_amount") else 0
-	var shield_used: int = Blackboard.get_data("shield_used_amount") if Blackboard.get_data("shield_used_amount") else 0
-	var bow_used: int = Blackboard.get_data("bow_used_amount") if Blackboard.get_data("bow_used_amount") else 0
-	
 	var total_enemies: float = enemies_killed + enemies_left_alive
 	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
 	Blackboard.add_data("enemy_killed_percentage", enemy_killed_percentage)
 	
+	# Get weapon usage
+	var sword_used: int = Blackboard.get_data("sword_used_amount") if Blackboard.get_data("sword_used_amount") else 0
+	var shield_used: int = Blackboard.get_data("shield_used_amount") if Blackboard.get_data("shield_used_amount") else 0
+	var bow_used: int = Blackboard.get_data("bow_used_amount") if Blackboard.get_data("bow_used_amount") else 0
+	
+	# Get damage and health statistics
+	var player_damage_taken: int = Blackboard.get_data("player_damage_taken") if Blackboard.get_data("player_damage_taken") else 0
+	var player_max_health: int = Blackboard.get_data("player_max_health") if Blackboard.get_data("player_max_health") else 3
+	var player_heal_count: int = Blackboard.get_data("player_heal_count") if Blackboard.get_data("player_heal_count") else 0
+	
+	# Get mission choices
 	var mission_choices = Blackboard.get_data("mission_choices")
 	if !is_instance_valid(mission_choices):
 		mission_choices = []
 	mission_choices = mission_choices as Array[DungeonGenerator.MissionType]
 	
-	# Calculate playstyle points, using 3's and 4's as weighting to avoid ties
+	# Calculate playstyle points using weighting
 	var points_aggressive: int = 0
 	var points_defensive: int = 0
 	var points_evasive: int = 0
@@ -66,11 +74,25 @@ func calculate_playstyle() -> void:
 	# Weapon usage heuristic
 	match max(sword_used, shield_used, bow_used):
 		sword_used:
-			points_aggressive += 3
+			points_aggressive += 4
 		shield_used:
-			points_defensive += 3
+			points_defensive += 4
 		bow_used:
-			points_evasive += 3
+			points_evasive += 4
+	
+	# Nudge the player in the right direction with the npc playstyle heuristic
+	match npc.adapatable_playstyle:
+		npc.Playstyle.AGGRESSIVE:
+			points_defensive += 2
+		npc.Playstyle.DEFENSIVE:
+			points_evasive += 2
+		npc.Playstyle.EVASIVE:
+			points_aggressive += 2
+	
+	# Player Health/Damage heuristics
+	points_aggressive = points_aggressive + (player_damage_taken - player_max_health)
+	points_defensive = points_defensive + player_heal_count
+	points_evasive = points_evasive + (player_max_health - player_damage_taken)
 	
 	# Mission type heuristic
 	if mission_choices.count(DungeonGenerator.MissionType.ITEM) > mission_choices.count(DungeonGenerator.MissionType.SLAY):
@@ -79,14 +101,19 @@ func calculate_playstyle() -> void:
 	else:
 		points_aggressive += 3
 	
-	# Enemy damaging heuristic
-	if damage_done >= damage_blocked:
-		points_aggressive += 4
-	elif enemies_left_alive >= enemies_killed:
-		points_evasive += 4
-	else:
-		points_defensive += 4
-		
+	# Enemies left alive heuristic, and fix possible ties
+	if enemies_left_alive < enemies_killed:
+		points_aggressive += 3
+		points_defensive += 3
+		if points_aggressive == points_defensive || points_aggressive == points_evasive:
+			points_aggressive += 1
+		if points_defensive == points_evasive:
+			points_defensive += 1
+	elif enemies_left_alive > enemies_killed:
+		points_evasive += 3
+		if points_evasive == points_aggressive || points_evasive == points_defensive:
+			points_evasive += 1
+	
 	# Total point calculation
 	match max(points_aggressive, points_defensive, points_evasive):
 		points_aggressive:
@@ -129,6 +156,7 @@ static func update_npc_playstyle_priorities() -> void:
 	if !is_instance_valid(npc):
 		return
 	npc = npc as Npc
+	
 	var player_weapon_usage: Vector3 = calculate_weapon_usage()
 	var possible_playstyles = npc.adapatable_playstyle + npc.preferred_playstyle
 	match possible_playstyles:
@@ -157,63 +185,64 @@ static func update_aggro() -> void:
 static func calculate_level_ups() -> void:
 	var last_playstyle: String = get_last_playstyle()
 	
-	var sword_level: int = Blackboard.get_data("sword_level") if Blackboard.get_data("sword_level") else 1
-	var shield_level: int = Blackboard.get_data("shield_level") if Blackboard.get_data("shield_level") else 1
-	var bow_level: int = Blackboard.get_data("bow_level") if Blackboard.get_data("bow_level") else 1
+	var sword_level: float = Blackboard.get_data("sword_level") if Blackboard.get_data("sword_level") else 1
+	var shield_level: float = Blackboard.get_data("shield_level") if Blackboard.get_data("shield_level") else 1
+	var bow_level: float = Blackboard.get_data("bow_level") if Blackboard.get_data("bow_level") else 1
 	
 	var npc = Blackboard.get_data("npc")
 	if !is_instance_valid(npc):
 		return
 	npc = npc as Npc
 	
-	var new_npc_level: int
-	var new_sword_level: int
-	var new_shield_level: int
-	var new_bow_level: int
+	var new_npc_level: float
+	var new_sword_level: float
+	var new_shield_level: float
+	var new_bow_level: float
 	
 	match last_playstyle:
 		"Aggressive":
 			if npc.adapatable_playstyle == Npc.Playstyle.EVASIVE:
-				new_npc_level = min(3, npc.level + 1)
+				new_npc_level = minf(3.99, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.AGGRESSIVE:
-				new_npc_level = min(2, npc.level + 1)
+				new_npc_level = min(2.5, npc.level + .6)
 			else:
-				new_npc_level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - .4)
 			
-			new_sword_level = min(3, sword_level + 1)
-			new_shield_level = max(1, shield_level - 1)
-			new_bow_level = max(1, bow_level - 1)
+			new_sword_level = min(3.99, sword_level + 1)
+			new_shield_level = max(1, shield_level - .4)
+			new_bow_level = max(1, bow_level - .4)
 		"Defensive":
 			if npc.adapatable_playstyle == Npc.Playstyle.AGGRESSIVE:
-				new_npc_level = min(3, npc.level + 1)
+				new_npc_level = min(3.99, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.DEFENSIVE:
-				new_npc_level = min(2, npc.level + 1)
+				new_npc_level = min(2.5, npc.level + .6)
 			else:
-				new_npc_level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - .4)
 			
-			new_sword_level = max(1, sword_level - 1)
-			new_shield_level = min(3, shield_level + 1)
-			new_bow_level = max(1, bow_level - 1)
+			new_sword_level = max(1, sword_level - .4)
+			new_shield_level = min(3.99, shield_level + 1)
+			new_bow_level = max(1, bow_level - .4)
 		"Evasive":
 			if npc.adapatable_playstyle == Npc.Playstyle.DEFENSIVE:
-				new_npc_level = min(3, npc.level + 1)
+				new_npc_level = min(3.99, npc.level + 1)
 			elif npc.preferred_playstyle == Npc.Playstyle.EVASIVE:
-				new_npc_level = min(2, npc.level + 1)
+				new_npc_level = min(2.5, npc.level + .6)
 			else:
-				new_npc_level = max(1, npc.level - 1)
+				new_npc_level = max(1, npc.level - .4)
 			
-			new_sword_level = max(1, sword_level - 1)
-			new_shield_level = max(1, shield_level - 1)
+			new_sword_level = max(1, sword_level - .4)
+			new_shield_level = max(1, shield_level - .4)
 			new_bow_level = min(3, bow_level + 1)
 	
+	npc.level = floori(new_npc_level)
 	Blackboard.add_data("sword_level", sword_level)
 	Blackboard.add_data("shield_level", shield_level)
 	Blackboard.add_data("bow_level", bow_level)
 	
-	Blackboard.add_data("npc_level_report", get_level_report(npc.level, new_npc_level))
-	Blackboard.add_data("sword_level_report", get_level_report(sword_level, new_sword_level))
-	Blackboard.add_data("shield_level_report", get_level_report(shield_level, new_shield_level))
-	Blackboard.add_data("bow_level_report", get_level_report(bow_level, new_bow_level))
+	Blackboard.add_data("npc_level_report", get_level_report(floori(npc.level), floori(new_npc_level)))
+	Blackboard.add_data("sword_level_report", get_level_report(floori(sword_level), floori(new_sword_level)))
+	Blackboard.add_data("shield_level_report", get_level_report(floori(shield_level), floori(new_shield_level)))
+	Blackboard.add_data("bow_level_report", get_level_report(floori(bow_level), floori(new_bow_level)))
 
 
 static func get_level_report(old_level: int, new_level: int) -> String:

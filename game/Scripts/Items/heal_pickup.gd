@@ -33,6 +33,8 @@ func _pickup() -> void:
 		return
 	
 	if actor.health_component.health < max_health:
+		if is_instance_valid(actor as Player):
+			Blackboard.increment_data("player_heal_count", max_health - actor.health_component.health)
 		actor.health_component.gain_health(heal_amount)
 		heal_used.emit(self)
 		queue_free()
