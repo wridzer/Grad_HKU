@@ -241,7 +241,6 @@ idle_dialogue = ExtResource("2_35isb")
 hit_dialogue = ExtResource("3_3h1rx")
 following_dialogue = ExtResource("4_1aa62")
 dungeon_dialogue = ExtResource("5_ncj3t")
-_home_level = "res://Scenes/Levels/level_hub.tscn"
 adapatable_playstyle = 2
 goap_agent = NodePath("GoapAgent")
 base_slash_priority = 50

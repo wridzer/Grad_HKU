@@ -66,7 +66,7 @@ condition_failure_dialogue = ExtResource("15_wu44a")
 
 [node name="SpawnPoint" parent="." instance=ExtResource("4_yhct4")]
 position = Vector2(111, 8)
-_npc_offset = Vector2(10, 0)
+_npc_offset = Vector2(0, 0)
 
 [editable path="NpcRose"]
 [editable path="NpcRose/CharacterAnimations/AnimationDirection/Sword"]

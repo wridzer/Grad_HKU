@@ -18,6 +18,9 @@ func _ready() -> void:
 
 
 func calculate() -> void:
+	if !Blackboard.get_data("mission_success"):
+		return
+	
 	calculate_playstyle()
 	calculate_weapon_usage()
 	calculate_level_ups()
@@ -263,7 +266,11 @@ static func get_level_report(old_level: int, new_level: int) -> String:
 
 
 static func get_last_playstyle() -> String:
-	var playstyles: Array[String] = []
-	if Blackboard.get_data("playstyles"):
-		playstyles = Blackboard.get_data("playstyles")
+	if !Blackboard.get_data("mission_success"):
+		return "Failure"
+	
+	var playstyles = Blackboard.get_data("playstyles")
+	if !playstyles:
+		return ""
+	playstyles = playstyles as Array[String]
 	return playstyles[-1]

@@ -10,7 +10,6 @@ process_mode = 1
 [node name="Player" parent="." instance=ExtResource("1_ygi7h")]
 z_index = 1
 position = Vector2(40, -7)
-_home_level = "res://Scenes/Levels/level_hub.tscn"
 
 [node name="Level" type="Node" parent="."]
 

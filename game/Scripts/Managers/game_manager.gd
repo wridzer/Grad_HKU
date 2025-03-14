@@ -31,6 +31,7 @@ var is_npc_following: bool:
 
 @export var _level_parent: Node
 @export_file var _level_hub: String
+@export var mission_fail_count_limit: int = 1
 
 
 func _ready() -> void:
@@ -74,3 +75,14 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	
 	# Make sure player can move again
 	input_manager.toggle_input(true)
+
+
+func mission_fail() -> void:
+	Blackboard.add_data("mission_success", false)
+	Blackboard.increment_data("mission_fail_count", 1)
+	var mission_fail_count: int = Blackboard.get_data("mission_fail_count") if Blackboard.get_data("mission_fail_count") else 1
+	if mission_fail_count > mission_fail_count_limit:
+		#TODO fired
+		pass
+	
+	load_level(_level_hub)

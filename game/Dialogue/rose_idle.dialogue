@@ -64,3 +64,7 @@ Rose: You were slow. The enemy won’t wait for you out there. Try and keep up.
 ~ start_night_Evasive
 Rose: Not really my style, but at least it gets the job done. Throats need to be slit one way or another.
 => END
+
+~ start_night_Failure
+Dominic: That was really bad, even for you.
+=> END

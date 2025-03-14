@@ -7,7 +7,6 @@ const MAX_ARROW_COUNT = 5
 var is_hidden : bool = false
 
 @export_file var _arrow_path: String
-@export_file var _home_level: String
 
 var _arrows: Array[Arrow]
 var _saved_spawn_pos: Vector2
@@ -181,8 +180,9 @@ func respawn() -> void:
 
 func die() -> void:
 	if Blackboard.get_data("npc_health") <= 0:
-		game_manager.load_level(_home_level)
+		game_manager.mission_fail()
 		return
+	
 	input_manager.toggle_input(false)
 	_hurtbox_component.immune = true
 

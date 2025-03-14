@@ -64,3 +64,7 @@ Dominic: Wonderful show out there! A good defense is the best offense, like I al
 ~ start_night_Evasive
 Dominic: I do not see any sense in not announcing yourself like you did. There is no honour in an ambush.
 => END
+
+~ start_night_Failure
+Dominic: Sadly, a failure. Should've played more defensively, I'd say.
+=> END

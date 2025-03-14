@@ -28,5 +28,6 @@ func _on_body_exited(player: Player) -> void:
 
 
 func _on_timer_timeout() -> void:
+	Blackboard.add_data("mission_success", true)
 	game_manager.load_level(_level_to_load)
 	_timer.stop()

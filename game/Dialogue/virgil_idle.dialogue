@@ -66,3 +66,7 @@ Virgil: You were being pretty careful. That’s- that’s good. Can’t have our
 ~ start_night_Evasive
 Virgil: You've got a good balance. You’re really something out there.
 => END
+
+~ start_night_Failure
+Dominic: You were not careful enough...
+=> END
