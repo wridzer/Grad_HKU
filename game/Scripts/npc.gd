@@ -160,7 +160,7 @@ func choose() -> void:
 	health_component.set_health_blackboard_variables("npc")
 	
 	if goap_agent.enable_debug_window:
-		goap_agent.activate_debug_window()
+		goap_agent.toggle_debug_window(true)
 
 
 func slash() -> bool:
