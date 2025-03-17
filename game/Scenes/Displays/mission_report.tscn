@@ -12,7 +12,6 @@
 atlas = ExtResource("5_5s2q1")
 
 [node name="MissionReport" type="Node2D"]
-visible = false
 script = ExtResource("1_n1y03")
 
 [node name="Control" type="Control" parent="."]

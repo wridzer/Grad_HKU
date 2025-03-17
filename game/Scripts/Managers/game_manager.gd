@@ -13,6 +13,7 @@ signal get_spawn_location
 signal toggle_goap
 signal return_to_hub
 signal day_time
+signal fired
 
 var day: int = 1
 var night_time: bool:
@@ -82,7 +83,7 @@ func mission_fail() -> void:
 	Blackboard.increment_data("mission_fail_count", 1)
 	var mission_fail_count: int = Blackboard.get_data("mission_fail_count") if Blackboard.get_data("mission_fail_count") else 1
 	if mission_fail_count > mission_fail_count_limit:
-		#TODO fired
-		pass
+		fired.emit()
+		return
 	
 	load_level(_level_hub)
