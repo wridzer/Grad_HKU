@@ -3,7 +3,7 @@ extends Window
 
 @export var _blackboard_list: VBoxContainer
 @export var _goal_list: VBoxContainer
-@export var _action_plan: VBoxContainer 
+@export var _action_plan_list: VBoxContainer 
 
 @export var _goap_agent: GoapAgent
 
@@ -65,7 +65,7 @@ func _process(_delta: float) -> void:
 				goal.set("theme_override_colors/font_color", Color.RED)
 		
 		# Populate action plan List
-		clear_container(_action_plan)
+		clear_container(_action_plan_list)
 		for i in range(0, plan.size()):
 			var new_label = Label.new()
 			new_label.text = plan[i].replace("_", " ")
@@ -76,7 +76,7 @@ func _process(_delta: float) -> void:
 			else:
 				new_label.set("theme_override_colors/font_color", Color.RED)
 			new_label.add_theme_font_size_override("font_size", font_size) 
-			_action_plan.add_child(new_label)
+			_action_plan_list.add_child(new_label)
 	
 
 func clear_container(container: Container):
