@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://s3ehrd1th7j5" path="res://Scenes/NPCs/npc_dominic.tscn" id="3_scwlw"]
 [ext_resource type="PackedScene" uid="uid://dfqtqx2hreskn" path="res://Scenes/NPCs/npc_virgil.tscn" id="4_ogu1r"]
 [ext_resource type="PackedScene" uid="uid://dos5t40le7wrk" path="res://Scenes/Levels/spawn_point.tscn" id="4_yhct4"]
-[ext_resource type="PackedScene" uid="uid://d3nmvrek3uub0" path="res://Scenes/mission_display.tscn" id="9_emmm7"]
-[ext_resource type="PackedScene" uid="uid://ceh5ro36yh1k6" path="res://Scenes/tent.tscn" id="15_tqh5u"]
+[ext_resource type="PackedScene" uid="uid://d3nmvrek3uub0" path="res://Scenes/Actionables/mission_display.tscn" id="9_emmm7"]
+[ext_resource type="PackedScene" uid="uid://ceh5ro36yh1k6" path="res://Scenes/Actionables/tent.tscn" id="15_tqh5u"]
 [ext_resource type="Resource" uid="uid://cteaboydc06j8" path="res://Dialogue/mission_condition_failure.dialogue" id="15_wu44a"]
-[ext_resource type="PackedScene" uid="uid://bs20txhswp5q" path="res://Scenes/fireplace.tscn" id="21_uppqn"]
+[ext_resource type="PackedScene" uid="uid://bs20txhswp5q" path="res://Scenes/Actionables/fireplace.tscn" id="21_uppqn"]
 
 [node name="Hub" type="Node2D"]
 script = ExtResource("1_q3wky")

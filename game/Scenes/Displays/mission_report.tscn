@@ -1,19 +1,19 @@
 [gd_scene load_steps=8 format=3 uid="uid://dfpbhfv5i6trw"]
 
-[ext_resource type="Script" path="res://Scripts/mission_report.gd" id="1_rwao0"]
-[ext_resource type="Texture2D" uid="uid://dswsfweqvicyu" path="res://Art/mission_report.png" id="1_y8hhg"]
-[ext_resource type="Texture2D" uid="uid://cnbxumqvs7fol" path="res://Art/black_square.png" id="2_ehjma"]
-[ext_resource type="Texture2D" uid="uid://cvd41bixqd586" path="res://Art/kenney_game-icons/PNG/White/1x/cross.png" id="3_73ob5"]
-[ext_resource type="Theme" uid="uid://cf2xku76h2w8c" path="res://mission_report_theme.tres" id="4_ussnp"]
+[ext_resource type="Script" path="res://Scripts/Displays/mission_report.gd" id="1_n1y03"]
+[ext_resource type="Texture2D" uid="uid://cnbxumqvs7fol" path="res://Art/black_square.png" id="2_lwaos"]
+[ext_resource type="Texture2D" uid="uid://dswsfweqvicyu" path="res://Art/mission_report.png" id="3_om4uf"]
+[ext_resource type="Theme" uid="uid://cf2xku76h2w8c" path="res://mission_report_theme.tres" id="4_gc1x5"]
+[ext_resource type="Texture2D" uid="uid://cvd41bixqd586" path="res://Art/kenney_game-icons/PNG/White/1x/cross.png" id="5_5s2q1"]
 
 [sub_resource type="FontVariation" id="FontVariation_dyern"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bbgrs"]
-atlas = ExtResource("3_73ob5")
+atlas = ExtResource("5_5s2q1")
 
 [node name="MissionReport" type="Node2D"]
 visible = false
-script = ExtResource("1_rwao0")
+script = ExtResource("1_n1y03")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -42,7 +42,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ehjma")
+texture = ExtResource("2_lwaos")
 expand_mode = 1
 
 [node name="Background" type="TextureRect" parent="Control"]
@@ -58,7 +58,7 @@ offset_right = 377.186
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_y8hhg")
+texture = ExtResource("3_om4uf")
 expand_mode = 3
 stretch_mode = 4
 
@@ -74,7 +74,7 @@ offset_right = -0.180481
 offset_bottom = 0.039978
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_ussnp")
+theme = ExtResource("4_gc1x5")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_dyern")
 text = "Playstyle: X

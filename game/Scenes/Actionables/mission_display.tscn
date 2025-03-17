@@ -1,24 +1,24 @@
 [gd_scene load_steps=11 format=3 uid="uid://d3nmvrek3uub0"]
 
-[ext_resource type="Script" path="res://Scripts/mission_display.gd" id="1_ve4ia"]
-[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="1_yh8sa"]
-[ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="2_123cq"]
-[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wvo26"]
-[ext_resource type="Texture2D" uid="uid://cu2g81fgholj1" path="res://Art/sign.png" id="5_0kswu"]
-[ext_resource type="Texture2D" uid="uid://b3fgv2a6m8ke4" path="res://Art/sign_highlighted.png" id="6_bvs1m"]
+[ext_resource type="Script" path="res://Scripts/Actionables/mission_display.gd" id="1_tuagt"]
+[ext_resource type="Resource" uid="uid://2lqfg7tjgmeg" path="res://Dialogue/mission.dialogue" id="2_8npru"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/Actionables/actionable.tscn" id="3_edq5p"]
+[ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_2efn6"]
+[ext_resource type="Texture2D" uid="uid://b3fgv2a6m8ke4" path="res://Art/sign_highlighted.png" id="5_burxl"]
+[ext_resource type="Texture2D" uid="uid://cu2g81fgholj1" path="res://Art/sign.png" id="6_otq0y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oudfl"]
 radius = 8.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kolxj"]
-atlas = ExtResource("4_wvo26")
+atlas = ExtResource("4_2efn6")
 region = Rect2(412, 150, 16, 40)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4lb3t"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_bvs1m")
+"texture": ExtResource("5_burxl")
 }],
 "loop": true,
 "name": &"highlighted",
@@ -26,7 +26,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_0kswu")
+"texture": ExtResource("6_otq0y")
 }],
 "loop": true,
 "name": &"idle",
@@ -38,11 +38,11 @@ radius = 6.0
 
 [node name="MissionDisplay" type="StaticBody2D" node_paths=PackedStringArray("_exclamation_mark_sprite")]
 collision_mask = 3
-script = ExtResource("1_ve4ia")
-_mission_dialogue = ExtResource("2_123cq")
+script = ExtResource("1_tuagt")
+_mission_dialogue = ExtResource("2_8npru")
 _exclamation_mark_sprite = NodePath("Sprite2DExclamationMark")
 
-[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("1_yh8sa")]
+[node name="Actionable" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("3_edq5p")]
 position = Vector2(0, -1)
 actionable_priority = 1
 animated_sprite = NodePath("../AnimatedSprite2DSign")

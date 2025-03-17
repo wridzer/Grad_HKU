@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://bs20txhswp5q"]
 
-[ext_resource type="Script" path="res://Scripts/fireplace.gd" id="1_tdv2o"]
+[ext_resource type="Script" path="res://Scripts/Actionables/fireplace.gd" id="1_tdv2o"]
 [ext_resource type="Resource" uid="uid://dcoi6fav4i202" path="res://Dialogue/fireplace.dialogue" id="2_xsesf"]
-[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_3uwvx"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/Actionables/actionable.tscn" id="3_3uwvx"]
 [ext_resource type="Texture2D" uid="uid://ci08n4lej768p" path="res://Art/kenney_game-icons/Vector/vector_whiteIcons.svg" id="4_wydcg"]
 [ext_resource type="Texture2D" uid="uid://t6wwuflcnni8" path="res://Art/fireplace1highlighted.png" id="5_xkeig"]
 [ext_resource type="Texture2D" uid="uid://jyufnpc7tctp" path="res://Art/fireplace2highlighted.png" id="6_e0njt"]

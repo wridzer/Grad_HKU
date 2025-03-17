@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://cqidee48j5shu"]
 
-[ext_resource type="Script" path="res://Scripts/pause.gd" id="1_i0k8m"]
-[ext_resource type="Texture2D" uid="uid://cnbxumqvs7fol" path="res://Art/black_square.png" id="2_wpryx"]
-[ext_resource type="Theme" uid="uid://cf2xku76h2w8c" path="res://mission_report_theme.tres" id="4_5hynb"]
+[ext_resource type="Script" path="res://Scripts/Displays/pause.gd" id="1_ggk3e"]
+[ext_resource type="Texture2D" uid="uid://cnbxumqvs7fol" path="res://Art/black_square.png" id="2_fr1nl"]
+[ext_resource type="Theme" uid="uid://cf2xku76h2w8c" path="res://mission_report_theme.tres" id="3_g2152"]
 
 [sub_resource type="FontVariation" id="FontVariation_dyern"]
 
 [node name="Pause" type="Node2D"]
 visible = false
-script = ExtResource("1_i0k8m")
+script = ExtResource("1_ggk3e")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -37,7 +37,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_wpryx")
+texture = ExtResource("2_fr1nl")
 expand_mode = 1
 
 [node name="PauseText" type="RichTextLabel" parent="Control"]
@@ -53,7 +53,7 @@ offset_right = 678.0
 offset_bottom = 284.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_5hynb")
+theme = ExtResource("3_g2152")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_dyern")
 text = "Paused"

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="1_3m0e2"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_ewpuj"]
-[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/health_display.tscn" id="2_5c03w"]
+[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/Displays/health_display.tscn" id="2_5c03w"]
 [ext_resource type="Script" path="res://Scripts/States/Enemy/enemy_idle.gd" id="3_1iy2t"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="3_ox5hm"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="4_egr5u"]

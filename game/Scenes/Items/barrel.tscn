@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Items/barrel.gd" id="1_b8ccn"]
 [ext_resource type="Texture2D" uid="uid://c2ahqyqftdy7l" path="res://Art/kenney_roguelike-rpg-pack/Spritesheet/roguelikeSheet_transparent.png" id="2_28gv3"]
-[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/actionable.tscn" id="3_kds1u"]
+[ext_resource type="PackedScene" uid="uid://dxcrb47g2ejqf" path="res://Scenes/Actionables/actionable.tscn" id="3_kds1u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_arjjr"]
 atlas = ExtResource("2_28gv3")
