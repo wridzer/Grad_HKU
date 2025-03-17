@@ -25,7 +25,6 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 1080.0
 grow_horizontal = 2
-size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
@@ -71,39 +70,42 @@ text = "Action plan"
 [node name="HBoxContainerLists" type="HBoxContainer" parent="CanvasLayer/Control"]
 clip_contents = true
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 20.0
 offset_top = 80.0
 offset_right = -20.0
 offset_bottom = 80.0
 grow_horizontal = 2
-grow_vertical = 2
 size_flags_vertical = 3
 
 [node name="Blackboard_list" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainerLists"]
 clip_contents = true
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 9
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Spacer" type="Control" parent="CanvasLayer/Control/HBoxContainerLists"]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Goal_list" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainerLists"]
-custom_minimum_size = Vector2(200, 0)
+clip_contents = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 9
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Spacer2" type="Control" parent="CanvasLayer/Control/HBoxContainerLists"]
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Action_plan_list" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainerLists"]
+clip_contents = true
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 9
+size_flags_horizontal = 0
+size_flags_vertical = 0

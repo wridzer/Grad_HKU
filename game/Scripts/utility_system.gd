@@ -36,6 +36,7 @@ func reset_values() -> void:
 		"bow_used_amount",
 		"enemies_killed",
 		"keys",
+		"mission_success",
 	]
 	Blackboard.clear_utility_data(clear_values)
 
@@ -260,6 +261,9 @@ static func calculate_level_ups() -> void:
 	Blackboard.add_data("sword_level_report", get_level_report(floori(sword_level), floori(new_sword_level)))
 	Blackboard.add_data("shield_level_report", get_level_report(floori(shield_level), floori(new_shield_level)))
 	Blackboard.add_data("bow_level_report", get_level_report(floori(bow_level), floori(new_bow_level)))
+	
+	# For dungeon difficulty scaling
+	Blackboard.add_data("average_level", floori(new_npc_level + new_sword_level + new_shield_level + new_bow_level) / 4)
 
 
 static func get_level_report(old_level: int, new_level: int) -> String:

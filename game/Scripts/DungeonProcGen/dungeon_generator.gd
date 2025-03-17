@@ -62,6 +62,7 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 
 # Generation instructions
 @export_category("Generation Instructions")
+@export var difficulty_modifier: float = 1
 @export var _room_types: Dictionary[int, Array] = {14: [12, 13 ,14], 13: [12, 13, 14], 12: [12, 13, 14]}
 @export_range(15, 200, 5) var _dungeon_size: int = 120
 @export_range(3, 10) var _min_room_amount: int = 4
@@ -123,8 +124,12 @@ func _generate_dungeon() -> void:
 	if !_seed.is_empty():
 		seed(_seed.hash())
 	
+	difficulty_modifier = _get_difficulty_modifier()
+	
 	_make_border()
-	for i in _max_room_amount:
+	
+	# Scale room amount with the difficulty modifier
+	for i in floori(_max_room_amount * difficulty_modifier):
 		_make_room(MAX_RECURSION)
 	
 	# Only works for 3+ rooms
@@ -164,6 +169,22 @@ func _clear_dungeon() -> void:
 		child.queue_free()
 
 
+func _get_difficulty_modifier() -> float:
+	# Base modifier per day count (day 1 = 1.00)
+	var modifier: float = 1.00 + (game_manager.day - 1) * 0.05
+	
+	# If player failed once already, increase the difficulty by another 10%
+	var mission_fail_count: int = Blackboard.get_data("mission_fail_count") if Blackboard.get_data("mission_fail_count") else 0
+	if mission_fail_count == 1:
+		modifier += 0.10
+	
+	# Scale the modifier negatively by 10% per average level
+	var average_level = Blackboard.get_data("average_level") if Blackboard.get_data("average_level") else 1
+	modifier -= 0.10 * (average_level - 1)
+	
+	return modifier
+
+
 func _make_border() -> void:
 	# Generate the border tiles
 	for i in range(-1, _dungeon_size + 1):
@@ -176,8 +197,8 @@ func _make_border() -> void:
 
 func _make_room(recursion: int) -> void:
 	if recursion <= 0:
-		if _rooms.size() < _min_room_amount:
-			print("Dungeon size too small to succesfully generate " + str(_min_room_amount) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
+		if _rooms.size() < floori(_min_room_amount * difficulty_modifier):
+			print("Dungeon size too small to succesfully generate " + str(floori(_min_room_amount * difficulty_modifier)) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
 			_dungeon_size = int(_dungeon_size * 1.2)
 			_clear_dungeon()
 			_generate_dungeon()
@@ -524,7 +545,9 @@ func _spawn_heal_items(goal_room: Room) -> void:
 	var possible_heal_rooms: Array[Room] = _rooms.duplicate()
 	possible_heal_rooms.erase(goal_room)
 	
-	var heal_item_amount = randi_range(_min_heal_items, _max_heal_items)
+	# Negatively scale heal item amount range with the difficulty modifier
+	var heal_item_amount = randi_range(floori(_min_heal_items / difficulty_modifier), floori(_max_heal_items / difficulty_modifier))
+	
 	for i in range(heal_item_amount):
 		var heal_room = possible_heal_rooms.pick_random()
 		possible_heal_rooms.erase(heal_room)
@@ -570,12 +593,14 @@ func _spawn_enemies(spawn_room: Room, goal_room: Room = null) -> void:
 		if room == spawn_room:
 			continue
 		
-		var enemy_count: int = randi_range(_min_enemies_per_room, _max_enemies_per_room)
+		# Scale enemy amount range with the difficulty modifer
+		var enemy_amount: int = randi_range(floori(_min_enemies_per_room * difficulty_modifier), floori(_max_enemies_per_room * difficulty_modifier))
+		
 		if is_instance_valid(goal_room):
 			if room == goal_room:
-				enemy_count = 1
+				enemy_amount = 1
 		
-		for i in range(enemy_count):
+		for i in range(enemy_amount):
 			var enemy: Enemy = _enemy_scene.instantiate()
 			room.enemies.append(enemy)
 			room.add_child(enemy)

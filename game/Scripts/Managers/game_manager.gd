@@ -81,7 +81,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 func mission_fail() -> void:
 	Blackboard.add_data("mission_success", false)
 	Blackboard.increment_data("mission_fail_count", 1)
-	var mission_fail_count: int = Blackboard.get_data("mission_fail_count") if Blackboard.get_data("mission_fail_count") else 1
+	var mission_fail_count: int = Blackboard.get_data("mission_fail_count")
 	if mission_fail_count > mission_fail_count_limit:
 		fired.emit()
 		return
