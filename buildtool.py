@@ -50,24 +50,33 @@ class GodotBuildApp:
         self.cores_entry = ttk.Entry(root, textvariable=self.cores_var, width=10)
         self.cores_entry.grid(row=4, column=1, padx=10, pady=5)
 
+        # Open project after finished build (true/false)
+        ttk.Label(root, text="After build:").grid(row=5, column=0, padx=10, pady=5, sticky="w")
+        self.open_engine_var = tk.BooleanVar(value=False)
+        self.open_project_var = tk.BooleanVar(value=False)
+        tools_checkbox = ttk.Checkbutton(root, variable=self.open_engine_var, text="Open engine")
+        tools_checkbox.grid(row=5, column=1, padx=10, pady=5, sticky="w")
+        tools_checkbox = ttk.Checkbutton(root, variable=self.open_project_var, text="Open project")
+        tools_checkbox.grid(row=5, column=2, padx=10, pady=5, sticky="w")
+        
         # Build Button
         self.build_button = ttk.Button(root, text="Build", command=self.run_build_thread)
-        self.build_button.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
+        self.build_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
         # Build update Label
         self.build_label = tk.Label(root, text="Please build the new version of the engine", fg="red", font=("Ariel", 10, "bold"))
-        self.build_label.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+        self.build_label.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
         self.build_label.grid_forget() # Hide initially
         self.check_for_changes()
 
         # Output Display: Last line and full output toggle
         self.output_label = ttk.Label(root, text="", font=("Arial", 10))
-        self.output_label.grid(row=7, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+        self.output_label.grid(row=8, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 
         # Toggle button for full output
         self.show_output = False
         self.toggle_output_button = ttk.Button(root, text="Show Full Output", command=self.toggle_output)
-        self.toggle_output_button.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
+        self.toggle_output_button.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
 
         # Full output display (hidden by default)
         self.output_box = scrolledtext.ScrolledText(root, height=10, width=50, state="disabled")
@@ -75,8 +84,8 @@ class GodotBuildApp:
         self.output_box.grid_remove()  # Hide initially
 
         # Shortcuts to Open Engine and Project
-        ttk.Button(root, text="Open Engine", command=self.open_engine).grid(row=10, column=0, padx=10, pady=5)
-        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=10, column=1, padx=10, pady=5)
+        ttk.Button(root, text="Open Engine", command=self.open_engine).grid(row=11, column=0, padx=10, pady=5)
+        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=11, column=1, padx=10, pady=5)
 
     def toggle_output(self):
         # Toggle the visibility of the full output box
@@ -140,6 +149,10 @@ class GodotBuildApp:
 
             if process.returncode == 0:
                 messagebox.showinfo("Success", "Build completed successfully!")
+                if self.open_engine_var:
+                    self.open_engine()
+                if self.open_project_var:
+                    self.open_project()
             else:
                 error_output = process.stderr.read()
                 messagebox.showerror("Build Failed", f"An error occurred during the build process:\n{error_output}")
