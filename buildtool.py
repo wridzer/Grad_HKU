@@ -85,7 +85,7 @@ class GodotBuildApp:
 
         # Shortcuts to Open Engine and Project
         ttk.Button(root, text="Open Engine", command=self.open_engine).grid(row=11, column=0, padx=10, pady=5)
-        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=11, column=1, padx=10, pady=5)
+        ttk.Button(root, text="Open Project", command=self.open_project).grid(row=11, column=2, padx=10, pady=5)
 
     def toggle_output(self):
         # Toggle the visibility of the full output box
@@ -153,7 +153,7 @@ class GodotBuildApp:
                 if self.open_project_var.get():
                     self.open_project()
                 
-                if not self.open_engine_varg.get() and not self.open_project_var.get():
+                if not self.open_engine_var.get() and not self.open_project_var.get():
                     messagebox.showinfo("Success", "Build completed successfully!")
             else:
                 error_output = process.stderr.read()
