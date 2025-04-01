@@ -147,9 +147,13 @@ void Blackboard::save_to_csv(const String &p_path) {
 
 	// Create/Open file
 	Ref<FileAccess> file = nullptr;
+	Vector<String> header;
 
 	if (FileAccess::exists(p_path)) {
 		file = FileAccess::open(p_path, FileAccess::READ_WRITE);
+
+		// Get header (adds empty entry if file is empty)
+		header = file->get_csv_line();
 	} else {
 		// this fuckery is needed to create a file because FileAccess::WRITE creates a file but will truncate it
 		// file FileAccess::READ_WRITE will not create it but will write without truncating
@@ -157,15 +161,12 @@ void Blackboard::save_to_csv(const String &p_path) {
 		file = FileAccess::open(p_path, FileAccess::READ_WRITE); // Open file for writing without truncating
 	}
 
-	// Order current data
+	// Get data from blackboard and order it
 	Vector<String> blackboard_data_headers = Vector<String>();
-	for (auto a : blackboard_data) {
+	for (auto &a : blackboard_data) {
 		blackboard_data_headers.append(a.key);
 	}
 	blackboard_data_headers.sort();
-
-	// Get header
-	Vector<String> header = file->get_csv_line();
 
 	// Create vector for existing lines
 	Vector<Vector<String>> existing_lines = Vector<Vector<String>>();
@@ -177,7 +178,7 @@ void Blackboard::save_to_csv(const String &p_path) {
 			end_of_file = true;
 		} else {
 			Vector<String> line_data = Vector<String>();
-			for (auto a : line) {
+			for (auto &a : line) {
 				line_data.append(a);
 				i++;
 			}
@@ -188,10 +189,12 @@ void Blackboard::save_to_csv(const String &p_path) {
 	// Add new header for current data and empty values for existing lines
 	file = FileAccess::open(p_path, FileAccess::WRITE);
 
-	for (int i = 0; i < blackboard_data_headers.size() - 1; i++) {
+	if (header.is_empty()) {
+		header = blackboard_data_headers;
+	} else for (int i = 0; i < blackboard_data_headers.size(); i++) {
 		if (blackboard_data_headers[i] != header[i]) {
 			header.insert(i, blackboard_data_headers[i]);
-			for (auto a : existing_lines) {
+			for (auto &a : existing_lines) {
 				a.insert(i, "");
 			}
 		}
@@ -201,15 +204,15 @@ void Blackboard::save_to_csv(const String &p_path) {
 	file->store_csv_line(header);
 
 	// Add old data, then current data
-	for (auto a : existing_lines) {
+	for (auto &a : existing_lines) {
 		Vector<String> line = Vector<String>();
-		for (auto b : a) {
+		for (auto &b : a) {
 			line.push_back(b);
 		}
 		file->store_csv_line(line);
 	}
 	Vector<String> line = Vector<String>();
-	for (auto a : blackboard_data_headers) {
+	for (auto &a : blackboard_data_headers) {
 		line.push_back(get_data(a).stringify());
 	}
 	file->store_csv_line(line);
