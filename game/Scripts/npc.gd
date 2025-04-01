@@ -62,12 +62,13 @@ var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
-	# Destroy instance if any other instance exists
+	# Destroy other instance if any other instance exists
 	var data = Blackboard.get_data("npc")
 	if is_instance_valid(data):
 		var npc: Npc = data
 		if npc.display_name == display_name:
 			npc.die()
+			Blackboard.remove_data("npc")
 	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + display_name)

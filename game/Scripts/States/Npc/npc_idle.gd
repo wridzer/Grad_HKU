@@ -13,7 +13,6 @@ func enter(previous_state: int, data := {}) -> void:
 	npc.actionable.action.connect(start_dialogue)
 	
 	game_manager.npc_follow.connect(follow)
-	game_manager.switch_level_cleanup.connect(die)
 	
 	super.enter(previous_state, data)
 
@@ -27,7 +26,6 @@ func exit() -> void:
 	npc.actionable.action.disconnect(start_dialogue)
 	
 	game_manager.npc_follow.disconnect(follow)
-	game_manager.switch_level_cleanup.disconnect(die)
 	
 	super.exit()
 

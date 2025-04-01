@@ -18,11 +18,11 @@ func _ready() -> void:
 
 
 func calculate() -> void:
+	calculate_playstyle()
+	calculate_weapon_usage()
 	if !Blackboard.get_data("mission_success"):
 		return
 	
-	calculate_playstyle()
-	calculate_weapon_usage()
 	calculate_level_ups()
 
 

@@ -36,6 +36,9 @@ var is_npc_following: bool:
 
 
 func _ready() -> void:
+	# Disable quit via x button
+	get_tree().set_auto_accept_quit(false)
+	
 	# Get the level parent node
 	var main = get_tree().root.get_node("Main")
 	if main and main.has_node("Level"):
@@ -50,9 +53,6 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	if is_instance_valid(npc):
 		npc = npc as Node
 		npc.reparent(_level_parent.get_parent())
-	
-	# Perform any cleanup like: Remove leftover npc's, Reset health
-	switch_level_cleanup.emit()
 	
 	# Add the level to load under "Level" to the scene tree
 	var scene = ResourceLoader.load(level_to_load, PackedScene.new().get_class(), ResourceLoader.CACHE_MODE_IGNORE)
@@ -74,6 +74,9 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	# Get the new level's spawn point location and emit a signal to spawn player (and following npc) there
 	get_spawn_location.emit()
 	
+	# Perform any final cleanup like: Remove leftover npc's, Reset health, remove arrows
+	switch_level_cleanup.emit()
+	
 	# Make sure player can move again
 	input_manager.toggle_input(true)
 
@@ -89,5 +92,14 @@ func mission_fail() -> void:
 	load_level(_level_hub)
 
 
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		quit()
+
+
 func quit():
+	Blackboard.dump_data()
+	Blackboard.save_data()
+	Blackboard.clear_data()
+	Blackboard.save_data()
 	get_tree().quit()
