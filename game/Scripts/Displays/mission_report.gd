@@ -32,7 +32,7 @@ fired and sent to hell."
 	var enemies_killed: String = str(data) if data else "0"
 	
 	data = Blackboard.get_data("enemies_alive")
-	var enemies_alive: String = str(data) if data else "0"
+	var enemies_alive: String = str(data) if data else "0"	
 	
 	data = Blackboard.get_data("npc_choices")
 	var npc_name: String = (data as Array)[-1] if data else "None"

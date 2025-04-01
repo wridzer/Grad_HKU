@@ -6,13 +6,9 @@ extends Node2D
 
 func _ready() -> void:
 	game_manager.fired.connect(fired)
-	quit_button.pressed.connect(quit)
+	quit_button.pressed.connect(game_manager.quit)
 
 
 func fired():
 	input_manager.toggle_pause()
 	visible = true
-
-
-func quit():
-	get_tree().quit()

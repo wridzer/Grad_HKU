@@ -76,7 +76,7 @@ func calculate_playstyle() -> void:
 	var points_evasive: int = 0
 	
 	# Weapon usage heuristic:
-	#Simple +4 of weapon class most used
+	# Simple +4 of weapon class most used
 	match max(sword_used, shield_used, bow_used):
 		sword_used:
 			points_aggressive += 4
@@ -95,7 +95,7 @@ func calculate_playstyle() -> void:
 		npc.Playstyle.EVASIVE:
 			points_aggressive += 2
 	
-	# Player health heuristic:
+	# Player health heuristic
 	# Basic playstyle analysis on taking damage and heals, with limiting factors: -3 or +3 points
 	points_aggressive = points_aggressive + max(3, (player_damage_taken - player_max_health))
 	points_defensive = points_defensive + max(3, player_heal_count)

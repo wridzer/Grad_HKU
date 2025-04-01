@@ -87,3 +87,7 @@ func mission_fail() -> void:
 		return
 	
 	load_level(_level_hub)
+
+
+func quit():
+	get_tree().quit()
