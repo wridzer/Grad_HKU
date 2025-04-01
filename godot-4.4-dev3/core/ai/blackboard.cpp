@@ -57,10 +57,26 @@ void Blackboard::clear_data() {
 void Blackboard::dump_data()
 {
 	OS* os = OS::get_singleton();
-	if (os->has_feature("editor"))
-		save_to_csv(ProjectSettings::get_singleton()->get_resource_path() + "/blackboard_dump/blackboard.txt");
-	else
-		save_to_csv(os->get_executable_path().get_base_dir() + "/blackboard_dump/blackboard.txt");
+
+	String base;
+	if (os->has_feature("editor")) {
+		base = ProjectSettings::get_singleton()->get_resource_path();
+	}
+	else {
+		base = os->get_executable_path().get_base_dir();
+	}
+
+	base += "/blackboard_dump/blackboard";
+	int counter = 1;
+	String extension = ".txt";
+	String path = base + String::num(counter) + extension;
+
+	while (FileAccess::exists(path)) {
+		counter += 1;
+		path = base + String::num(counter) + extension;
+	}
+
+	save_to_csv(path);
 }
 
 void Blackboard::remove_data(const String &p_key) {
@@ -129,6 +145,7 @@ void Blackboard::save_to_csv(const String &p_path) {
 		dir->make_dir_recursive_absolute(p_path.get_base_dir());
 	}
 
+	// Create/Open file
 	Ref<FileAccess> file = nullptr;
 
 	if (FileAccess::exists(p_path)) {
