@@ -13,19 +13,15 @@ if game_manager.is_npc_following:
 		=> already_following_dominic
 	if Blackboard.get_data("npc").display_name == "Rose":
 		=> already_following_rose
-=> wel
+=> follow_dialogue
 
-~ wel
+~ follow_dialogue
 % Virgil: Alright, let's watch each other's backs.
 % Virgil: Let's be careful out there.
 => follow
 
 ~ follow
 do game_manager.npc_follow.emit("Virgil")
-=> END
-
-~ niet
-Virgil: I would... rather not.
 => END
 
 ~ no
@@ -68,5 +64,5 @@ Virgil: You've got a good balance. You’re really something out there.
 => END
 
 ~ start_night_Failure
-Dominic: You were not careful enough...
+Virgil: You were not careful enough...
 => END

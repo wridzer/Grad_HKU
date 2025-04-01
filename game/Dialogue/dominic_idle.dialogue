@@ -13,19 +13,15 @@ if game_manager.is_npc_following:
 		=> already_following_rose
 	if Blackboard.get_data("npc").display_name == "Virgil":
 		=> already_following_virgil
-=> wel
+=> follow_dialogue
 
-~ wel
+~ follow_dialogue
 % Dominic: Off we go then!
 % Dominic: Let us head out.
 => follow
 
 ~ follow
 do game_manager.npc_follow.emit("Dominic")
-=> END
-
-~ niet
-Dominic: I would rather not.
 => END
 
 ~ no
