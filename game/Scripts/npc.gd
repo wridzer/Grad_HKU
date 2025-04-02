@@ -62,14 +62,6 @@ var saved_spawn_pos: Vector2
 
 
 func _ready() -> void:
-	# Destroy other instance if any other instance exists
-	var data = Blackboard.get_data("npc")
-	if is_instance_valid(data):
-		var npc: Npc = data
-		if npc.display_name == display_name:
-			npc.die()
-			Blackboard.remove_data("npc")
-	
 	# Assert that all necessary dialogue has been assigned
 	assert(is_instance_valid(idle_dialogue), "Please assign a valid idle_dialogue to " + display_name)
 	assert(is_instance_valid(hit_dialogue), "Please assign a valid hit_dialogue to " + display_name)
@@ -81,6 +73,8 @@ func _ready() -> void:
 	
 	# Connect signals
 	game_manager.switch_level_cleanup.connect(_reduce_arrows_to.bind(0))
+	game_manager.switch_level_cleanup.connect(free_other_npc_instances)
+	
 	health_component.die.connect(downed)
 	health_component.immunity.connect(update_immunity_animation)
 	health_component.health_gained.connect(update_blackboard_health)
@@ -112,6 +106,16 @@ func downed() -> void:
 	state_machine.transition_to_next_state(NpcState.state_type_to_int(NpcState.StateType.DOWNED))
 	if Player.instance.health_component.health <= 0:
 		game_manager.mission_fail()
+
+
+func free_other_npc_instances() -> void:
+	# Destroy other instance if any other instance exists
+	var data = Blackboard.get_data("npc")
+	if is_instance_valid(data):
+		var npc: Npc = data
+		if npc.display_name == display_name && npc != self:
+			npc.die()
+			Blackboard.remove_data("npc")
 
 
 func die() -> void:

@@ -281,6 +281,6 @@ static func get_last_playstyle() -> String:
 	
 	var playstyles = Blackboard.get_data("playstyles")
 	if !playstyles:
-		return ""
+		return "Failure"
 	playstyles = playstyles as Array[String]
 	return playstyles[-1]
