@@ -29,10 +29,10 @@ fired and sent to hell."
 	var bow_used_amount: String = str(data) if data else "0"
 	
 	data = Blackboard.get_data("enemies_killed")
-	var enemies_killed: int = data if data else "0"
+	var enemies_killed: int = data if data else 0
 	
 	data = Blackboard.get_data("enemies_total")
-	var enemies_alive: int = data - enemies_killed if data else "0"
+	var enemies_alive: int = data - enemies_killed if data else 0
 	
 	data = Blackboard.get_data("npc_choices")
 	var npc_name: String = (data as Array)[-1] if data else "None"
