@@ -179,7 +179,7 @@ func _get_difficulty_modifier() -> float:
 		modifier += 0.10
 	
 	# Scale the modifier negatively by 10% per average level
-	var average_level = Blackboard.get_data("average_level") if Blackboard.get_data("average_level") else 1
+	var average_level: int = Blackboard.get_data("average_level") if Blackboard.get_data("average_level") else 1
 	modifier -= 0.10 * (average_level - 1)
 	
 	return modifier
@@ -628,4 +628,4 @@ func _make_dungeon_exit(goal_room: Room) -> void:
 	
 	if mission_type == MissionType.SLAY:
 		dungeon_exit.condition = func() -> bool: 
-			return Blackboard.get_data("enemies_alive") <= 0
+			return Blackboard.get_data("enemies_total") - Blackboard.get_data("enemies_killed") <= 0

@@ -16,7 +16,7 @@ func _is_goal_met() -> bool:
 func _get_priority() -> int:
 	# Get data
 	var aggro = Blackboard.get_data("aggro_priority") if Blackboard.get_data("aggro_priority") else 30
-	var player_aggro = Blackboard.get_data("enemy_killed_percentage_in_room") if Blackboard.get_data("enemy_killed_percentage_in_room") else 30
+	var player_aggro = Blackboard.get_data("enemies_killed_percentage_last_room") if Blackboard.get_data("enemies_killed_percentage_last_room") else 30
 	
 	# Add player aggro that is above 50, subtract less then 50
 	aggro += (player_aggro - 50)

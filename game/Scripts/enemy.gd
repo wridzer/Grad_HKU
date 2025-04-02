@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 	assert(max_chase_speed > min_chase_speed, "enemy max_chase_speed is not larger than min_chase_speed")
 	
-	Blackboard.increment_data("enemies_alive", 1)
+	Blackboard.increment_data("enemies_total", 1)
 	
 	_health_component.die.connect(die)
 	hurtbox_component.hurt.connect(hurt)
@@ -53,8 +53,7 @@ func immunity(immune: bool) -> void:
 
 func die() -> void:
 	Blackboard.increment_data("enemies_killed", 1)
-	Blackboard.increment_data("enemies_killed_in_room", 1)
-	Blackboard.increment_data("enemies_alive", -1)
+	Blackboard.increment_data("enemies_killed_last_room", 1)
 	
 	died.emit(self)
 	queue_free()

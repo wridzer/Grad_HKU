@@ -29,10 +29,10 @@ fired and sent to hell."
 	var bow_used_amount: String = str(data) if data else "0"
 	
 	data = Blackboard.get_data("enemies_killed")
-	var enemies_killed: String = str(data) if data else "0"
+	var enemies_killed: int = data if data else "0"
 	
-	data = Blackboard.get_data("enemies_alive")
-	var enemies_alive: String = str(data) if data else "0"	
+	data = Blackboard.get_data("enemies_total")
+	var enemies_alive: int = data - enemies_killed if data else "0"
 	
 	data = Blackboard.get_data("npc_choices")
 	var npc_name: String = (data as Array)[-1] if data else "None"
@@ -54,8 +54,8 @@ fired and sent to hell."
 Sword used: " + sword_used_amount + " times
 Shield used: " + shield_used_amount + " times
 Bow used: " + bow_used_amount + " times
-Enemies slain: " + enemies_killed + "
-Enemies left alive: " + enemies_alive + "
+Enemies slain: " + str(enemies_killed) + "
+Enemies left alive: " + str(enemies_alive) + "
 Companion taken: " + npc_name + "
 Companion level: " + npc_level + "
 Sword level: " + sword_level + "

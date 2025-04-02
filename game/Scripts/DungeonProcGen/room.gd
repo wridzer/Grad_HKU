@@ -40,6 +40,7 @@ func _player_entered_room(body: Node2D) -> void:
 	for enemy in enemies:
 		if is_instance_valid(enemy):
 			enemy.state_machine.transition_to_next_state(EnemyState.state_type_to_int(EnemyState.StateType.DOCILE))
+			Blackboard.increment_data("enemies_total_last_room", 1)
 
 
 func _player_exited_room(body: Node2D) -> void:
@@ -54,8 +55,10 @@ func _player_exited_room(body: Node2D) -> void:
 func erase_dead_enemy(enemy: Enemy) -> void:
 	enemies.erase(enemy)
 
+
 func erase_used_heal(heal_pickup: HealPickup) -> void:
 	heal_pickups.erase(heal_pickup)
+
 
 func erase_used_key(key_pickup: KeyPickup) -> void:
 	key_pickups.erase(key_pickup)

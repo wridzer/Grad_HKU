@@ -19,8 +19,6 @@ var room: Room:
 			Blackboard.add_data("enemies_present", false)
 			UtilitySystem.update_npc_playstyle_priorities()
 			UtilitySystem.update_aggro()
-		else:
-			Blackboard.add_data("enemies_in_room" , value.enemies.size())
 		room = value
 
 static var instance: Player = null

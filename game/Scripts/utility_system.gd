@@ -30,11 +30,13 @@ func reset_values() -> void:
 	var clear_values: Array[String] = [
 		"damage_done",
 		"amount_blocked",
-		"enemies_alive",
+		"enemies_killed",
+		"enemies_total",
+		"enemies_killed_last_room",
+		"enemies_total_last_room",
 		"sword_used_amount",
 		"shield_used_amount",
 		"bow_used_amount",
-		"enemies_killed",
 		"keys",
 		"mission_success",
 	]
@@ -49,10 +51,9 @@ func calculate_playstyle() -> void:
 	
 	# Calculate enemy killed/left alive data
 	var enemies_killed: int = Blackboard.get_data("enemies_killed") if Blackboard.get_data("enemies_killed") else 0
-	var enemies_left_alive: int = Blackboard.get_data("enemies_alive") if Blackboard.get_data("enemies_alive") else 0
-	var total_enemies: float = enemies_killed + enemies_left_alive
-	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
-	Blackboard.add_data("enemy_killed_percentage", enemy_killed_percentage)
+	var enemies_total: int = Blackboard.get_data("enemies_total") if Blackboard.get_data("enemies_total") else 0
+	var enemies_killed_percentage: float = enemies_killed / enemies_total * 100
+	Blackboard.add_data("enemies_killed_percentage", enemies_killed_percentage)
 	
 	# Get weapon usage
 	var sword_used: int = Blackboard.get_data("sword_used_amount") if Blackboard.get_data("sword_used_amount") else 0
@@ -112,6 +113,7 @@ func calculate_playstyle() -> void:
 	# Enemies killed/alive heuristic
 	# Determine the evasiveness using kill count
 	# This last heuristic also fixes possible ties
+	var enemies_left_alive: int = enemies_total - enemies_killed
 	if enemies_left_alive < enemies_killed:
 		points_aggressive += 3
 		points_defensive += 3
@@ -182,14 +184,17 @@ static func update_npc_playstyle_priorities() -> void:
 
 
 static func update_aggro() -> void:
-	var enemies_killed: int = Blackboard.get_data("enemies_killed_in_room") if Blackboard.get_data("enemies_killed") else 0
-	var enemies_left_alive: int = Blackboard.get_data("enemies_in_room") if Blackboard.get_data("enemies_alive") else 0
-	if enemies_killed == 0 && enemies_left_alive == 0:
+	var enemies_killed_last_room: int = Blackboard.get_data("enemies_killed_last_room") if Blackboard.get_data("enemies_killed_last_room") else 0
+	var enemies_total_last_room: int = Blackboard.get_data("enemies_total_last_room") if Blackboard.get_data("enemies_total_last_room") else 0
+	if enemies_total_last_room == 0:
 		return
 	
-	var total_enemies: float = enemies_killed + enemies_left_alive
-	var enemy_killed_percentage: float = enemies_killed / total_enemies * 100
-	Blackboard.add_data("enemy_killed_percentage_in_room", enemy_killed_percentage)
+	var enemies_killed_percentage_last_room: float = enemies_killed_last_room / enemies_total_last_room * 100
+	Blackboard.add_data("enemies_killed_percentage_last_room", enemies_killed_percentage_last_room)
+	
+	Blackboard.add_data("enemies_killed_last_room", 0)
+	Blackboard.add_data("enemies_total_last_room", 0)
+	
 
 
 static func calculate_level_ups() -> void:
@@ -263,7 +268,7 @@ static func calculate_level_ups() -> void:
 	Blackboard.add_data("bow_level_report", get_level_report(floori(bow_level), floori(new_bow_level)))
 	
 	# For dungeon difficulty scaling
-	Blackboard.add_data("average_level", floori(new_npc_level + new_sword_level + new_shield_level + new_bow_level) / 4)
+	Blackboard.add_data("average_level", floori((new_npc_level + new_sword_level + new_shield_level + new_bow_level) / 4))
 
 
 static func get_level_report(old_level: int, new_level: int) -> String:
