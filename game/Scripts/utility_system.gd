@@ -78,7 +78,7 @@ func calculate_playstyle() -> void:
 	
 	# Weapon usage heuristic:
 	# Simple +4 of weapon class most used
-	match max(sword_used, shield_used, bow_used):
+	match max_without_ties([sword_used, shield_used, bow_used]):
 		sword_used:
 			points_aggressive += 4
 		shield_used:
@@ -98,9 +98,9 @@ func calculate_playstyle() -> void:
 	
 	# Player health heuristic
 	# Basic playstyle analysis on taking damage and heals, with limiting factors: -3 or +3 points
-	points_aggressive = points_aggressive + max(3, (player_damage_taken - player_max_health))
+	points_aggressive = points_aggressive + min(3, (player_damage_taken - player_max_health))
 	points_defensive = points_defensive + max(3, player_heal_count)
-	points_evasive = points_evasive + min(-3, (player_max_health - player_damage_taken))
+	points_evasive = points_evasive + max(-3, (player_max_health - player_damage_taken))
 	
 	# Mission type heuristic
 	# Item missions require you to be less aggressive
@@ -117,17 +117,21 @@ func calculate_playstyle() -> void:
 	if enemies_left_alive < enemies_killed:
 		points_aggressive += 3
 		points_defensive += 3
+		
+		# Tie breaking
 		if points_aggressive == points_defensive || points_aggressive == points_evasive:
 			points_aggressive += 1
 		if points_defensive == points_evasive:
 			points_defensive += 1
 	elif enemies_left_alive > enemies_killed:
 		points_evasive += 3
+		
+		#Tie breaking
 		if points_evasive == points_aggressive || points_evasive == points_defensive:
 			points_evasive += 1
 	
 	# Total point calculation
-	match max(points_aggressive, points_defensive, points_evasive):
+	match max_without_ties([points_aggressive, points_defensive, points_evasive]):
 		points_aggressive:
 			current_state = "Aggressive"
 		points_defensive:
@@ -140,6 +144,17 @@ func calculate_playstyle() -> void:
 		playstyles = Blackboard.get_data("playstyles")
 	playstyles.append(current_state)
 	Blackboard.add_data("playstyles", playstyles)
+
+
+static func max_without_ties(args: Array) -> Variant:
+	if args.is_empty():
+		return null
+	
+	var max_value: int = args.max()
+	if args.count(max_value) > 1:
+		return null
+	
+	return max_value 
 
 
 static func calculate_weapon_usage() -> Vector3:
