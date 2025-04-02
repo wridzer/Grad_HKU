@@ -58,7 +58,8 @@ grow_vertical = 2
 theme = ExtResource("3_2ja4n")
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_fonts/normal_font = SubResource("FontVariation_7dc82")
-text = "You got fired, and sent to hell..."
+text = "You're fired!
+Go to hell."
 scroll_active = false
 horizontal_alignment = 1
 language = "en_GB"
@@ -80,4 +81,4 @@ grow_vertical = 2
 theme = ExtResource("3_2ja4n")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = SubResource("FontVariation_fqhqr")
-text = "Quit Game"
+text = "Quit"
