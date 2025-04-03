@@ -13,8 +13,8 @@ func _is_goal_met() -> bool:
 		return true
 		
 	if Player.instance.room.heal_pickups.size() > 0:
-		var npc_health = Blackboard.get_data("npc_health")
-		var desired_health = Blackboard.get_data("desired_health")
+		var npc_health = Blackboard.get_data("npc_health") if Blackboard.get_data("npc_health") else 0
+		var desired_health = Blackboard.get_data("desired_health") if Blackboard.get_data("desired_health") else 0
 		if (npc_health <= desired_health):
 			return false
 			
