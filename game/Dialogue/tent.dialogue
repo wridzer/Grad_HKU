@@ -3,12 +3,18 @@ It's daytime, go to work!
 => END
 
 ~ start_night
+if game_manager.exclamation_marks_visibile > 0:
+	=> cant
 Go to sleep?
 - Yes => yes
 - No => no
 
 ~ yes
 do game_manager.night_time = false
+=> END
+
+~ cant
+You feel like you still have things to do
 => END
 
 ~ no

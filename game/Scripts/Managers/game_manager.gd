@@ -15,6 +15,8 @@ signal return_to_hub
 signal day_time
 signal fired
 
+
+var exclamation_marks_visibile: int = 0
 var day: int = 1
 var night_time: bool:
 	set(value):
