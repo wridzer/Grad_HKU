@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dma75j0lif7dx" path="res://Art/nadja_art/NPC/Virgil_hurt.png" id="10_3fqvj"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_goap.gd" id="10_sjl4h"]
 [ext_resource type="Script" path="res://Scripts/States/Npc/npc_downed.gd" id="11_35dkx"]
-[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/Displays/health_display.tscn" id="14_h6f22"]
+[ext_resource type="PackedScene" uid="uid://byx8vd3x5u6q" path="res://Scenes/Displays/health_hud.tscn" id="14_h6f22"]
 [ext_resource type="PackedScene" uid="uid://y4d1uca33vw0" path="res://Scenes/Components/health_component.tscn" id="15_xqiul"]
 [ext_resource type="Texture2D" uid="uid://cvmpuv0crv1f8" path="res://Art/nadja_art/NPC/Virgil_interact.png" id="16_nupsm"]
 [ext_resource type="PackedScene" uid="uid://doratto4po304" path="res://Scenes/Components/hurtbox_component.tscn" id="16_vbs5g"]

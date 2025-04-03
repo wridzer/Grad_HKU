@@ -79,6 +79,7 @@ const UNSUCCESFULL_GENERATION_DUNGEON_SIZE_MULTIPLIER: float = 1.05
 @export_range(0.5, 5.0) var _item_wall_margin: float = 0.5
 
 static var mission_type: MissionType = MissionType.INVALID
+
 var _rooms: Array[Room] = []
 var _keys: Array = []
 var _heals: Array = []
@@ -151,6 +152,7 @@ func _generate_dungeon() -> void:
 	if mission_type == MissionType.ITEM:
 		_spawn_key_items(spawn_room, goal_room)
 		_spawn_enemies(spawn_room, goal_room)
+		game_manager.toggle_keys_hud.emit(true)
 	else:
 		_spawn_enemies(spawn_room)
 	_spawn_heal_items(goal_room)
@@ -169,7 +171,7 @@ func _clear_dungeon() -> void:
 		child.queue_free()
 
 
-func _get_difficulty_modifier() -> float:
+func _get_difficulty_modifier() -> float:	
 	# Base modifier per day count (day 1 = 1.00)
 	var modifier: float = 1.00 + (game_manager.day - 1) * 0.05
 	
@@ -197,7 +199,7 @@ func _make_border() -> void:
 
 func _make_room(recursion: int) -> void:
 	if recursion <= 0:
-		if _rooms.size() < floori(_min_room_amount * difficulty_modifier):
+		if _rooms.size() < min(3, floori(_min_room_amount * difficulty_modifier)):
 			print("Dungeon size too small to succesfully generate " + str(floori(_min_room_amount * difficulty_modifier)) + "rooms. Only " + str(_rooms.size()) + " were generated. Trying again with 120% dungeon size.")
 			_dungeon_size = int(_dungeon_size * 1.2)
 			_clear_dungeon()
@@ -482,6 +484,7 @@ func _choose_goal_room() -> Room:
 	
 	var goal_room: Room = possible_goal_rooms.pick_random()
 	if mission_type == MissionType.ITEM:
+		game_manager.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
 		_tile_map_doors.set_cell(goal_room.doors[0].door_sprite_position, 0, CLOSED_DOOR_TILE, 0)
 		goal_room.player_detector.body_entered.connect(_start_goal_room_dialogue.bind(goal_room))
 	
@@ -533,8 +536,7 @@ func _spawn_key_items(spawn_room: Room, goal_room: Room) -> void:
 		var half_height: float = key_room.height / 2.0 - _item_wall_margin
 		var pos: Vector2 = Vector2(randf_range(-half_width, half_width), randf_range(-half_height, half_height))
 		key_pickup.translate(pos * _tile_map.rendering_quadrant_size)
-		key_pickup.no_keys_left.connect(_open_goal_room_door.bind(goal_room))
-		key_pickup.key_used.connect(key_room.erase_used_key)
+		game_manager.key_used.connect(key_room.erase_used_key)
 
 
 func _open_goal_room_door(goal_room: Room) -> void:

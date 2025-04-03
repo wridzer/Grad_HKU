@@ -61,4 +61,5 @@ func erase_used_heal(heal_pickup: HealPickup) -> void:
 
 
 func erase_used_key(key_pickup: KeyPickup) -> void:
-	key_pickups.erase(key_pickup)
+	if key_pickups.has(key_pickup):
+		key_pickups.erase(key_pickup)

@@ -3,13 +3,9 @@ class_name KeyPickup
 extends Node2D
 
 
-signal no_keys_left
-
 @onready var actionable: Actionable = $Actionable
 
 @export var pickup_dialogue: DialogueResource
-
-signal key_used
 
 
 func _ready() -> void:
@@ -25,10 +21,10 @@ func _pickup() -> void:
 	Blackboard.increment_data("keys", -1)
 	
 	if Blackboard.get_data("keys") == 0:
-		no_keys_left.emit()
+		game_manager.no_keys_left.emit()
 	
 	# Tell the player how much keys are left
 	dialogue_manager.start_dialogue(pickup_dialogue)
-
-	key_used.emit(self)
+	
+	game_manager.key_used.emit(self)
 	queue_free()

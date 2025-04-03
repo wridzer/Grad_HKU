@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Displays/health_display.gd" id="1_s3oxt"]
 [ext_resource type="Texture2D" uid="uid://cvgs02d07442u" path="res://Art/heartpixelated.png" id="2_jaw68"]
 
-[node name="HealthDisplay" type="Node2D"]
+[node name="HealthHud" type="Node2D"]
 script = ExtResource("1_s3oxt")
 
 [node name="HealthSprite" type="Sprite2D" parent="."]

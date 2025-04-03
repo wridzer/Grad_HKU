@@ -14,9 +14,11 @@ signal toggle_goap
 signal return_to_hub
 signal day_time
 signal fired
+signal toggle_keys_hud(enabled)
+signal key_used
+signal no_keys_left
 
-
-var exclamation_marks_visibile: int = 0
+@export var exclamation_marks_visibile: int = 0
 var day: int = 1
 var night_time: bool:
 	set(value):
@@ -69,6 +71,7 @@ func load_level(level_to_load: String = _level_hub) -> void:
 	# Dump blackboard & update utilities
 	if level_to_load == _level_hub:
 		night_time = true
+		toggle_keys_hud.emit(false)
 		return_to_hub.emit()
 		Blackboard.dump_data()
 		Blackboard.save_data()
