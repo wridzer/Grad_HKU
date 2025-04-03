@@ -17,7 +17,8 @@ func _on_body_entered(player: Player) -> void:
 		if condition.call():
 			_timer.start()
 		elif is_instance_valid(condition_failure_dialogue):
-			dialogue_manager.start_dialogue(condition_failure_dialogue)
+			var time_context: String = "nighttime" if game_manager.night_time else ""
+			dialogue_manager.start_dialogue(condition_failure_dialogue, "", time_context)
 		else:
 			print("no level loader condition_failure_dialogue")
 

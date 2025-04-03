@@ -1,3 +1,7 @@
 ~ start
 Please choose a mission type and a companion to go with you on a mission.
 => END
+
+~ nighttime
+You can't go on a mission right now
+=> END
