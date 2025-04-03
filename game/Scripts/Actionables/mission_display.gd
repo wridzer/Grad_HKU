@@ -15,8 +15,10 @@ func _ready() -> void:
 func _activate_display() -> void:
 	if _exclamation_mark_sprite.visible:
 		game_manager.exclamation_marks_visibile -= 1
-	_exclamation_mark_sprite.visible = false
+		_exclamation_mark_sprite.visible = false
+	
 	if game_manager.night_time:
+		input_manager.disabled = true
 		Player.instance.mission_report.do_mission_report()
 	else:
 		dialogue_manager.start_dialogue(_mission_dialogue)

@@ -64,4 +64,5 @@ Bow level: " + bow_level
 
 
 func _on_close_button_button_down():
+	input_manager.disabled = false
 	visible = false
