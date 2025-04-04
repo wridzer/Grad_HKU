@@ -21,6 +21,19 @@ func _process(_delta: float) -> void:
 	if get_tree().paused:
 		return
 	
+	# Debug actions, always able to do these
+	# Go to hub action
+	if Input.is_action_just_pressed("debug_gotohub"):
+		game_manager.load_level()
+	
+	# Fired
+	if Input.is_action_just_pressed("debug_fired"):
+		game_manager.fired.emit()
+	
+	# Stuck npc
+	if Input.is_action_just_pressed("debug_stucknpc"):
+		debug_stucknpc.emit()
+	
 	# Reset movement direction when input is disabled
 	if disabled:
 		direction = Vector2.ZERO
@@ -43,19 +56,6 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("interact"):
 		interact.emit()
-		
-	# Debug actions
-	# Go to hub action
-	if Input.is_action_just_pressed("debug_gotohub"):
-		game_manager.load_level()
-	
-	# Fired
-	if Input.is_action_just_pressed("debug_fired"):
-		game_manager.fired.emit()
-	
-	# Stuck npc
-	if Input.is_action_just_pressed("debug_stucknpc"):
-		debug_stucknpc.emit()
 
 
 func toggle_input(enable: bool) -> void:
