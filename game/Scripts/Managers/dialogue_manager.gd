@@ -18,5 +18,6 @@ func start_dialogue(dialogue: DialogueResource, display_name: String = "", title
 
 
 func _on_dialogue_ended(_resource) -> void:
-	input_manager.toggle_input(true)
+	if !Player.instance.health_component.health <= 0:
+		input_manager.toggle_input(true)
 	_active_dialogue = false
