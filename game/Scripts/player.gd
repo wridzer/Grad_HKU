@@ -29,6 +29,7 @@ static var instance: Player = null
 @onready var _hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var mission_report: MissionReport = $Camera2D/CanvasLayer/MissionReport
 @onready var night_time_filter: CanvasItem = $Camera2D/CanvasLayer/NightTimeFilter
+@onready var name_label: Label = $NameLabel
 
 
 func _ready() -> void:	
@@ -172,11 +173,14 @@ func spawn(spawn_pos: Vector2, _npc_offset: Vector2) -> void:
 
 
 func respawn() -> void:
+	name_label.text = ""
 	input_manager.toggle_input(true)
 	_hurtbox_component.immune = false
 
 
 func die() -> void:
+	name_label.text = "Please revive me!"
+	
 	if Blackboard.get_data("npc_health") <= 0:
 		game_manager.mission_fail()
 		return
