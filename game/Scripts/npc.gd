@@ -80,6 +80,9 @@ func _ready() -> void:
 	health_component.health_gained.connect(update_blackboard_health)
 	hurtbox_component.hurt.connect(func(_x, _y): hurt())
 	
+	# DEBUG STUCK
+	input_manager.debug_stucknpc.connect(debug_stucknpc)
+	
 	# Set display name label
 	name_label.text = display_name
 	
@@ -221,3 +224,11 @@ func toggle_hide(enabled: bool) -> void:
 	is_hidden = enabled
 	hurtbox_component.immune = enabled
 	super.toggle_hide(enabled)
+
+
+func debug_stucknpc() -> void:
+	var data = Blackboard.get_data("npc")
+	if is_instance_valid(data):
+		var npc: Npc = data
+		if npc == self:
+			position = Player.instance.position

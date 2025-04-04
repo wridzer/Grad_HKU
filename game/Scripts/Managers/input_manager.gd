@@ -3,6 +3,7 @@ extends Node
 
 signal interact
 signal pause(paused)
+signal debug_stucknpc
 
 var direction: Vector2 = Vector2.ZERO
 var mouse_direction: Vector2 = Vector2.ZERO
@@ -51,6 +52,10 @@ func _process(_delta: float) -> void:
 	# Fired
 	if Input.is_action_just_pressed("debug_fired"):
 		game_manager.fired.emit()
+	
+	# Stuck npc
+	if Input.is_action_just_pressed("debug_stucknpc"):
+		debug_stucknpc.emit()
 
 
 func toggle_input(enable: bool) -> void:
