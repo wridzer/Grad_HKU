@@ -16,5 +16,5 @@ func toggle_keys_hud(enabled: bool) -> void:
 
 
 func update_keys() -> void:
-	var keys: String = str(Blackboard.get_data("keys")) if Blackboard.get_data("keys") else 0
+	var keys: String = str(Blackboard.get_data("keys")) if Blackboard.get_data("keys") else "0"
 	_keys_text.text = "Keys Left: " + keys
