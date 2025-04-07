@@ -57,10 +57,10 @@ Bow used: " + bow_used_amount + " times
 Enemies slain: " + str(enemies_killed) + "
 Enemies left alive: " + str(enemies_alive) + "
 Companion taken: " + npc_name + "
-Companion level: " + npc_level + "
-Sword level: " + sword_level + "
-Shield level: " + shield_level + "
-Bow level: " + bow_level
+Co-operation experience: " + npc_level + "
+Sword experience: " + sword_level + "
+Shield experience: " + shield_level + "
+Bow experience: " + bow_level
 
 
 func _on_close_button_button_down():

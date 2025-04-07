@@ -86,10 +86,10 @@ Bow used: X times
 Enemies slain: X
 Enemies left alive: X
 Companion taken: X
-Companion level: X/3
-Sword level: X/3
-Shield level: X/3
-Bow level: X/3"
+Co-operation experience: X/3
+Sword experience: X/3
+Shield experience: X/3
+Bow experience: X/3"
 scroll_active = false
 language = "en_GB"
 
